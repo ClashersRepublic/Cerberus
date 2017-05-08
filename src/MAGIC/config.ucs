@@ -1,0 +1,25 @@
+﻿<appSettings>
+  <!-- ____________________________________ Database SETTINGS ____________________________________ -->
+
+  <add key="DatabaseMode" value="1" />
+  <!-- 0 for Mysql, 1 for Mysql + Redis-->
+  
+  <add key="RedisIPAddress" value="127.0.0.1" />
+  <!-- Redis server IP address-->
+  <add key="RedisPort" value="6379" />
+  <!--  Redis server port-->
+  <add key="RedisPassword" value="aididlwq0115" />
+  <!--  Redis server password-->
+
+  <add key="MysqlIPAddress" value="127.0.0.1" />
+  <!-- MySql IP Address -->
+  <add key="MysqlPort" value="3307" />
+  <!-- MySql Username -->
+  <add key="MysqlUsername" value="root" />
+  <!-- MySql Username -->
+  <add key="MysqlPassword" value="" />
+  <!--  MySql server password-->
+  <add key="MysqlDatabase" value="ucsdb" />
+  <!-- Mysql Database -->
+  <!-- _______________________________________________________________________________________ -->
+</appSettings>

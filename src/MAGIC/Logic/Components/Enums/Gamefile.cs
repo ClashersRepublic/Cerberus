@@ -1,0 +1,37 @@
+﻿namespace BL.Servers.CoC.Logic.Enums
+{
+    public enum Gamefile
+    {
+        None,
+        Buildings,
+        Locales,
+        Resources,
+        Characters,
+        Animations,
+        Projectiles,
+        Building_Classes,
+        Obstacles,
+        Effects,
+        Particle_Emitters,
+        Experience_Levels,
+        Traps,
+        Alliance_Badges,
+        Globals,
+        Townhall_Levels,
+        Alliance_Portal,
+        Npcs,
+        Decos,
+        Resource_Packs,
+        Shields,
+        Missions,
+        Billing_Packages,
+        Achievements,
+        Credits,
+        Faq,
+        Spells,
+        Hints,
+        Heroes,
+        Leagues,
+        News
+    }
+}
