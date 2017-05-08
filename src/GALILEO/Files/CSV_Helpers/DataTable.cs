@@ -8,12 +8,12 @@ namespace BL.Servers.CoC.Files.CSV_Helpers
     {
         internal List<Data> Datas;
         internal int Index;
-        
+
         internal DataTable()
         {
             this.Datas = new List<Data>();
         }
-        
+
         internal DataTable(Table Table, int Index)
         {
             this.Index = Index;
@@ -35,33 +35,36 @@ namespace BL.Servers.CoC.Files.CSV_Helpers
             switch (this.Index)
             {
 
-                  case 1:
-                      _Data = new Buildings(_Row, this);
-                      break;
-                  case 3:
-                      _Data = new Resource(_Row, this);
-                      break;
-                 case 4:
-                      _Data = new Characters(_Row, this);
-                      break;
-                  case 8:
-                      _Data = new Obstacles(_Row, this);
-                      break;
-                  //case 11:
-                    //  _Data = new Experience_Levels(_Row, this);
-                      //break;*/
-                  case 12:
-                      _Data = new Traps(_Row, this);
-                      break;
-                  case 14:
-                      _Data = new Globals(_Row, this);
-                      break;
-                   case 18:
-                      _Data = new Decos(_Row, this);
-                      break;
-                  case 21:
-                      _Data = new Missions(_Row, this);
-                      break;
+                case 1:
+                    _Data = new Buildings(_Row, this);
+                    break;
+                case 3:
+                    _Data = new Resource(_Row, this);
+                    break;
+                case 4:
+                    _Data = new Characters(_Row, this);
+                    break;
+                case 8:
+                    _Data = new Obstacles(_Row, this);
+                    break;
+                //case 11:
+                //  _Data = new Experience_Levels(_Row, this);
+                //break;*/
+                case 12:
+                    _Data = new Traps(_Row, this);
+                    break;
+                case 14:
+                    _Data = new Globals(_Row, this);
+                    break;
+                case 17:
+                    _Data = new Npcs(_Row, this);
+                    break;
+                case 18:
+                    _Data = new Decos(_Row, this);
+                    break;
+                case 21:
+                    _Data = new Missions(_Row, this);
+                    break;
 
 
                 /*case 2:

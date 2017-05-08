@@ -25,9 +25,12 @@ namespace BL.Servers.CoC.Core
         
         internal void Remove(Device Device)
         {
-            if (Resources.Players.ContainsKey(Device.Player.Avatar.UserId))
-            {                
-                 Resources.Players.Remove(Device.Player);
+            if (Device.Player != null)
+            {
+                if (Resources.Players.ContainsKey(Device.Player.Avatar.UserId))
+                {
+                    Resources.Players.Remove(Device.Player);
+                }
             }
             else
             {

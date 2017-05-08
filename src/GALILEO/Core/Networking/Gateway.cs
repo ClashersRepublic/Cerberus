@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,7 +43,7 @@ namespace BL.Servers.CoC.Core.Networking
 
             Program.Stopwatch.Stop();
             
-            Loggers.Log($"Project BL.Servers.CoC has been started on {this.Listener.LocalEndPoint} in {Math.Round(Program.Stopwatch.Elapsed.TotalSeconds, 4)} Seconds !", true);
+            Loggers.Log(Assembly.GetExecutingAssembly().GetName().Name + $" has been started on {this.Listener.LocalEndPoint} in {Math.Round(Program.Stopwatch.Elapsed.TotalSeconds, 4)} Seconds!", true);
 
             SocketAsyncEventArgs AcceptEvent = new SocketAsyncEventArgs();
             AcceptEvent.Completed += this.OnAcceptCompleted;

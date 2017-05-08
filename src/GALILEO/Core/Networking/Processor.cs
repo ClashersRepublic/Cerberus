@@ -25,20 +25,21 @@ namespace BL.Servers.CoC.Core.Networking
                 Message.Encode();
 
 #if DEBUG
-                if (Message.Device.Connected())
-                {
-                    Console.WriteLine(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " +  Message.GetType().Name);
-                    Loggers.Log(Message, Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15));
-
-                }
+                Loggers.Log(Message, Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15));
 #endif
                 Message.Encrypt();
                 Resources.Gateway.Send(Message);
-
+#if DEBUG
+                if (Message.Device.Connected())
+                {
+                    Console.WriteLine(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " +  Message.GetType().Name);
+                }
+#endif
                 Message.Process();
             }
             catch (Exception)
             {
+                //
             }
         }
 

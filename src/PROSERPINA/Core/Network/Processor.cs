@@ -17,17 +17,15 @@ namespace BL.Servers.CR.Core.Network
         {
             try
             {
-
-#if DEBUG
-                if (Message.Device.Connected())
-                {
-                    Console.WriteLine(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " +
-                                      Message.GetType().Name);
-                }
-#endif
                 Message.Encode();
                 Message.Encrypt();
                 Resources.Gateway.Send(Message);
+#if DEBUG
+                if (Message.Device.Connected())
+                {
+                    Console.WriteLine(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " +  Message.GetType().Name);
+                }
+#endif
 
                 Message.Process();
             }
