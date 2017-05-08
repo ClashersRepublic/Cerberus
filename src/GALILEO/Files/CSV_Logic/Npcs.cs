@@ -1,0 +1,24 @@
+﻿using BL.Servers.CoC.Files.CSV_Helpers;
+using BL.Servers.CoC.Files.CSV_Reader;
+
+namespace BL.Servers.CoC.Files.CSV_Logic
+{
+    internal class Npcs : Data
+    {
+        public Npcs(Row _Row, DataTable _DataTable) : base(_Row, _DataTable)
+        {
+            Load(Row);
+        }
+        public string Name { get; set; }
+        public string MapInstanceName { get; set; }
+        public string[] MapDependencies { get; set; }
+        public string TID { get; set; }
+        public int ExpLevel { get; set; }
+        public string UnitType { get; set; }
+        public int UnitCount { get; set; }
+        public string LevelFile { get; set; }
+        public int Gold { get; set; }
+        public int Elixir { get; set; }
+
+    }
+}

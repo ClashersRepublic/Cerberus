@@ -243,6 +243,7 @@
     <Compile Include="Files\CSV_Logic\Decos.cs" />
     <Compile Include="Files\CSV_Logic\Globals.cs" />
     <Compile Include="Files\CSV_Logic\Missions.cs" />
+    <Compile Include="Files\CSV_Logic\Npcs.cs" />
     <Compile Include="Files\CSV_Logic\Obstacles.cs" />
     <Compile Include="Files\CSV_Logic\Resource.cs" />
     <Compile Include="Files\CSV_Logic\Traps.cs" />

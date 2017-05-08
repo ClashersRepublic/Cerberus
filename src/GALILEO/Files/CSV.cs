@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using BL.Servers.CoC.Files.CSV_Reader;
+using BL.Servers.CoC.Logic.Enums;
 
 namespace BL.Servers.CoC.Files
 {
@@ -12,21 +13,22 @@ namespace BL.Servers.CoC.Files
         internal static Gamefiles Tables;
         internal CSV()
         {
-            CSV.Gamefiles.Add(1, @"Gamefiles/logic/buildings.csv");
-            CSV.Gamefiles.Add(3, @"Gamefiles/logic/resources.csv");
-            CSV.Gamefiles.Add(4, @"Gamefiles/logic/characters.csv");
-            CSV.Gamefiles.Add(8, @"Gamefiles/logic/obstacles.csv");
+            CSV.Gamefiles.Add((int)Gamefile.Buildings, @"Gamefiles/logic/buildings.csv");
+            CSV.Gamefiles.Add((int)Gamefile.Resources, @"Gamefiles/logic/resources.csv");
+            CSV.Gamefiles.Add((int)Gamefile.Characters, @"Gamefiles/logic/characters.csv");
+            CSV.Gamefiles.Add((int)Gamefile.Obstacles, @"Gamefiles/logic/obstacles.csv");
             //CSV.Gamefiles.Add(11, @"Gamefiles/logic/experience_levels.csv");
-            CSV.Gamefiles.Add(12, @"Gamefiles/logic/traps.csv");
-            CSV.Gamefiles.Add(14, @"Gamefiles/logic/globals.csv");
-            CSV.Gamefiles.Add(18, @"Gamefiles/logic/decos.csv");
-            CSV.Gamefiles.Add(21, @"Gamefiles/logic/missions.csv");
+            CSV.Gamefiles.Add((int)Gamefile.Traps, @"Gamefiles/logic/traps.csv");
+            CSV.Gamefiles.Add((int)Gamefile.Globals, @"Gamefiles/logic/globals.csv");
+            CSV.Gamefiles.Add((int)Gamefile.Npcs, @"Gamefiles/logic/npcs.csv");
+            CSV.Gamefiles.Add((int)Gamefile.Decos, @"Gamefiles/logic/decos.csv");
+            CSV.Gamefiles.Add((int)Gamefile.Missions, @"Gamefiles/logic/missions.csv");
             CSV.Tables = new Gamefiles();
 
             //Parallel.ForEach(CSV.Gamefiles, File => //Parallel is slower in this case (When we have load csv it will help)
             foreach (var File in CSV.Gamefiles)
             {
-                if (new System.IO.FileInfo(File.Value).Exists)
+                if (new FileInfo(File.Value).Exists)
                 {
                     CSV.Tables.Initialize(new Table(File.Value), File.Key);
                 }

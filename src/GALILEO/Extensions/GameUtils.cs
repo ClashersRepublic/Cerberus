@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Files.CSV_Logic;
 using BL.Servers.CoC.Logic;
@@ -180,17 +178,19 @@ namespace BL.Servers.CoC.Extensions
                 Missions Mission = CSV.Tables.Get(Gamefile.Missions).GetDataWithID(Global_ID) as Missions;
 
 #if DEBUG
-                    Console.WriteLine($"Mission received {Mission.Name} marked as finished");
+                Console.WriteLine($"Mission received {Mission.Name} marked as finished");
 #endif
                 if (!string.IsNullOrEmpty(Mission.RewardResource))
                 {
-                    Files.CSV_Logic.Resource CSV_Resources = CSV.Tables.Get(Gamefile.Resources).GetData(Mission.RewardResource) as Files.CSV_Logic.Resource;
+                    Files.CSV_Logic.Resource CSV_Resources =
+                        CSV.Tables.Get(Gamefile.Resources).GetData(Mission.RewardResource) as Files.CSV_Logic.Resource;
 
                     Player.Resources.Plus(CSV_Resources.GetGlobalID(), Mission.RewardResourceCount);
                 }
                 if (!string.IsNullOrEmpty(Mission.RewardTroop))
                 {
-                    Characters CSV_Characters = CSV.Tables.Get(Gamefile.Characters).GetData(Mission.RewardTroop) as Characters;
+                    Characters CSV_Characters =
+                        CSV.Tables.Get(Gamefile.Characters).GetData(Mission.RewardTroop) as Characters;
 
 #if DEBUG
                     Console.WriteLine($"Player received {CSV_Characters.Name} as mission rewards");
@@ -209,11 +209,22 @@ namespace BL.Servers.CoC.Extensions
                         Mission_Finish(Player, DependenciesID);
                     }
                 }
+                 if (!string.IsNullOrEmpty(Mission.AttackNPC))
+                {
+                   Npcs CSV_Npcs = CSV.Tables.Get(Gamefile.Npcs).GetData(Mission.AttackNPC) as Npcs;
+
+                    if (Player.Npcs.FindIndex(N => N.NPC_Id == CSV_Npcs.GetGlobalID()) > -1)
+                    {
+                        Player.Resources.Plus(Logic.Enums.Resource.Gold, CSV_Npcs.Gold);
+                        Player.Resources.Plus(Logic.Enums.Resource.Elixir, CSV_Npcs.Elixir);
+                    }
+                }
+
                 Player.Experience += Mission.RewardXP;
                 Player.Tutorials.Add(Mission.GetGlobalID());
                 return true;
             }
-                return false;
+            return false;
         }
     }
 }
