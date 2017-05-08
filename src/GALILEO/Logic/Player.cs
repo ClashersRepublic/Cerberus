@@ -151,9 +151,27 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddLong(this.UserId);
                 _Packet.AddLong(this.UserId);
 
-                _Packet.AddBool(false);
+                _Packet.AddBool(this.ClanId > 0);
                 if (this.ClanId > 0)
                 {
+                    Clan clan = Core.Resources.Clans.Get(ClanId, Constants.Database, false);
+                    if (!string.IsNullOrEmpty(clan.Name))
+                    {
+                        _Packet.AddLong(this.ClanId);
+                        _Packet.AddString(clan.Name);
+                        _Packet.AddInt(clan.Badge); // Badge
+                        _Packet.AddInt((int) clan.Members[UserId].Role); // Role
+                        _Packet.AddInt(clan.Level); // Level
+
+                        _Packet.AddBool(false); // Alliance War
+                        {
+                            // _Packet.AddLong(1); // War ID
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("s");
+                    }
                 }
 
                 _Packet.AddInt(this.Legendary_Trophies);

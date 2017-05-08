@@ -5,8 +5,8 @@ namespace BL.Servers.CoC.Logic.Structure.API
 {
     internal class Facebook
     {
-        internal const string ApplicationID = "623623897848356";
-        internal const string ApplicationSecret = "22dfd5e1675c0af73c7a1780513827ee";
+        internal const string ApplicationID = "124338961457529";
+        internal const string ApplicationSecret = "08245c5cd0bb17aff05647ff6e2f4627";
         internal const string ApplicationVersion = "2.8";
 
         [JsonProperty("fb_id")] internal string Identifier;

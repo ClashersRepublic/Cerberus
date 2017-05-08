@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using BL.Servers.CoC.Packets.Client.Authentication;
 using BL.Servers.CoC.Packets.Messages.Client;
+using BL.Servers.CoC.Packets.Messages.Client.API;
 using BL.Servers.CoC.Packets.Messages.Client.Authentication;
 using BL.Servers.CoC.Packets.Messages.Client.Battle;
+using BL.Servers.CoC.Packets.Messages.Client.Clans;
 
 namespace BL.Servers.CoC.Packets
 {
@@ -23,6 +25,10 @@ namespace BL.Servers.CoC.Packets
                 {14325, typeof(Avatar_Profile)},
                 {14101, typeof(Go_Home) },
                 {14102, typeof(Execute_Commands) },
+                {14201, typeof(Facebook_Connect)},
+                {14301, typeof(Create_Clan)},
+                {14302, typeof(Ask_Clan)},
+                {14262, typeof(Bind_Google_Account)},
                 {14134, typeof(Attack_NPC)},
                 {14715, typeof(Add_Global_Chat) },
             };

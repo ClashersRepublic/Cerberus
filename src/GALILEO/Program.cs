@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
+using System.Threading;
 using BL.Servers.CoC.Core;
 using BL.Servers.CoC.Extensions;
+using BL.Servers.CoC.Logic;
 
 namespace BL.Servers.CoC
 {
@@ -44,12 +47,14 @@ namespace BL.Servers.CoC
 
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
             Resources.Initialize();
-            /* var s = Stopwatch.StartNew();
-             int count = 100000;
-             for (var i = 3; i < count; i++)
+            /*var s = Stopwatch.StartNew();
+             int count = 4000;
+             for (var i = 1; i < count; i++)
              {
-                 Console.WriteLine(i);
-                 Resources.Players.Get(i);
+                var a = Resources.Clans.New(i, Constants.Database);
+                a.Members.Add(new Player(1) { Name = "Hi", Level = 1});
+                 a.Members.Add(new Player(2) { Name = "Hi", Level = 1 });
+                Resources.Clans.Save(a);
              }
              s.Stop();
 

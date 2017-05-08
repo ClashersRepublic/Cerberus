@@ -53,7 +53,7 @@ namespace BL.Servers.CoC.Core
                             });
                         }
                     }
-                    /* lock (Resources.Clans.Gate)
+                     lock (Resources.Clans.Gate)
                      {
                          if (Resources.Clans.Count > 0)
                          {
@@ -67,7 +67,7 @@ namespace BL.Servers.CoC.Core
                                  }
                              }
                          }
-                     }*/
+                     }
                 }
                 catch (Exception ex)
                 {

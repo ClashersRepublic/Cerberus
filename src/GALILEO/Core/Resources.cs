@@ -7,6 +7,7 @@ namespace BL.Servers.CoC.Core
     {
         internal static Devices Devices;
         internal static Players Players;
+        internal static Clans Clans;
         internal static Random Random;
         internal static Classes Classes;
         internal static Global_Chat GChat;
@@ -19,6 +20,7 @@ namespace BL.Servers.CoC.Core
             Resources.Classes = new Classes();
             Resources.Devices = new Devices();
             Resources.Players = new Players();
+            Resources.Clans = new Clans();
             Resources.Random = new Random();
             Resources.GChat = new Global_Chat();
             Resources.Region = new Region();

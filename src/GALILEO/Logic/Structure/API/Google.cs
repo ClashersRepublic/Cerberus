@@ -42,13 +42,13 @@ namespace BL.Servers.CoC.Logic.Structure.API
 
         internal void GetCredentials()
         {
-            /*using (var Stream = new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
+            using (var Stream = new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
             {
                 this.OCredentials = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(Stream).Secrets, new[]
                 {
                     GamesService.Scope.Games, GamesService.Scope.PlusLogin
-                }, "", CancellationToken.None, new FileDataStore("")).Result;
-            }*/
+                }, "com.barbarianland.galileo", CancellationToken.None, new FileDataStore("Galileo.Server")).Result;
+            }
         }
 
         /// <summary>
