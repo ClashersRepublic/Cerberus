@@ -27,7 +27,7 @@ namespace BL.Servers.CoC.Core.Networking
         internal string GetIpCountryIso(string ipAddress)
         {
             if (ipAddress == null || Reader == null)
-                return "UCS Land";
+                return "BarbarianLand";
 
             try
             {
@@ -35,14 +35,14 @@ namespace BL.Servers.CoC.Core.Networking
             }
             catch (AddressNotFoundException)
             {
-                return "UCS Land";
+                return "BarbarianLand";
             }
         }
 
         internal string GetIpCountry(string ipAddress)
         {
             if (ipAddress == null || Reader == null)
-                return "UCS Land";
+                return "BarbarianLand";
 
             try
             {
@@ -50,7 +50,7 @@ namespace BL.Servers.CoC.Core.Networking
             }
             catch (AddressNotFoundException)
             {
-                return "UCS Land";
+                return "BarbarianLand";
             }
         }
 
@@ -58,7 +58,7 @@ namespace BL.Servers.CoC.Core.Networking
         internal string GetFullIpData(string ipAddress)
         {
             if (ipAddress == null || Reader == null)
-                return "UCS Land";
+                return "BarbarianLand";
 
             try
             {
@@ -82,7 +82,7 @@ namespace BL.Servers.CoC.Core.Networking
             }
             catch (AddressNotFoundException)
             {
-                return "UCS Land";
+                return "BarbarianLand";
             }
         }
     }

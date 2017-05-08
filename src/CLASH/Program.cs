@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using BL.Servers.CoC.Core;
 using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Packets;
-using MySql;
 
 namespace BL.Servers.CoC
 {
@@ -18,7 +11,7 @@ namespace BL.Servers.CoC
         internal static Stopwatch Stopwatch = Stopwatch.StartNew();
         internal static void Main(string[] args)
         {
-            Console.Title = $"BarbarianLand Magic Server - ©BarbarianLand ";
+            Console.Title = $"BarbarianLand Clash Server - ©BarbarianLand ";
             //NativeCalls.SetWindowLong(NativeCalls.GetConsoleWindow(), -20, (int) NativeCalls.GetWindowLong(NativeCalls.GetConsoleWindow(), -20) ^ 0x80000);
             //NativeCalls.SetLayeredWindowAttributes(NativeCalls.GetConsoleWindow(), 0, 217, 0x2);
 

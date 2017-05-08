@@ -2,18 +2,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BL.Servers.CoC.Logic.Structure;
 
-namespace UCS.Logic.Manager
+namespace BL.Servers.CoC.Logic.Manager
 {
     internal class WorkerManager
     {
-        readonly List<GameObject> m_vGameObjectReferences;
-       
-        internal int m_vWorkerCount;
+        internal List<GameObject> GameObjectReferences;
+
+        internal int WorkerCount;
 
         public WorkerManager()
         {
-            m_vGameObjectReferences = new List<GameObject>();
-            m_vWorkerCount = 0;
+            this.GameObjectReferences = new List<GameObject>();
+            this.WorkerCount = 0;
         }
 
         public static int GetFinishTaskOfOneWorkerCost() => 0;
@@ -24,21 +24,21 @@ namespace UCS.Logic.Manager
 
         public void AllocateWorker(GameObject go)
         {
-            if (m_vGameObjectReferences.IndexOf(go) == -1)
+            if (this.GameObjectReferences.IndexOf(go) == -1)
             {
-                m_vGameObjectReferences.Add(go);
+                this.GameObjectReferences.Add(go);
             }
         }
 
         public void DeallocateWorker(GameObject go)
         {
-            if (m_vGameObjectReferences.IndexOf(go) != -1)
+            if (this.GameObjectReferences.IndexOf(go) != -1)
             {
-                m_vGameObjectReferences.Remove(go);
+                this.GameObjectReferences.Remove(go);
             }
         }
 
-        public void DecreaseWorkerCount() => m_vWorkerCount--;
+        public void DecreaseWorkerCount() => this.WorkerCount--;
 
         public void FinishTaskOfOneWorker()
         {
@@ -63,7 +63,7 @@ namespace UCS.Logic.Manager
             }
         }
 
-        public int GetFreeWorkers() => m_vWorkerCount - m_vGameObjectReferences.Count;
+        public int GetFreeWorkers() => this.WorkerCount - this.GameObjectReferences.Count;
 
         public GameObject GetShortestTaskGO
         {
@@ -73,7 +73,7 @@ namespace UCS.Logic.Manager
                 int shortestGOTime = 0;
                 int currentGOTime;
 
-                Parallel.ForEach((m_vGameObjectReferences), go =>
+                Parallel.ForEach((this.GameObjectReferences), go =>
                 {
                     currentGOTime = -1;
                     if (go.ClassId == 3)
@@ -119,6 +119,6 @@ namespace UCS.Logic.Manager
             }
         }
 
-        public void IncreaseWorkerCount() => m_vWorkerCount++;
+        public void IncreaseWorkerCount() => this.WorkerCount++;
     }
 }

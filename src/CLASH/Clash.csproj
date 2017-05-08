@@ -7,7 +7,7 @@
     <ProjectGuid>{9257A23D-569D-40E6-9744-A34F6374DD47}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>BL.Servers.CoC</RootNamespace>
-    <AssemblyName>BarbarianLand Magic Server</AssemblyName>
+    <AssemblyName>BarbarianLand Clash Server</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -364,11 +364,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Tools\database.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Server.ico" />
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="config.ucs">
+    <None Include="config.bl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">
@@ -767,9 +770,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tools\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>RMDIR /S /Q "$(TargetDir)Library\"

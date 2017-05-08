@@ -19,7 +19,7 @@
   <!-- MySql Username -->
   <add key="MysqlPassword" value="" />
   <!--  MySql server password-->
-  <add key="MysqlDatabase" value="ucsdb" />
+  <add key="MysqlDatabase" value="Clash" />
   <!-- Mysql Database -->
   <!-- _______________________________________________________________________________________ -->
 </appSettings>
