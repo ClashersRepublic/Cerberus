@@ -46,17 +46,18 @@ namespace BL.Servers.BB.Core
 
         internal void Remove(Level Player)
         {
-            this.Remove(Player.Avatar.UserId);
+            if (this.Remove(Player.Avatar.UserId))
+            {
+                this.Save(Player);
+            }
 
             if (Player.Client != null)
             {
                 if (Resources.Devices.ContainsKey(Player.Client.SocketHandle))
                 {
-                    Resources.Devices.Remove(Player.Client.Socket.Handle);
+                    Resources.Gateway.Disconnect(Player.Client.Token.Args);
                 }
             }
-
-            this.Add(Player);
         }
 
         internal Level Get(long UserId, DBMS DBMS = Constants.Database, bool Store = true)

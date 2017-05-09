@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BL.Servers.CR.Packets;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using BL.Servers.CR.Logic;
 using BL.Servers.CR.Logic.Enums;
@@ -40,8 +41,7 @@ namespace BL.Servers.CR.Core.Network.TCP
 
             Program.Stopwatch.Stop();
 
-            Console.WriteLine($"BL.Servers.CR has been started on {this.Listener.LocalEndPoint} in {Program.Stopwatch.ElapsedMilliseconds} Milliseconds !");
-            Loggers.Log($"BL.Servers.CR has been started on {this.Listener.LocalEndPoint} in {Program.Stopwatch.ElapsedMilliseconds} Milliseconds !");
+            Loggers.Log(Assembly.GetExecutingAssembly().GetName().Name + $" has been started on {this.Listener.LocalEndPoint} in {Math.Round(Program.Stopwatch.Elapsed.TotalSeconds, 4)} Seconds!", true);
 
             SocketAsyncEventArgs AcceptEvent = new SocketAsyncEventArgs();
             AcceptEvent.Completed += this.OnAcceptCompleted;
@@ -186,8 +186,8 @@ namespace BL.Servers.CR.Core.Network.TCP
             Token Token = AsyncEvent.UserToken as Token;
 
             Token.Aborting = true;
-           
-            if (Token.Device.Player != null)
+
+            if (Resources.Players.ContainsValue(Token.Device.Player))
             {
                 Resources.Players.Remove(Token.Device.Player);
             }

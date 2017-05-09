@@ -19,6 +19,7 @@ namespace BL.Servers.CoC.Core
         internal NPC Npc;
         internal Timers Timers;
         internal Redis Redis;
+        internal Test Test;
         internal Classes()
         {
             this.MFactory = new MessageFactory();
@@ -27,14 +28,20 @@ namespace BL.Servers.CoC.Core
             this.CSV = new CSV();
             this.Home = new Home();
             this.Npc = new NPC();
-            if (Constants.Database == DBMS.Redis)
-                throw new UnintentionalCodeFirstException();
-            else if (Constants.Database == DBMS.Both)
-                this.Redis = new Redis();
+            switch (Constants.Database)
+            {
+                case DBMS.Redis:
+                    throw new UnintentionalCodeFirstException();
+                case DBMS.Both:
+                    this.Redis = new Redis();
+                    break;
+            }
 #if DEBUG
             Console.WriteLine("We loaded " + MessageFactory.Messages.Count + " messages, " + CommandFactory.Commands.Count + " commands, and 0 debug commands.\n");
 #endif
             this.Timers = new Timers();
+            
+            //this.Test = new Test();
         }
     }
 }

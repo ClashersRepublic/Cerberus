@@ -27,7 +27,7 @@ namespace BL.Servers.CoC.Core
         {
             if (Device.Player != null)
             {
-                if (Resources.Players.ContainsKey(Device.Player.Avatar.UserId))
+                if (Resources.Players.ContainsValue(Device.Player))
                 {
                     Resources.Players.Remove(Device.Player);
                 }
@@ -66,7 +66,6 @@ namespace BL.Servers.CoC.Core
                     // Already Closed.
                 }
             }
-
         }
     }
 }

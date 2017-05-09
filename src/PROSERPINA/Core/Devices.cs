@@ -7,18 +7,11 @@
 
     internal class Devices : Dictionary<IntPtr, Device>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Devices"/> class.
-        /// </summary>
         internal Devices()
         {
             // Devices.
         }
-
-        /// <summary>
-        /// Adds the specified device.
-        /// </summary>
-        /// <param name="Device">The device.</param>
+        
         internal void Add(Device Device)
         {
             if (this.ContainsKey(Device.SocketHandle))
@@ -30,16 +23,15 @@
                 this.Add(Device.SocketHandle, Device);
             }
         }
-
-        /// <summary>
-        /// Removes the specified device.
-        /// </summary>
-        /// <param name="Device">The device.</param>
+        
         internal void Remove(Device Device)
         {
             if (Device.Player != null)
             {
-                Resources.Players.Remove(Device.Player);
+                if (Resources.Players.ContainsValue(Device.Player))
+                {
+                    Resources.Players.Remove(Device.Player);
+                }
             }
             else
             {
@@ -50,16 +42,31 @@
 
                 try
                 {
-                    Device.Socket.Shutdown(SocketShutdown.Both);
+                    Device.Socket.Disconnect(false);
                 }
                 catch (Exception)
                 {
                     // Already Closed.
                 }
 
-                Device.Socket.Close(5);
-            }
+                try
+                {
+                    Device.Socket.Close(5);
+                }
+                catch (Exception)
+                {
+                    // Already Closed.
+                }
 
+                try
+                {
+                    Device.Socket.Dispose();
+                }
+                catch (Exception)
+                {
+                    // Already Closed.
+                }
+            }
         }
     }
 }

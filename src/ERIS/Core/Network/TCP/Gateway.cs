@@ -2,10 +2,9 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Threading.Tasks;
 using BL.Servers.BB.Packets;
 using System.Linq;
-using System.Text;
+using System.Reflection;
 using BL.Servers.BB.Logic;
 using BL.Servers.BB.Logic.Enums;
 
@@ -40,8 +39,7 @@ namespace BL.Servers.BB.Core.Network.TCP
 
             Program.Stopwatch.Stop();
 
-            Console.WriteLine($"BL.Servers.BB has been started on {this.Listener.LocalEndPoint} in {Program.Stopwatch.ElapsedMilliseconds} Milliseconds !");
-            Loggers.Log($"BL.Servers.BB has been started on {this.Listener.LocalEndPoint} in {Program.Stopwatch.ElapsedMilliseconds} Milliseconds !");
+            Loggers.Log(Assembly.GetExecutingAssembly().GetName().Name + $" has been started on {this.Listener.LocalEndPoint} in {Math.Round(Program.Stopwatch.Elapsed.TotalSeconds, 4)} Seconds!", true);
 
             SocketAsyncEventArgs AcceptEvent = new SocketAsyncEventArgs();
             AcceptEvent.Completed += this.OnAcceptCompleted;
@@ -186,8 +184,8 @@ namespace BL.Servers.BB.Core.Network.TCP
             Token Token = AsyncEvent.UserToken as Token;
 
             Token.Aborting = true;
-           
-            if (Token.Device.Player != null)
+
+            if (Resources.Players.ContainsValue(Token.Device.Player))
             {
                 Resources.Players.Remove(Token.Device.Player);
             }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BL.Servers.CoC.Core.Database;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Logic;
@@ -55,7 +52,7 @@ namespace BL.Servers.CoC.Core
             {
                 if (Resources.Devices.ContainsKey(Player.Client.SocketHandle))
                 {
-                    Resources.Devices.Remove(Player.Client);
+                    Resources.Gateway.Disconnect(Player.Client.Token.Args);
                 }
                 Resources.GChat.Remove(Player.Client);
             }

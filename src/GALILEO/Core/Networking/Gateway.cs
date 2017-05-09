@@ -186,7 +186,7 @@ namespace BL.Servers.CoC.Core.Networking
 
             Token.Aborting = true;
 
-            if (Token.Device.Player != null)
+            if (Resources.Players.ContainsValue(Token.Device.Player))
             {
                 Resources.Players.Remove(Token.Device.Player);
             }
@@ -241,7 +241,7 @@ namespace BL.Servers.CoC.Core.Networking
 
             if (Message.Length + 7 > Message.Offset)
             {
-              //  if (Message.Device.Connected())
+                if (Message.Device.Connected())
                 {
                     Args.SetBuffer(Message.Offset, Message.Length + 7 - Message.Offset);
 

@@ -358,6 +358,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Mysql.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Core\Database\Mysql.edmx">
