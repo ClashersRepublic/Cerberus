@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F8036C4C-7362-4C06-A8A0-22B534E8F1BA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BL.Proxy.Lyra</RootNamespace>
+    <AssemblyName>BarbarianLand Proxy - Lyra</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <PublishUrl>../bin/Publish/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Builds\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>0</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>7</LangVersion>
+    <FileAlignment>1024</FileAlignment>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Builds\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SupercellProxy.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Server.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\Config.cs" />
+    <Compile Include="Configuration\Game.cs" />
+    <Compile Include="Consoles\ConsoleArgs.cs" />
+    <Compile Include="Consoles\ConsoleCmdListener.cs" />
+    <Compile Include="Crypto\Piranha\EnDecrypt.cs" />
+    <Compile Include="Crypto\Piranha\Keys.cs" />
+    <Compile Include="Crypto\Piranha\CustomNaCl\SecretBox.cs" />
+    <Compile Include="Exceptions\InvalidPublicKeyException.cs" />
+    <Compile Include="External\Blake2b\Blake2B.cs" />
+    <Compile Include="External\Blake2b\Blake2BConfig.cs" />
+    <Compile Include="External\Blake2b\Blake2BCore-FullyUnrolled.cs" />
+    <Compile Include="External\Blake2b\Blake2BCore-Inline.cs" />
+    <Compile Include="External\Blake2b\Blake2BCore-Simple.cs" />
+    <Compile Include="External\Blake2b\Blake2BCore.cs" />
+    <Compile Include="External\Blake2b\Blake2BHasher.cs" />
+    <Compile Include="External\Blake2b\Blake2BNodeHasher.cs" />
+    <Compile Include="External\Blake2b\Blake2BTreeConfig.cs" />
+    <Compile Include="External\Blake2b\Blake2IvBuilder.cs" />
+    <Compile Include="External\Blake2b\Hasher.cs" />
+    <Compile Include="External\Blake2b\NodeHasher.cs" />
+    <Compile Include="External\Blake2b\TreeHasher.cs" />
+    <Compile Include="Crypto\Piranha\CustomNaCl\CustomNaCl.cs" />
+    <Compile Include="External\JSON\Bson\BsonBinaryType.cs" />
+    <Compile Include="External\JSON\Bson\BsonBinaryWriter.cs" />
+    <Compile Include="External\JSON\Bson\BsonObjectId.cs" />
+    <Compile Include="External\JSON\Bson\BsonReader.cs" />
+    <Compile Include="External\JSON\Bson\BsonToken.cs" />
+    <Compile Include="External\JSON\Bson\BsonType.cs" />
+    <Compile Include="External\JSON\Bson\BsonWriter.cs" />
+    <Compile Include="External\JSON\ConstructorHandling.cs" />
+    <Compile Include="External\JSON\Converters\BinaryConverter.cs" />
+    <Compile Include="External\JSON\Converters\BsonObjectIdConverter.cs" />
+    <Compile Include="External\JSON\Converters\CustomCreationConverter.cs" />
+    <Compile Include="External\JSON\Converters\DataSetConverter.cs" />
+    <Compile Include="External\JSON\Converters\DataTableConverter.cs" />
+    <Compile Include="External\JSON\Converters\DateTimeConverterBase.cs" />
+    <Compile Include="External\JSON\Converters\DiscriminatedUnionConverter.cs" />
+    <Compile Include="External\JSON\Converters\EntityKeyMemberConverter.cs" />
+    <Compile Include="External\JSON\Converters\ExpandoObjectConverter.cs" />
+    <Compile Include="External\JSON\Converters\IsoDateTimeConverter.cs" />
+    <Compile Include="External\JSON\Converters\JavaScriptDateTimeConverter.cs" />
+    <Compile Include="External\JSON\Converters\KeyValuePairConverter.cs" />
+    <Compile Include="External\JSON\Converters\RegexConverter.cs" />
+    <Compile Include="External\JSON\Converters\StringEnumConverter.cs" />
+    <Compile Include="External\JSON\Converters\VersionConverter.cs" />
+    <Compile Include="External\JSON\Converters\XmlNodeConverter.cs" />
+    <Compile Include="External\JSON\DateFormatHandling.cs" />
+    <Compile Include="External\JSON\DateParseHandling.cs" />
+    <Compile Include="External\JSON\DateTimeZoneHandling.cs" />
+    <Compile Include="External\JSON\DefaultValueHandling.cs" />
+    <Compile Include="External\JSON\FloatFormatHandling.cs" />
+    <Compile Include="External\JSON\FloatParseHandling.cs" />
+    <Compile Include="External\JSON\FormatterAssemblyStyle.cs" />
+    <Compile Include="External\JSON\Formatting.cs" />
+    <Compile Include="External\JSON\IArrayPool.cs" />
+    <Compile Include="External\JSON\IJsonLineInfo.cs" />
+    <Compile Include="External\JSON\JsonArrayAttribute.cs" />
+    <Compile Include="External\JSON\JsonConstructorAttribute.cs" />
+    <Compile Include="External\JSON\JsonContainerAttribute.cs" />
+    <Compile Include="External\JSON\JsonConvert.cs" />
+    <Compile Include="External\JSON\JsonConverter.cs" />
+    <Compile Include="External\JSON\JsonConverterAttribute.cs" />
+    <Compile Include="External\JSON\JsonConverterCollection.cs" />
+    <Compile Include="External\JSON\JsonDictionaryAttribute.cs" />
+    <Compile Include="External\JSON\JsonException.cs" />
+    <Compile Include="External\JSON\JsonExtensionDataAttribute.cs" />
+    <Compile Include="External\JSON\JsonIgnoreAttribute.cs" />
+    <Compile Include="External\JSON\JsonObjectAttribute.cs" />
+    <Compile Include="External\JSON\JsonPosition.cs" />
+    <Compile Include="External\JSON\JsonPropertyAttribute.cs" />
+    <Compile Include="External\JSON\JsonReader.cs" />
+    <Compile Include="External\JSON\JsonReaderException.cs" />
+    <Compile Include="External\JSON\JsonRequiredAttribute.cs" />
+    <Compile Include="External\JSON\JsonSerializationException.cs" />
+    <Compile Include="External\JSON\JsonSerializer.cs" />
+    <Compile Include="External\JSON\JsonSerializerSettings.cs" />
+    <Compile Include="External\JSON\JsonTextReader.cs" />
+    <Compile Include="External\JSON\JsonTextWriter.cs" />
+    <Compile Include="External\JSON\JsonToken.cs" />
+    <Compile Include="External\JSON\JsonValidatingReader.cs" />
+    <Compile Include="External\JSON\JsonWriter.cs" />
+    <Compile Include="External\JSON\JsonWriterException.cs" />
+    <Compile Include="External\JSON\Linq\CommentHandling.cs" />
+    <Compile Include="External\JSON\Linq\Extensions.cs" />
+    <Compile Include="External\JSON\Linq\IJEnumerable.cs" />
+    <Compile Include="External\JSON\Linq\JArray.cs" />
+    <Compile Include="External\JSON\Linq\JConstructor.cs" />
+    <Compile Include="External\JSON\Linq\JContainer.cs" />
+    <Compile Include="External\JSON\Linq\JEnumerable.cs" />
+    <Compile Include="External\JSON\Linq\JObject.cs" />
+    <Compile Include="External\JSON\Linq\JProperty.cs" />
+    <Compile Include="External\JSON\Linq\JPropertyDescriptor.cs" />
+    <Compile Include="External\JSON\Linq\JPropertyKeyedCollection.cs" />
+    <Compile Include="External\JSON\Linq\JRaw.cs" />
+    <Compile Include="External\JSON\Linq\JsonLoadSettings.cs" />
+    <Compile Include="External\JSON\Linq\JsonMergeSettings.cs" />
+    <Compile Include="External\JSON\Linq\JsonPath\ArrayIndexFilter.cs" />
+    <Compile Include="External\JSON\Linq\JsonPath\ArrayMultipleIndexFilter.cs" />
+    <Compile Include="External\JSON\Linq\JsonPath\ArraySliceFilter.cs" />
+    <Compile Include="External\JSON\Linq\JsonPath\FieldFilter.cs" />
+    <Compile Include="External\JSON\Linq\JsonPath\FieldMultipleFilter.cs" />
+    <Compile Include="External\JSON\Linq\JsonPath\JPath.cs" />
+    <Compile Include="External\JSON\Linq\JsonPath\PathFilter.cs" />
+    <Compile Include="External\JSON\Linq\JsonPath\QueryExpression.cs" />
+    <Compile Include="External\JSON\Linq\JsonPath\QueryFilter.cs" />
+    <Compile Include="External\JSON\Linq\JsonPath\RootFilter.cs" />
+    <Compile Include="External\JSON\Linq\JsonPath\ScanFilter.cs" />
+    <Compile Include="External\JSON\Linq\JToken.cs" />
+    <Compile Include="External\JSON\Linq\JTokenEqualityComparer.cs" />
+    <Compile Include="External\JSON\Linq\JTokenReader.cs" />
+    <Compile Include="External\JSON\Linq\JTokenType.cs" />
+    <Compile Include="External\JSON\Linq\JTokenWriter.cs" />
+    <Compile Include="External\JSON\Linq\JValue.cs" />
+    <Compile Include="External\JSON\Linq\MergeArrayHandling.cs" />
+    <Compile Include="External\JSON\Linq\MergeNullValueHandling.cs" />
+    <Compile Include="External\JSON\MemberSerialization.cs" />
+    <Compile Include="External\JSON\MetadataPropertyHandling.cs" />
+    <Compile Include="External\JSON\MissingMemberHandling.cs" />
+    <Compile Include="External\JSON\NullValueHandling.cs" />
+    <Compile Include="External\JSON\ObjectCreationHandling.cs" />
+    <Compile Include="External\JSON\PreserveReferencesHandling.cs" />
+    <Compile Include="External\JSON\ReferenceLoopHandling.cs" />
+    <Compile Include="External\JSON\Required.cs" />
+    <Compile Include="External\JSON\Schema\Extensions.cs" />
+    <Compile Include="External\JSON\Schema\JsonSchema.cs" />
+    <Compile Include="External\JSON\Schema\JsonSchemaBuilder.cs" />
+    <Compile Include="External\JSON\Schema\JsonSchemaConstants.cs" />
+    <Compile Include="External\JSON\Schema\JsonSchemaException.cs" />
+    <Compile Include="External\JSON\Schema\JsonSchemaGenerator.cs" />
+    <Compile Include="External\JSON\Schema\JsonSchemaModel.cs" />
+    <Compile Include="External\JSON\Schema\JsonSchemaModelBuilder.cs" />
+    <Compile Include="External\JSON\Schema\JsonSchemaNode.cs" />
+    <Compile Include="External\JSON\Schema\JsonSchemaNodeCollection.cs" />
+    <Compile Include="External\JSON\Schema\JsonSchemaResolver.cs" />
+    <Compile Include="External\JSON\Schema\JsonSchemaType.cs" />
+    <Compile Include="External\JSON\Schema\JsonSchemaWriter.cs" />
+    <Compile Include="External\JSON\Schema\UndefinedSchemaIdHandling.cs" />
+    <Compile Include="External\JSON\Schema\ValidationEventArgs.cs" />
+    <Compile Include="External\JSON\Schema\ValidationEventHandler.cs" />
+    <Compile Include="External\JSON\SerializationBinder.cs" />
+    <Compile Include="External\JSON\Serialization\CachedAttributeGetter.cs" />
+    <Compile Include="External\JSON\Serialization\CamelCaseNamingStrategy.cs" />
+    <Compile Include="External\JSON\Serialization\CamelCasePropertyNamesContractResolver.cs" />
+    <Compile Include="External\JSON\Serialization\DefaultContractResolver.cs" />
+    <Compile Include="External\JSON\Serialization\DefaultNamingStrategy.cs" />
+    <Compile Include="External\JSON\Serialization\DefaultReferenceResolver.cs" />
+    <Compile Include="External\JSON\Serialization\DefaultSerializationBinder.cs" />
+    <Compile Include="External\JSON\Serialization\DiagnosticsTraceWriter.cs" />
+    <Compile Include="External\JSON\Serialization\DynamicValueProvider.cs" />
+    <Compile Include="External\JSON\Serialization\ErrorContext.cs" />
+    <Compile Include="External\JSON\Serialization\ErrorEventArgs.cs" />
+    <Compile Include="External\JSON\Serialization\ExpressionValueProvider.cs" />
+    <Compile Include="External\JSON\Serialization\IAttributeProvider.cs" />
+    <Compile Include="External\JSON\Serialization\IContractResolver.cs" />
+    <Compile Include="External\JSON\Serialization\IReferenceResolver.cs" />
+    <Compile Include="External\JSON\Serialization\ISerializationBinder.cs" />
+    <Compile Include="External\JSON\Serialization\ITraceWriter.cs" />
+    <Compile Include="External\JSON\Serialization\IValueProvider.cs" />
+    <Compile Include="External\JSON\Serialization\JsonArrayContract.cs" />
+    <Compile Include="External\JSON\Serialization\JsonContainerContract.cs" />
+    <Compile Include="External\JSON\Serialization\JsonContract.cs" />
+    <Compile Include="External\JSON\Serialization\JsonDictionaryContract.cs" />
+    <Compile Include="External\JSON\Serialization\JsonDynamicContract.cs" />
+    <Compile Include="External\JSON\Serialization\JsonFormatterConverter.cs" />
+    <Compile Include="External\JSON\Serialization\JsonISerializableContract.cs" />
+    <Compile Include="External\JSON\Serialization\JsonLinqContract.cs" />
+    <Compile Include="External\JSON\Serialization\JsonObjectContract.cs" />
+    <Compile Include="External\JSON\Serialization\JsonPrimitiveContract.cs" />
+    <Compile Include="External\JSON\Serialization\JsonProperty.cs" />
+    <Compile Include="External\JSON\Serialization\JsonPropertyCollection.cs" />
+    <Compile Include="External\JSON\Serialization\JsonSerializerInternalBase.cs" />
+    <Compile Include="External\JSON\Serialization\JsonSerializerInternalReader.cs" />
+    <Compile Include="External\JSON\Serialization\JsonSerializerInternalWriter.cs" />
+    <Compile Include="External\JSON\Serialization\JsonSerializerProxy.cs" />
+    <Compile Include="External\JSON\Serialization\JsonStringContract.cs" />
+    <Compile Include="External\JSON\Serialization\JsonTypeReflector.cs" />
+    <Compile Include="External\JSON\Serialization\MemoryTraceWriter.cs" />
+    <Compile Include="External\JSON\Serialization\NamingStrategy.cs" />
+    <Compile Include="External\JSON\Serialization\ObjectConstructor.cs" />
+    <Compile Include="External\JSON\Serialization\OnErrorAttribute.cs" />
+    <Compile Include="External\JSON\Serialization\ReflectionAttributeProvider.cs" />
+    <Compile Include="External\JSON\Serialization\ReflectionValueProvider.cs" />
+    <Compile Include="External\JSON\Serialization\SerializationBinderAdapter.cs" />
+    <Compile Include="External\JSON\Serialization\SnakeCaseNamingStrategy.cs" />
+    <Compile Include="External\JSON\Serialization\TraceJsonReader.cs" />
+    <Compile Include="External\JSON\Serialization\TraceJsonWriter.cs" />
+    <Compile Include="External\JSON\StringEscapeHandling.cs" />
+    <Compile Include="External\JSON\TraceLevel.cs" />
+    <Compile Include="External\JSON\TypeNameAssemblyFormatHandling.cs" />
+    <Compile Include="External\JSON\TypeNameHandling.cs" />
+    <Compile Include="External\JSON\Utilities\Base64Encoder.cs" />
+    <Compile Include="External\JSON\Utilities\BidirectionalDictionary.cs" />
+    <Compile Include="External\JSON\Utilities\CollectionUtils.cs" />
+    <Compile Include="External\JSON\Utilities\CollectionWrapper.cs" />
+    <Compile Include="External\JSON\Utilities\ConvertUtils.cs" />
+    <Compile Include="External\JSON\Utilities\DateTimeParser.cs" />
+    <Compile Include="External\JSON\Utilities\DateTimeUtils.cs" />
+    <Compile Include="External\JSON\Utilities\DynamicProxy.cs" />
+    <Compile Include="External\JSON\Utilities\DynamicProxyMetaObject.cs" />
+    <Compile Include="External\JSON\Utilities\DynamicReflectionDelegateFactory.cs" />
+    <Compile Include="External\JSON\Utilities\DynamicUtils.cs" />
+    <Compile Include="External\JSON\Utilities\EnumUtils.cs" />
+    <Compile Include="External\JSON\Utilities\EnumValue.cs" />
+    <Compile Include="External\JSON\Utilities\ExpressionReflectionDelegateFactory.cs" />
+    <Compile Include="External\JSON\Utilities\FSharpUtils.cs" />
+    <Compile Include="External\JSON\Utilities\ILGeneratorExtensions.cs" />
+    <Compile Include="External\JSON\Utilities\ImmutableCollectionsUtils.cs" />
+    <Compile Include="External\JSON\Utilities\JavaScriptUtils.cs" />
+    <Compile Include="External\JSON\Utilities\JsonTokenUtils.cs" />
+    <Compile Include="External\JSON\Utilities\LateBoundReflectionDelegateFactory.cs" />
+    <Compile Include="External\JSON\Utilities\LinqBridge.cs" />
+    <Compile Include="External\JSON\Utilities\MathUtils.cs" />
+    <Compile Include="External\JSON\Utilities\MethodBinder.cs" />
+    <Compile Include="External\JSON\Utilities\MethodCall.cs" />
+    <Compile Include="External\JSON\Utilities\MiscellaneousUtils.cs" />
+    <Compile Include="External\JSON\Utilities\PropertyNameTable.cs" />
+    <Compile Include="External\JSON\Utilities\ReflectionDelegateFactory.cs" />
+    <Compile Include="External\JSON\Utilities\ReflectionObject.cs" />
+    <Compile Include="External\JSON\Utilities\ReflectionUtils.cs" />
+    <Compile Include="External\JSON\Utilities\StringBuffer.cs" />
+    <Compile Include="External\JSON\Utilities\StringReference.cs" />
+    <Compile Include="External\JSON\Utilities\StringUtils.cs" />
+    <Compile Include="External\JSON\Utilities\ThreadSafeStore.cs" />
+    <Compile Include="External\JSON\Utilities\TypeExtensions.cs" />
+    <Compile Include="External\JSON\Utilities\ValidationUtils.cs" />
+    <Compile Include="External\JSON\WriteState.cs" />
+    <Compile Include="External\LZMA\Common\CommandLineParser.cs" />
+    <Compile Include="External\LZMA\Common\CRC.cs" />
+    <Compile Include="External\LZMA\Common\InBuffer.cs" />
+    <Compile Include="External\LZMA\Common\OutBuffer.cs" />
+    <Compile Include="External\LZMA\Compress\LzmaAlone\LzmaAlone.cs" />
+    <Compile Include="External\LZMA\Compress\LzmaAlone\LzmaBench.cs" />
+    <Compile Include="External\LZMA\Compress\LZMA\LzmaBase.cs" />
+    <Compile Include="External\LZMA\Compress\LZMA\LzmaDecoder.cs" />
+    <Compile Include="External\LZMA\Compress\LZMA\LzmaEncoder.cs" />
+    <Compile Include="External\LZMA\Compress\LZ\IMatchFinder.cs" />
+    <Compile Include="External\LZMA\Compress\LZ\LzBinTree.cs" />
+    <Compile Include="External\LZMA\Compress\LZ\LzInWindow.cs" />
+    <Compile Include="External\LZMA\Compress\LZ\LzOutWindow.cs" />
+    <Compile Include="External\LZMA\Compress\RangeCoder\RangeCoder.cs" />
+    <Compile Include="External\LZMA\Compress\RangeCoder\RangeCoderBit.cs" />
+    <Compile Include="External\LZMA\Compress\RangeCoder\RangeCoderBitTree.cs" />
+    <Compile Include="External\LZMA\ICoder.cs" />
+    <Compile Include="Crypto\RC4\RC4.cs" />
+    <Compile Include="External\TweetNaCl\curve25519.cs" />
+    <Compile Include="External\TweetNaCl\curve25519xsalsa20poly1305.cs" />
+    <Compile Include="External\TweetNaCl\hsalsa20.cs" />
+    <Compile Include="External\TweetNaCl\poly1305.cs" />
+    <Compile Include="External\TweetNaCl\salsa20.cs" />
+    <Compile Include="External\TweetNaCl\verify_16.cs" />
+    <Compile Include="External\TweetNaCl\xsalsa20.cs" />
+    <Compile Include="External\TweetNaCl\xsalsa20poly1305.cs" />
+    <Compile Include="Crypto\Piranha\CustomNaCl\KeyPair.cs" />
+    <Compile Include="Crypto\Piranha\CustomNaCl\PublicBox.cs" />
+    <Compile Include="Crypto\Piranha\vInt\vInt.cs" />
+    <Compile Include="Helper\Extensions.cs" />
+    <Compile Include="Helper\NativeCalls.cs" />
+    <Compile Include="JSON Parser\JSONPacketField.cs" />
+    <Compile Include="JSON Parser\JSONPacketManager.cs" />
+    <Compile Include="JSON Parser\JSONPacketWrapper.cs" />
+    <Compile Include="JSON Parser\JsonParseHelper.cs" />
+    <Compile Include="JSON Parser\ParsedField.cs" />
+    <Compile Include="JSON Parser\ParsedPacket.cs" />
+    <Compile Include="Logger\Logger.cs" />
+    <!--<Compile Include="Logger\LogLevel.cs" />
+    <Compile Include="Logger\LogType.cs" />-->
+    <Compile Include="Logger\LogType.cs" />
+    <Compile Include="Net\Client.cs" />
+    <Compile Include="Net\Packets\PacketType.cs" />
+    <Compile Include="Net\Packets\PacketDestination.cs" />
+    <Compile Include="Net\Packets\Packet.cs" />
+    <Compile Include="Net\Proxy.cs" />
+    <Compile Include="Net\ReceiveSendThreads.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helper\Helper.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 und x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="Resources\ToDo.txt">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Server.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>echo "Building SupercellProxy (%25TIME%25).." &gt; build.log
+</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>echo "Successful SupercellProxy build (%25TIME%25)!" &gt; build.log
+</PostBuildEvent>
+  </PropertyGroup>
+</Project>

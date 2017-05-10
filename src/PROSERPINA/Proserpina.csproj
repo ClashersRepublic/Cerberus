@@ -304,6 +304,7 @@
     <Compile Include="Packets\Commands\Client\Chest\Buy_Chest.cs" />
     <Compile Include="Packets\Commands\Client\Battles\Search_Battle.cs" />
     <Compile Include="Packets\Commands\Client\Chest\Next_Card.cs" />
+    <Compile Include="Packets\Commands\Client\Chest\Open_Free_Chest.cs" />
     <Compile Include="Packets\Commands\Server\Chest\Buy_Chest_Callback.cs" />
     <Compile Include="Packets\Commands\Server\Name_Change_Callback.cs" />
     <Compile Include="Packets\Crypto.cs" />
@@ -347,6 +348,7 @@
     <Compile Include="Library\LZMA\Compress\RangeCoder\RangeCoderBitTree.cs" />
     <Compile Include="Library\LZMA\ICoder.cs" />
     <Compile Include="Packets\Messages\Client\Alliance\Request_Create_Alliance.cs" />
+    <Compile Include="Packets\Messages\Client\Ask_Profile.cs" />
     <Compile Include="Packets\Messages\Client\Authentication\Authentification.cs" />
     <Compile Include="Packets\Messages\Client\Authentication\Pre_Authentification.cs" />
     <Compile Include="Packets\Messages\Client\Avatar_Stream.cs" />

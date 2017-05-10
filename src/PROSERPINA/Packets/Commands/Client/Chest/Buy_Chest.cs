@@ -14,8 +14,8 @@ namespace BL.Servers.CR.Packets.Commands.Client.Chest
 {
     internal class Buy_Chest : Command
     {
-        internal int Chest_ID = 0;
-        internal int Tick = 0;
+        internal int Chest_ID;
+        internal int Tick;
 
         public Buy_Chest(Reader Reader, Device Device, int ID) : base(Reader, Device, ID)
         {
@@ -34,12 +34,12 @@ namespace BL.Servers.CR.Packets.Commands.Client.Chest
 
         internal override void Process()
         {
+            ShowValues();
             new Server_Commands(this.Device)
             {
                 Command = new Buy_Chest_Callback(this.Device)
                 {
-                    Cards  = JsonConvert.DeserializeObject<Logic.Slots.Decks>(Files.Home.Starting_Home, Core.Resources.Players.Settings),
-                    ChestID = this.Chest_ID
+                    ChestID = Chest_ID,
                 }.Handle()
             }.Send();
         }

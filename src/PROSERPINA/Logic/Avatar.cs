@@ -140,7 +140,19 @@ namespace BL.Servers.CR.Logic
                 _Packet.Add(255); // Deck Thingy
 
                 _Packet.AddRange(this.Decks.ToBytes());
-                _Packet.AddVInt(0); //Inactive card
+
+                _Packet.AddVInt(this.Decks.Count - 8);
+                foreach (Card _Card in this.Decks.Skip(8))
+                {
+                    _Packet.AddVInt(_Card.ID);
+                    _Packet.AddVInt(_Card.Level);
+                    _Packet.AddVInt(0);
+                    _Packet.AddVInt(_Card.Count);
+                    _Packet.AddVInt(0);
+                    _Packet.AddVInt(0);
+                    _Packet.AddVInt(_Card.New);
+                }
+
                 _Packet.AddVInt(0);
 
                 _Packet.AddVInt(0);
@@ -317,14 +329,7 @@ namespace BL.Servers.CR.Logic
                 // 9 = Name already set + clan
                 // < 8 =  Set name popup
 
-                if (!string.IsNullOrEmpty(this.Username))
-                {
-                    _Packet.Add(9);
-                }
-                else
-                {
-                    _Packet.Add(8);
-                }
+                _Packet.AddVInt(!string.IsNullOrEmpty(this.Username) ? 9 : 8);
 
                 _Packet.AddVInt(this.ClanHighID); // Clan HighID
                 _Packet.AddVInt(this.ClanHighID); // Clan LowID

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BL.Servers.CR.Extensions.List;
 using BL.Servers.CR.Logic.Slots.Items;
 using Newtonsoft.Json;
@@ -11,7 +9,6 @@ namespace BL.Servers.CR.Logic.Slots
 {
     internal class Decks : List<Card>
     {
-        internal Random Random;
         internal Avatar Player;
         
         public Decks()
@@ -99,9 +96,8 @@ namespace BL.Servers.CR.Logic.Slots
         {
             List<byte> _Packet = new List<byte>();
 
-            foreach (Card _Card in this.GetRange(0, 8).OrderBy(_Card => Random.Next()))
+            foreach (Card _Card in this.GetRange(0, 8).OrderBy(_Card => Core.Resources.Random.Next()))
             {
-                _Packet.AddVInt(_Card.Type);    // Card Type
                 _Packet.AddVInt(_Card.ID);      // Card ID
                 _Packet.AddVInt(_Card.Level);   // Card Level
             }

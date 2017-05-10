@@ -106,6 +106,50 @@ namespace BB.Library.Patcher
                         }
                     }
                 }
+                else if (Encoding.UTF8.GetString(_file, 0, _file.Length).Contains("boombeach"))
+                {
+                    //May not work
+                    using (MemoryStream Stream = new MemoryStream(_file))
+                    {
+                        long Offset = FindPosition(Stream, Constants.BoomBeach);
+                        Console.WriteLine("- BB : ");
+
+                        if (Offset > -1)
+                        {
+                            Console.WriteLine("    - Offest       : " + (Offset - 32) + " [0x" + (Offset - 32).ToString("X") + "]");
+                            Console.WriteLine("    - Key (Hex)    : " + "0x" + BitConverter.ToString(_file.ToList().GetRange((int)Offset - 32, 32).ToArray()).Replace("-", ", 0x"));
+                            Console.WriteLine("    - Replace?");
+                            Console.Write("\b");
+
+                        }
+                        else
+                        {
+                            using (MemoryStream Stream2 = new MemoryStream(_file))
+                            {
+                                Offset = FindPosition(Stream2, Constants.OriginalKeyBB);
+                                if (Offset > -1)
+                                {
+
+                                    Console.WriteLine("    - Offest       : " + (Offset + 32) + " [0x" + (Offset + 32).ToString("X") + "]");
+                                    Console.WriteLine("    - 20 byte sequence (Hex)    : " + "0x" + BitConverter.ToString(_file.ToList().GetRange((int)Offset + 32, 20).ToArray()).Replace("-", ", 0x"));
+                                    Console.Write("\b");
+                                    Console.ReadKey(false);
+                                }
+                            }
+                        }
+                        if (Console.ReadKey(false).Key == ConsoleKey.Y)
+                        {
+                            List<Byte> Patched = _file.ToList();
+                            Patched.RemoveRange((int)Offset - 32, 32);
+                            Patched.InsertRange((int)Offset - 32, Constants.CustomKey);
+
+                            using (FileStream FStream = File.Create(_folder.FullName + "/BB-libg.so", Patched.Count, FileOptions.None))
+                            {
+                                FStream.Write(Patched.ToArray(), 0, Patched.Count);
+                            }
+                        }
+                    }
+                }
             }
         }
 
