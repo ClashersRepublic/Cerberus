@@ -8,6 +8,7 @@ using BL.Servers.CR.Extensions.Binary;
 using BL.Servers.CR.Logic;
 using BL.Servers.CR.Packets.Commands.Server.Chest;
 using BL.Servers.CR.Packets.Messages.Server;
+using Newtonsoft.Json;
 
 namespace BL.Servers.CR.Packets.Commands.Client.Chest
 {
@@ -37,6 +38,7 @@ namespace BL.Servers.CR.Packets.Commands.Client.Chest
             {
                 Command = new Buy_Chest_Callback(this.Device)
                 {
+                    Cards  = JsonConvert.DeserializeObject<Logic.Slots.Decks>(Files.Home.Starting_Home, Core.Resources.Players.Settings),
                     ChestID = this.Chest_ID
                 }.Handle()
             }.Send();

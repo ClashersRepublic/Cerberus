@@ -19,7 +19,7 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
         internal int Gems = 1;
         internal int Gold = 1;
 
-        internal Decks Cards = new Decks();
+        internal Decks Cards = new Decks(null);
 
         public Buy_Chest_Callback(Reader _Reader, Device _Client, int _ID) : base(_Reader, _Client, _ID)
         {
@@ -48,7 +48,6 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
 
             foreach (Card _Card in this.Cards)
             {
-                this.Data.AddVInt(_Card.Type);
                 this.Data.AddVInt(_Card.ID);
                 this.Data.AddVInt(_Card.Level);
                 this.Data.AddVInt(0); // Chest Tick

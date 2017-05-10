@@ -167,6 +167,7 @@ namespace BL.Servers.CR.Core
                     Player.Avatar.Password += Number;
                 }
             }
+            Player.Avatar.Decks = JsonConvert.DeserializeObject<Logic.Slots.Decks>(Files.Home.Starting_Home, this.Settings);
             Player.LoadFromJSON(Files.Home.Starting_Home);
 
             while (true)

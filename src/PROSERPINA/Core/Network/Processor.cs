@@ -1,5 +1,6 @@
 ﻿using System;
 using BL.Servers.CR.Extensions;
+using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Packets;
 
 namespace BL.Servers.CR.Core.Network
@@ -23,14 +24,16 @@ namespace BL.Servers.CR.Core.Network
 #if DEBUG
                 if (Message.Device.Connected())
                 {
+                    Console.WriteLine("Alive");
                     Console.WriteLine(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " +  Message.GetType().Name);
                 }
 #endif
 
                 Message.Process();
             }
-            catch (Exception)
+            catch (Exception Exception)
             {
+                Loggers.Log(Utils.Padding(Exception.GetType().Name, 15) + " : " + Exception.Message + Environment.NewLine + Exception.StackTrace, true, Defcon.ERROR);
             }
         }
 

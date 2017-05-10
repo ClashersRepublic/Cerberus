@@ -14,7 +14,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
         internal override void Encode()
         {
             this.Data.AddVInt(Constants.ServerPort);
-            this.Data.AddString(Constants.ServerAddr);
+            this.Data.AddString("127.0.0.1"); // xD
             this.Data.AddString("Session ID"); // Session ID
             this.Data.AddString(""); // Nonce
         }

@@ -42,7 +42,7 @@ namespace BL.Servers.CR.Core
 #if DEBUG
             Console.WriteLine("We loaded " + MessageFactory.Messages.Count + " messages, " + CommandFactory.Commands.Count + " commands, and 0 debug commands.\n");
 #endif
-           //this.Test = new Test();
+           this.Test = new Test();
         }
     }
 }

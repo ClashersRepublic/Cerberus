@@ -129,13 +129,6 @@ namespace BL.Servers.CR.Logic.Slots
             this.Set(Resource.Diamonds, Utils.ParseConfigInt("startingGems"));
 
             this.Set(Resource.Resource1, Utils.ParseConfigInt("startingGold"));
-            this.Set(Resource.Resource2, Utils.ParseConfigInt("startingWood"));
-            this.Set(Resource.Resource3, Utils.ParseConfigInt("startingStone"));
-#if DEBUG
-            int Metal = Utils.ParseConfigInt("startingMetal");
-            if (Metal != 0)
-            this.Set(Resource.Resource4, Utils.ParseConfigInt("startingMetal")); //Metal
-#endif
         }
     }
 }

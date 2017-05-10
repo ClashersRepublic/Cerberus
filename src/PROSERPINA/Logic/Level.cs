@@ -1,6 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace BL.Servers.CR.Logic
 {
@@ -9,7 +7,6 @@ namespace BL.Servers.CR.Logic
 
         internal Device Client;
         internal Avatar Avatar;
-        internal Home Home;
 
         internal Level()
         {

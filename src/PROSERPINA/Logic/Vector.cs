@@ -1,8 +1,8 @@
 ﻿namespace BL.Servers.CR.Logic
 {
-    internal class VectorOld
+    internal class Vector
     {
-        internal VectorOld(int X, int Y)
+        internal Vector(int X, int Y)
         {
             this.X = X;
             this.Y = Y;

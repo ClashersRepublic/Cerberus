@@ -5,15 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using BL.Servers.CR.Extensions.List;
 using BL.Servers.CR.Logic.Slots.Items;
+using Newtonsoft.Json;
 
 namespace BL.Servers.CR.Logic.Slots
 {
     internal class Decks : List<Card>
     {
         internal Random Random;
-
-        public Decks(bool Initialize = false)
+        internal Avatar Player;
+        
+        public Decks()
         {
+            
+        }
+
+        public Decks(Avatar _Player, bool Initialize = false)
+        {
+            this.Player = _Player;
             if (Initialize)
                 this.Initialize();
         }
@@ -22,7 +30,7 @@ namespace BL.Servers.CR.Logic.Slots
         {
             if (this.Contains(_Card))
             {
-                int _Index = this.FindIndex(Card => Card.GlobalID == _Card.GlobalID);
+                int _Index = this.FindIndex(Card => Card.ID == _Card.ID);
 
                 if (_Index > -1)
                 {
@@ -45,7 +53,7 @@ namespace BL.Servers.CR.Logic.Slots
 
             if (this.Contains(_Card))
             {
-                int _Index = this.FindIndex(Card => Card.GlobalID == _Card.GlobalID);
+                int _Index = this.FindIndex(Card => Card.ID == _Card.ID);
 
                 if (_Index > -1)
                 {
@@ -73,7 +81,7 @@ namespace BL.Servers.CR.Logic.Slots
         {
             List<byte> _Packet = new List<byte>();
 
-            foreach (Card _Card in this.GetRange(0, 8))
+            foreach (Card _Card in this.GetRange(0, 7))
             {
                 _Packet.AddVInt(_Card.ID);      // Card ID
                 _Packet.AddVInt(_Card.Level);   // Card Level
@@ -101,9 +109,12 @@ namespace BL.Servers.CR.Logic.Slots
             return _Packet.ToArray();
         }
 
+        public void Die()
+        {
+            Console.WriteLine(JsonConvert.SerializeObject(this, Core.Resources.Players.Settings));
+        }
         public void Initialize()
         {
-            
         }
     }
 }

@@ -291,7 +291,6 @@
     <Compile Include="Logic\Enums\Save.cs" />
     <Compile Include="Logic\Enums\State.cs" />
     <Compile Include="Logic\Enums\UnlockReason.cs" />
-    <Compile Include="Logic\Home.cs" />
     <Compile Include="Logic\Level.cs" />
     <Compile Include="Core\Battles.cs" />
     <Compile Include="Logic\Slots\Decks.cs" />
@@ -581,6 +580,9 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Gamefiles\level\starting_home.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -685,12 +687,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\CSV_Logic\" />
-    <Folder Include="Logic\AvatarStreamEntry\" />
-    <Folder Include="Logic\Components\" />
-    <Folder Include="Logic\DataSlots\" />
-    <Folder Include="Logic\Manager\" />
-    <Folder Include="Logic\StreamEntry\" />
-    <Folder Include="Logic\Structure\" />
     <Folder Include="Packets\GameOpCommands\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
