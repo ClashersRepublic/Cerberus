@@ -41,7 +41,7 @@ namespace BL.Servers.CoC.Core
 #endif
             this.Timers = new Timers();
             
-            //this.Test = new Test();
+            this.Test = new Test();
         }
     }
 }

@@ -310,6 +310,7 @@
     <Compile Include="Packets\Commands\Client\My_League.cs" />
     <Compile Include="Packets\Commands\Client\SpeedUp_Construction.cs" />
     <Compile Include="Packets\Commands\Client\Train_Unit.cs" />
+    <Compile Include="Packets\Commands\Client\Unlock_Building.cs" />
     <Compile Include="Packets\Commands\Server\Joined_Alliance.cs" />
     <Compile Include="Packets\Commands\Server\Name_Change_Callback.cs" />
     <Compile Include="Packets\Commands\Server\Role_Update.cs" />

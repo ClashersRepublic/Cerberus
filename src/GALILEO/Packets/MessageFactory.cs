@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using BL.Servers.CoC.Packets.Client.Authentication;
 using BL.Servers.CoC.Packets.Messages.Client;
