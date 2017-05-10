@@ -81,7 +81,7 @@ namespace BL.Servers.CR.Logic.Slots
         {
             List<byte> _Packet = new List<byte>();
 
-            foreach (Card _Card in this.GetRange(0, 7))
+            foreach (Card _Card in this.GetRange(0, 8))
             {
                 _Packet.AddVInt(_Card.ID);      // Card ID
                 _Packet.AddVInt(_Card.Level);   // Card Level

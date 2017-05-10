@@ -49,7 +49,7 @@ namespace BB.Library.Patcher
                         {
                             using (MemoryStream Stream2 = new MemoryStream(_file))
                             {
-                                Offset = FindPosition(Stream2, Constants.OriginalKey);
+                                Offset = FindPosition(Stream2, Constants.OriginalKeyCoC);
                                 if (Offset > -1)
                                 {
 
@@ -77,6 +77,21 @@ namespace BB.Library.Patcher
                             Console.WriteLine("    - Replace?");
                             Console.Write("\b");
 
+                        }
+                        else
+                        {
+                            using (MemoryStream Stream2 = new MemoryStream(_file))
+                            {
+                                Offset = FindPosition(Stream2, Constants.OriginalKeyCR);
+                                if (Offset > -1)
+                                {
+
+                                    Console.WriteLine("    - Offest       : " + (Offset + 32) + " [0x" + (Offset + 32).ToString("X") + "]");
+                                    Console.WriteLine("    - 20 byte sequence (Hex)    : " + "0x" + BitConverter.ToString(_file.ToList().GetRange((int)Offset + 32, 20).ToArray()).Replace("-", ", 0x"));
+                                    Console.Write("\b");
+                                    Console.ReadKey(false);
+                                }
+                            }
                         }
                         if (Console.ReadKey(false).Key == ConsoleKey.Y)
                         {

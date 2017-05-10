@@ -42,10 +42,6 @@ namespace BL.Servers.CR
             Resources.Initialize();
 
             Console.WriteLine(@"-------------------------------------" + Environment.NewLine);
-            var a = Resources.Players.New();
-            var avatarDecks = a.Avatar.Decks;
-            Console.WriteLine(avatarDecks.Count);
-            Console.WriteLine(avatarDecks[0].ID);
             while (true);
         }
     }
