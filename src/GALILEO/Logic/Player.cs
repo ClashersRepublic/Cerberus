@@ -151,8 +151,8 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddLong(this.UserId);
                 _Packet.AddLong(this.UserId);
 
-                _Packet.AddBool(this.ClanId > 0);
-                if (this.ClanId > 0)
+                _Packet.AddBool(false);
+                if (this.ClanId < 0)
                 {
                     Clan clan = Core.Resources.Clans.Get(ClanId, Constants.Database, false);
                     if (!string.IsNullOrEmpty(clan.Name))
@@ -346,7 +346,8 @@ namespace BL.Servers.CoC.Logic
             }
         }
 
-        public bool HasEnoughResources(int Globalid, int buildCost) => this.Resources.Get(Globalid) >= buildCost;
+        public bool HasEnoughResources(Resource resource, int buildCost) => this.Resources.Get(resource) >= buildCost;
+        public bool HasEnoughResources(int globalId, int buildCost) => this.Resources.Get(globalId) >= buildCost;
 
     }
 }

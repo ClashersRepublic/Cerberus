@@ -25,10 +25,10 @@ namespace BB.Library.Patcher
                     {
                         Console.WriteLine("- CoC : ");
 
-                        long Offset = FindPosition(Stream, Constants.ClashOfClans);
+                        long Offset = FindPosition(Stream, Constants.ClashOfClansAndroid);
                         if (Offset > -1)
                         {
-                            Console.WriteLine("    - Offest       : " + (Offset) + " [0x" + (Offset - 32).ToString("X") + "]");
+                            Console.WriteLine("    - Offest       : " + (Offset - 32) + " [0x" + (Offset - 32).ToString("X") + "]");
                             Console.WriteLine("    - Key (Hex)    : " + "0x" + BitConverter.ToString(_file.ToList().GetRange((int)Offset - 32, 32).ToArray()).Replace("-", ", 0x"));
                             Console.WriteLine("    - Replace?");
                             Console.Write("\b");
@@ -45,6 +45,21 @@ namespace BB.Library.Patcher
                                 }
                             }
                         }
+                        else
+                        {
+                            using (MemoryStream Stream2 = new MemoryStream(_file))
+                            {
+                                Offset = FindPosition(Stream2, Constants.OriginalKey);
+                                if (Offset > -1)
+                                {
+
+                                    Console.WriteLine("    - Offest       : " + (Offset + 32) + " [0x" + (Offset + 32).ToString("X") + "]");
+                                    Console.WriteLine("    - 20 byte sequence (Hex)    : " + "0x" + BitConverter.ToString(_file.ToList().GetRange((int)Offset + 32, 20).ToArray()).Replace("-", ", 0x"));
+                                    Console.Write("\b");
+                                    Console.ReadKey(false);
+                                }
+                            }
+                        }
                     }
                 }
                 else if (Encoding.UTF8.GetString(_file, 0, _file.Length).Contains("clashroyale"))
@@ -57,7 +72,7 @@ namespace BB.Library.Patcher
 
                         if (Offset > -1)
                         {
-                            Console.WriteLine("    - Offest       : " + (Offset) + " [0x" + (Offset - 32).ToString("X") + "]");
+                            Console.WriteLine("    - Offest       : " + (Offset - 32) + " [0x" + (Offset - 32).ToString("X") + "]");
                             Console.WriteLine("    - Key (Hex)    : " + "0x" + BitConverter.ToString(_file.ToList().GetRange((int)Offset - 32, 32).ToArray()).Replace("-", ", 0x"));
                             Console.WriteLine("    - Replace?");
                             Console.Write("\b");

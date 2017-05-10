@@ -188,8 +188,14 @@ namespace BL.Servers.CoC.Files.CSV_Logic
             return Total_Time;
             //return BuildTimeS[level] + BuildTimeM[level] * 60 + BuildTimeH[level] * 60 * 60 + BuildTimeD[level] * 60 * 60 * 24;
         }
+        public int GetUnitProduction(int level) => UnitProduction[level];
+
+        public int GetUnitStorageCapacity(int level) => HousingSpace[level];
+
+        public int GetAltUnitStorageCapacity(int level) => HousingSpaceAlt[level];
 
         public override bool IsTownHall() => BuildingClass == "Town Hall";
+
         public bool IsWorkerBuilding() => BuildingClass == "Worker";
 
         public Resource GetAltBuildResource(int level) => CSV.Tables.Get(Gamefile.Resources).GetData(AltBuildResource[level]) as Resource;

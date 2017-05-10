@@ -31,7 +31,7 @@ namespace BL.Servers.CoC.Logic.Structure
         {
             IsBoosted = true;
         }
-
+        
         internal int GetUpgradeLevel() => this.UpgradeLevel;
 
         public bool IsMaxUpgradeLevel() => UpgradeLevel >= GetConstructionItemData().GetUpgradeLevelCount() - 1;
