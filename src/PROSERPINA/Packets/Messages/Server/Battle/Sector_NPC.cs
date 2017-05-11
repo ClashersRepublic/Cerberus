@@ -175,9 +175,9 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
             }
 
             this.Data.AddRange("FF0184010A2A0B1F0B190B2509020B0707060B00".HexaToBytes()); //Deck - Card Type-ID-Level 
-            this.Data.AddHexa("F303");
+            this.Data.AddHexa("FE03");
             this.Data.AddRange(this.Device.Player.Avatar.Decks.Hand());
-            this.Data.AddRange("050602020402010300000000000000060901010000000000000000000000010000000000000000000000000C00000080A1B0A80F002A002B".HexaToBytes());
+            this.Data.AddRange("0000050602020402010300000000000000060901010000000000000000000000010000000000000000000000000C00000080A1B0A80F002A002B".HexaToBytes());
         }
     }
 }
