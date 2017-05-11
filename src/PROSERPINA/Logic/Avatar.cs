@@ -60,15 +60,22 @@ namespace BL.Servers.CR.Logic
 
         [JsonProperty("lvl")] internal int Level = 13;
         [JsonProperty("xp")] internal int Experience;
+        [JsonProperty("arena")] internal int Arena = 21;
         [JsonProperty("tutorials")] internal byte Tutorial = 8;
         [JsonProperty("changes")] internal byte Changes = 0;
         [JsonProperty("nameset")] internal byte NameSet = 0;
 
-        [JsonProperty("trophies")] internal int Trophies = 6500;
+        [JsonProperty("wins")] internal int Wins = 0;
+        [JsonProperty("loses")] internal int Loses = 0;
+        [JsonProperty("games_played")] internal int Games_Played = 0;
+
+        [JsonProperty("trophies")] internal int Trophies = 9999;
+        [JsonProperty("legendary_trophies")] internal int Legendary_Trophies = 0;
 
         [JsonProperty("resources")] internal Resources Resources;
         [JsonProperty("resources_cap")] internal Resources Resources_Cap;
         [JsonProperty("decks")] internal Decks Decks;
+        [JsonProperty("achievements")] internal Achievements Achievements;
 
         [JsonProperty("account_locked")] internal bool Locked = false;
 
@@ -85,6 +92,8 @@ namespace BL.Servers.CR.Logic
             this.Resources = new Resources(this);
             this.Resources_Cap = new Resources(this);
             this.Decks = new Decks(this);
+
+            this.Achievements = new Achievements();
         }
 
         internal Avatar(long UserId)
@@ -95,6 +104,8 @@ namespace BL.Servers.CR.Logic
             this.Resources = new Resources(this, true);
             this.Resources_Cap = new Resources(this, false);
             this.Decks = new Decks(this, true);
+
+            this.Achievements = new Achievements();
         }
 
         internal byte[] Components
@@ -117,25 +128,13 @@ namespace BL.Servers.CR.Logic
                 _Packet.AddVInt(TimeStamp);
 
                 _Packet.AddVInt(0);
-                // _Packet.AddVInt(3); // Deck Count
-                _Packet.AddVInt(1); // Deck Count
+                _Packet.AddVInt(1);
                 _Packet.AddVInt(8);
 
                 foreach (Card _Card in this.Decks.GetRange(0, 8))
                 {
                     _Packet.AddVInt(_Card.GId);
                 }
-              /*  _Packet.AddVInt(8);
-                foreach (Card _Card in this.Decks.GetRange(0, 8)) //Should be 8-16?
-                {
-                    _Packet.AddVInt(_Card.GId);
-                }
-                _Packet.AddVInt(8);
-
-                foreach (Card _Card in this.Decks.GetRange(0, 8)) // 16-24?
-                {               
-                    _Packet.AddVInt(_Card.GId);
-                }*/
 
                 _Packet.Add(255); // Deck Thingy
 
@@ -222,7 +221,7 @@ namespace BL.Servers.CR.Logic
 
                 _Packet.AddVInt(55);
 
-                _Packet.AddVInt(21); // Old Arena
+                _Packet.AddVInt(this.Arena); // Old Arena
 
                 _Packet.AddHexa("DD CE A7 DB 0E 05 05 B0 B9 B6 01 B0 B9".Replace(" ", ""));
 
@@ -277,27 +276,27 @@ namespace BL.Servers.CR.Logic
 
                 _Packet.AddVInt(this.UserLowId);
 
-                _Packet.AddString(this.Username); // Name
+                _Packet.AddString("Test"); // Name
 
                 _Packet.AddVInt(this.Changes); // Changes
 
-                _Packet.AddVInt(21); // Arena
+                _Packet.AddVInt(this.Arena); // Arena
 
                 _Packet.AddVInt(this.Trophies); // Trophies
 
                 _Packet.AddVInt(0); // Unknown
 
-                _Packet.AddVInt(0); // Legend Trophies
+                _Packet.AddVInt(this.Legendary_Trophies); // Legend Trophies
 
                 _Packet.AddVInt(0); // Current Trophies => Season Higheset
 
-                _Packet.AddVInt(this.NameSet); // Unknown
+                _Packet.AddVInt(0); // Unknown
 
                 _Packet.AddVInt(0); // Leaderboard NR => Best Season
 
                 _Packet.AddVInt(0); // Trophies => Best Season
 
-                _Packet.AddVInt(this.NameSet); // Unknown
+                _Packet.AddVInt(0); // Unknown
 
                 _Packet.AddVInt(30); // Unknown
 
@@ -307,29 +306,53 @@ namespace BL.Servers.CR.Logic
 
                 _Packet.AddVInt(0); // Highest Trophies
 
-                _Packet.AddVInt(this.NameSet); // Unknown
+                _Packet.AddVInt(0); // Unknown
 
-                _Packet.AddVInt(this.NameSet); // Unknown
+                _Packet.AddVInt(0); // Unknown
 
-                _Packet.AddHexa("07 08 05 01 9B 02 05 05 9B".Replace(" ", ""));
+                _Packet.AddVInt(this.Resources.Count);
+                _Packet.AddVInt(this.Resources.Count);
 
-                _Packet.AddHexa("02 05 1D 88 88 D5 44 05 0D 05 05 0E 06 05 03 02 05 10 01 05 02 06 00 06 3C 07 08 3C 08 08 3C 09 08 3C 04 01 3C 05 01 3C 06 01 00 03 05 0B 1E 05 08 08 05 1B 01 08 1A 00 0A 1A 01 0C 1A 0D 0A 1A 03 01 1C 01 01 1C 00 01 1A 0E 04 1A 10 03 00".Replace(" ", ""));
+                foreach (Slots.Items.Resource _Resource in this.Resources.OrderBy(r => r.Data))
+                {
+                    _Packet.AddVInt(_Resource.Type);
+                    _Packet.AddVInt(_Resource.Data);
+                    _Packet.AddVInt(_Resource.Value);
+                }
 
-                _Packet.AddVInt(this.Resources.Gems); // Gems
+                _Packet.Add(0);
 
-                _Packet.AddVInt(this.Resources.Gems); // Gems
+                _Packet.AddVInt(this.Achievements.Count);
+                foreach (Achievement _Achievement in this.Achievements)
+                {
+                    _Packet.AddVInt(_Achievement.Type);
+                    _Packet.AddVInt(_Achievement.Data);
+                    _Packet.AddVInt(_Achievement.Value);
+                }
 
-                _Packet.AddVInt(Experience); // Experience
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
 
-                _Packet.AddVInt(Level); // Level
+                _Packet.Add(0);
+                _Packet.Add(0);
 
-                _Packet.Add(this.NameSet); // Unknown
+                _Packet.AddVInt(this.Resources[0].Value); // Gems
+
+                _Packet.AddVInt(this.Resources[0].Value); // Gems
+
+                _Packet.AddVInt(this.Experience); // Experience
+
+                _Packet.AddVInt(this.Level); // Level
+
+                _Packet.Add(0); // Unknown
 
                 // 8 = Set name popup + clan
                 // 9 = Name already set + clan
                 // < 8 =  Set name popup
 
-                _Packet.AddVInt(!string.IsNullOrEmpty(this.Username) ? 9 : 8);
+                _Packet.AddVInt(9);
+
+                //_Packet.AddVInt(!string.IsNullOrEmpty(this.Username) ? 9 : 8);
 
                 _Packet.AddVInt(this.ClanHighID); // Clan HighID
                 _Packet.AddVInt(this.ClanHighID); // Clan LowID
@@ -340,15 +363,15 @@ namespace BL.Servers.CR.Logic
 
                 _Packet.AddVInt(2); // Access Level
 
-                _Packet.AddVInt(0); // Games Played
+                _Packet.AddVInt(this.Games_Played); // Games Played
 
                 _Packet.AddVInt(0); // Matched Played -> Tournament Stats
 
-                _Packet.Add(NameSet); // Unknown
+                _Packet.Add(0); // Unknown
 
-                _Packet.AddVInt(0); // Win
+                _Packet.AddVInt(this.Wins); // Win
 
-                _Packet.AddVInt(0); // Loses
+                _Packet.AddVInt(this.Loses); // Loses
 
                 _Packet.AddVInt(0); // Win Streak
 
@@ -356,9 +379,9 @@ namespace BL.Servers.CR.Logic
 
                 _Packet.AddVInt(0); // Tournament?
 
-                _Packet.AddVInt(this.NameSet); // Unknown
+                _Packet.AddVInt(0); // Unknown
 
-                _Packet.AddVInt(this.NameSet); // Unknown
+                _Packet.AddVInt(0); // Unknown
 
                 _Packet.AddVInt(TimeStamp);
 

@@ -5,7 +5,7 @@ namespace BL.Servers.CR.Core
 
     internal class Constants
     {
-        internal const bool Local = false;
+        internal const bool Local = true;
 
         internal const int SendBuffer = 2048;
 
@@ -29,7 +29,7 @@ namespace BL.Servers.CR.Core
 
         internal static string[] AuthorizedIP =
         {
-            "192.168.0.65"
+            "192.168.0.29"
         };
     }
 }

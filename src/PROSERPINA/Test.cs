@@ -13,13 +13,15 @@ namespace BL.Servers.CR
 
         internal Test()
         {
+            this.Uncompress("12823B");
         }
 
         internal void Uncompress(string Hexa)
         {
             Reader br = new Reader(Hexa.HexaToBytes());
 
-
+            Console.WriteLine(br.ReadRRInt32());
+            Console.WriteLine(br.ReadRRInt32());
 
             var data =  br.ReadFully();
 

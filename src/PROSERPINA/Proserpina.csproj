@@ -293,9 +293,12 @@
     <Compile Include="Logic\Enums\UnlockReason.cs" />
     <Compile Include="Logic\Level.cs" />
     <Compile Include="Core\Battles.cs" />
+    <Compile Include="Logic\Slots\Achievements.cs" />
     <Compile Include="Logic\Slots\Decks.cs" />
+    <Compile Include="Logic\Slots\Items\Achievement.cs" />
     <Compile Include="Logic\Slots\Items\Battle.cs" />
     <Compile Include="Logic\Slots\Items\Card.cs" />
+    <Compile Include="Logic\Slots\Items\Resource.cs" />
     <Compile Include="Logic\Slots\Items\Slot.cs" />
     <Compile Include="Logic\Slots\Resources.cs" />
     <Compile Include="Logic\Vector.cs" />
