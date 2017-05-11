@@ -7,7 +7,7 @@ All programs developed by the BarbariansLand Development Team are licensed by a 
 
 ## Project Codenames:
 * Eris - Boom Beach Server
-* Europa - Patcher
+* Europa - Some Patcher
 * Galileo - Clash of Clans Server
 * Nebula - SC Editor
 * Nibiru - LZMA Manager
