@@ -46,15 +46,18 @@ namespace BL.Servers.CoC.Core
             if (this.Remove(Player.Avatar.UserId))
             {
                 this.Save(Player, Constants.Database);
+                Player.Client.Player = null;
             }
 
             if (Player.Client != null)
             {
                 if (Resources.Devices.ContainsKey(Player.Client.SocketHandle))
                 {
-                    Resources.Gateway.Disconnect(Player.Client.Token.Args);
+
+                    Resources.GChat.Remove(Player.Client);
+                    Resources.Devices.Remove(Player.Client);
+                    Player.Client = null;
                 }
-                Resources.GChat.Remove(Player.Client);
             }
         }
 
@@ -222,9 +225,9 @@ namespace BL.Servers.CoC.Core
 
         internal void Save(Level Player, DBMS DBMS = DBMS.Mysql)
         {
+            Player.Avatar.LastSave = DateTime.UtcNow;
             while (true)
             {
-
                 switch (DBMS)
                 {
                     case DBMS.Mysql:

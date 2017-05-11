@@ -15,7 +15,7 @@ namespace BL.Servers.CR.Logic.Slots.Items
         [JsonProperty("id")] internal int ID = 0;
 
         [JsonProperty("global_id")] internal int GId = 0;
-        [JsonProperty("lvl")] internal byte Level = 0;
+        [JsonProperty("lvl")] internal int Level = 0;
         [JsonProperty("new")] internal byte New = 0;
         [JsonProperty("type")] internal byte Type = 0;
 
@@ -24,7 +24,7 @@ namespace BL.Servers.CR.Logic.Slots.Items
             
         }
 
-        public Card(byte _Type, byte _ID, int _Count, byte _Level, byte _isNew)
+        public Card(byte _Type, int _ID, int _Count, int _Level, byte _isNew)
         {
             this.Type = _Type;
             this.ID = _ID;

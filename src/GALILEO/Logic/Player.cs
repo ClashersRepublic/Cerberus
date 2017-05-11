@@ -95,8 +95,12 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("resources_cap")] internal Resources Resources_Cap;
         [JsonProperty("npcs")] internal Npcs Npcs;
 
+
+        [JsonProperty("login_count")] internal int Login_Count;
+        [JsonProperty("play_time")] internal TimeSpan PlayTime => (DateTime.UtcNow - this.Created);
+
         [JsonProperty("last_tick")] internal DateTime LastTick = DateTime.UtcNow;
-        [JsonProperty("update_date")] internal DateTime Update = DateTime.UtcNow;
+        [JsonProperty("last_save")] internal DateTime LastSave = DateTime.UtcNow;
         [JsonProperty("creation_date")] internal DateTime Created = DateTime.UtcNow;
         [JsonProperty("ban_date")] internal DateTime BanTime = DateTime.UtcNow;
 
@@ -151,10 +155,10 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddLong(this.UserId);
                 _Packet.AddLong(this.UserId);
 
-                _Packet.AddBool(false);
-                if (this.ClanId < 0)
+                _Packet.AddBool(this.ClanId > 0);
+                if (this.ClanId > 0)
                 {
-                    Clan clan = Core.Resources.Clans.Get(ClanId, Constants.Database, false);
+                    Clan clan = Core.Resources.Clans.Get(ClanId, Constants.Database);
                     if (!string.IsNullOrEmpty(clan.Name))
                     {
                         _Packet.AddLong(this.ClanId);
@@ -170,7 +174,7 @@ namespace BL.Servers.CoC.Logic
                     }
                     else
                     {
-                        Console.WriteLine("s");
+                        Console.WriteLine("Name is null or empty");
                     }
                 }
 

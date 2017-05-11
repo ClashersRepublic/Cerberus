@@ -279,6 +279,7 @@
     <Compile Include="Files\CSV_Reader\RowCollection.cs" />
     <Compile Include="Files\CSV_Reader\Table.cs" />
     <Compile Include="Files\Home.cs" />
+    <Compile Include="Logic\Achivements.cs" />
     <Compile Include="Logic\Avatar.cs" />
     <Compile Include="Logic\Enums\CVersion.cs" />
     <Compile Include="Logic\Enums\Database.cs" />
@@ -293,7 +294,6 @@
     <Compile Include="Logic\Enums\UnlockReason.cs" />
     <Compile Include="Logic\Level.cs" />
     <Compile Include="Core\Battles.cs" />
-    <Compile Include="Logic\Slots\Achievements.cs" />
     <Compile Include="Logic\Slots\Decks.cs" />
     <Compile Include="Logic\Slots\Items\Achievement.cs" />
     <Compile Include="Logic\Slots\Items\Battle.cs" />

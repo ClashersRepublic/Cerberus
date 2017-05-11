@@ -207,10 +207,6 @@ namespace BL.Servers.CoC.Logic.Structure
         public void SetUpgradeLevel(int level)
         {
             UpgradeLevel = level;
-            if (GetConstructionItemData().IsTownHall())
-            {
-                this.Level.Avatar.TownHall_Level = level;
-            }
             if (UpgradeLevel > -1 || IsUpgrading() || !IsConstructing)
             {
                 /*if (GetUnitStorageComponent(true) != null)

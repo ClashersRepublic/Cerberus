@@ -100,10 +100,10 @@ namespace BL.Servers.CoC.Logic.Structure.Slots
                     _Packet.AddInt(Member.Received);
                     _Packet.AddInt(0); // Order ?
                     _Packet.AddInt(0); // Previous Order ?
-                    _Packet.AddBool(Member.New);
+                    _Packet.AddInt(Member.New ? 1 : 0);
                     _Packet.AddInt(0);
                     _Packet.AddInt(_Player.Avatar.WarState ? 1 : 0);
-                    _Packet.AddInt(1);
+                    _Packet.AddByte(1);
                     _Packet.AddLong(_Player.Avatar.UserId);
                 }
                 return _Packet.ToArray();

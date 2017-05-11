@@ -30,15 +30,15 @@
             {
                 if (Resources.Players.ContainsValue(Device.Player))
                 {
-                    Resources.Players.Remove(Device.Player);
+                    if (Resources.Players.ContainsValue(Device.Player))
+                    {
+                        Resources.Players.Remove(Device.Player);
+                    }
                 }
             }
-            else
+            else if (this.ContainsKey(Device.SocketHandle))
             {
-                if (this.ContainsKey(Device.SocketHandle))
-                {
-                    this.Remove(Device.SocketHandle);
-                }
+                this.Remove(Device.SocketHandle);
 
                 try
                 {

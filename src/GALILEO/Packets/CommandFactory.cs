@@ -14,12 +14,14 @@ namespace BL.Servers.CoC.Packets
             Commands = new Dictionary<int, Type>
             {
                 {500, typeof(Buy_Building) },
+                {502, typeof(Upgrade_Building) },
                 {504, typeof(SpeedUp_Construction)},
                 {508, typeof(Train_Unit) },
                 {519, typeof(Mission_Progress) },
                 {520, typeof(Unlock_Building)},
                 {538, typeof(My_League) },
                 {600, typeof(Place_Attacker) },
+                {700, typeof(Search_Opponent) }
             };
         }
     }

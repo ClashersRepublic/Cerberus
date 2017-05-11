@@ -16,11 +16,9 @@ namespace BL.Servers.CR.Logic.Slots
             
         }
 
-        public Decks(Avatar _Player, bool Initialize = false)
+        public Decks(Avatar _Player)
         {
             this.Player = _Player;
-            if (Initialize)
-                this.Initialize();
         }
 
         public new void Add(Card _Card)
@@ -44,7 +42,7 @@ namespace BL.Servers.CR.Logic.Slots
             }
         }
 
-        public new void Add(byte _Type, byte _ID, int _Count, byte _Level, byte _isNew)
+        public new void Add(byte _Type, int _ID, int _Count, int _Level, byte _isNew)
         {
             Card _Card = new Card(_Type, _ID, _Count, _Level, _isNew);
 
@@ -108,9 +106,6 @@ namespace BL.Servers.CR.Logic.Slots
         public void Die()
         {
             Console.WriteLine(JsonConvert.SerializeObject(this, Core.Resources.Players.Settings));
-        }
-        public void Initialize()
-        {
         }
     }
 }

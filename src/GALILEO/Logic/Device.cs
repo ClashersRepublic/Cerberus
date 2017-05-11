@@ -48,7 +48,7 @@ namespace BL.Servers.CoC.Logic
             {
                 return !(Socket.Poll(1000, SelectMode.SelectRead) && Socket.Available == 0 || !Socket.Connected);
             }
-            catch
+            catch 
             {
                 return false;
             }

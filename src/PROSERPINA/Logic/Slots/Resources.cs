@@ -42,7 +42,7 @@ namespace BL.Servers.CR.Logic.Slots
 
         internal int Get(int Gl_ID)
         {
-            int i = this.FindIndex(R => R.Data == Gl_ID);
+            int i = this.FindIndex(R => R.Identifier == Gl_ID);
 
             if (i > -1)
                 return this[i].Value;
@@ -57,7 +57,7 @@ namespace BL.Servers.CR.Logic.Slots
 
         internal void Set(int Gl_ID, int Count)
         {
-            int i = this.FindIndex(R => R.Data == Gl_ID);
+            int i = this.FindIndex(R => R.Identifier == Gl_ID);
 
             if (i > -1)
                 this[i].Value = Count;
@@ -71,7 +71,7 @@ namespace BL.Servers.CR.Logic.Slots
 
         internal void Plus(int Gl_ID, int Count)
         {
-            int i = this.FindIndex(R => R.Data == Gl_ID);
+            int i = this.FindIndex(R => R.Identifier == Gl_ID);
 
             if (i > -1)
                 this[i].Value += Count;
@@ -85,7 +85,7 @@ namespace BL.Servers.CR.Logic.Slots
 
         internal bool Minus(int Gl_ID, int Count)
         {
-            int i = this.FindIndex(R => R.Data == Gl_ID);
+            int i = this.FindIndex(R => R.Identifier == Gl_ID);
 
             if (i > -1)
                 if (this[i].Value >= Count)
@@ -99,7 +99,7 @@ namespace BL.Servers.CR.Logic.Slots
 
         internal void Minus(Enums.Resource _Resource, int _Value)
         {
-            int Index = this.FindIndex(T => T.Data == 3000000 + (int) _Resource);
+            int Index = this.FindIndex(T => T.Identifier == 3000000 + (int) _Resource);
 
             if (Index > -1)
             {
@@ -116,7 +116,7 @@ namespace BL.Servers.CR.Logic.Slots
                 Packet.AddInt(this.Count - 1);
                 foreach (Items.Resource Resource in this.Skip(1))
                 {
-                    Packet.AddInt(Resource.Data);
+                    Packet.AddInt(Resource.Identifier);
                     Packet.AddInt(Resource.Value);
                 }
 

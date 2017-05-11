@@ -19,7 +19,7 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
         internal int Gems = 1;
         internal int Gold = 1;
 
-        internal Decks Cards = new Decks(null);
+        internal List<Card> Cards = new List<Card>();
 
         public Buy_Chest_Callback(Device _Client) : base(_Client)
         {

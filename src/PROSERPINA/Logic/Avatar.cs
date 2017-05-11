@@ -103,7 +103,7 @@ namespace BL.Servers.CR.Logic
 
             this.Resources = new Resources(this, true);
             this.Resources_Cap = new Resources(this, false);
-            this.Decks = new Decks(this, true);
+            this.Decks = new Decks(this);
 
             this.Achievements = new Achievements();
         }
@@ -254,6 +254,64 @@ namespace BL.Servers.CR.Logic
             }
         }
 
+        internal byte[] Battle
+        {
+            get
+            {
+                List<byte> _Packet = new List<byte>();
+
+                _Packet.AddVInt(this.UserHighId);
+
+                _Packet.AddVInt(this.UserLowId);
+
+                _Packet.AddVInt(this.UserHighId);
+
+                _Packet.AddVInt(this.UserLowId);
+
+                _Packet.AddVInt(this.UserHighId);
+
+                _Packet.AddVInt(this.UserLowId);
+
+                _Packet.AddString("Test"); // Name
+
+                _Packet.AddVInt(this.Arena); // Arena
+
+                _Packet.AddVInt(this.Trophies); // Trophies
+                _Packet.AddRange("AC04000AA38909BC33001E919133B82E000000".HexaToBytes());
+
+                _Packet.AddVInt(this.Device.Player.Avatar.Resources.Count);
+                _Packet.AddVInt(this.Device.Player.Avatar.Resources.Count);
+
+                foreach (var _Resource in this.Device.Player.Avatar.Resources.OrderBy(r => r.Identifier))
+                {
+                    _Packet.AddVInt(_Resource.Type);
+                    _Packet.AddVInt(_Resource.Identifier);
+                    _Packet.AddVInt(_Resource.Value);
+                }
+
+                _Packet.AddVInt(0); // Count
+
+                _Packet.AddVInt(this.Device.Player.Avatar.Achievements.Count); // Achievement Count
+
+                foreach (var _Achievement in this.Device.Player.Avatar.Achievements)
+                {
+                    _Packet.AddVInt(_Achievement.Type);
+                    _Packet.AddVInt(_Achievement.Identifier);
+                    _Packet.AddVInt(_Achievement.Value);
+                }
+
+                _Packet.AddVInt(this.Device.Player.Avatar.Achievements.Completed.Count);
+
+                _Packet.AddVInt(0); // Count 0506  stuff
+                _Packet.AddVInt(0); // Count 1a00 stuff
+
+                _Packet.AddVInt(0);
+                
+                _Packet.AddHexa("0A008D30AB10008D17A3147EB901");
+                return _Packet.ToArray();
+            }
+        }
+
         internal byte[] Profile
         {
             get
@@ -313,10 +371,10 @@ namespace BL.Servers.CR.Logic
                 _Packet.AddVInt(this.Resources.Count);
                 _Packet.AddVInt(this.Resources.Count);
 
-                foreach (Slots.Items.Resource _Resource in this.Resources.OrderBy(r => r.Data))
+                foreach (Slots.Items.Resource _Resource in this.Resources.OrderBy(r => r.Identifier))
                 {
                     _Packet.AddVInt(_Resource.Type);
-                    _Packet.AddVInt(_Resource.Data);
+                    _Packet.AddVInt(_Resource.Identifier);
                     _Packet.AddVInt(_Resource.Value);
                 }
 
@@ -326,7 +384,7 @@ namespace BL.Servers.CR.Logic
                 foreach (Achievement _Achievement in this.Achievements)
                 {
                     _Packet.AddVInt(_Achievement.Type);
-                    _Packet.AddVInt(_Achievement.Data);
+                    _Packet.AddVInt(_Achievement.Identifier);
                     _Packet.AddVInt(_Achievement.Value);
                 }
 

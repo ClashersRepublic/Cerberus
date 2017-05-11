@@ -11,7 +11,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
 {
     internal class Create_Clan : Message
     {
-        internal Clan Clan = Resources.Clans.New(0, Constants.Database, true);
+        internal Clan Clan = Resources.Clans.New(0, Constants.Database);
         public Create_Clan(Device Device, Reader Reader) : base(Device, Reader)
         {
 
@@ -29,6 +29,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
             this.Clan.War_History = this.Reader.ReadByte() > 0;
             this.Clan.War_Amical = this.Reader.ReadByte() > 0;
         }
+
         internal override void Process()
         {
             this.Device.Player.Avatar.ClanId = Clan.Clan_ID;

@@ -13,6 +13,7 @@ using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Packets.Messages.Server.Authentication;
 using BL.Servers.CoC.Packets.Messages.Server;
+using BL.Servers.CoC.Packets.Messages.Server.Clans;
 
 namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 {
@@ -102,7 +103,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
         {
             if (this.UserId == 0)
             {
-                this.Device.Player = Resources.Players.New();
+                this.Device.Player = Resources.Players.New(0, Constants.Database);
 
                 if (this.Device.Player != null)
                 {
@@ -174,20 +175,38 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                 }
             }
         }
+
         internal void Login()
         {
             this.Device.Player.Client = this.Device;
-            this.Device.Player.Avatar.Region = Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress = this.Device.IPAddress);
+            this.Device.Player.Avatar.Region =
+                Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress = this.Device.IPAddress);
 
             Resources.GChat.Add(this.Device);
             Resources.PRegion.Add(this.Device.Player);
 
-             new Authentication_OK(this.Device).Send();
-             new Own_Home_Data(this.Device).Send();
+            new Authentication_OK(this.Device).Send();
+            new Own_Home_Data(this.Device).Send();
             new Avatar_Stream(this.Device).Send();
-            //new Shutdown_Started(this.Device, 30).Send();
-            //new Inbox_Data(this.Device).Send();
 
+            if (this.Device.Player.Avatar.ClanId > 0)
+            {
+                Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
+
+                if (Alliance != null)
+                {
+                    new Alliance_Full_Entry(this.Device) {Clan = Alliance}.Send();
+
+                    //if (Alliance.Chat != null)
+                    {
+                        // new Clan_Stream(this.Device, Alliance).Send();
+                    }
+                }
+                else
+                {
+                    this.Device.Player.Avatar.ClanId = 0;
+                }
+            }
         }
     }
 }

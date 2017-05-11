@@ -262,12 +262,12 @@ namespace BL.Servers.CR.Extensions.Binary
 
             if (bytes?.Length > 0)
             {
-                var decompressedLength = base.ReadInt32();
-                var decompressedBytes = new byte[decompressedLength];
+                var decompressedLength = base.ReadUInt32();
+                var decompressedBytes = new byte[Convert.ToInt32(decompressedLength)];
 
                 using (var zlib = new ZlibStream(BaseStream, CompressionMode.Decompress))
                 {
-                    var count = zlib.Read(decompressedBytes, 0, decompressedLength);
+                    var count = zlib.Read(decompressedBytes, 0, Convert.ToInt32(decompressedLength));
                     Debug.Assert(count == decompressedLength);
                 }
 

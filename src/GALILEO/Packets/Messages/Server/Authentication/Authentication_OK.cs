@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.List;
 using BL.Servers.CoC.External.Blake2B;
 using BL.Servers.CoC.External.Sodium;
@@ -38,14 +39,14 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
 
             this.Data.AddString("prod");
 
-            this.Data.AddInt(3); //Session Count
-            this.Data.AddInt(490); //Playtime Second
+            this.Data.AddInt(avatar.Login_Count++); //Session Count
+            this.Data.AddInt((int)avatar.PlayTime.TotalSeconds); //Playtime Second
             this.Data.AddInt(0);
             
             this.Data.AddString(Logic.Structure.API.Facebook.ApplicationID);
 
-            this.Data.AddString("1482970881296"); // 14 75 26 87 86 11 24 33
-            this.Data.AddString("1482952262000"); // 14 78 03 95 03 10 0
+            this.Data.AddString(TimeUtils.ToJavaTimestamp(avatar.LastSave).ToString()); // 14 75 26 87 86 11 24 33
+            this.Data.AddString(TimeUtils.ToJavaTimestamp(avatar.Created).ToString()); // 14 78 03 95 03 10 0
 
             this.Data.AddInt(0);
             this.Data.AddString(avatar.Google.Identifier);

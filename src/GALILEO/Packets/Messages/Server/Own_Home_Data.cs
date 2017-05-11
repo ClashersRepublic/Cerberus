@@ -19,8 +19,8 @@ namespace BL.Servers.CoC.Packets.Messages.Server
         {
             using (Objects Home = new Objects(Avatar = this.Device.Player, Avatar.JSON))
             {
-                this.Data.AddInt(0);
-                this.Data.AddInt(0);
+                this.Data.AddInt((int)(Home.Timestamp - DateTime.UtcNow).TotalSeconds);
+                this.Data.AddInt(-1);
 
                 this.Data.AddRange(Home.ToBytes);
                 this.Data.AddRange(Avatar.Avatar.ToBytes);

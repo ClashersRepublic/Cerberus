@@ -187,9 +187,12 @@ namespace BL.Servers.CR.Core.Network.TCP
 
             Token.Aborting = true;
 
-            if (Resources.Players.ContainsValue(Token.Device.Player))
+            if (Token.Device.Player != null)
             {
-                Resources.Players.Remove(Token.Device.Player);
+                if (Resources.Players.ContainsValue(Token.Device.Player))
+                {
+                    Resources.Players.Remove(Token.Device.Player);
+                }
             }
             else if (!Token.Device.Connected())
             {

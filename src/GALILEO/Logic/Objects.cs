@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.List;
 
 namespace BL.Servers.CoC.Logic
@@ -8,6 +9,7 @@ namespace BL.Servers.CoC.Logic
     {
         internal Level Player;
         internal string Json;
+        internal DateTime Timestamp = DateTime.UtcNow;
 
         internal Objects(Level player, String Village)
         {
@@ -21,7 +23,7 @@ namespace BL.Servers.CoC.Logic
             {
                 List<byte> _Packet = new List<byte>();
 
-                _Packet.AddInt((int)Player.Avatar.LastTick.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+                _Packet.AddInt((int)TimeUtils.ToUnixTimestamp(Timestamp));
 
                 _Packet.AddLong(this.Player.Avatar.UserId);
 

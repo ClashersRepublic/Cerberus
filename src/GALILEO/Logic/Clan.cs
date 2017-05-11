@@ -22,7 +22,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("name")] internal string Name;
         [JsonProperty("desc")] internal string Description;
 
-        [JsonProperty("level")] internal int Level;
+        [JsonProperty("level")] internal int Level = 1;
         [JsonProperty("experience")] internal int Experience;
 
         [JsonProperty("win")] internal int Win_War;
@@ -69,7 +69,7 @@ namespace BL.Servers.CoC.Logic
             get
             {
                 List<byte> _Packet = new List<byte>();
-
+                
                 _Packet.AddLong(this.Clan_ID);
                 _Packet.AddString(this.Name);
 

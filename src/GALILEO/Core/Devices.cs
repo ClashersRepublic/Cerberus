@@ -10,7 +10,7 @@ namespace BL.Servers.CoC.Core
         {
             // Devices.
         }
-        
+
         internal void Add(Device Device)
         {
             if (this.ContainsKey(Device.SocketHandle))
@@ -22,22 +22,22 @@ namespace BL.Servers.CoC.Core
                 this.Add(Device.SocketHandle, Device);
             }
         }
-        
+
         internal void Remove(Device Device)
         {
             if (Device.Player != null)
             {
                 if (Resources.Players.ContainsValue(Device.Player))
                 {
-                    Resources.Players.Remove(Device.Player);
+                    if (Resources.Players.ContainsValue(Device.Player))
+                    {
+                        Resources.Players.Remove(Device.Player);
+                    }
                 }
             }
-            else
+            else if (this.ContainsKey(Device.SocketHandle))
             {
-                if (this.ContainsKey(Device.SocketHandle))
-                {
-                    this.Remove(Device.SocketHandle);
-                }
+                this.Remove(Device.SocketHandle);
 
                 try
                 {

@@ -98,9 +98,7 @@ namespace BL.Servers.CoC.Core
             {
                 List<Device> DeadSockets = new List<Device>();
 #if DEBUG
-                Loggers.Log(
-                    Utils.Padding(this.GetType().Name, 6) + " : DeadSocket executed at " + DateTime.Now.ToString("T") +
-                    ".", true);
+                Loggers.Log(Utils.Padding(this.GetType().Name, 6) + " : DeadSocket executed at " + DateTime.Now.ToString("T") + ".", true);
 #endif
                 foreach (Device Device in Resources.Devices.Values.ToList())
                 {

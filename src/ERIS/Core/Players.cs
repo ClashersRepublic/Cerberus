@@ -49,13 +49,15 @@ namespace BL.Servers.BB.Core
             if (this.Remove(Player.Avatar.UserId))
             {
                 this.Save(Player);
+                Player.Client.Player = null;
             }
 
             if (Player.Client != null)
             {
                 if (Resources.Devices.ContainsKey(Player.Client.SocketHandle))
                 {
-                    Resources.Gateway.Disconnect(Player.Client.Token.Args);
+                    Resources.Devices.Remove(Player.Client);
+                    Player.Client = null;
                 }
             }
         }

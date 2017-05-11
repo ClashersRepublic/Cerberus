@@ -38,7 +38,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 #if DEBUG
                 Loggers.Log($"Building: Unlocking {name} with ID {BuildingId}", true);
 #endif
-                if (string.Equals(name, "Alliance Castle"))
+                if (bd.IsAllianceCastle())
                 {
                     var a = (Building)this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId);
                     var al = a.GetBuildingData();
