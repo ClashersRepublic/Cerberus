@@ -47,9 +47,9 @@ namespace BL.Servers.CoC.Files.CSV_Helpers
                 case 8:
                     _Data = new Obstacles(_Row, this);
                     break;
-                //case 11:
-                //  _Data = new Experience_Levels(_Row, this);
-                //break;*/
+                case 11:
+                    _Data = new Experience_Levels(_Row, this);
+                    break;
                 case 12:
                     _Data = new Traps(_Row, this);
                     break;

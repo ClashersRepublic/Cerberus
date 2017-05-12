@@ -19,6 +19,7 @@ namespace BL.Servers.CoC.Core
         internal NPC Npc;
         internal Timers Timers;
         internal Redis Redis;
+        internal Fingerprint Fingerprint;
         internal Test Test;
         internal Classes()
         {
@@ -28,6 +29,7 @@ namespace BL.Servers.CoC.Core
             this.CSV = new CSV();
             this.Home = new Home();
             this.Npc = new NPC();
+            this.Fingerprint = new Fingerprint();
             switch (Constants.Database)
             {
                 case DBMS.Redis:

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ionic.Zlib;
-using BL.Servers.CoC.Core;
 using BL.Servers.CoC.Files.CSV_Helpers;
+using BL.Servers.CoC.Logic.Structure.Slots;
+using BL.Servers.CoC.Logic.Structure.Slots.Items;
+using Resources = BL.Servers.CoC.Core.Resources;
 
 namespace BL.Servers.CoC.Extensions.List
 {
@@ -105,6 +107,16 @@ namespace BL.Servers.CoC.Extensions.List
 
             _Writer.AddInt(Reference);
             _Writer.AddInt(RowIndex);
+        }
+
+        internal static void AddDataSlots(this List<byte> _Packet, List<Slot> data)
+        {
+            _Packet.AddInt(data.Count);
+            foreach (var dataSlot in data)
+            {
+                _Packet.AddInt(dataSlot.Data);
+                _Packet.AddInt(dataSlot.Count);
+            }
         }
 
         internal static void Shuffle<T>(this IList<T> List)

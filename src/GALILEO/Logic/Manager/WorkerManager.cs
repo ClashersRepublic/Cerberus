@@ -55,9 +55,8 @@ namespace BL.Servers.CoC.Logic.Manager
                         b.SpeedUpConstruction();
                     else
                     {
-                        //var hero = b.GetHeroBaseComponent();
-                        //if (hero != null)
-                          //  hero.SpeedUpUpgrade();
+                        var hero = b.GetHeroBaseComponent();
+                        hero?.SpeedUpUpgrade();
                     }
                 }
             }
@@ -88,12 +87,12 @@ namespace BL.Servers.CoC.Logic.Manager
                         }
                         else
                         {
-                            //var hero = c.GetHeroBaseComponent();
-                            //if (hero != null)
+                            var hero = c.GetHeroBaseComponent();
+                            if (hero != null)
                             {
-                              //  if (hero.IsUpgrading())
+                                if (hero.IsUpgrading())
                                 {
-                            //        currentGOTime = hero.GetRemainingUpgradeSeconds();
+                                    currentGOTime = hero.GetRemainingUpgradeSeconds();
                                 }
                             }
                         }

@@ -50,7 +50,7 @@ namespace Pluto
                     .Hash();
             var str1 = str.TrimEnd(',') + "],\"sha\":\"" + dateTimehash + "\",\"version\":\"" + Version + "\"}";
             var textWriter =
-                new StreamWriter(new FileStream(Path.Combine(args[2], "fingerprint.json"), FileMode.OpenOrCreate),
+                new StreamWriter(new FileStream(Path.Combine(args[2], "fingerprint.json"), FileMode.CreateNew),
                     new UTF8Encoding(false));
             textWriter.Write(str1);
             textWriter.Dispose();

@@ -243,7 +243,9 @@
     <Compile Include="Files\CSV_Logic\Combat_Item.cs" />
     <Compile Include="Files\CSV_Logic\Constructions_Item.cs" />
     <Compile Include="Files\CSV_Logic\Decos.cs" />
+    <Compile Include="Files\CSV_Logic\Experience_Levels.cs" />
     <Compile Include="Files\CSV_Logic\Globals.cs" />
+    <Compile Include="Files\CSV_Logic\Heroes.cs" />
     <Compile Include="Files\CSV_Logic\Missions.cs" />
     <Compile Include="Files\CSV_Logic\Npcs.cs" />
     <Compile Include="Files\CSV_Logic\Obstacles.cs" />
@@ -256,9 +258,11 @@
     <Compile Include="Files\CSV_Reader\Row.cs" />
     <Compile Include="Files\CSV_Reader\RowCollection.cs" />
     <Compile Include="Files\CSV_Reader\Table.cs" />
+    <Compile Include="Files\Fingerprint.cs" />
     <Compile Include="Files\Home.cs" />
     <Compile Include="Files\NPC.cs" />
     <Compile Include="Logic\Clan.cs" />
+    <Compile Include="Logic\Components\Hero_Base_Component.cs" />
     <Compile Include="Logic\Enums\Hiring.cs" />
     <Compile Include="Logic\Enums\Resource.cs" />
     <Compile Include="Logic\Enums\Role.cs" />
@@ -301,7 +305,9 @@
     <Compile Include="Logic\Structure\Slots\Members.cs" />
     <Compile Include="Logic\Structure\Slots\Npcs.cs" />
     <Compile Include="Logic\Structure\Slots\Resources.cs" />
+    <Compile Include="Logic\Structure\Slots\Slots.cs" />
     <Compile Include="Logic\Structure\Slots\Units.cs" />
+    <Compile Include="Logic\Structure\Slots\Upgrades.cs" />
     <Compile Include="Logic\Structure\Timer.cs" />
     <Compile Include="Logic\Structure\Trap.cs" />
     <Compile Include="Packets\Command.cs" />

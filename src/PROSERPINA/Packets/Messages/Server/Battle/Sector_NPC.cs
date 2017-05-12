@@ -100,19 +100,12 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
             this.Data.AddVInt(0);
             this.Data.AddVInt(0);
             this.Data.AddVInt(1);
-            this.Data.AddVInt(5);
-            this.Data.AddVInt(0);
-            this.Data.AddVInt(5);
-            this.Data.AddVInt(1);
-            this.Data.AddVInt(5);
-            this.Data.AddVInt(2);
-            this.Data.AddVInt(5);
-            this.Data.AddVInt(3);
-            this.Data.AddVInt(5);
-            this.Data.AddVInt(4);
 
-            this.Data.AddVInt(5);
-            this.Data.AddVInt(5);
+            for (int Index = 0; Index < Count; Index++)
+            {
+                this.Data.AddVInt(5);
+                this.Data.AddVInt(Index);
+            }
 
             this.Data.AddVInt(12); //Level Tower R
             this.Data.AddVInt(13); //Prefixed

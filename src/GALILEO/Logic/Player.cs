@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.List;
 using BL.Servers.CoC.Files.CSV_Helpers;
+using BL.Servers.CoC.Files.CSV_Logic;
 using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Logic.Structure.API;
 using BL.Servers.CoC.Logic.Structure.Slots;
 using BL.Servers.CoC.Logic.Structure.Slots.Items;
 using Newtonsoft.Json;
+using Npcs = BL.Servers.CoC.Logic.Structure.Slots.Npcs;
+using Resource = BL.Servers.CoC.Logic.Enums.Resource;
 
 namespace BL.Servers.CoC.Logic
 {
@@ -83,6 +86,7 @@ namespace BL.Servers.CoC.Logic
 
         [JsonProperty("bookmarks")] internal List<long> Bookmarks = new List<long>();
         [JsonProperty("tutorials")] internal List<int> Tutorials = new List<int>();
+        [JsonProperty("last_search_enemy_id")] internal List<long> Last_Attack_Enemy_ID = new List<long>();
         [JsonProperty("account_locked")] internal bool Locked = false;
 
 
@@ -90,6 +94,15 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("spells")] internal Units Spells;
         [JsonProperty("alliance_units")] internal Units Castle_Units;
         [JsonProperty("alliance_spells")] internal Units Castle_Spells;
+
+
+        [JsonProperty("unit_upgrades")] internal Upgrades Unit_Upgrades;
+        [JsonProperty("spell_upgrades")] internal Upgrades Spell_Upgrades;
+        [JsonProperty("hereos_upgrades")] internal Upgrades Heroes_Upgrades;
+
+        [JsonProperty("heroes_states")] internal Slots Heroes_States;
+        [JsonProperty("hereos_health")] internal Slots Heroes_Health;
+        [JsonProperty("hereos_modes")] internal Slots Heroes_Modes;
 
         [JsonProperty("resources")] internal Resources Resources;
         [JsonProperty("resources_cap")] internal Resources Resources_Cap;
@@ -125,6 +138,14 @@ namespace BL.Servers.CoC.Logic
             this.Spells = new Units(this);
             this.Castle_Units = new Units(this);
             this.Castle_Spells = new Units(this);
+
+            this.Unit_Upgrades = new Upgrades(this);
+            this.Spell_Upgrades = new Upgrades(this);
+            this.Heroes_Upgrades = new Upgrades(this);
+            
+            this.Heroes_Health = new Slots();
+            this.Heroes_Modes = new Slots();
+            this.Heroes_States = new Slots();
         }
 
         internal Player(long UserId)
@@ -144,6 +165,14 @@ namespace BL.Servers.CoC.Logic
             this.Spells = new Units(this);
             this.Castle_Units = new Units(this);
             this.Castle_Spells = new Units(this);
+
+            this.Unit_Upgrades = new Upgrades(this);
+            this.Spell_Upgrades = new Upgrades(this);
+            this.Heroes_Upgrades = new Upgrades(this);
+
+            this.Heroes_Health = new Slots();
+            this.Heroes_Modes = new Slots();
+            this.Heroes_States = new Slots();
         }
 
         internal byte[] ToBytes
@@ -242,34 +271,18 @@ namespace BL.Servers.CoC.Logic
 
                 _Packet.AddBool(this.NameState > 1);
 
-                _Packet.AddInt(this.Resources_Cap.Count);
-                foreach (Slot _Resource in this.Resources_Cap)
-                {
-                    _Packet.AddInt(_Resource.Data);
-                    _Packet.AddInt(_Resource.Count);
-                }
+                _Packet.AddDataSlots(this.Resources_Cap);
 
                 _Packet.AddRange(this.Resources.ToBytes);
 
-                _Packet.AddInt(this.Units.Count);
-                foreach (Slot _Unit in this.Units)
-                {
-                    _Packet.AddInt(_Unit.Data);
-                    _Packet.AddInt(_Unit.Count);
-                }
+                _Packet.AddDataSlots(this.Units);
+                _Packet.AddDataSlots(this.Spells);
+                _Packet.AddDataSlots(this.Unit_Upgrades);
+                _Packet.AddDataSlots(this.Spell_Upgrades);
 
-                _Packet.AddInt(this.Spells.Count);
-                foreach (Slot _Spell in this.Spells)
-                {
-                    _Packet.AddInt(_Spell.Data);
-                    _Packet.AddInt(_Spell.Count);
-                }
-
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
+                _Packet.AddDataSlots(this.Heroes_Upgrades);
+                _Packet.AddDataSlots(this.Heroes_Health);
+                _Packet.AddDataSlots(this.Heroes_States);
 
                 _Packet.AddInt(this.Castle_Units.Count + this.Castle_Spells.Count);
 
@@ -313,6 +326,11 @@ namespace BL.Servers.CoC.Logic
             }
             
         }
+
+        public static int GetDataIndex(List<Slot> dsl, Data d) => dsl.FindIndex(ds => ds.Data == d.Id);
+
+        public static int GetDataIndex(Units dsl, Data d) => dsl.FindIndex(ds => ds.Data == d.Id);
+
         internal void Add_Unit(int Data, int Count)
         {
             int _Index = this.Units.FindIndex(U => U.Data == Data);
@@ -326,6 +344,121 @@ namespace BL.Servers.CoC.Logic
                 this.Units.Add(new Slot(Data, Count));
             }
         }
+
+        public int GetUnitUpgradeLevel(Combat_Item cd)
+        {
+            int result = 0;
+            switch (cd.GetCombatItemType())
+            {
+                case 2:
+                {
+                    int index = GetDataIndex(this.Heroes_Upgrades, cd);
+                    if (index != -1)
+                    {
+                        result = this.Heroes_Upgrades[index].Count;
+                    }
+                    break;
+                }
+                case 1:
+                {
+                    int index = GetDataIndex(this.Spell_Upgrades, cd);
+                    if (index != -1)
+                    {
+                        result = this.Spell_Upgrades[index].Count;
+                    }
+                    break;
+                }
+
+                default:
+                {
+                    int index = GetDataIndex(this.Unit_Upgrades, cd);
+                    if (index != -1)
+                    {
+                        result = this.Unit_Upgrades[index].Count;
+                    }
+                    break;
+                }
+            }
+            return result;
+        }
+
+        public void SetUnitUpgradeLevel(Combat_Item cd, int level)
+        {
+            switch (cd.GetCombatItemType())
+            {
+                case 2:
+                {
+                    int index = GetDataIndex(this.Heroes_Upgrades, cd);
+                    if (index != -1)
+                    {
+                        this.Heroes_Upgrades[index].Count = level;
+                    }
+                    else
+                    {
+                        Slot ds = new Slot(cd.GetGlobalID(), level);
+                        this.Heroes_Upgrades.Add(ds);
+                    }
+                    break;
+                }
+                case 1:
+                {
+                    int index = GetDataIndex(this.Spell_Upgrades, cd);
+                    if (index != -1)
+                    {
+                        this.Spell_Upgrades[index].Count = level;
+                    }
+                    else
+                    {
+                        Slot ds = new Slot(cd.GetGlobalID(), level);
+                        this.Spell_Upgrades.Add(ds);
+                    }
+                    break;
+                }
+                default:
+                {
+                    int index = GetDataIndex(this.Unit_Upgrades, cd);
+                    if (index != -1)
+                    {
+                        this.Unit_Upgrades[index].Count = level;
+                    }
+                    else
+                    {
+                        Slot ds = new Slot(cd.GetGlobalID(), level);
+                        this.Unit_Upgrades.Add(ds);
+                    }
+                    break;
+                }
+            }
+        }
+
+        public void SetHeroHealth(Heroes hd, int health)
+        {
+            int index = GetDataIndex(this.Heroes_Health, hd);
+            if (index == -1)
+            {
+                Slot ds = new Slot(hd.GetGlobalID(), health);
+                this.Heroes_Health.Add(ds);
+            }
+            else
+            {
+                this.Heroes_Health[index].Count = health;
+            }
+        }
+
+        public void SetHeroState(Heroes hd, int state)
+        {
+            int index = GetDataIndex(this.Heroes_States, hd);
+            if (index == -1)
+            {
+                Slot ds = new Slot(hd.GetGlobalID(), state);
+                this.Heroes_States.Add(ds);
+            }
+            else
+            {
+                this.Heroes_States[index].Count = state;
+            }
+        }
+
         public void CommodityCountChangeHelper(int commodityType, Data data, int count)
         {
             if (data.Type == 2)
@@ -351,6 +484,7 @@ namespace BL.Servers.CoC.Logic
         }
 
         public bool HasEnoughResources(Resource resource, int buildCost) => this.Resources.Get(resource) >= buildCost;
+
         public bool HasEnoughResources(int globalId, int buildCost) => this.Resources.Get(globalId) >= buildCost;
 
     }

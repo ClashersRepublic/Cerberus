@@ -17,12 +17,13 @@ namespace BL.Servers.CoC.Files
             CSV.Gamefiles.Add((int)Gamefile.Resources, @"Gamefiles/logic/resources.csv");
             CSV.Gamefiles.Add((int)Gamefile.Characters, @"Gamefiles/logic/characters.csv");
             CSV.Gamefiles.Add((int)Gamefile.Obstacles, @"Gamefiles/logic/obstacles.csv");
-            //CSV.Gamefiles.Add(11, @"Gamefiles/logic/experience_levels.csv");
+            CSV.Gamefiles.Add((int)Gamefile.Experience_Levels, @"Gamefiles/logic/experience_levels.csv");
             CSV.Gamefiles.Add((int)Gamefile.Traps, @"Gamefiles/logic/traps.csv");
             CSV.Gamefiles.Add((int)Gamefile.Globals, @"Gamefiles/logic/globals.csv");
             CSV.Gamefiles.Add((int)Gamefile.Npcs, @"Gamefiles/logic/npcs.csv");
             CSV.Gamefiles.Add((int)Gamefile.Decos, @"Gamefiles/logic/decos.csv");
             CSV.Gamefiles.Add((int)Gamefile.Missions, @"Gamefiles/logic/missions.csv");
+            CSV.Gamefiles.Add((int)Gamefile.Heroes, @"Gamefiles/logic/heroes.csv");
             CSV.Tables = new Gamefiles();
 
             //Parallel.ForEach(CSV.Gamefiles, File => //Parallel is slower in this case (When we have load csv it will help)

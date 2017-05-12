@@ -7,6 +7,7 @@ using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.List;
 using BL.Servers.CoC.External.Blake2B;
 using BL.Servers.CoC.External.Sodium;
+using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
 
@@ -23,25 +24,24 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
 
 
         internal Reason Reason = Reason.Default;
+        internal string PatchingHost => Fingerprint.Custom ? "http://192.168.0.5/" : "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
 
-        internal string ContentUrl;
         internal string Message;
         internal string RedirectDomain;
-        internal string FingerprintData;
 
         internal int Time;
 
         internal override void Encode()
         {
             this.Data.AddInt((int)this.Reason);
-            this.Data.AddString(null);
+            this.Data.AddString(Fingerprint.Json);
             this.Data.AddString(this.RedirectDomain);
-            this.Data.AddString(this.ContentUrl);
+            this.Data.AddString("http://192.186.0.5");
             this.Data.AddString(Constants.UpdateServer);
             this.Data.AddString(this.Message);
             this.Data.AddInt(this.Time);
             this.Data.AddByte(0);
-            this.Data.AddCompressed(this.Reason == Reason.Patch ? this.FingerprintData : null, false);
+            this.Data.AddCompressed(this.Reason == Reason.Patch ? Fingerprint.Json : null, false);
             this.Data.AddInt(-1);
             this.Data.AddInt(-1);
             this.Data.AddInt(-1);

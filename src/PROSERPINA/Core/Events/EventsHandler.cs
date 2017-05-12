@@ -50,7 +50,6 @@ namespace BL.Servers.CR.Core.Events
                         {
                             if (_Player != null)
                             {
-                                Resources.Players.Save(_Player);
                                 Resources.Players.Remove(_Player);
                                 Redis.Players.KeyDelete(_Player.Avatar.UserId.ToString());
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Files.CSV_Helpers;
 using BL.Servers.CoC.Files.CSV_Logic;
@@ -46,6 +47,15 @@ namespace BL.Servers.CoC.Logic.Structure
             if (comp != null && comp.Type != -1)
             {
                 return (Resource_Storage_Component)comp;
+            }
+            return null;
+        }
+        public Hero_Base_Component GetHeroBaseComponent(bool enabled = false)
+        {
+            Component comp = GetComponent(10, enabled);
+            if (comp != null && comp.Type != -1)
+            {
+                return (Hero_Base_Component)comp;
             }
             return null;
         }
@@ -107,8 +117,15 @@ namespace BL.Servers.CoC.Logic.Structure
             }
 
             int constructionTime = GetConstructionItemData().GetConstructionTime(GetUpgradeLevel());
-            int exp = (int)Math.Sqrt(constructionTime);
-           //this.Level.Avatar.AddExperience(exp);
+            this.Level.Avatar.AddExperience((int)Math.Pow(constructionTime, 0.5f));
+            if (GetHeroBaseComponent(true) != null)
+            {
+                Buildings data = (Buildings)GetData();
+                Heroes hd = CSV.Tables.Get(Gamefile.Heroes).GetData(data.HeroType) as Heroes;
+                Avatar.Avatar.SetUnitUpgradeLevel(hd, 0);
+                Avatar.Avatar.SetHeroHealth(hd, 0);
+                Avatar.Avatar.SetHeroState(hd, 3);
+            }
         }
 
         public int GetRemainingConstructionTime() => this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick);
@@ -159,15 +176,15 @@ namespace BL.Servers.CoC.Logic.Structure
             {
                 Player ca = this.Level.Avatar;
                 int remainingSeconds = this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick);
-                //int cost = GameTools.GetSpeedUpCost(remainingSeconds);
-                //if (ca.Resources.Gems >= cost)
+                int cost = GameUtils.GetSpeedUpCost(remainingSeconds);
+                if (ca.Resources.Gems >= cost)
                 {
-                  //  ca.Resources.Minus(Enums.Resource.Diamonds, cost);
+                    ca.Resources.Minus(Enums.Resource.Diamonds, cost);
                     FinishConstruction();
                 }
             }
         }
-        
+
         public void StartConstructing(Vector vector)
         {
             X = (int)vector.X;

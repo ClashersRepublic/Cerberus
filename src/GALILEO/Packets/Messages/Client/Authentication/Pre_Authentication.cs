@@ -1,6 +1,7 @@
 ﻿using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions.Binary;
+using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Packets.Messages.Server.Authentication;
 
@@ -41,12 +42,12 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
             {
                 //if (!Constants.Maintenance)
                 {
-                    // if (string.Equals(this.Hash, Fingerprint.Sha))
-                    // {
-                    new Pre_Authentication_OK(this.Device).Send();
-                    //}
-                    //else
-                    //  new Authentification_Failed(this.Device, Reason.Patch).Send();
+                    if (string.Equals(this.Hash, Fingerprint.Sha))
+                    {
+                        new Pre_Authentication_OK(this.Device).Send();
+                    }
+                    else
+                        new Authentication_Failed(this.Device, Reason.Patch).Send();
                     //   }
                     // else
                     //   new Authentification_Failed(this.Device, Reason.Maintenance).Send();
