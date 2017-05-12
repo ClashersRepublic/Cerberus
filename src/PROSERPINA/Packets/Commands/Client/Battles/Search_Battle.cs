@@ -58,20 +58,20 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
                     { 
                       Battle  = Battle,
                     }.Send();
-                   // new UDP_Connection_Info(Battle.Player1.Device).Send();
+                    //new UDP_Connection_Info(Battle.Player1.Device).Send();
 
                     // Player 2
                     new Sector_PC(Battle.Player2.Device)
                     {
                         Battle = Battle,
                     }.Send();
-                  //  new UDP_Connection_Info(Battle.Player2.Device).Send();
+                    //new UDP_Connection_Info(Battle.Player2.Device).Send();
                 }
             }
             else
             {
-                new Matchmake_Failed(Device).Send();
-                new Cancel_Battle_OK(Device).Send();
+                new Matchmake_Failed(this.Device).Send();
+                new Cancel_Battle_OK(this.Device).Send();
             }
         }
     }

@@ -130,17 +130,17 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
                         else if (this.Device.Player.Avatar.Banned)
                         {
                             this.Reason = new StringBuilder();
-                            this.Reason.AppendLine("Your Player have been banned on our servers, please contact one of the BarbarianLand staff with these following informations if you are not satisfied with the ban:");
+                            this.Reason.AppendLine("You have been banned from our servers, please contact one of the BarbarianLand staff members with these following information if you are not happy with the ban:");
                             this.Reason.AppendLine();
-                            this.Reason.AppendLine("Your Player Name         : " + this.Device.Player.Avatar.Username + ".");
-                            this.Reason.AppendLine("Your Player ID           : " + this.Device.Player.Avatar.UserHighId + "-" + this.Device.Player.Avatar.UserLowId + ".");
-                            this.Reason.AppendLine("Your Player Ban Duration : " + Math.Round((this.Device.Player.Avatar.BanTime - DateTime.UtcNow).TotalDays, 3) + " Day.");
-                            this.Reason.AppendLine("Your Player Unlock Date  : " + this.Device.Player.Avatar.BanTime);
+                            this.Reason.AppendLine("Your Name: " + this.Device.Player.Avatar.Username + ".");
+                            this.Reason.AppendLine("Your ID: " + this.Device.Player.Avatar.UserHighId + "-" + this.Device.Player.Avatar.UserLowId + ".");
+                            this.Reason.AppendLine("Your Ban Duration: " + Math.Round((this.Device.Player.Avatar.BanTime - DateTime.UtcNow).TotalDays, 3) + " Day.");
+                            this.Reason.AppendLine("Your Unlock Date: " + this.Device.Player.Avatar.BanTime);
                             this.Reason.AppendLine();
 
                             new Authentification_Failed(this.Device, Logic.Enums.Reason.Banned)
                             {
-                                Message = Reason.ToString()
+                                Message = this.Reason.ToString()
                             }.Send();
                         }
                         else
@@ -156,9 +156,9 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
                 else
                 {
                     this.Reason = new StringBuilder();
-                    this.Reason.AppendLine("Your Device have been block from accessing our servers due to invalid Id, please  clear your game data or contact one of the BarbarianLand staff with these following informations if you are not able to clear you game data :");
-                    this.Reason.AppendLine("Your Device IP         : " + this.Device.IPAddress +  ".");
-                    this.Reason.AppendLine("Your Requested ID       : " + this.UserId  + ".");
+                    this.Reason.AppendLine("You have been block from accessing our servers due to invalid id, please clear your game data or contact one of the BarbarianLand staff members with these following information if you are not able to clear you game data:");
+                    this.Reason.AppendLine("Your IP: " + this.Device.IPAddress +  ".");
+                    this.Reason.AppendLine("Your ID: " + this.UserId  + ".");
                     this.Reason.AppendLine();
 
                     new Authentification_Failed(this.Device, Logic.Enums.Reason.Banned)
@@ -171,16 +171,12 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
 
         internal void Login()
         {
-          //  new Authentification_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
-
             this.Device.Player.Client = this.Device;
             this.Device.Player.Avatar.Device = this.Device;
 
             new Authentification_OK(this.Device).Send();
             new Own_Home_Data(this.Device).Send();
-            //new Shutdown_Started(this.Device, 30).Send();
             new Inbox_Data(this.Device).Send();
-
         }
     }
 }

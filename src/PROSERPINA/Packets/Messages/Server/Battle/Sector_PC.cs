@@ -21,8 +21,10 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
         {
             this.Data.AddBool(false);
             this.Data.AddHexa("0021A381A2900B0B00F3660944F693DC890701");
+
             Console.WriteLine(this.Battle.Player1 == this.Device.Player.Avatar);
             Console.WriteLine(this.Battle.Player1.UserId);
+
             if (this.Battle.Player1 == this.Device.Player.Avatar)
             {
                 Console.WriteLine("Sup");
@@ -34,7 +36,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
                 this.Data.AddVInt(this.Battle.Player2.UserLowId);
 
                 this.Data.AddString(this.Battle.Player2.Username);
-                this.Data.AddByte(11); //Arena?
+                this.Data.AddByte(21); //Arena?
                 this.Data.AddVInt(4000); //Trophy
 
                 this.Data.AddVInt(0);

@@ -17,7 +17,10 @@ namespace BL.Servers.CR.Packets
             Commands = new Dictionary<int, Type>
             {
                 {1, typeof(Place_Troop)},
+                {500, typeof(Move_Card)},
+                //{504, typeof(Upgrade_Card)},
                 {505, typeof(Open_Free_Chest)},
+                {513, typeof(Card_Seen)},
                 {516, typeof(Buy_Chest)},
                 {525, typeof(Search_Battle)},
                 {526, typeof(Next_Card)},

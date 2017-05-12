@@ -76,6 +76,7 @@ namespace BL.Servers.CR.Logic
         [JsonProperty("resources_cap")] internal Resources Resources_Cap;
         [JsonProperty("decks")] internal Decks Decks;
         [JsonProperty("achievements")] internal Achievements Achievements;
+        [JsonProperty("chests")] internal Chests Chests;
 
         [JsonProperty("account_locked")] internal bool Locked = false;
 
@@ -94,6 +95,7 @@ namespace BL.Servers.CR.Logic
             this.Decks = new Decks(this);
 
             this.Achievements = new Achievements();
+            this.Chests = new Chests();
         }
 
         internal Avatar(long UserId)
@@ -106,6 +108,7 @@ namespace BL.Servers.CR.Logic
             this.Decks = new Decks(this);
 
             this.Achievements = new Achievements();
+            this.Chests = new Chests();
         }
 
         internal byte[] Components
@@ -129,11 +132,13 @@ namespace BL.Servers.CR.Logic
 
                 _Packet.AddVInt(0);
                 _Packet.AddVInt(1);
-                _Packet.AddVInt(8);
-
-                foreach (Card _Card in this.Decks.GetRange(0, 8))
                 {
-                    _Packet.AddVInt(_Card.GId);
+                    _Packet.AddVInt(8);
+
+                    foreach (Card _Card in this.Decks.GetRange(0, 8))
+                    {
+                        _Packet.AddVInt(_Card.GId);
+                    }
                 }
 
                 _Packet.Add(255); // Deck Thingy
@@ -141,6 +146,7 @@ namespace BL.Servers.CR.Logic
                 _Packet.AddRange(this.Decks.ToBytes());
 
                 _Packet.AddVInt(this.Decks.Count - 8);
+
                 foreach (Card _Card in this.Decks.Skip(8))
                 {
                     _Packet.AddVInt(_Card.ID);
@@ -190,9 +196,19 @@ namespace BL.Servers.CR.Logic
 
                 #endregion
 
+                //_Packet.AddVInt(0);
+                //_Packet.AddVInt(4);
+
+                //_Packet.AddRange(this.Chests.ToBytes());
+
                 _Packet.AddHexa("00 04 01 13 03 00 09 06 00 00".Replace(" ", "")); // Chest 1
 
                 _Packet.AddHexa("00 04 13 03 00 0B 06 01 00 00 00 80 94 23 80 94 23 93 E9 8C 90 0B 00 00 7F 01 13 07 01 02 00 7F 00 00 00 00 00 00 00 00 00 00 00 00 00 00 B8 E3 D1 01 84 F7 D2 01 B9 C6 95 90 0B B8 E3 D1 01 84 F7 D2 01 B9 C6 95 90 0B".Replace(" ", "")); // Chest 2
+
+                //_Packet.AddVInt(287600);
+                //_Packet.AddVInt(288000);
+
+                //_Packet.AddVInt(TimeStamp);
 
                 _Packet.AddVInt(0);
                 _Packet.AddVInt(0);

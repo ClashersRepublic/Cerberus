@@ -40,6 +40,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
             this.Data.AddVInt((int)this.Reason);
             this.Data.AddString(null); //Finger
             this.Data.AddString(this.PatchingHost);
+            this.Data.AddString(null);
             this.Data.AddString(this.Reason != Reason.Patch ? this.UpdateHost : null);
             this.Data.AddString(this.Message);
             this.Data.AddVInt((int)TimeSpan.FromMinutes(5).Seconds);

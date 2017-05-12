@@ -8,12 +8,15 @@ using BL.Servers.CR.Logic;
 
 namespace BL.Servers.CR.Packets.Commands.Client.Cards
 {
-    internal class New_Card_Seen_Deck : Command
+    internal class Move_Card : Command
     {
         internal int Tick = 0;
+        internal int Position = 0;
+        internal int ID;
 
-        public New_Card_Seen_Deck(Reader Reader, Device Device, int ID) : base(Reader, Device, ID)
+        public Move_Card(Reader Reader, Device Device, int _ID) : base(Reader, Device, _ID)
         {
+            
         }
 
         internal override void Decode()
@@ -22,6 +25,14 @@ namespace BL.Servers.CR.Packets.Commands.Client.Cards
             this.Tick = this.Reader.ReadRRInt32();
 
             this.Reader.ReadInt16();
+
+            this.ID = this.Reader.ReadRRInt32();
+            this.Position = this.Reader.ReadRRInt32();
+        }
+
+        internal override void Process()
+        {
+            this.Device.Player.Avatar.Decks.Invert(this.ID, this.Position);
         }
     }
 }

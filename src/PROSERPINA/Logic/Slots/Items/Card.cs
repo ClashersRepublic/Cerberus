@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BL.Servers.CR.Files;
+using BL.Servers.CR.Files.CSV_Logic;
+using BL.Servers.CR.Logic.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -32,6 +35,49 @@ namespace BL.Servers.CR.Logic.Slots.Items
             this.Count = _Count;
             this.Level = _Level;
             this.New = _isNew;
+        }
+
+        public void Upgrade()
+        {
+            if (this.Type == 26)
+            {
+                Console.WriteLine("Card Type is 26");
+
+                Spells_Characters _Card = CSV.Tables.Get(Gamefile.Spells_Characters).GetDataWithID(this.ID) as Spells_Characters;
+                //Rarities _Rarity = CSV.Tables.Get(Gamefile.Rarities).GetData(_Card.Rarity) as Rarities;
+
+                //if (this.Level < _Rarity.LevelCount)
+                //{
+                //    this.Count -= _Rarity.UpgradeMaterialCount[this.Level];
+                //    this.Level++;
+                //}
+            }
+            else if (this.Type == 27)
+            {
+                Console.WriteLine("Card Type is 27");
+
+                //Spells_Buildings _Card = CSV.Tables.Get(Gamefile.Spells_Buildings).GetDataWithID(this.ID) as Spells_Buildings;
+                //Rarities _Rarity = CSV.Tables.Get(Gamefile.Rarities).GetData(_Card.Rarity) as Rarities;
+
+                //if (this.Level < _Rarity.LevelCount)
+                //{
+                //    this.Count -= _Rarity.UpgradeMaterialCount[this.Level];
+                //    this.Level++;
+                //}
+            }
+            else if (this.Type == 28)
+            {
+                Console.WriteLine("Card Type is 28");
+
+                //Spells_Others _Card = CSV.Tables.Get(Gamefile.Spells_Others).GetDataWithID(this.ID) as Spells_Others;
+                //Rarities _Rarity = CSV.Tables.Get(Gamefile.Rarities).GetData(_Card.Rarity) as Rarities;
+
+                //if (this.Level < _Rarity.LevelCount)
+                //{
+                //    this.Count -= _Rarity.UpgradeMaterialCount[this.Level];
+                //    this.Level++;
+                //}
+            }
         }
     }
 }

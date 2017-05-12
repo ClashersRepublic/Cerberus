@@ -25,7 +25,7 @@ namespace BL.Servers.CR.Logic.Slots
         {
             if (this.Contains(_Card))
             {
-                int _Index = this.FindIndex(Card => Card.ID == _Card.ID);
+                int _Index = this.FindIndex(Card => Card.ID == _Card.ID && Card.Type == _Card.Type);
 
                 if (_Index > -1)
                 {
@@ -48,7 +48,7 @@ namespace BL.Servers.CR.Logic.Slots
 
             if (this.Contains(_Card))
             {
-                int _Index = this.FindIndex(Card => Card.ID == _Card.ID);
+                int _Index = this.FindIndex(Card => Card.ID == _Card.ID && Card.Type == _Card.Type);
 
                 if (_Index > -1)
                 {
@@ -78,13 +78,13 @@ namespace BL.Servers.CR.Logic.Slots
 
             foreach (Card _Card in this.GetRange(0, 8))
             {
-                _Packet.AddVInt(_Card.ID);      // Card ID
-                _Packet.AddVInt(_Card.Level);   // Card Level
-                _Packet.AddVInt(0);             // Unknown
-                _Packet.AddVInt(_Card.Count);   // Card Count
-                _Packet.AddVInt(0);             // Unknown
-                _Packet.AddVInt(0);             // Unknown
-                _Packet.AddVInt(_Card.New);     // New Card = 2
+                _Packet.AddVInt(_Card.Type == 28 ? _Card.ID + 64 : _Card.ID); // Card ID
+                _Packet.AddVInt(_Card.Level); // Card Level
+                _Packet.AddVInt(0); // Unknown
+                _Packet.AddVInt(_Card.Count); // Card Count
+                _Packet.AddVInt(0); // Unknown
+                _Packet.AddVInt(0); // Unknown
+                _Packet.AddVInt(_Card.New); // New Card = 2
             }
 
             return _Packet.ToArray();

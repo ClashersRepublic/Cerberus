@@ -23,5 +23,10 @@
             this.Data.AddVInt(this.Command.Identifier);
             this.Data.AddRange(this.Command.Data);
         }
+
+        internal override void Process()
+        {
+            this.Command.Process();
+        }
     }
 }
