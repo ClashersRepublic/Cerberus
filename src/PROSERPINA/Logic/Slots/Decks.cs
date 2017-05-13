@@ -42,7 +42,7 @@ namespace BL.Servers.CR.Logic.Slots
             }
         }
 
-        public new void Add(byte _Type, int _ID, int _Count, int _Level, byte _isNew)
+        public void Add(byte _Type, int _ID, int _Count, int _Level, byte _isNew)
         {
             Card _Card = new Card(_Type, _ID, _Count, _Level, _isNew);
 

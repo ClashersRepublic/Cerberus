@@ -7,8 +7,9 @@
     using System.Linq;
     using System.Text;
 
-    public static class Writer
+    internal static class Writer
     {
+
         /// <summary>
         /// Adds the byte.
         /// </summary>
@@ -131,6 +132,12 @@
             }
             else
                 _Packet.AddString(_Value);
+        }
+
+        public static void AddGlobalID(this List<byte> _Packet, int _Value)
+        {
+            _Packet.AddVInt(GlobalID.GetID(_Value));
+            _Packet.AddVInt(GlobalID.GetType(_Value));
         }
 
         /// <summary>

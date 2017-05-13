@@ -20,14 +20,14 @@ namespace BL.Servers.CR.Logic.Slots.Items
         [JsonProperty("global_id")] internal int GId = 0;
         [JsonProperty("lvl")] internal int Level = 0;
         [JsonProperty("new")] internal byte New = 0;
-        [JsonProperty("type")] internal byte Type = 0;
+        [JsonProperty("type")] internal int Type = 0;
 
         public Card()
         {
             
         }
 
-        public Card(byte _Type, int _ID, int _Count, int _Level, byte _isNew)
+        public Card(int _Type, int _ID, int _Count, int _Level, byte _isNew)
         {
             this.Type = _Type;
             this.ID = _ID;
@@ -41,42 +41,36 @@ namespace BL.Servers.CR.Logic.Slots.Items
         {
             if (this.Type == 26)
             {
-                Console.WriteLine("Card Type is 26");
-
                 Spells_Characters _Card = CSV.Tables.Get(Gamefile.Spells_Characters).GetDataWithID(this.ID) as Spells_Characters;
-                //Rarities _Rarity = CSV.Tables.Get(Gamefile.Rarities).GetData(_Card.Rarity) as Rarities;
+                Rarities _Rarity = CSV.Tables.Get(Gamefile.Rarities).GetData(_Card.Rarity) as Rarities;
 
-                //if (this.Level < _Rarity.LevelCount)
-                //{
-                //    this.Count -= _Rarity.UpgradeMaterialCount[this.Level];
-                //    this.Level++;
-                //}
+                if (this.Level < _Rarity.LevelCount)
+                {
+                    this.Count -= _Rarity.UpgradeMaterialCount[this.Level];
+                    this.Level++;
+                }
             }
             else if (this.Type == 27)
             {
-                Console.WriteLine("Card Type is 27");
+                Spells_Buildings _Card = CSV.Tables.Get(Gamefile.Spells_Buildings).GetDataWithID(this.ID) as Spells_Buildings;
+                Rarities _Rarity = CSV.Tables.Get(Gamefile.Rarities).GetData(_Card.Rarity) as Rarities;
 
-                //Spells_Buildings _Card = CSV.Tables.Get(Gamefile.Spells_Buildings).GetDataWithID(this.ID) as Spells_Buildings;
-                //Rarities _Rarity = CSV.Tables.Get(Gamefile.Rarities).GetData(_Card.Rarity) as Rarities;
-
-                //if (this.Level < _Rarity.LevelCount)
-                //{
-                //    this.Count -= _Rarity.UpgradeMaterialCount[this.Level];
-                //    this.Level++;
-                //}
+                if (this.Level < _Rarity.LevelCount)
+                {
+                    this.Count -= _Rarity.UpgradeMaterialCount[this.Level];
+                    this.Level++;
+                }
             }
             else if (this.Type == 28)
             {
-                Console.WriteLine("Card Type is 28");
+                Spells_Others _Card = CSV.Tables.Get(Gamefile.Spells_Others).GetDataWithID(this.ID) as Spells_Others;
+                Rarities _Rarity = CSV.Tables.Get(Gamefile.Rarities).GetData(_Card.Rarity) as Rarities;
 
-                //Spells_Others _Card = CSV.Tables.Get(Gamefile.Spells_Others).GetDataWithID(this.ID) as Spells_Others;
-                //Rarities _Rarity = CSV.Tables.Get(Gamefile.Rarities).GetData(_Card.Rarity) as Rarities;
-
-                //if (this.Level < _Rarity.LevelCount)
-                //{
-                //    this.Count -= _Rarity.UpgradeMaterialCount[this.Level];
-                //    this.Level++;
-                //}
+                if (this.Level < _Rarity.LevelCount)
+                {
+                    this.Count -= _Rarity.UpgradeMaterialCount[this.Level];
+                    this.Level++;
+                }
             }
         }
     }

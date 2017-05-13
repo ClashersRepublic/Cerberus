@@ -48,6 +48,7 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
                     {
                         int ID = _Cards[Core.Resources.Random.Next(0, this._Cards.Count)];
                         int count;
+                        byte Type;
                         this.Data.AddVInt(ID); // Card ID
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Tick
@@ -56,7 +57,17 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Is New  
 
-                        this.Cards.Add(new Card(26, ID, count, 1 ,0));
+                        int type;
+                        if (ID < 61)
+                            type = 26;
+                        else if (ID < 64)
+                            type = 27;
+                        else
+                        {
+                            type = 28;
+                        }
+
+                            this.Cards.Add(new Card(type, ID, count, 1 ,0));
                         this._Cards.Remove(ID);
                     }
                     break;
@@ -71,7 +82,8 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
                     {
                         int ID = _Cards[Core.Resources.Random.Next(0, this._Cards.Count)];
                         int count;
-                        this.Data.AddVInt(ID); // Card ID
+                        byte Type;
+                            this.Data.AddVInt(ID); // Card ID
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Tick
                         this.Data.AddVInt(count = Core.Resources.Random.Next(1, 50)); // Card Count
@@ -79,8 +91,18 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Is New   
 
-                        this.Cards.Add(new Card(26, ID, count, 1, 0));
-                        this._Cards.Remove(ID);
+                        int type;
+                        if (ID < 61)
+                            type = 26;
+                        else if (ID < 64)
+                            type = 27;
+                        else
+                        {
+                            type = 28;
+                        }
+
+                        this.Cards.Add(new Card(type, ID, count, 1, 0));
+                            this._Cards.Remove(ID);
                     }
                     break;
                 }
@@ -94,8 +116,9 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
                     {
                         int ID = _Cards[Core.Resources.Random.Next(0, this._Cards.Count)];
                         int count;
+                        byte Type;
 
-                        this.Data.AddVInt(ID); // Card ID
+                            this.Data.AddVInt(ID); // Card ID
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Tick
                         this.Data.AddVInt(count = Core.Resources.Random.Next(1, 20)); // Card Count
@@ -103,9 +126,18 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Is New    
 
+                        int type;
+                        if (ID < 61)
+                            type = 26;
+                        else if (ID < 64)
+                            type = 27;
+                        else
+                        {
+                            type = 28;
+                        }
 
-                        this.Cards.Add(new Card(26, ID, count, 1, 0));
-                        this._Cards.Remove(ID);
+                        this.Cards.Add(new Card(type, ID, count, 1, 0));
+                            this._Cards.Remove(ID);
                     }
                     break;
                 }
@@ -119,8 +151,9 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
                     {
                         int ID = _Cards[Core.Resources.Random.Next(0, this._Cards.Count)];
                         int count;
+                        byte Type;
 
-                        this.Data.AddVInt(ID); // Card ID
+                            this.Data.AddVInt(ID); // Card ID
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Tick
                         this.Data.AddVInt(count = Core.Resources.Random.Next(1, 10)); // Card Count
@@ -128,7 +161,17 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Is New    
 
-                        this.Cards.Add(new Card(26, ID, count, 1, 0));
+                        int type;
+                        if (ID < 61)
+                            type = 26;
+                        else if (ID < 64)
+                            type = 27;
+                        else
+                        {
+                            type = 28;
+                        }
+
+                            this.Cards.Add(new Card(type, ID, count, 1 ,0));
                         this._Cards.Remove(ID);
                     }
                     break;
@@ -141,17 +184,27 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
                     {
                         int ID = _Cards[Core.Resources.Random.Next(0, this._Cards.Count)];
                         int count;
+                        byte Type;
 
-                        this.Data.AddVInt(ID); // Card ID
+                            this.Data.AddVInt(ID); // Card ID
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Tick
                         this.Data.AddVInt(count = Core.Resources.Random.Next(1, 1000)); // Card Count
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Is New  
+                        int type;
+                        if (ID < 61)
+                            type = 26;
+                        else if (ID < 64)
+                            type = 27;
+                        else
+                        {
+                            type = 28;
+                        }
 
-                        this.Cards.Add(new Card(26, ID, count, 1, 0));
-                        this._Cards.Remove(ID);
+                        this.Cards.Add(new Card(type, ID, count, 1, 0));
+                            this._Cards.Remove(ID);
                     }
                     break;
                 }

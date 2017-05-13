@@ -24,8 +24,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
         internal string UserPassword;
         public Unlock_Account(Device Device, Reader Reader) : base(Device, Reader)
         {
-            this.UserPassword = "121212121212";
-            //this.UserPassword = this.Device.Player.Avatar.Password;
+            this.UserPassword = this.Device.Player.Avatar.Password;
         }
 
         internal override void Decode()

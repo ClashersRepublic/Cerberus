@@ -11,6 +11,7 @@ using BL.Servers.CR.Logic.Slots.Items;
 using BL.Servers.CR.Packets;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Google = BL.Servers.CR.Logic.Slots.Items.Google;
 
 namespace BL.Servers.CR.Logic
 {
@@ -85,6 +86,10 @@ namespace BL.Servers.CR.Logic
         [JsonProperty("creation_date")] internal DateTime Created = DateTime.UtcNow;
         [JsonProperty("ban_date")] internal DateTime BanTime = DateTime.UtcNow;
 
+        [JsonProperty("google")] internal Slots.Items.Google Google;
+
+        [JsonProperty("facebook")] internal Slots.Items.Facebook Facebook;
+
 
         internal bool Banned => this.BanTime > DateTime.UtcNow;
 
@@ -93,6 +98,8 @@ namespace BL.Servers.CR.Logic
             this.Resources = new Resources(this);
             this.Resources_Cap = new Resources(this);
             this.Decks = new Decks(this);
+            this.Google = new Slots.Items.Google(this);
+            this.Facebook = new Slots.Items.Facebook(this);
 
             this.Achievements = new Achievements();
             this.Chests = new Chests();
@@ -106,6 +113,8 @@ namespace BL.Servers.CR.Logic
             this.Resources = new Resources(this, true);
             this.Resources_Cap = new Resources(this, false);
             this.Decks = new Decks(this);
+            this.Google = new Slots.Items.Google(this);
+            this.Facebook = new Slots.Items.Facebook(this);
 
             this.Achievements = new Achievements();
             this.Chests = new Chests();

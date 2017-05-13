@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text;
 using BL.Servers.CR.Extensions;
+using BL.Servers.CR.Files;
+using BL.Servers.CR.Files.CSV_Logic;
 using BL.Servers.CR.Library.ZLib;
 
 namespace BL.Servers.CR
@@ -13,20 +15,14 @@ namespace BL.Servers.CR
 
         internal Test()
         {
-            this.Uncompress("84-03-84-03-00-1F-01-1A-03-FF-FF-FF-FF".Replace("-", ""));
+            this.Uncompress("00-00-55-8E".Replace("-", ""));        
         }
 
         internal void Uncompress(string Hexa)
         {
             Reader br = new Reader(Hexa.HexaToBytes());
 
-            Console.WriteLine(br.ReadRRInt32());
-            Console.WriteLine(br.ReadRRInt32());
-            Console.WriteLine(br.ReadInt16());
-
-            Console.WriteLine(br.ReadRRInt32());
-            Console.WriteLine(br.ReadRRInt32());
-            Console.WriteLine(br.ReadRRInt32());
+            Console.WriteLine(br.ReadInt32());
 
             var data =  br.ReadFully();
 

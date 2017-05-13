@@ -164,6 +164,24 @@
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Facebook.7.0.10-beta\lib\net45\Facebook.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Apis, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.1.25.0\lib\net45\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.Auth.1.25.0\lib\net45\Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.Auth.1.25.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.Core.1.25.0\lib\net45\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Games.v1, Version=1.25.0.854, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.Games.v1.1.25.0.854\lib\net45\Google.Apis.Games.v1.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.1.25.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
     <Reference Include="Google.ProtocolBuffers, Version=2.4.1.555, Culture=neutral, PublicKeyToken=55f7125234beb589, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Google.ProtocolBuffers.2.4.1.555\lib\net40\Google.ProtocolBuffers.dll</HintPath>
     </Reference>
@@ -228,6 +246,9 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="WindowsBase" />
+    <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Classes.cs" />
@@ -264,7 +285,6 @@
     <Compile Include="Extensions\Utils.cs" />
     <Compile Include="Extensions\VarInt.cs" />
     <Compile Include="Files\CSV.cs" />
-    <Compile Include="Files\CSV_Helpers\DataOld.cs" />
     <Compile Include="Files\CSV_Helpers\Data.cs" />
     <Compile Include="Files\CSV_Helpers\DataTable.cs" />
     <Compile Include="Files\CSV_Helpers\GlobalID.cs" />
@@ -312,10 +332,7 @@
     <Compile Include="Files\CSV_Logic\Treasure_Chests.cs" />
     <Compile Include="Files\CSV_Logic\Tutorials_Home.cs" />
     <Compile Include="Files\CSV_Logic\Tutorial_NPC.cs" />
-    <Compile Include="Files\CSV_Reader_Old\Column.cs" />
     <Compile Include="Files\CSV_Reader\Gamefiles.cs" />
-    <Compile Include="Files\CSV_Reader_Old\Row.cs" />
-    <Compile Include="Files\CSV_Reader_Old\Table.cs" />
     <Compile Include="Files\CSV_Reader\Column.cs" />
     <Compile Include="Files\CSV_Reader\ColumnCollection.cs" />
     <Compile Include="Files\CSV_Reader\CsvException.cs" />
@@ -344,6 +361,8 @@
     <Compile Include="Logic\Slots\Items\Battle.cs" />
     <Compile Include="Logic\Slots\Items\Card.cs" />
     <Compile Include="Logic\Slots\Items\Chest.cs" />
+    <Compile Include="Logic\Slots\Items\Facebook.cs" />
+    <Compile Include="Logic\Slots\Items\Google.cs" />
     <Compile Include="Logic\Slots\Items\Resource.cs" />
     <Compile Include="Logic\Slots\Items\Slot.cs" />
     <Compile Include="Logic\Slots\Resources.cs" />
@@ -400,11 +419,14 @@
     <Compile Include="Library\LZMA\Compress\RangeCoder\RangeCoderBitTree.cs" />
     <Compile Include="Library\LZMA\ICoder.cs" />
     <Compile Include="Packets\Messages\Client\Alliance\Request_Create_Alliance.cs" />
+    <Compile Include="Packets\Messages\Client\API\Bind_Facebook.cs" />
+    <Compile Include="Packets\Messages\Client\API\Bind_Google.cs" />
     <Compile Include="Packets\Messages\Client\Ask_Profile.cs" />
     <Compile Include="Packets\Messages\Client\Authentication\Authentification.cs" />
     <Compile Include="Packets\Messages\Client\Authentication\Pre_Authentification.cs" />
     <Compile Include="Packets\Messages\Client\Avatar_Stream.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Battle_Commands.cs" />
+    <Compile Include="Packets\Messages\Client\Battle\Battle_End.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Battle_NPC.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Client_Capabilities.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Sector_Command.cs" />
@@ -419,6 +441,7 @@
     <Compile Include="Packets\Messages\Client\Request_Name_Change.cs" />
     <Compile Include="Packets\Messages\Client\Set_Device_Token.cs" />
     <Compile Include="Packets\Messages\Server\Alliance\Response_Create_Alliance.cs" />
+    <Compile Include="Packets\Messages\Server\API\Facebook_Bind_OK.cs" />
     <Compile Include="Packets\Messages\Server\Authentication\Authentication_Ok.cs" />
     <Compile Include="Packets\Messages\Server\Authentication\Authentification_Failed.cs" />
     <Compile Include="Packets\Messages\Server\Authentication\Pre_Authentification_OK.cs" />
@@ -460,182 +483,195 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="Gamefiles\csv\ab_tests.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\background_decos.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\achievements.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\billing_packages.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\alliance_badges.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\client_globals.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\animations.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\credits.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\artifacts.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\effects.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\artifact_bonuses.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\event_output.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\billing_packages.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\health_bars.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\boombox.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\helpshift.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\buildings.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\hints.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\building_classes.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\music.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\calendar.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\news.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\calendar_events.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\particle_emitters.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\characters.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\sorted_regions\CNT_regions.csv" />
+    <None Include="Gamefiles\csv_client\sorted_regions\CN_regions.csv" />
+    <None Include="Gamefiles\csv_client\sorted_regions\JP_regions.csv" />
+    <None Include="Gamefiles\csv_client\sorted_regions\KR_regions.csv" />
+    <None Include="Gamefiles\csv_client\sounds.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\community_links.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\texts.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\countries.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_client\texts_patch.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\credits.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\abilities.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\decos.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\achievements.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\deeplinks.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\alliance_badges.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\deepsea_parameters.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\alliance_roles.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\defense_rewards.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\area_effect_objects.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\effects.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\arenas.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\events.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\buildings.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\experience_levels.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\characters.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\exploration_costs.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\character_buffs.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\faq.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\chest_order.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\footsteps.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\configuration_definitions.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\globals.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\content_tests.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\heart.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\decos.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\heroes.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\draft_deck.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\hero_abilities.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\event_categories.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\hints.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\event_category_definitions.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\landing_ships.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\event_category_enums.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\letters.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\event_category_object_definitions.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\liberated_income.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\exp_levels.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\locales.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\gamble_chests.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\locators.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\game_modes.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\loot_boxes.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\globals.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\missions.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\heroes.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\npcs.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\locales.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\obstacles.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\locations.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\offers.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\npcs.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\particle_emitters.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\predefined_decks.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\persistent_event_rewards.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\projectiles.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\projectiles.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\rarities.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\prototypes.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\regions.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\ranks.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\resources.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\regions.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\resource_packs.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\resources.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\shop.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\resource_packs.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\spells_buildings.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\resource_ships.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\spells_characters.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\shields.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\spells_heroes.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\spells.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\spells_other.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\texts.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\spell_sets.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\texts_patch.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\survival_modes.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\townhall_levels.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\taunts.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv\traps.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Gamefiles\csv_logic\tournament_tiers.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Gamefiles\csv_logic\treasure_chests.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Gamefiles\csv_logic\tutorials_home.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Gamefiles\csv_logic\tutorials_npc.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Gamefiles\database\Database.mmdb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Gamefiles\level\starting_home.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>

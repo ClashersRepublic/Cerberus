@@ -18,7 +18,7 @@ namespace BL.Servers.CR.Packets
             {
                 {1, typeof(Place_Troop)},
                 {500, typeof(Move_Card)},
-                //{504, typeof(Upgrade_Card)},
+                {504, typeof(Upgrade_Card)},
                 {505, typeof(Open_Free_Chest)},
                 {513, typeof(Card_Seen)},
                 {516, typeof(Buy_Chest)},

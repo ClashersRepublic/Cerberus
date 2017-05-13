@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Timers;
 using BL.Servers.CR.Core.Network;
 using BL.Servers.CR.Packets;
@@ -34,7 +35,7 @@ namespace BL.Servers.CR.Logic.Slots.Items
 
         public void Begin()
         {
-            this.Timer.Interval = 1000;
+            this.Timer.Interval = TimeSpan.FromSeconds(1).TotalMilliseconds;
             this.Timer.AutoReset = true;
 
             this.Timer.Elapsed += (Fuck, Gl) =>
