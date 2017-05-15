@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic;

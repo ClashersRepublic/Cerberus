@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using BL.Servers.CoC.Extensions;
@@ -18,8 +17,22 @@ namespace BL.Servers.CoC.Core
         {
             this.Save();
             this.DeadSockets();
+            this.Random();
             this.Run();
         }
+        internal void Random()
+        {
+            Timer Timer = new Timer
+            {
+                Interval = TimeSpan.FromHours(1).TotalMilliseconds,
+                AutoReset = true
+            };
+            Timer.Elapsed += (_Sender, _Args) =>
+            {
+                Resources.Random = new Random(DateTime.Now.ToString().GetHashCode());
+            };
+        }
+
         internal void Save()
         {
             Timer Timer = new Timer
@@ -53,21 +66,21 @@ namespace BL.Servers.CoC.Core
                             });
                         }
                     }
-                     lock (Resources.Clans.Gate)
-                     {
-                         if (Resources.Clans.Count > 0)
-                         {
-                             List<Clan> Clans = Resources.Clans.Values.ToList();
+                    lock (Resources.Clans.Gate)
+                    {
+                        if (Resources.Clans.Count > 0)
+                        {
+                            List<Clan> Clans = Resources.Clans.Values.ToList();
 
-                             foreach (Clan _Clan in Clans)
-                             {
-                                 if (_Clan != null)
-                                 {
-                                     Resources.Clans.Save(_Clan, Constants.Database);
-                                 }
-                             }
-                         }
-                     }
+                            foreach (Clan _Clan in Clans)
+                            {
+                                if (_Clan != null)
+                                {
+                                    Resources.Clans.Save(_Clan, Constants.Database);
+                                }
+                            }
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

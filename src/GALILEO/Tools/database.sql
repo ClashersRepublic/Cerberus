@@ -16,7 +16,9 @@ CREATE TABLE IF NOT EXISTS `clan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `player` (
-  `ID` bigint(20) NOT NULL COMMENT 'The ID of the Player',
+  `ID` bigint(20) NOT NULL COMMENT 'The ID of the Player',  
+  `Trophies` int(5) NOT NULL COMMENT 'The Trophies of the Player',
+  `FacebookID` text CHARACTER SET utf8mb4 NOT NULL COMMENT 'The FacebookID of the player',
   `Data` text CHARACTER SET utf8mb4 NOT NULL COMMENT 'The infos and data of the player',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -12,6 +12,7 @@ namespace BL.Servers.CR.Logic.Slots.Items
         internal int BattleID;
         internal int Tick;
         internal int Checksum;
+        internal bool Started;
 
         internal Avatar Player1;
         internal Avatar Player2;
@@ -35,11 +36,24 @@ namespace BL.Servers.CR.Logic.Slots.Items
 
         public void Begin()
         {
+            if (this.Started)
+            {
+                return;
+            }
+
+            this.Started = true;
             this.Timer.Interval = TimeSpan.FromSeconds(1).TotalMilliseconds;
             this.Timer.AutoReset = true;
 
             this.Timer.Elapsed += (Fuck, Gl) =>
             {
+                this.Tick++;
+
+                if (this.Tick == (TimeSpan.FromMinutes(3).TotalSeconds * 2))
+                {
+                    this.Stop();
+                }
+
                 new Battle_Command_Data(this.Player1.Device)
                 {
                     Battle = this
@@ -54,8 +68,11 @@ namespace BL.Servers.CR.Logic.Slots.Items
             this.Timer.Start();
 
         }
-        public void Stop()
+        internal void Stop()
         {
+            Core.Resources.Battles.Remove(this.BattleID);
+
+            this.Timer.Stop();
             this.Timer.Close();
         }
     }

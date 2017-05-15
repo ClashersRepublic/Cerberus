@@ -30,7 +30,7 @@ namespace BL.Servers.CoC.Logic.Structure
             }
             if (!string.IsNullOrEmpty(GetBuildingData().ProducesResource))
             {
-                //AddComponent(new ResourceProductionComponent(this, level));
+                //AddComponent(new Resource_Production_Component(this, level));
             }
 
             if (GetBuildingData().MaxStoredGold[0] > 0 || GetBuildingData().MaxStoredElixir[0] > 0 || GetBuildingData().MaxStoredDarkElixir[0] > 0 || GetBuildingData().MaxStoredWarGold[0] > 0 || GetBuildingData().MaxStoredWarElixir[0] > 0 || GetBuildingData().MaxStoredWarDarkElixir[0] > 0)

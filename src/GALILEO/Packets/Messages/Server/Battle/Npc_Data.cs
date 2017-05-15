@@ -1,6 +1,4 @@
-﻿using System;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
+﻿using BL.Servers.CoC.Extensions.List;
 using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
@@ -15,7 +13,6 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Battle
         public Npc_Data(Device _Device) : base(_Device)
         {
             this.Identifier = 24133;
-            this.Device.State = State.IN_BATTLE;     
         }
 
         internal override void Encode()
@@ -28,6 +25,11 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Battle
 
                 this.Data.AddInt(this.Npc_ID);
             }
+        }
+
+        internal override void Process()
+        {
+            this.Device.State = State.IN_NPC_BATTLE;
         }
     }
 }

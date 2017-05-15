@@ -32,7 +32,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
 
         internal override void Process()
         {
-            if (this.Device.State == State.IN_BATTLE)
+            if (this.Device.State == State.IN_NPC_BATTLE || this.Device.State == State.IN_PC_BATTLE)
             {
                 List<Slot> _PlayerUnits = this.Device.Player.Avatar.Units;
 

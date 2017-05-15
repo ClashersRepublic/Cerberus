@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using BL.Servers.CoC.Core;
+using BL.Servers.CoC.Core.Database;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Logic;
 
@@ -47,22 +48,19 @@ namespace BL.Servers.CoC
 
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
             Resources.Initialize();
-            /*var s = Stopwatch.StartNew();
-             int count = 4000;
+            /* var s = Stopwatch.StartNew();
+             int count = 200;
              for (var i = 1; i < count; i++)
              {
-                var a = Resources.Clans.New(i, Constants.Database);
-                a.Members.Add(new Player(1) { Name = "Hi", Level = 1});
-                 a.Members.Add(new Player(2) { Name = "Hi", Level = 1 });
-                Resources.Clans.Save(a);
+                var a = Resources.Players.New(0, Constants.Database);
+                 a.Avatar.Name = $"Hi {i}";
              }
              s.Stop();
 
              Console.WriteLine("Total second {0:N0}",  s.Elapsed.TotalSeconds);
              Console.WriteLine("{0:N0} queries per second", count / s.Elapsed.TotalSeconds);*/
             Console.WriteLine(@"-------------------------------------" + Environment.NewLine);
-
-            while (true) ;
+            Thread.Sleep(Timeout.Infinite);
 
         }
     }

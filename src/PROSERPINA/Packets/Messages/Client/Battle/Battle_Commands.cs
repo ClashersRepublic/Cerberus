@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using BL.Servers.CR.Core;
 using BL.Servers.CR.Core.Network;
@@ -39,6 +40,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Battle
         internal override void Process()
         {
             ShowValues();
+            Thread.Sleep((int)TimeSpan.FromSeconds(5).TotalSeconds);
 
             Avatar _Enemy = Resources.Battles.GetEnemy(this.Device.Player.Avatar.BattleID, this.Device.Player.Avatar.UserId);
 

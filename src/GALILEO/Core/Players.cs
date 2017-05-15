@@ -43,10 +43,13 @@ namespace BL.Servers.CoC.Core
         }
         internal void Remove(Level Player)
         {
-            if (this.Remove(Player.Avatar.UserId))
+            if (Player.Client.Player != null)
             {
-                this.Save(Player, Constants.Database);
-                Player.Client.Player = null;
+                if (this.Remove(Player.Avatar.UserId))
+                {
+                    this.Save(Player, Constants.Database);
+                    Player.Client.Player = null;
+                }
             }
 
             if (Player.Client != null)
@@ -240,7 +243,8 @@ namespace BL.Servers.CoC.Core
                             if (Data != null)
                             {
                                 Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON;
-                                    Database.SaveChanges();
+                                Data.Trophies = Player.Avatar.Trophies;
+                                Database.SaveChanges();
                             }
                         }
                         break;

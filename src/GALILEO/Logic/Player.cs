@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.List;
+using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Files.CSV_Helpers;
 using BL.Servers.CoC.Files.CSV_Logic;
 using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure.API;
 using BL.Servers.CoC.Logic.Structure.Slots;
 using BL.Servers.CoC.Logic.Structure.Slots.Items;
 using Newtonsoft.Json;
@@ -19,27 +16,48 @@ namespace BL.Servers.CoC.Logic
 {
     internal class Player
     {
+        [JsonIgnore] internal Battle Battle;
+
         [JsonIgnore]
         internal long UserId
         {
-            get => (((long)this.UserHighId << 32) | (this.UserLowId & 0xFFFFFFFFL));
+            get => (((long) this.UserHighId << 32) | (this.UserLowId & 0xFFFFFFFFL));
             set
             {
                 this.UserHighId = Convert.ToInt32(value >> 32);
-                this.UserLowId = (int)value;
+                this.UserLowId = (int) value;
             }
         }
 
         [JsonIgnore]
         internal long ClanId
         {
-            get => (((long)this.ClanHighID << 32) | (this.ClanLowID & 0xFFFFFFFFL));
+            get => (((long) this.ClanHighID << 32) | (this.ClanLowID & 0xFFFFFFFFL));
             set
             {
                 this.ClanHighID = Convert.ToInt32(value >> 32);
-                this.ClanLowID = (int)value;
+                this.ClanLowID = (int) value;
             }
         }
+
+        internal void Refresh()
+        {
+            DataTable table = CSV.Tables.Get(Gamefile.Leagues);
+            int i = 0;
+            bool found = false;
+            while (!found)
+            {
+                var league = (Leagues) table.Datas[i];
+                if (this.Trophies <= league.BucketPlacementRangeHigh[league.BucketPlacementRangeHigh.Length - 1] &&
+                    this.Trophies >= league.BucketPlacementRangeLow[0])
+                {
+                    found = true;
+                    this.League = i;
+                }
+                i++;
+            }
+        }
+
 
         [JsonProperty("acc_hi")] internal int UserHighId;
         [JsonProperty("acc_lo")] internal int UserLowId;
@@ -57,7 +75,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("lvl")] internal int Level = 1;
         [JsonProperty("xp")] internal int Experience;
 
-        [JsonProperty("wins")] internal int Wins;
+        [JsonProperty("wins")] internal int Wons;
         [JsonProperty("loses")] internal int Loses;
         [JsonProperty("games")] internal int Games;
         [JsonProperty("win_streak")] internal int Streak;
@@ -92,8 +110,8 @@ namespace BL.Servers.CoC.Logic
 
         [JsonProperty("units")] internal Units Units;
         [JsonProperty("spells")] internal Units Spells;
-        [JsonProperty("alliance_units")] internal Units Castle_Units;
-        [JsonProperty("alliance_spells")] internal Units Castle_Spells;
+        [JsonProperty("alliance_units")] internal Castle_Units Castle_Units;
+        [JsonProperty("alliance_spells")] internal Castle_Units Castle_Spells;
 
 
         [JsonProperty("unit_upgrades")] internal Upgrades Unit_Upgrades;
@@ -110,7 +128,9 @@ namespace BL.Servers.CoC.Logic
 
 
         [JsonProperty("login_count")] internal int Login_Count;
-        [JsonProperty("play_time")] internal TimeSpan PlayTime => (DateTime.UtcNow - this.Created);
+
+        [JsonProperty("play_time")]
+        internal TimeSpan PlayTime => (DateTime.UtcNow - this.Created);
 
         [JsonProperty("last_tick")] internal DateTime LastTick = DateTime.UtcNow;
         [JsonProperty("last_save")] internal DateTime LastSave = DateTime.UtcNow;
@@ -122,6 +142,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("gamecenter")] internal Structure.API.Gamecenter Gamecenter;
 
         internal bool Banned => this.BanTime > DateTime.UtcNow;
+
         internal Player()
         {
 
@@ -136,13 +157,13 @@ namespace BL.Servers.CoC.Logic
 
             this.Units = new Units(this);
             this.Spells = new Units(this);
-            this.Castle_Units = new Units(this);
-            this.Castle_Spells = new Units(this);
+            this.Castle_Units = new Castle_Units(this);
+            this.Castle_Spells = new Castle_Units(this);
 
             this.Unit_Upgrades = new Upgrades(this);
             this.Spell_Upgrades = new Upgrades(this);
             this.Heroes_Upgrades = new Upgrades(this);
-            
+
             this.Heroes_Health = new Slots();
             this.Heroes_Modes = new Slots();
             this.Heroes_States = new Slots();
@@ -163,8 +184,8 @@ namespace BL.Servers.CoC.Logic
 
             this.Units = new Units(this);
             this.Spells = new Units(this);
-            this.Castle_Units = new Units(this);
-            this.Castle_Spells = new Units(this);
+            this.Castle_Units = new Castle_Units(this);
+            this.Castle_Spells = new Castle_Units(this);
 
             this.Unit_Upgrades = new Upgrades(this);
             this.Spell_Upgrades = new Upgrades(this);
@@ -179,6 +200,8 @@ namespace BL.Servers.CoC.Logic
         {
             get
             {
+                this.Refresh();
+
                 List<byte> _Packet = new List<byte>();
 
                 _Packet.AddLong(this.UserId);
@@ -245,11 +268,11 @@ namespace BL.Servers.CoC.Logic
 
                 _Packet.AddInt(this.Trophies);
 
-                _Packet.AddInt(this.Wins);
+                _Packet.AddInt(this.Wons);
                 _Packet.AddInt(this.Loses);
                 _Packet.AddInt(0); // Def Wins
                 _Packet.AddInt(0); // Def Loses
-                
+
                 _Packet.AddInt(this.Castle_Resources.Get(Resource.WarGold));
                 _Packet.AddInt(this.Castle_Resources.Get(Resource.WarElixir));
                 _Packet.AddInt(this.Castle_Resources.Get(Resource.WarDarkElixir));
@@ -286,16 +309,18 @@ namespace BL.Servers.CoC.Logic
 
                 _Packet.AddInt(this.Castle_Units.Count + this.Castle_Spells.Count);
 
-                foreach (Slot _Unit in this.Castle_Units)
+                foreach (Alliance_Unit _Unit in this.Castle_Units)
                 {
                     _Packet.AddInt(_Unit.Data);
                     _Packet.AddInt(_Unit.Count);
+                    _Packet.AddInt(_Unit.Level);
                 }
 
-                foreach (Slot _Spell in this.Castle_Spells)
+                foreach (Alliance_Unit _Spell in this.Castle_Spells)
                 {
                     _Packet.AddInt(_Spell.Data);
                     _Packet.AddInt(_Spell.Count);
+                    _Packet.AddInt(_Spell.Level);
                 }
 
 
@@ -305,12 +330,12 @@ namespace BL.Servers.CoC.Logic
                     _Packet.AddInt(Tutorial);
                 }
 
-                _Packet.AddInt(0);//Achievements
-                _Packet.AddInt(0);//Achievements Progress
+                _Packet.AddInt(0); //Achievements
+                _Packet.AddInt(0); //Achievements Progress
 
                 _Packet.AddRange(this.Npcs.ToBytes);
 
-                _Packet.AddInt(0);//Var
+                _Packet.AddInt(0); //Var
 
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
@@ -324,7 +349,7 @@ namespace BL.Servers.CoC.Logic
 
                 return _Packet.ToArray();
             }
-            
+
         }
 
         public static int GetDataIndex(List<Slot> dsl, Data d) => dsl.FindIndex(ds => ds.Data == d.Id);
@@ -342,6 +367,48 @@ namespace BL.Servers.CoC.Logic
             else
             {
                 this.Units.Add(new Slot(Data, Count));
+            }
+        }
+
+        public void Add_Spells(int Data, int Count)
+        {
+            int _Index = this.Spells.FindIndex(S => S.Data == Data);
+
+            if (_Index > -1)
+            {
+                this.Spells[_Index].Count += Count;
+            }
+            else
+            {
+                this.Spells.Add(new Slot(Data, Count));
+            }
+        }
+
+        public void AddCastleTroop(int Data, int Count, int level)
+        {
+            int _Index = this.Castle_Units.FindIndex(t => t.Data == Data && t.Level == level);
+            if (_Index > -1)
+            {
+                this.Castle_Units[_Index].Count += Count;
+            }
+            else
+            {
+                Alliance_Unit ds = new Alliance_Unit(0, Data, Count, level);
+                this.Castle_Units.Add(ds);
+            }
+        }
+
+        public void AddCastleSpell(int Data, int Count, int level)
+        {
+            int _Index = this.Castle_Spells.FindIndex(t => t.Data == Data && t.Level == level);
+            if (_Index > -1)
+            {
+                this.Castle_Spells[_Index].Count += Count;
+            }
+            else
+            {
+                Alliance_Unit ds = new Alliance_Unit(0, Data, Count, level);
+                this.Castle_Spells.Add(ds);
             }
         }
 
@@ -381,7 +448,6 @@ namespace BL.Servers.CoC.Logic
             }
             return result;
         }
-
         public void SetUnitUpgradeLevel(Combat_Item cd, int level)
         {
             switch (cd.GetCombatItemType())
@@ -486,6 +552,5 @@ namespace BL.Servers.CoC.Logic
         public bool HasEnoughResources(Resource resource, int buildCost) => this.Resources.Get(resource) >= buildCost;
 
         public bool HasEnoughResources(int globalId, int buildCost) => this.Resources.Get(globalId) >= buildCost;
-
     }
 }

@@ -25,9 +25,6 @@ namespace BL.Servers.CoC.Packets.Messages.Client.API
 
         internal override void Process()
         {
-            Console.WriteLine(this.GoogleID);
-            Console.WriteLine(this.Token);
-            Console.WriteLine(this.Reader.BaseStream.Length - this.Reader.BaseStream.Position);
             if (!string.IsNullOrEmpty(this.GoogleID) && !string.IsNullOrEmpty(this.Token))
             {
                 this.Device.Player.Avatar.Google.Identifier = this.GoogleID;

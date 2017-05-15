@@ -6,11 +6,11 @@ using BL.Servers.CoC.Packets.Messages.Server.Clans;
 
 namespace BL.Servers.CoC.Packets.Messages.Client.Clans
 {
-    internal class Ask_Clan : Message
+    internal class Ask_Alliance : Message
     {
         internal long ClanID;
 
-        public Ask_Clan(Device Device, Reader Reader) : base(Device, Reader)
+        public Ask_Alliance(Device Device, Reader Reader) : base(Device, Reader)
         {
 
         }

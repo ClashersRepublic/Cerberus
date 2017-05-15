@@ -25,7 +25,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("level")] internal int Level = 1;
         [JsonProperty("experience")] internal int Experience;
 
-        [JsonProperty("win")] internal int Win_War;
+        [JsonProperty("win")] internal int Won_War;
         [JsonProperty("lost")] internal int Lost_War;
         [JsonProperty("draw")] internal int Draw_War;
 
@@ -36,6 +36,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("type")] internal Hiring Type = Hiring.OPEN;
 
         [JsonProperty("members")] internal Members Members;
+        [JsonProperty("chats")] internal Chats Chats;
 
         internal int Donations
         {
@@ -52,17 +53,18 @@ namespace BL.Servers.CoC.Logic
                 return this.Members.Values.ToList().Sum(Member => (Member.Player.Avatar.Trophies / 2));
             }
         }
+
         internal Clan()
         {
             this.Members = new Members(this);
-            //this.Chat = new Chat(this);
+            this.Chats = new Chats(this);
         }
         internal Clan(long ClanID = 0)
         {
             this.Clan_ID = ClanID;
 
             this.Members = new Members(this);
-            //this.Chat = new Chat(this);
+            this.Chats = new Chats(this);
         }
         internal byte[] ToBytes
         {
@@ -80,7 +82,7 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(this.Trophies);
                 _Packet.AddInt(this.Required_Trophies);
 
-                _Packet.AddInt(this.Win_War);
+                _Packet.AddInt(this.Won_War);
                 _Packet.AddInt(this.Lost_War);
                 _Packet.AddInt(this.Draw_War); 
 

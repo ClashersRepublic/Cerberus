@@ -20,6 +20,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="Trophies" Type="int" Nullable="false" />
+          <Property Name="FacebookID" Type="text" Nullable="false" />
           <Property Name="Data" Type="text" Nullable="false" />
         </EntityType>
         <EntityContainer Name="MysqlModelStoreContainer">
@@ -45,6 +47,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="Trophies" Type="Int32" Nullable="false" />
+          <Property Name="FacebookID" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="Data" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="MysqlEntities" annotation:LazyLoadingEnabled="true">
@@ -69,6 +73,8 @@
             <EntityTypeMapping TypeName="MysqlModel.Player">
               <MappingFragment StoreEntitySet="Player">
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Trophies" ColumnName="Trophies" />
+                <ScalarProperty Name="FacebookID" ColumnName="FacebookID" />
                 <ScalarProperty Name="Data" ColumnName="Data" />
               </MappingFragment>
             </EntityTypeMapping>

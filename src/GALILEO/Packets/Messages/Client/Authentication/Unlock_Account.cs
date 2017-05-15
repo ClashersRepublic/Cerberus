@@ -78,11 +78,9 @@ namespace BL.Servers.CoC.Packets.Client.Authentication
 
         internal override void Decrypt()
         {
-            var data = this.Reader.ReadBytes(this.Length);
-            this.Device.Keys.SNonce.Increment();
-            Console.WriteLine(BitConverter.ToString(data.ToArray()));
-            Console.WriteLine(Encoding.UTF8.GetString(data.ToArray()));
-            byte[] Decrypted = Sodium.Decrypt(data.ToArray(), this.Device.Keys.SNonce, this.Device.Keys.PublicKey);
+            Console.WriteLine(BitConverter.ToString(this.Device.Keys.SNonce));
+            //this.Device.Keys.SNonce.Increment(0);
+            byte[] Decrypted = Sodium.Decrypt(new byte[16].Concat(this.Reader.ReadBytes(this.Length)).ToArray(), this.Device.Keys.SNonce, this.Device.Keys.PublicKey);
 
             if (Decrypted == null)
             {

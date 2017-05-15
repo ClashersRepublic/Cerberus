@@ -19,6 +19,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Battle
 
         internal override void Encode()
         {
+            this.Enemy.Tick();
             using (Objects Home = new Objects(Enemy, Enemy.JSON))
             {
                 this.Data.AddInt((int)(Home.Timestamp - DateTime.UtcNow).TotalSeconds);
@@ -36,7 +37,8 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Battle
 
         internal override void Process()
         {
-            this.Device.State = Logic.Enums.State.IN_BATTLE;
+            this.Device.Player.Avatar.Battle = new Logic.Battle();
+            this.Device.State = Logic.Enums.State.IN_PC_BATTLE;
         }
 
     }

@@ -166,22 +166,41 @@ namespace BL.Servers.CoC.Extensions.Binary
             }
         }
 
+        internal string ReadZlibStreamFail()
+        {
+            var bytes = ReadBytes();
+
+            if (bytes?.Length > 0)
+            {
+                using (Reader br = new Reader(bytes))
+                {
+                    var decompressedLength = br.ReadInt32();
+                    var decompressedBytes = new byte[decompressedLength];
+
+                    using (var zlib = new ZlibStream(br.BaseStream, CompressionMode.Decompress))
+                    {
+                        var count = zlib.Read(decompressedBytes, 0, decompressedLength);
+                        Debug.Assert(count == decompressedLength);
+                    }
+
+                    return Encoding.UTF8.GetString(decompressedBytes);
+                }
+            }
+            return null;
+        }
+
         internal string ReadZlibStream()
         {
             var bytes = ReadBytes();
 
             if (bytes?.Length > 0)
             {
-                var decompressedLength = base.ReadInt32();
-                var decompressedBytes = new byte[decompressedLength];
-
-                using (var zlib = new ZlibStream(BaseStream, CompressionMode.Decompress))
+                using (Reader br = new Reader(bytes))
                 {
-                    var count = zlib.Read(decompressedBytes, 0, decompressedLength);
-                    Debug.Assert(count == decompressedLength);
+                    uint decompressedLength = br.ReadUInt32();
+                    string homeJson = ZlibStream.UncompressString(br.ReadBytes((int)decompressedLength));
+                    return homeJson;
                 }
-
-                return Encoding.UTF8.GetString(decompressedBytes);
             }
             return null;
         }

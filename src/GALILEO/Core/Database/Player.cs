@@ -15,6 +15,8 @@ namespace BL.Servers.CoC.Core.Database
     public partial class Player
     {
         public long ID { get; set; }
+        public int Trophies { get; set; }
+        public string FacebookID { get; set; }
         public string Data { get; set; }
     }
 }

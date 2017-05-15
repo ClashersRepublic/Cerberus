@@ -14,6 +14,7 @@ using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Packets.Messages.Server.Authentication;
 using BL.Servers.CoC.Packets.Messages.Server;
 using BL.Servers.CoC.Packets.Messages.Server.Clans;
+using BL.Servers.CoC.Packets.Messages.Server.Clans.War;
 
 namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 {
@@ -196,10 +197,11 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                 if (Alliance != null)
                 {
                     new Alliance_Full_Entry(this.Device) {Clan = Alliance}.Send();
+//                    new War_Map(this.Device).Send();
 
-                    //if (Alliance.Chat != null)
+                    if (Alliance.Chats != null)
                     {
-                        // new Clan_Stream(this.Device, Alliance).Send();
+                        new Alliance_All_Stream_Entry(this.Device, Alliance).Send();
                     }
                 }
                 else

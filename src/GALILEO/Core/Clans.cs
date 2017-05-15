@@ -16,10 +16,14 @@ namespace BL.Servers.CoC.Core
     {
         internal JsonSerializerSettings Settings = new JsonSerializerSettings
         {
-            TypeNameHandling            = TypeNameHandling.Auto,            MissingMemberHandling   = MissingMemberHandling.Ignore,
-            DefaultValueHandling        = DefaultValueHandling.Include,     NullValueHandling       = NullValueHandling.Ignore,
-            PreserveReferencesHandling  = PreserveReferencesHandling.All,   ReferenceLoopHandling   = ReferenceLoopHandling.Ignore,
-            Formatting                  = Formatting.Indented,              Converters = {new Utils.ArrayReferencePreservngConverter()},
+            TypeNameHandling = TypeNameHandling.Auto,
+            MissingMemberHandling = MissingMemberHandling.Ignore,
+            DefaultValueHandling = DefaultValueHandling.Include,
+            NullValueHandling = NullValueHandling.Ignore,
+            PreserveReferencesHandling = PreserveReferencesHandling.All,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            Formatting = Formatting.Indented,
+            Converters = { new Utils.ArrayReferencePreservngConverter() },
         };
 
 
@@ -52,6 +56,35 @@ namespace BL.Servers.CoC.Core
             if (this.Remove(Clan.Clan_ID))
             {
                 this.Save(Clan, Constants.Database);
+            }
+        }
+
+        internal void Delete(Clan Clan, DBMS DBMS = DBMS.Mysql)
+        {
+            if (this.ContainsValue(Clan))
+            {
+                this.Remove(Clan.Clan_ID);
+            }
+
+            while (true)
+            {
+                switch (DBMS)
+                {
+                    case DBMS.Mysql:
+                        using (MysqlEntities Database = new MysqlEntities())
+                        {
+                            Database.Clan.Remove(Database.Clan.Find(Clan.Clan_ID));
+                            Database.SaveChanges();
+                        }
+                        break;
+                    case DBMS.Redis:
+                        Redis.Clans.KeyDelete(Clan.Clan_ID.ToString());
+                        break;
+                    case DBMS.Both:
+                        this.Delete(Clan);
+                        DBMS = DBMS.Redis;
+                        continue;
+                }
             }
         }
 
@@ -137,48 +170,48 @@ namespace BL.Servers.CoC.Core
                 switch (DBMS)
                 {
                     case DBMS.Mysql:
-                    {
-                        using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.Clan.Add(new Database.Clan
+                            using (MysqlEntities Database = new MysqlEntities())
                             {
-                                ID = Clan.Clan_ID,
-                                Data = JsonConvert.SerializeObject(Clan, this.Settings)
-                            });
+                                Database.Clan.Add(new Database.Clan
+                                {
+                                    ID = Clan.Clan_ID,
+                                    Data = JsonConvert.SerializeObject(Clan, this.Settings)
+                                });
 
-                            Database.SaveChanges();
-                        }
+                                Database.SaveChanges();
+                            }
 
-                        if (Store)
-                        {
-                            this.Add(Clan);
+                            if (Store)
+                            {
+                                this.Add(Clan);
+                            }
+                            break;
                         }
-                        break;
-                    }
 
                     case DBMS.Redis:
-                    {
-                        this.Save(Clan, DBMS);
-
-                        if (Store)
                         {
-                            this.Add(Clan);
+                            this.Save(Clan, DBMS);
+
+                            if (Store)
+                            {
+                                this.Add(Clan);
+                            }
+                            break;
                         }
-                        break;
-                    }
 
                     case DBMS.Both:
-                    {
-                        this.Save(Clan, DBMS);
-                        DBMS = DBMS.Mysql;
-
-                        if (Store)
                         {
-                            this.Add(Clan);
-                        }
+                            this.Save(Clan, DBMS);
+                            DBMS = DBMS.Mysql;
 
-                        continue;
-                    }
+                            if (Store)
+                            {
+                                this.Add(Clan);
+                            }
+
+                            continue;
+                        }
                 }
                 break;
             }
@@ -194,33 +227,33 @@ namespace BL.Servers.CoC.Core
                 switch (DBMS)
                 {
                     case DBMS.Mysql:
-                    {
-
-                        using (MysqlEntities Database = new MysqlEntities())
                         {
-                            var Data = Database.Clan.Find(Clan.Clan_ID);
 
-                            if (Data != null)
+                            using (MysqlEntities Database = new MysqlEntities())
                             {
-                                Data.Data = JsonConvert.SerializeObject(Clan, this.Settings);
-                                Database.SaveChanges();
+                                var Data = Database.Clan.Find(Clan.Clan_ID);
+
+                                if (Data != null)
+                                {
+                                    Data.Data = JsonConvert.SerializeObject(Clan, this.Settings);
+                                    Database.SaveChanges();
+                                }
                             }
+                            break;
                         }
-                        break;
-                    }
 
                     case DBMS.Redis:
-                    {
-                        Redis.Clans.StringSet(Clan.Clan_ID.ToString(), JsonConvert.SerializeObject(Clan, this.Settings), TimeSpan.FromHours(4));
-                        break;
-                    }
+                        {
+                            Redis.Clans.StringSet(Clan.Clan_ID.ToString(), JsonConvert.SerializeObject(Clan, this.Settings), TimeSpan.FromHours(4));
+                            break;
+                        }
 
                     case DBMS.Both:
-                    {
-                        this.Save(Clan);
-                        DBMS = DBMS.Redis;
-                        continue;
-                    }
+                        {
+                            this.Save(Clan);
+                            DBMS = DBMS.Redis;
+                            continue;
+                        }
                 }
                 break;
             }

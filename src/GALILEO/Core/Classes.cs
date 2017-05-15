@@ -5,6 +5,7 @@ using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Packets;
+using BL.Servers.CoC.Core.Events;
 
 namespace BL.Servers.CoC.Core
 {
@@ -20,6 +21,7 @@ namespace BL.Servers.CoC.Core
         internal Timers Timers;
         internal Redis Redis;
         internal Fingerprint Fingerprint;
+        internal EventsHandler Events;
         internal Test Test;
         internal Classes()
         {
@@ -38,6 +40,7 @@ namespace BL.Servers.CoC.Core
                     this.Redis = new Redis();
                     break;
             }
+            this.Events = new EventsHandler();
 #if DEBUG
             Console.WriteLine("We loaded " + MessageFactory.Messages.Count + " messages, " + CommandFactory.Commands.Count + " commands, and 0 debug commands.\n");
 #endif

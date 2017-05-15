@@ -17,7 +17,7 @@
         /// <param name="_Value">The value.</param>
         public static void AddByte(this List<byte> _Packet, int _Value)
         {
-            _Packet.Add((byte)_Value);
+            _Packet.Add((byte) _Value);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@
         /// <param name="_Value">if set to <c>true</c> [value].</param>
         public static void AddBool(this List<byte> _Packet, bool _Value)
         {
-            _Packet.Add(_Value ? (byte)1 : (byte)0);
+            _Packet.Add(_Value ? (byte) 1 : (byte) 0);
         }
 
         /// <summary>
@@ -149,19 +149,19 @@
         {
             if (_Value > 63)
             {
-                _Packet.Add((byte)(_Value & 0x3F | 0x80));
+                _Packet.Add((byte) (_Value & 0x3F | 0x80));
 
                 if (_Value > 8191)
                 {
-                    _Packet.Add((byte)(_Value >> 6 | 0x80));
+                    _Packet.Add((byte) (_Value >> 6 | 0x80));
 
                     if (_Value > 1048575)
                     {
-                        _Packet.Add((byte)(_Value >> 13 | 0x80));
+                        _Packet.Add((byte) (_Value >> 13 | 0x80));
 
                         if (_Value > 134217727)
                         {
-                            _Packet.Add((byte)(_Value >> 20 | 0x80));
+                            _Packet.Add((byte) (_Value >> 20 | 0x80));
                             _Value >>= 27 & 0x7F;
                         }
                         else
@@ -174,15 +174,15 @@
                 else
                     _Value >>= 6 & 0x7F;
             }
-            _Packet.Add((byte)_Value);
+            _Packet.Add((byte) _Value);
         }
 
         /// <summary>
-            /// Adds the hexadecimal string.
-            /// </summary>
-            /// <param name="_Packet">The packet.</param>
-            /// <param name="_Value">The value.</param>
-            public static void AddHexa(this List<byte> _Packet, string _Value)
+        /// Adds the hexadecimal string.
+        /// </summary>
+        /// <param name="_Packet">The packet.</param>
+        /// <param name="_Value">The value.</param>
+        public static void AddHexa(this List<byte> _Packet, string _Value)
         {
             _Packet.AddRange(_Value.HexaToBytes());
         }
@@ -195,7 +195,10 @@
         public static byte[] HexaToBytes(this string _Value)
         {
             string _Tmp = _Value.Replace("-", string.Empty);
-            return Enumerable.Range(0, _Tmp.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(_Tmp.Substring(x, 2), 16)).ToArray();
+            return Enumerable.Range(0, _Tmp.Length)
+                .Where(x => x % 2 == 0)
+                .Select(x => Convert.ToByte(_Tmp.Substring(x, 2), 16))
+                .ToArray();
         }
 
         /// <summary>
@@ -232,6 +235,7 @@
                 List[c] = Value;
             }
         }
+
         public static void AddByteArray(this List<byte> list, byte[] data)
         {
             if (data == null)

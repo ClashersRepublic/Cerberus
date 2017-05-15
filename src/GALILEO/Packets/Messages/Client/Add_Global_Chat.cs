@@ -24,7 +24,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
         {
             new Global_Chat_Entry(this.Device) { Message = this.Message, Message_Sender = this.Device.Player.Avatar, Sender = true}.Send();
 
-            foreach (var _Device in Resources.GChat.Get_Chat(this.Device).Values.SkipWhile(v => v.Equals(this.Device)))
+            foreach (var _Device in Resources.GChat.Get_Chat(this.Device).Values.SkipWhile(v => v.Player.Avatar.UserId.Equals(this.Device.Player.Avatar.UserId)))
             {
               new Global_Chat_Entry (_Device){ Message = this.Message, Message_Sender = this.Device.Player.Avatar }.Send();
             }

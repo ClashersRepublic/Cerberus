@@ -8,7 +8,8 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
 
         public List_Regions(Level Player)
         {
-            this.Level.Add(Player);
+            if (Player != null)
+                this.Level.Add(Player);
         }
 
         internal void Remove(Level Player)

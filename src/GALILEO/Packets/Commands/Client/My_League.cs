@@ -14,7 +14,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
         internal override void Process()
         {
-            new League_Players(this.Device).Send();
+            //new League_Players(this.Device).Send();
         }
     }
 }

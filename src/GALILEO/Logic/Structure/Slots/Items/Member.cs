@@ -17,15 +17,7 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
 
         internal bool Connected => Core.Resources.Players.ContainsKey(this.UserID);
         internal Level Player => Core.Resources.Players.Get(this.UserID, Constants.Database, false);
-        internal bool New
-        {
-            get
-            {
-                if (this.Joined < DateTime.UtcNow.AddDays(-1))
-                    return false;
-                return true;
-            }
-        }
+        internal bool New => this.Joined >= DateTime.UtcNow.AddDays(-1);
 
         internal Member()
         {

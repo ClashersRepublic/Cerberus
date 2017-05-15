@@ -32,6 +32,7 @@ namespace BL.Servers.CoC.Logic
 
                 _Packet.AddInt((int) TimeSpan.FromDays(365).TotalSeconds);
 
+                Console.WriteLine(this.Json);
                 _Packet.AddCompressed(this.Json);
                 _Packet.AddCompressed("{\"event\":[]}");
 

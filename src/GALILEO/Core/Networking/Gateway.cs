@@ -4,9 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using BL.Servers.CoC.Packets;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Logic;
@@ -20,7 +18,7 @@ namespace BL.Servers.CoC.Core.Networking
         internal SocketAsyncEventArgsPool ReadPool;
         internal SocketAsyncEventArgsPool WritePool;
         internal Socket Listener;
-        internal Mutex Mutex;
+        //internal Mutex Mutex;
         internal int ConnectedSockets;
 
         internal Gateway()
@@ -83,7 +81,7 @@ namespace BL.Servers.CoC.Core.Networking
             {
                 if (Constants.Local)
                 {
-                   // if (!Constants.AuthorizedIP.Contains(Socket.RemoteEndPoint.ToString().Split(':')[0]))
+                    if (!Constants.AuthorizedIP.Contains(Socket.RemoteEndPoint.ToString().Split(':')[0]))
                     {
                        Socket.Close();
 

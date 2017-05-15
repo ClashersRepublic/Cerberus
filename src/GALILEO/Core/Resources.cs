@@ -21,7 +21,7 @@ namespace BL.Servers.CoC.Core
             Resources.Devices = new Devices();
             Resources.Players = new Players();
             Resources.Clans = new Clans();
-            Resources.Random = new Random();
+            Resources.Random = new Random(DateTime.Now.ToString().GetHashCode());
             Resources.GChat = new Global_Chat();
             Resources.Region = new Region();
             Resources.PRegion = new Player_Region();

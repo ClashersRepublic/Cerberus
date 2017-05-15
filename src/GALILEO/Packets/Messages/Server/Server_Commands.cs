@@ -7,7 +7,6 @@ namespace BL.Servers.CoC.Packets.Messages.Server
     internal class Server_Commands : Message
     {
         internal Command Command = null;
-        internal bool ForceExectute;
 
         public Server_Commands(Device Device, Command Command) : base(Device)
         {
@@ -24,7 +23,6 @@ namespace BL.Servers.CoC.Packets.Messages.Server
         {
             this.Data.AddInt(this.Command.Identifier);
             this.Data.AddRange(this.Command.Data);
-            this.Data.AddBool(this.ForceExectute);
         }
     }
 }

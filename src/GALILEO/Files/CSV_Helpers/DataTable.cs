@@ -65,7 +65,12 @@ namespace BL.Servers.CoC.Files.CSV_Helpers
                 case 21:
                     _Data = new Missions(_Row, this);
                     break;
-
+                case 28:
+                    _Data = new Heroes(_Row, this);
+                    break;
+                case 29:
+                    _Data = new Leagues(_Row, this);
+                    break;
 
                 /*case 2:
                     _Data = new Locales(_Row, this);

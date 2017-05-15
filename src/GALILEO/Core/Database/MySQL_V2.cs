@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BL.Servers.CoC.Extensions;
+using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
 using MySql.Data.MySqlClient;
 
@@ -13,7 +14,26 @@ namespace BL.Servers.CoC.Core.Database
     {
         internal static string Credentials;
 
-        public static long GetClanSeed()
+        internal static Level GetPlayerViaFID(long ID)
+        {
+            const string SQL = "SELECT coalesce(MAX(ID), 0) FROM clan";
+            Level Level = null;
+            using (MySqlConnection Conn = new MySqlConnection(Credentials))
+            {
+                Conn.Open();
+
+                using (MySqlCommand CMD = new MySqlCommand(SQL, Conn))
+                {
+                    CMD.Prepare();
+                    Level = Resources.Players.Get(Convert.ToInt64(CMD.ExecuteScalar()), Constants.Database, false);
+                }
+
+            }
+            return Level;
+
+        }
+
+        internal static long GetClanSeed()
         {
             const string SQL = "SELECT coalesce(MAX(ID), 0) FROM clan";
             long Seed = -1;
@@ -33,7 +53,33 @@ namespace BL.Servers.CoC.Core.Database
 
             return Seed;
         }
-        public static long GetPlayerSeed()
+
+        internal static List<long> GetTopPlayer()
+        {
+            const string SQL = "SELECT ID FROM player ORDER BY TROPHIES DESC LIMIT 100";
+            List<long> Seed = new List<long>(100);
+
+            using (MySqlConnection Conn = new MySqlConnection(Credentials))
+            {
+                Conn.Open();
+
+                using (MySqlCommand CMD = new MySqlCommand(SQL, Conn))
+                {
+                    CMD.Prepare();
+
+                    MySqlDataReader reader = CMD.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Seed.Add(Convert.ToInt64(reader["ID"]));
+                    }
+                }
+                Conn.Close();
+            }
+
+            return Seed;
+        }
+
+        internal static long GetPlayerSeed()
         {
             try
             {

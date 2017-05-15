@@ -2,7 +2,6 @@
 using BL.Servers.CoC.Logic.Manager;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using BL.Servers.CoC.Logic.Manager;
 
 namespace BL.Servers.CoC.Logic
 {

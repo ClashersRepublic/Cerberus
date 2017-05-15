@@ -454,6 +454,7 @@
     <Compile Include="Packets\Messages\Server\Battle\Sector_PC.cs" />
     <Compile Include="Packets\Messages\Server\Battle\UDP_Connection_Info.cs" />
     <Compile Include="Packets\Messages\Server\Cancel_Battle_Ok.cs" />
+    <Compile Include="Packets\Messages\Server\Disconnected.cs" />
     <Compile Include="Packets\Messages\Server\Inbox_Data.cs" />
     <Compile Include="Packets\Messages\Server\Keep_Alive_Response.cs" />
     <Compile Include="Packets\Messages\Server\Matchmake_Failed.cs" />

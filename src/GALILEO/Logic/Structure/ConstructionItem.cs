@@ -31,6 +31,7 @@ namespace BL.Servers.CoC.Logic.Structure
         public void BoostBuilding()
         {
             IsBoosted = true;
+            this.BoostEndTime = Avatar.Avatar.LastTick.AddMinutes(GetBoostDuration());
         }
         
         internal int GetUpgradeLevel() => this.UpgradeLevel;
@@ -84,7 +85,29 @@ namespace BL.Servers.CoC.Logic.Structure
                 }
             }
         }
-        public bool CanUpgrade()
+        internal int GetBoostDuration()
+        {
+            /*if (GetResourceProductionComponent() != null)
+            {
+                return ((Globals)CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_PRODUCTION_BOOST_MINS")).NumberValue;
+            }
+           if (GetUnitProductionComponent() != null)
+            {
+                if (GetUnitProductionComponent().IsSpellForge())
+                {
+                    return ((Globals)CSV.Tables.Get(Gamefile.Globals).GetData("SPELL_FACTORY_BOOST_MINS")).NumberValue;
+                }
+                return ((Globals)CSV.Tables.Get(Gamefile.Globals).GetData("BARRACKS_BOOST_MINS")).NumberValue;
+            }*/
+            if (GetHeroBaseComponent() != null)
+            {
+                return ((Globals)CSV.Tables.Get(Gamefile.Globals).GetData("HERO_REST_BOOST_MINS")).NumberValue;
+            }
+
+            return 0;
+        }
+
+        internal bool CanUpgrade()
         {
             bool result = false;
             if (!IsConstructing)
@@ -189,8 +212,6 @@ namespace BL.Servers.CoC.Logic.Structure
         {
             X = (int)vector.X;
             Y = (int)vector.Y;
-          
-            Console.WriteLine(GetConstructionItemData().GetConstructionTime(UpgradeLevel + 1));
 
             int constructionTime = GetConstructionItemData().GetConstructionTime(UpgradeLevel + 1);
             if (constructionTime < 1)
@@ -254,7 +275,6 @@ namespace BL.Servers.CoC.Logic.Structure
 
             if (this.IsConstructing)
             {
-                Console.WriteLine(this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick));
                 if (this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick) <= 0)
                 {
                     FinishConstruction();

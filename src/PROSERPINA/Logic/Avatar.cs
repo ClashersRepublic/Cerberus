@@ -331,7 +331,6 @@ namespace BL.Servers.CR.Logic
                 _Packet.AddVInt(0); // Count 1a00 stuff
 
                 _Packet.AddVInt(0);
-                
                 _Packet.AddHexa("0A008D30AB10008D17A3147EB901");
                 return _Packet.ToArray();
             }

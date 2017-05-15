@@ -36,6 +36,8 @@ namespace BL.Servers.CoC.Packets.Messages.Client
 
         internal override void Process()
         {
+            if (this.Device.State == Logic.Enums.State.IN_PC_BATTLE)
+                this.Device.Player.Avatar.Battle.Battle_Tick = (int)this.CTick;
             if (this.Count > -1 && this.Count <= 50)
             {
                 this.Device.Player.Tick();
