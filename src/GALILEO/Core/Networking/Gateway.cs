@@ -235,19 +235,23 @@ namespace BL.Servers.CoC.Core.Networking
 
         internal void ProcessSend(Message Message, SocketAsyncEventArgs Args)
         {
-            Message.Offset += Args.BytesTransferred;
-
-            if (Message.Length + 7 > Message.Offset)
+            while (true)
             {
-                if (Message.Device.Connected())
-                {
-                    Args.SetBuffer(Message.Offset, Message.Length + 7 - Message.Offset);
+                Message.Offset += Args.BytesTransferred;
 
-                    if (!Message.Device.Socket.SendAsync(Args))
+                if (Message.Length + 7 > Message.Offset)
+                {
+                    if (Message.Device.Connected())
                     {
-                        this.ProcessSend(Message, Args);
+                        Args.SetBuffer(Message.Offset, Message.Length + 7 - Message.Offset);
+
+                        if (!Message.Device.Socket.SendAsync(Args))
+                        {
+                            continue;
+                        }
                     }
                 }
+                break;
             }
         }
 

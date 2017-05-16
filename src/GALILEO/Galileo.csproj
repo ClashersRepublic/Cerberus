@@ -386,6 +386,7 @@
     <Compile Include="Packets\Messages\Server\Avatar_Stream.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Npc_Data.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Pc_Battle_Data.cs" />
+    <Compile Include="Packets\Messages\Server\Clans\Alliance_Change_Role_Ok.cs" />
     <Compile Include="Packets\Messages\Server\Clans\Alliance_Data.cs" />
     <Compile Include="Packets\Messages\Server\Clans\Alliance_Full_Entry.cs" />
     <Compile Include="Packets\Messages\Server\Clans\Alliance_All_Stream_Entry.cs" />
@@ -427,6 +428,7 @@
     </None>
     <None Include="Core\Database\Mysql.edmx.diagram">
       <DependentUpon>Mysql.edmx</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Core\Database\Mysql.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

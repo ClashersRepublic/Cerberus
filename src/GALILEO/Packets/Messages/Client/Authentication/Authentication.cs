@@ -169,7 +169,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                     this.Reason.AppendLine("Your Requested ID       : " + this.UserId + ".");
                     this.Reason.AppendLine();
 
-                    new Authentication_Failed(this.Device, Logic.Enums.Reason.Banned)
+                    new Authentication_Failed(this.Device, (Reason)443)
                     {
                         Message = Reason.ToString()
                     }.Send();
@@ -197,7 +197,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                 if (Alliance != null)
                 {
                     new Alliance_Full_Entry(this.Device) {Clan = Alliance}.Send();
-//                    new War_Map(this.Device).Send();
+                    new War_Map(this.Device).Send();
 
                     if (Alliance.Chats != null)
                     {

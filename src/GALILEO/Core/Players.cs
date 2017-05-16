@@ -244,6 +244,7 @@ namespace BL.Servers.CoC.Core
                             {
                                 Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON;
                                 Data.Trophies = Player.Avatar.Trophies;
+                                Data.FacebookID = Player.Avatar.Facebook.Identifier;
                                 Database.SaveChanges();
                             }
                         }

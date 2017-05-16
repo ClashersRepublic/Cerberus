@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;   
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
@@ -57,7 +54,7 @@ namespace BL.Servers.CoC.Core.Database
         internal static List<long> GetTopPlayer()
         {
             const string SQL = "SELECT ID FROM player ORDER BY TROPHIES DESC LIMIT 100";
-            List<long> Seed = new List<long>(100);
+            List<long> Seed = new List<long>(150);
 
             using (MySqlConnection Conn = new MySqlConnection(Credentials))
             {
@@ -112,7 +109,6 @@ namespace BL.Servers.CoC.Core.Database
                     }
                     Connections.Close();
                 }
-
                 return Seed;
             }
             catch (Exception ex)
