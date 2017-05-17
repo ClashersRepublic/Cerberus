@@ -14,8 +14,10 @@
             this.Device.Ping = this.Reader.ReadRRInt32();
             this.Device.Interface = this.Reader.ReadString();
 
+#if DEBUG
             Console.WriteLine($"Ping {this.Device.Ping}");
             Console.WriteLine($"Interface {this.Device.Interface}");
+#endif
         }
         
     }

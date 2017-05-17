@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26510.0
+VisualStudioVersion = 15.0.26430.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proserpina", "src\PROSERPINA\Proserpina.csproj", "{E9AB2ED5-C78C-4586-AB9E-0214F9551B9A}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nibiru", "src\NIBIRU\Nibiru.csproj", "{7EA6F76E-D8DB-4BC4-ACD3-5D53D54622CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xena", "src\XENA\Xena.csproj", "{086B7850-569A-499D-B078-309B1A0D286D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lyra", "src\LYRA\Lyra.csproj", "{4A219B15-DFD8-480B-A52C-C6737ED48263}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,14 @@ Global
 		{086B7850-569A-499D-B078-309B1A0D286D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{086B7850-569A-499D-B078-309B1A0D286D}.Release|x64.ActiveCfg = Release|Any CPU
 		{086B7850-569A-499D-B078-309B1A0D286D}.Release|x64.Build.0 = Release|Any CPU
+		{4A219B15-DFD8-480B-A52C-C6737ED48263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A219B15-DFD8-480B-A52C-C6737ED48263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A219B15-DFD8-480B-A52C-C6737ED48263}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4A219B15-DFD8-480B-A52C-C6737ED48263}.Debug|x64.Build.0 = Debug|Any CPU
+		{4A219B15-DFD8-480B-A52C-C6737ED48263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A219B15-DFD8-480B-A52C-C6737ED48263}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A219B15-DFD8-480B-A52C-C6737ED48263}.Release|x64.ActiveCfg = Release|Any CPU
+		{4A219B15-DFD8-480B-A52C-C6737ED48263}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
