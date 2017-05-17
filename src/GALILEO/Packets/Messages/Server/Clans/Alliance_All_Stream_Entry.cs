@@ -18,6 +18,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Clans
             this.Identifier = 24311;
             this.Alliance = clan;
         }
+
         internal override void Encode()
         {
             this.Data.AddInt(0);

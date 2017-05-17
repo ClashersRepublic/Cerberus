@@ -6,6 +6,7 @@ using BL.Servers.CoC.External.Blake2B;
 using BL.Servers.CoC.External.Sodium;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
+using System;
 
 namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
 {
@@ -29,7 +30,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
 
             this.Data.AddString(avatar.Token);
 
-            this.Data.AddString(avatar.Facebook.Identifier);
+            this.Data.AddString(Convert.ToString(avatar.Facebook.Identifier));
             this.Data.AddString(avatar.Gamecenter.Identifier);
 
 

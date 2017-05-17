@@ -11,20 +11,23 @@ namespace BL.Servers.CoC.Core.Database
     {
         internal static string Credentials;
 
-        internal static Level GetPlayerViaFID(long ID)
+        internal static List<Level> GetPlayerViaFID(List<string> ID)
         {
-            const string SQL = "SELECT coalesce(MAX(ID), 0) FROM clan";
-            Level Level = null;
+            const string SQL = "SELECT ID FROM player WHERE FacebookID=@FacebookID";
+            List<Level> Level = new List<Level>();
             using (MySqlConnection Conn = new MySqlConnection(Credentials))
             {
                 Conn.Open();
-
-                using (MySqlCommand CMD = new MySqlCommand(SQL, Conn))
+                foreach (var _ID in ID)
                 {
-                    CMD.Prepare();
-                    Level = Resources.Players.Get(Convert.ToInt64(CMD.ExecuteScalar()), Constants.Database, false);
+                    using (MySqlCommand CMD = new MySqlCommand(SQL, Conn))
+                    {
+                        CMD.Parameters.AddWithValue("@FacebookID", _ID);
+                        CMD.Prepare();
+                        long UserID = Convert.ToInt64(CMD.ExecuteScalar());
+                        Level.Add(Resources.Players.Get(UserID, Constants.Database, false));
+                    }
                 }
-
             }
             return Level;
 

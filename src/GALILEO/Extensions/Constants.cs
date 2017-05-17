@@ -16,7 +16,7 @@ namespace BL.Servers.CoC.Extensions
 
         internal static string[] AuthorizedIP =
         {
-            "192.168.0.65",
+            "192.168.0.5",
             "115.133.41.158"
         };
 

@@ -12,7 +12,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.API
 {
     internal class Facebook_Friends : Message
     {
-        internal string[] Friends;
+        internal List<string> Friends;
 
         public Facebook_Friends(Device Device, Reader Reader) : base(Device, Reader)
         {
@@ -22,17 +22,17 @@ namespace BL.Servers.CoC.Packets.Messages.Client.API
         internal override void Decode()
         {
             int Count = this.Reader.ReadInt32();
-            this.Friends = new string[Count];
+            this.Friends = new List<string>(Count);
 
             for (int i = 0; i < Count; i++)
             {
-                this.Friends[i] = this.Reader.ReadString();
+                this.Friends.Add(this.Reader.ReadString());
                 Console.WriteLine(this.Friends[i]);
             }
         }
         internal override void Process()
         {
-            new Friend_List_Data(this.Device).Send();
+            new Friend_List_Data(this.Device, this.Friends).Send();
         }
     }
 }

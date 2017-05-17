@@ -51,7 +51,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                             if (bd.IsAllianceCastle())
                             {
                                 var a = (Building)this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId);
-                                var al = a.GetBuildingData();
+                                var al = a.GetBuildingData;
 
                                 ca.Castle_Level++;
                                 ca.Castle_Total = al.GetUnitStorageCapacity(ca.Castle_Level);

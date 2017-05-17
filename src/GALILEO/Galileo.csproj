@@ -374,7 +374,9 @@
     <Compile Include="Packets\Messages\Client\Execute_Commands.cs" />
     <Compile Include="Packets\Messages\Client\Go_Home.cs" />
     <Compile Include="Packets\Messages\Client\Keep_Alive.cs" />
+    <Compile Include="Packets\Messages\Client\Leaderboard\Request_Global_Clans.cs" />
     <Compile Include="Packets\Messages\Client\Leaderboard\Request_Global_Players.cs" />
+    <Compile Include="Packets\Messages\Client\Leaderboard\Request_Local_Clans.cs" />
     <Compile Include="Packets\Messages\Client\Leaderboard\Request_Local_Players.cs" />
     <Compile Include="Packets\Messages\Client\Request_Name_Change.cs" />
     <Compile Include="Packets\Messages\Server\API\Facebook_Connect_OK.cs" />
@@ -400,7 +402,9 @@
     <Compile Include="Packets\Messages\Server\Errors\Server_Error.cs" />
     <Compile Include="Packets\Messages\Server\Global_Chat_Entry.cs" />
     <Compile Include="Packets\Messages\Server\Keep_Alive_OK.cs" />
+    <Compile Include="Packets\Messages\Server\Leaderboard\Global_Clans.cs" />
     <Compile Include="Packets\Messages\Server\Leaderboard\Global_Players.cs" />
+    <Compile Include="Packets\Messages\Server\Leaderboard\Local_Clans.cs" />
     <Compile Include="Packets\Messages\Server\Leaderboard\Local_Players.cs" />
     <Compile Include="Packets\Messages\Server\League_Players.cs" />
     <Compile Include="Packets\Messages\Server\Name_Change_Response.cs" />

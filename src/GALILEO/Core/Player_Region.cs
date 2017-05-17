@@ -30,7 +30,6 @@ namespace BL.Servers.CoC.Core
 
         internal void Fetch()
         {
-
             foreach (var _Id in MySQL_V2.GetTopPlayer())
             {
                 this.Add("INTERNATIONAL", Resources.Players.Get(_Id, Constants.Database, true));
@@ -38,13 +37,14 @@ namespace BL.Servers.CoC.Core
             
             Timer Timer = new Timer
             {
-                Interval = TimeSpan.FromMinutes(2).TotalMilliseconds,
+                Interval = TimeSpan.FromMinutes(0.5).TotalMilliseconds,
                 AutoReset = true,
             };
 
 
             Timer.Elapsed += (_Sender, _Args) =>
             {
+                this.Remove("INTERNATIONAL");
                 foreach (var _Id in MySQL_V2.GetTopPlayer())
                 {
                     this.Add("INTERNATIONAL", Resources.Players.Get(_Id, Constants.Database, true));

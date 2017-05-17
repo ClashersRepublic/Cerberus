@@ -52,7 +52,6 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
                     Event_Player_Name = this.Device.Player.Avatar.Name
                 });
 
-                new Alliance_Data(this.Device).Send();
                 new Alliance_All_Stream_Entry(this.Device).Send();
             }
         }

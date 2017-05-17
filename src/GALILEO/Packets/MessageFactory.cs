@@ -40,6 +40,8 @@ namespace BL.Servers.CoC.Packets
                 {14315, typeof(Add_Alliance_Message)},
                 {14316, typeof(Edit_Alliance_Settings)},
                 {14325, typeof(Avatar_Profile)},
+                {14401, typeof(Request_Global_Clans)},
+                {14402, typeof(Request_Local_Clans)},
                 {14403, typeof(Request_Global_Players)},
                 {14404, typeof(Request_Local_Players)},
                 {14600, typeof(Request_Name_Change)},

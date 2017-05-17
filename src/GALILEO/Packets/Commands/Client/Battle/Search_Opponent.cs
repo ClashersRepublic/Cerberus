@@ -26,7 +26,15 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
 
         internal override void Process()
         {
-            while (this.Enemy_Player == null)
+            if (this.Device.State == Logic.Enums.State.LOGGED)
+            {
+                this.Device.Player.Tick();
+            }
+
+            this.Device.State = Logic.Enums.State.REPLAY;
+            this.Enemy_ID = Core.Resources.Random.Next(1, (int)Core.Resources.Players.Seed);
+
+            while (this.Enemy_Player == null && this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count < Core.Resources.Players.Seed - 1)
             {
                 if (this.Enemy_ID != this.Device.Player.Avatar.UserId && this.Enemy_ID > 0)
                 {
@@ -36,26 +44,44 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
 
                         if (this.Enemy_Player != null)
                         {
-                            this.Device.Player.Avatar.Last_Attack_Enemy_ID.Add(
-                                (int) this.Enemy_Player.Avatar.UserId);
+                            this.Device.Player.Avatar.Last_Attack_Enemy_ID.Add(this.Enemy_Player.Avatar.UserId);
 
-                            if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20 ||
-                                this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count ==
-                                Core.Resources.Players.Seed - 1)
+                            if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20 || this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count == Core.Resources.Players.Seed - 1)
                                 this.Device.Player.Avatar.Last_Attack_Enemy_ID.RemoveAt(0);
                         }
                     }
                     else
                     {
-                        this.Enemy_ID = Core.Resources.Random.Next(1, Convert.ToInt32(Core.Resources.Players.Seed - 1));
+                        if (this.Enemy_ID < Core.Resources.Players.Seed - 1 && !this.Max_Seed_Achieved)
+                        {
+                            this.Enemy_ID++;
+                        }
+                        else
+                        {
+                            if (this.Enemy_ID < 1) break;
+                            this.Enemy_ID--;
+                            this.Max_Seed_Achieved = true;
+                        }
                     }
                 }
                 else
                 {
-                    this.Enemy_ID = Core.Resources.Random.Next(1, Convert.ToInt32(Core.Resources.Players.Seed - 1));
+                    if (this.Enemy_ID < Core.Resources.Players.Seed - 1 && !this.Max_Seed_Achieved)
+                    {
+                        this.Enemy_ID++;
+                    }
+                    else
+                    {
+                        if (this.Enemy_ID < 1)
+                        {
+                            break;
+                        }
+                        this.Enemy_ID--;
+                        this.Max_Seed_Achieved = true;
+                    }
                 }
             }
-            
+
             if (this.Enemy_Player != null)
                 new Pc_Battle_Data(this.Device) { Enemy = this.Enemy_Player }.Send();
             else

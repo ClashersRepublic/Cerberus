@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BL.Servers.CoC.Logic.Structure.Slots;
 using Newtonsoft.Json;
+using BL.Servers.CoC.Logic.Structure.Slots.Items;
 
 namespace BL.Servers.CoC.Logic
 {
@@ -49,5 +50,10 @@ namespace BL.Servers.CoC.Logic
 
         [JsonProperty("prep_skip")]
         internal int Preparation_Skip = 0;
+
+        internal void Add_Command(Battle_Command Command)
+        {
+            this.Commands.Add(this, Command);
+        }
     }
 }

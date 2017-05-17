@@ -15,7 +15,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
     internal class Place_Attacker : Command
     {
         internal Combat_Item Unit;
-        internal uint Tick;
+        internal int Tick;
         internal int X;
         internal int Y;
 
@@ -27,21 +27,25 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
             this.X = this.Reader.ReadInt32();
             this.Y = this.Reader.ReadInt32();
             this.Unit = (Combat_Item)CSV.Tables.GetWithGlobalID(this.Reader.ReadInt32());
-            this.Tick = this.Reader.ReadUInt32();
+            this.Tick = this.Reader.ReadInt32();
         }
 
         internal override void Process()
         {
-            if (this.Device.State == State.IN_NPC_BATTLE || this.Device.State == State.IN_PC_BATTLE)
+
+            if (this.Device.State == State.IN_PC_BATTLE)
             {
-                List<Slot> _PlayerUnits = this.Device.Player.Avatar.Units;
+                Battle_Command Command = new Battle_Command { Command_Type = this.Identifier, Command_Base = new Command_Base { Base = new Base { Tick = this.Tick }, Data = this.Unit.GetGlobalID(), X = this.X, Y = this.Y } };
+                this.Device.Player.Avatar.Battle.Add_Command(Command);
+            }
+            List<Slot> _PlayerUnits = this.Device.Player.Avatar.Units;
 
                 Slot _DataSlot = _PlayerUnits.Find(t => t.Data == Unit.GetGlobalID());
                 if (_DataSlot != null)
                 {
                     _DataSlot.Count -= 1;
                 }
-            }
+            
             /*            List<Component> components = level.GetComponentManager().GetComponents(0);
             for (int i = 0; i < components.Count; i++)
             {

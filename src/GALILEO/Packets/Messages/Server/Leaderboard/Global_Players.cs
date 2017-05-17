@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BL.Servers.CoC.Core;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Files.CSV_Logic;
 using BL.Servers.CoC.Logic;
 
 namespace BL.Servers.CoC.Packets.Messages.Server.Leaderboard
@@ -35,7 +32,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Leaderboard
             {
                 _Packet.AddLong(_Player.Avatar.UserId);
                 _Packet.AddString(_Player.Avatar.Name);
-                _Packet.AddInt(i++);
+                _Packet.AddInt((i++) + 1);
                 _Packet.AddInt(_Player.Avatar.Trophies);
                 _Packet.AddInt(Resources.Random.Next(0, 10)); //Previous month rank
                 _Packet.AddInt(_Player.Avatar.Level);
@@ -63,9 +60,9 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Leaderboard
             }
 
             this.Data.AddInt(i);
-            this.Data.AddRange(_Packet.ToArray());
+            this.Data.AddRange(_Packet);
             this.Data.AddInt(i);
-            this.Data.AddRange(_Packet.ToArray());
+            this.Data.AddRange(_Packet);
 
             this.Data.AddInt((int)(DateTime.UtcNow.LastDayOfMonth() - DateTime.UtcNow).TotalSeconds);
             this.Data.AddInt(DateTime.UtcNow.Year);

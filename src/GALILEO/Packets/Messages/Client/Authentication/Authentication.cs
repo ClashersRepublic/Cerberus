@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using BL.Servers.CoC.Core;
 using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions;
@@ -23,6 +21,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
     {
         public Authentification(Device device, Reader reader) : base(device, reader)
         {
+            this.Device.State = State.LOGIN;
         }
 
         internal StringBuilder Reason;
@@ -102,24 +101,60 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
             this.Reader.ReadString();
             this.Reader.ReadString();
 
-            this.ClientVersion = this.Reader.ReadString().Split(',');
+            this.ClientVersion = this.Reader.ReadString().Split('.');
 
         }
 
         internal override void Process()
         {
-            if (this.Device.State >= State.SESSION_OK)
+            if (this.UserId == 0)
             {
-                this.Device.State = State.LOGIN;
-                if (this.UserId == 0)
-                {
-                    this.Device.Player = Resources.Players.New(0, Constants.Database);
+                this.Device.Player = Resources.Players.New(0, Constants.Database);
 
-                    if (this.Device.Player != null)
+                if (this.Device.Player != null)
+                {
+                    if (this.Device.Player.Avatar.Locked)
+                    {
+                        new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
+                    }
+                    else
+                    {
+                        this.Login();
+                    }
+                }
+                else
+                {
+                    new Authentication_Failed(this.Device, Logic.Enums.Reason.Pause).Send();
+                }
+            }
+            else if (this.UserId > 0)
+            {
+                this.Device.Player = Resources.Players.Get(this.UserId, Constants.Database);
+                if (this.Device.Player != null)
+                {
+                    if (string.Equals(this.Token, this.Device.Player.Avatar.Token))
                     {
                         if (this.Device.Player.Avatar.Locked)
                         {
                             new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
+                        }
+                        else if (this.Device.Player.Avatar.Banned)
+                        {
+                            this.Reason = new StringBuilder();
+                            this.Reason.AppendLine(
+                                "Your Player have been banned on our servers, please contact one of the server staff with these following informations if you are not satisfied with the ban:");
+                            this.Reason.AppendLine();
+                            this.Reason.AppendLine("Your Player Name         : " + this.Device.Player.Avatar.Name);
+                            this.Reason.AppendLine("Your Player ID           : " + this.Device.Player.Avatar.UserId);
+                            this.Reason.AppendLine("Your Player Tag          : " + GameUtils.GetHashtag(this.Device.Player.Avatar.UserId));
+                            this.Reason.AppendLine("Your Player Ban Duration : " + Math.Round((this.Device.Player.Avatar.BanTime.AddDays(3) - DateTime.UtcNow).TotalDays, 3) + " Day");
+                            this.Reason.AppendLine("Your Player Unlock Date  : " + this.Device.Player.Avatar.BanTime.AddDays(3));
+                            this.Reason.AppendLine();
+
+                            new Authentication_Failed(this.Device, Logic.Enums.Reason.Banned)
+                            {
+                                Message = Reason.ToString()
+                            }.Send();
                         }
                         else
                         {
@@ -128,75 +163,22 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                     }
                     else
                     {
-                        new Authentication_Failed(this.Device, Logic.Enums.Reason.Pause).Send();
+                        new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
                     }
                 }
-                else if (this.UserId > 0)
+                else
                 {
-                    this.Device.Player = Resources.Players.Get(this.UserId, Constants.Database);
-                    if (this.Device.Player != null)
-                    {
-                        if (string.Equals(this.Token, this.Device.Player.Avatar.Token))
-                        {
-                            if (this.Device.Player.Avatar.Locked)
-                            {
-                                new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
-                            }
-                            else if (this.Device.Player.Avatar.Banned)
-                            {
-                                this.Reason = new StringBuilder();
-                                this.Reason.AppendLine(
-                                    "Your Player have been banned on our servers, please contact one of the server staff with these following informations if you are not satisfied with the ban:");
-                                this.Reason.AppendLine();
-                                this.Reason.AppendLine("Your Player Name         : " + this.Device.Player.Avatar.Name);
-                                this.Reason.AppendLine("Your Player ID           : " + this.Device.Player.Avatar.UserId);
-                                this.Reason.AppendLine("Your Player Tag          : " + GameUtils.GetHashtag(this.Device.Player.Avatar.UserId));
-                                this.Reason.AppendLine("Your Player Ban Duration : " + Math.Round((this.Device.Player.Avatar.BanTime.AddDays(3) - DateTime.UtcNow).TotalDays, 3) + " Day");
-                                this.Reason.AppendLine("Your Player Unlock Date  : " + this.Device.Player.Avatar.BanTime.AddDays(3));
-                                this.Reason.AppendLine();
+                    this.Reason = new StringBuilder();
+                    this.Reason.AppendLine("Your Device have been block from accessing our servers due to invalid Id, please  clear your game data or contact one of the BarbarianLand staff with these following informations if you are not able to clear you game data :");
+                    this.Reason.AppendLine("Your Device IP         : " + this.Device.IPAddress + ".");
+                    this.Reason.AppendLine("Your Requested ID       : " + this.UserId + ".");
+                    this.Reason.AppendLine();
 
-                                new Authentication_Failed(this.Device, Logic.Enums.Reason.Banned)
-                                {
-                                    Message = Reason.ToString()
-                                }.Send();
-                            }
-                            else
-                            {
-                                this.Login();
-                            }
-                        }
-                        else
-                        {
-                            new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
-                        }
-                    }
-                    else
+                    new Authentication_Failed(this.Device, (Reason)443)
                     {
-                        this.Reason = new StringBuilder();
-                        this.Reason.AppendLine("Your Device have been block from accessing our servers due to invalid Id, please  clear your game data or contact one of the BarbarianLand staff with these following informations if you are not able to clear you game data :");
-                        this.Reason.AppendLine("Your Device IP         : " + this.Device.IPAddress + ".");
-                        this.Reason.AppendLine("Your Requested ID       : " + this.UserId + ".");
-                        this.Reason.AppendLine();
-
-                        new Authentication_Failed(this.Device, (Reason)443)
-                        {
-                            Message = Reason.ToString()
-                        }.Send();
-                    }
+                        Message = Reason.ToString()
+                    }.Send();
                 }
-            }
-            else
-            {
-                this.Reason = new StringBuilder();
-                this.Reason.AppendLine("Your Device have been block from accessing our servers due to ourdated game version, please download new version of game from main website:");
-                this.Reason.AppendLine("Your Device IP                    : " + this.Device.IPAddress + ".");
-                this.Reason.AppendLine("Your Device Suspedted Issue       : Using RC4 version of the game.");
-                this.Reason.AppendLine();
-
-                new Authentication_Failed(this.Device, (Reason)443)
-                {
-                    Message = Reason.ToString()
-                }.Send();
             }
         }
 

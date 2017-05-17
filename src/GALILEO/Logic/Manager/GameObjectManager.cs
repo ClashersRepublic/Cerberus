@@ -38,7 +38,7 @@ namespace BL.Servers.CoC.Logic.Manager
             if (go.ClassId == 0)
             {
                 var b = (Building) go;
-                var bd = b.GetBuildingData();
+                var bd = b.GetBuildingData;
                 if (bd.IsWorkerBuilding())
                     this.Level.WorkerManager.IncreaseWorkerCount();
             }
@@ -71,7 +71,7 @@ namespace BL.Servers.CoC.Logic.Manager
                 foreach (GameObject go in new List<GameObject>(this.GameObjects[0]))
                 {
                     Building b = (Building)go;
-                    JObject j = new JObject { { "data", b.GetBuildingData().GetGlobalID() }, { "id", 500000000 + c } };
+                    JObject j = new JObject { { "data", b.GetBuildingData.GetGlobalID() }, { "id", 500000000 + c } };
                     b.Save(j);
                     JBuildings.Add(j);
                     c++;
@@ -222,7 +222,7 @@ namespace BL.Servers.CoC.Logic.Manager
             if (go.ClassId == 0)
             {
                 var b = (Building) go;
-                var bd = b.GetBuildingData();
+                var bd = b.GetBuildingData;
                 if (bd.IsWorkerBuilding())
                 {
                    this.Level.WorkerManager.DecreaseWorkerCount();
@@ -264,7 +264,7 @@ namespace BL.Servers.CoC.Logic.Manager
             if (go.ClassId == 0)
             {
                 var b = (Building) go;
-                var bd = b.GetBuildingData();
+                var bd = b.GetBuildingData;
                 if (bd.IsWorkerBuilding())
                     this.Level.WorkerManager.DecreaseWorkerCount();
             }

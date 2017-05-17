@@ -46,8 +46,13 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                     Sender_Role = Clan.Members[this.Device.Player.Avatar.UserId].Role,
                     Have_Message = this.Have_Message,
                     Message = this.Message,
-                    Max_Spells = (CSV.Tables.Get(Gamefile.Buildings).GetDataWithID(1000014) as Files.CSV_Logic.Buildings).HousingSpaceAlt[this.Device.Player.Avatar.Castle_Level],
                     Max_Troops = (CSV.Tables.Get(Gamefile.Buildings).GetDataWithID(1000014) as Files.CSV_Logic.Buildings).HousingSpace[this.Device.Player.Avatar.Castle_Level],
+                    Max_Spells = (CSV.Tables.Get(Gamefile.Buildings).GetDataWithID(1000014) as Files.CSV_Logic.Buildings).HousingSpaceAlt[this.Device.Player.Avatar.Castle_Level],
+                    Used_Space_Troops = this.Device.Player.Avatar.Castle_Used,
+                    Used_Space_Spells = this.Device.Player.Avatar.Castle_Used_SP,
+                    Units = this.Device.Player.Avatar.Castle_Units,
+                    Spells = this.Device.Player.Avatar.Castle_Spells,
+
                 });
         }
     }

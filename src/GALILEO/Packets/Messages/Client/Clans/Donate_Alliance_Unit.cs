@@ -39,11 +39,11 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
             if (GlobalId < 4000000)
             {
                 this.IsSpell = true;
-                this.Spell = CSV.Tables.Get(Gamefile.Buildings).GetDataWithID(this.Reader.ReadInt32()) as Spells;
+                this.Spell = CSV.Tables.Get(Gamefile.Spells).GetDataWithID(GlobalId) as Spells;
             }
             else
             {
-                this.Troop = CSV.Tables.Get(Gamefile.Buildings).GetDataWithID(this.Reader.ReadInt32()) as Characters;
+                this.Troop = CSV.Tables.Get(Gamefile.Characters).GetDataWithID(GlobalId) as Characters;
             }
 
             this.StreamHighId = this.Reader.ReadInt32();
@@ -62,7 +62,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
 
                 if (IsSpell)
                 {
-                    if (Stream.Max_Spells >= Stream.Max_Spells + this.Spell.HousingSpace[0])
+                    if (Stream.Max_Spells >= Stream.Used_Space_Spells + this.Spell.HousingSpace[0])
                     {
                         var Spell_Level = this.Device.Player.Avatar.GetUnitUpgradeLevel(this.Spell);
                         Stream.AddSpell(this.Device.Player.Avatar.UserId, this.GlobalId, 1, Spell_Level);
@@ -85,31 +85,38 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
                             }
                         }
                     }
-                    else
+                }
+                else
+                {
+                    Console.WriteLine(Stream.Max_Troops);
+                    Console.WriteLine(this.Troop.HousingSpace);
+                    Console.WriteLine((Stream.Max_Troops + this.Troop.HousingSpace));
+
+                    Console.WriteLine(Stream.Max_Troops <= (Stream.Max_Troops + this.Troop.HousingSpace));
+                    Console.WriteLine(Stream.Max_Troops >= (Stream.Max_Troops + this.Troop.HousingSpace));
+                    Console.WriteLine(Stream.Max_Troops >= Stream.Max_Troops + this.Troop.HousingSpace);
+                    if (Stream.Max_Troops >= (Stream.Used_Space_Troops + this.Troop.HousingSpace))
                     {
-                        if (Stream.Max_Troops >= Stream.Max_Troops + this.Troop.HousingSpace)
+
+                        var Unit_Level = this.Device.Player.Avatar.GetUnitUpgradeLevel(this.Troop);
+                        Stream.AddTroop(this.Device.Player.Avatar.UserId, this.GlobalId, 1, Unit_Level);
+                        Stream.Used_Space_Troops += this.Troop.HousingSpace;
+
+                        Receiver.Avatar.Castle_Used += this.Troop.HousingSpace;
+                        Receiver.Avatar.AddCastleTroop(this.GlobalId, 1, Unit_Level);
+
+                        new Server_Commands(this.Device) { Command = new Donate_Troop_Callback(this.Device) { SteamHighId = this.StreamHighId, StreamLowId = this.StreamLowId, TroopGlobalId = this.Troop.GetGlobalID() }.Handle() }.Send();
+
+                        if (Receiver.Client != null)
                         {
+                            new Server_Commands(Receiver.Client) { Command = new Receive_Troop_Callback(Receiver.Client) { TroopGlobalId = this.Troop.GetGlobalID(), TroopLevel = Unit_Level, DonatorName = this.Device.Player.Avatar.Name }.Handle() }.Send();
+                        }
 
-                            var Unit_Level = this.Device.Player.Avatar.GetUnitUpgradeLevel(this.Troop);
-                            Stream.AddTroop(this.Device.Player.Avatar.UserId, this.GlobalId, 1, Unit_Level);
-                            Stream.Used_Space_Troops += this.Troop.HousingSpace;
-
-                            Receiver.Avatar.Castle_Used += this.Troop.HousingSpace;
-                            Receiver.Avatar.AddCastleTroop(this.GlobalId, 1, Unit_Level);
-
-                            new Server_Commands(this.Device) { Command = new Donate_Troop_Callback(this.Device) { SteamHighId = this.StreamHighId, StreamLowId = this.StreamLowId, TroopGlobalId = this.Troop.GetGlobalID() }.Handle() }.Send();
-
-                            if (Receiver.Client != null)
+                        foreach (Member Member in Alliance.Members.Values)
+                        {
+                            if (Member.Connected)
                             {
-                                new Server_Commands(Receiver.Client) { Command = new Receive_Troop_Callback(Receiver.Client) { TroopGlobalId = this.Troop.GetGlobalID(), TroopLevel = Unit_Level, DonatorName = this.Device.Player.Avatar.Name }.Handle() }.Send();
-                            }
-
-                            foreach (Member Member in Alliance.Members.Values)
-                            {
-                                if (Member.Connected)
-                                {
-                                    new Alliance_Stream_Entry(Member.Player.Client, Stream).Send();
-                                }
+                                new Alliance_Stream_Entry(Member.Player.Client, Stream).Send();
                             }
                         }
                     }

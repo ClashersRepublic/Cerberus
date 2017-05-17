@@ -78,7 +78,6 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
         internal byte[] ToBytes()
         {
             List<byte> _Packet = new List<byte>();
-
             _Packet.AddInt((int)this.Stream_Type);
             _Packet.AddInt(this.Message_HighID);    
             _Packet.AddInt(this.Message_LowID);
