@@ -11,21 +11,19 @@ namespace BL.Servers.CR.Packets.Commands.Server
 
         public Name_Change_Callback(Device _Client) : base(_Client)
         {
-            this.Identifier = 3;
+            this.Identifier = 201;
         }
         
         internal override void Decode()
         {
-            this.Previous = this.Name;
             this.Name = this.Reader.ReadString();
+            this.Previous = this.Name;
         }
         
         internal override void Encode()
         {
             this.Data.AddString(this.Device.Player.Avatar.Username);
-            this.Data.AddInt(0);
-            this.Data.AddInt(4);
-            this.Data.AddInt(-1);
+            this.Data.AddInt(1);
         }
     }
 }

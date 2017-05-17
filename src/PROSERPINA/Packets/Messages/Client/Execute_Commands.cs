@@ -61,10 +61,13 @@
                         }
                         else
                         {
+#if DEBUG
+
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Command " + CommandID + " has not been handled.");
                             if (this.LCommands.Any()) Console.WriteLine("Previous command was " + this.LCommands.Last().Identifier + ". [" + (_Index + 1) + " / " + this.Count + "]");
                             Console.ResetColor();
+#endif
                             break;
                         }
                     }

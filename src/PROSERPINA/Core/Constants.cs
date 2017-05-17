@@ -30,7 +30,8 @@ namespace BL.Servers.CR.Core
         internal static string[] AuthorizedIP =
         {
             "192.168.0.65",
-            "115.133.41.158"
+            "115.133.41.158",
+            "70.68.246.228"
         };
     }
 }

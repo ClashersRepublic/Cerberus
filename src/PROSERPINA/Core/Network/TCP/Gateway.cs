@@ -92,9 +92,7 @@ namespace BL.Servers.CR.Core.Network.TCP
                     }
                 }
 
-#if DEBUG    
-                Loggers.Log($"New client connected -> {((IPEndPoint) Socket.RemoteEndPoint).Address}", true);
-#endif
+                Loggers.Log($"New client connected -> {((IPEndPoint)Socket.RemoteEndPoint).Address}", true);
 
                 SocketAsyncEventArgs ReadEvent = this.ReadPool.Dequeue();
 

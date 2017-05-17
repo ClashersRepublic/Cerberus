@@ -297,11 +297,12 @@ namespace BL.Servers.CR.Logic
 
                 _Packet.AddVInt(this.UserLowId);
 
-                _Packet.AddString("Test"); // Name
+                _Packet.AddString(this.Username); // Name
 
                 _Packet.AddVInt(this.Arena); // Arena
 
                 _Packet.AddVInt(this.Trophies); // Trophies
+
                 _Packet.AddRange("AC04000AA38909BC33001E919133B82E000000".HexaToBytes());
 
                 _Packet.AddVInt(this.Device.Player.Avatar.Resources.Count);
@@ -358,7 +359,7 @@ namespace BL.Servers.CR.Logic
 
                 _Packet.AddVInt(this.UserLowId);
 
-                _Packet.AddString("Test"); // Name
+                _Packet.AddString(this.Username); // Name
 
                 _Packet.AddVInt(this.Changes); // Changes
 
@@ -426,24 +427,13 @@ namespace BL.Servers.CR.Logic
 
                 _Packet.AddVInt(this.Level); // Level
 
-                _Packet.Add(0); // Unknown
+                _Packet.Add(this.NameSet); // Unknown
 
                 // 8 = Set name popup + clan
                 // 9 = Name already set + clan
                 // < 8 =  Set name popup
 
-                _Packet.AddVInt(9);
-
-                //_Packet.AddVInt(!string.IsNullOrEmpty(this.Username) ? 9 : 8);
-
-                _Packet.AddVInt(this.ClanHighID); // Clan HighID
-                _Packet.AddVInt(this.ClanHighID); // Clan LowID
-
-                _Packet.AddString("BarbarianLand"); // Clan Name
-
-                _Packet.AddVInt(100); // Clan Badge
-
-                _Packet.AddVInt(2); // Access Level
+                _Packet.AddVInt(!string.IsNullOrEmpty(this.Username) ? 7 : 0);
 
                 _Packet.AddVInt(this.Games_Played); // Games Played
 
