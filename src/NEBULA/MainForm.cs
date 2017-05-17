@@ -401,17 +401,58 @@ namespace BL.Assets.Editor
 
         private void noneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (lzmaToolStripMenuItem.Checked)
+            if (LZMACRToolStripMenuItem.Checked)
             {
-                lzmaToolStripMenuItem.Checked = false;
+                LZMACRToolStripMenuItem.Checked = false;
             }
             else if (lzhamToolStripMenuItem.Checked)
             {
                 lzhamToolStripMenuItem.Checked = false;
             }
         }
+        private void LZMACoCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult warning = MessageBox.Show(
+              "After the SC file has been compressed, the tool will clear all previous data to prevent reading errors.\nContinue?",
+              "Beware!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 
-        private void lzmaToolStripMenuItem_Click(object sender, EventArgs e)
+            if (warning == DialogResult.Yes)
+            {
+                using (SaveFileDialog dlg = new SaveFileDialog())
+                {
+                    dlg.Filter = "Supercell Graphics (SC) | *.sc";
+                    dlg.FileName = GetFileName(_scFile.GetInfoFileName());
+                    dlg.OverwritePrompt = false;
+                    dlg.CreatePrompt = false;
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        Lzma.CompressCoC(_scFile.GetInfoFileName(), dlg.FileName);
+
+                        dlg.Title = "Please enter texture file location";
+                        dlg.Filter = "Supercell Texture (SC) | *_tex.sc";
+                        dlg.FileName = GetFileName(_scFile.GetTextureFileName());
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                            Lzma.CompressCoC(_scFile.GetTextureFileName(), dlg.FileName);
+                    }
+                }
+
+                saveToolStripMenuItem.Visible = false;
+                reloadToolStripMenuItem.Visible = false;
+                exportAllShapeToolStripMenuItem.Visible = false;
+                exportAllChunkToolStripMenuItem.Visible = false;
+                exportAllAnimationToolStripMenuItem.Visible = false;
+                compressionToolStripMenuItem.Visible = false;
+                addTextureToolStripMenuItem.Visible = false;
+
+                treeView1.Nodes.Clear();
+
+                pictureBox1.Image = null;
+                label1.Text = null;
+                _scFile = null;
+            }
+        }
+
+        private void LZMACRToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult warning = MessageBox.Show(
                 "After the SC file has been compressed, the tool will clear all previous data to prevent reading errors.\nContinue?",
@@ -427,13 +468,13 @@ namespace BL.Assets.Editor
                     dlg.CreatePrompt = false;
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        Lzma.Compress(_scFile.GetInfoFileName(), dlg.FileName);
+                        Lzma.CompressCR(_scFile.GetInfoFileName(), dlg.FileName);
 
                         dlg.Title = "Please enter texture file location";
                         dlg.Filter = "Supercell Texture (SC) | *_tex.sc";
                         dlg.FileName = GetFileName(_scFile.GetTextureFileName());
                         if (dlg.ShowDialog() == DialogResult.OK)
-                            Lzma.Compress(_scFile.GetTextureFileName(), dlg.FileName);
+                            Lzma.CompressCR(_scFile.GetTextureFileName(), dlg.FileName);
                     }
                 }
 

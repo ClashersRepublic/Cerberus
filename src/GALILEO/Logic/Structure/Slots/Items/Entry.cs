@@ -3,9 +3,6 @@ using BL.Servers.CoC.Logic.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Servers.CoC.Logic.Structure.Slots.Items
 {
@@ -83,8 +80,7 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
             List<byte> _Packet = new List<byte>();
 
             _Packet.AddInt((int)this.Stream_Type);
-            _Packet.AddInt(this.Message_HighID);
-            Console.WriteLine(this.Message_LowID);
+            _Packet.AddInt(this.Message_HighID);    
             _Packet.AddInt(this.Message_LowID);
             _Packet.Add(3);
 

@@ -30,9 +30,8 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(this.Player.Avatar.Shield);
                 _Packet.AddInt(this.Player.Avatar.Guard);
 
-                _Packet.AddInt((int) TimeSpan.FromDays(365).TotalSeconds);
+                _Packet.AddInt((int) TimeSpan.FromDays(365).TotalSeconds); //Personal break
 
-                Console.WriteLine(this.Json);
                 _Packet.AddCompressed(this.Json);
                 _Packet.AddCompressed("{\"event\":[]}");
 

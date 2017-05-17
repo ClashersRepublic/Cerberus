@@ -63,9 +63,9 @@ namespace BL.Assets.Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap TCCLogo {
+        internal static System.Drawing.Bitmap Logo_Red_512_40_ {
             get {
-                object obj = ResourceManager.GetObject("TCCLogo", resourceCulture);
+                object obj = ResourceManager.GetObject("Logo-Red-512-40%", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

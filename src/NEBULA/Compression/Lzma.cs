@@ -19,7 +19,54 @@
         private const string Mf = "bt4";
         private const bool Eos = false;
 
-        internal static void Compress(string file, string outputlocation)
+        internal static void CompressCoC(string file, string outputlocation)
+        {
+            File.Copy(file, file += ".clone");
+
+            var encoder = new Encoder();
+            using (var input = new FileStream(file, FileMode.Open))
+            {
+                using (var output = new FileStream(outputlocation, FileMode.Create, FileAccess.Write))
+                {
+                    CoderPropID[] propIDs =
+                    {
+                        CoderPropID.DictionarySize,
+                        CoderPropID.PosStateBits,
+                        CoderPropID.LitContextBits,
+                        CoderPropID.LitPosBits,
+                        CoderPropID.Algorithm,
+                        CoderPropID.NumFastBytes,
+                        CoderPropID.MatchFinder,
+                        CoderPropID.EndMarker
+                    };
+
+                    object[] properties =
+                    {
+                        Dictionary,
+                        PosStateBits,
+                        3,
+                        //LitContextBits,
+                        LitPosBits,
+                        Algorithm,
+                        NumFastBytes,
+                        Mf,
+                        Eos
+                    };
+
+                    encoder.SetCoderProperties(propIDs, properties);
+                    encoder.WriteCoderProperties(output);
+                    output.Write(BitConverter.GetBytes(input.Length), 0, 4);
+
+                    encoder.Code(input, output, input.Length, -1, null);
+                    output.Flush();
+                    output.Dispose();
+                }
+                input.Dispose();
+            }
+            File.Delete(file);
+        }
+
+        internal static void CompressCR(string file, string outputlocation)
         {
             File.Copy(file, file += ".clone");
             byte[] hash;
@@ -74,7 +121,7 @@
             File.Delete(file);
         }
 
-        internal static void Decompress(string file)
+        internal static void DecompressCR(string file)
         {
             var clone = file + ".clone";
             File.Copy(file, clone);
@@ -86,15 +133,41 @@
                     var sc = new byte[2];
                     input.Read(sc, 0, 2);
 
-                    var version = new byte[4];
-                    input.Read(version, 0, 4);
+                        var version = new byte[4];
+                        input.Read(version, 0, 4);
 
-                    var md5Length = new byte[4];
-                    input.Read(md5Length, 0, 4);
+                        var md5Length = new byte[4];
+                        input.Read(md5Length, 0, 4);
 
-                    var md5 = new byte[16];
-                    input.Read(md5, 0, 16);
+                        var md5 = new byte[16];
+                        input.Read(md5, 0, 16);
 
+                    var properties = new byte[5];
+                    input.Read(properties, 0, 5);
+
+                    var fileLengthBytes = new byte[4];
+                    input.Read(fileLengthBytes, 0, 4);
+                    var fileLength = BitConverter.ToInt32(fileLengthBytes, 0);
+
+                    decoder.SetDecoderProperties(properties);
+                    decoder.Code(input, output, input.Length, fileLength, null);
+                    output.Flush();
+                    output.Close();
+                }
+                input.Close();
+            }
+            File.Delete(clone);
+        }
+
+        internal static void DecompressCoC(string file)
+        {
+            var clone = file + ".clone";
+            File.Copy(file, clone);
+            var decoder = new Decoder();
+            using (var input = new FileStream(clone, FileMode.Open))
+            {
+                using (var output = new FileStream(file, FileMode.Create, FileAccess.Write))
+                {
                     var properties = new byte[5];
                     input.Read(properties, 0, 5);
 

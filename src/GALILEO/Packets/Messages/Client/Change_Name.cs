@@ -4,6 +4,7 @@ using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Packets.Commands.Server;
 using BL.Servers.CoC.Packets.Messages.Server;
+using BL.Servers.CoC.Logic.Enums;
 
 namespace BL.Servers.CoC.Packets.Messages.Client
 {
@@ -17,7 +18,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
         internal override void Decode()
         {
             this.Name = this.Reader.ReadString();
-            this.Reader.Read();
+            this.Reader.ReadByte();
         }
         internal override void Process()
         {

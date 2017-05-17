@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;   
 using BL.Servers.CoC.Extensions.List;
 using BL.Servers.CoC.Logic;
 
@@ -25,7 +21,6 @@ namespace BL.Servers.CoC.Packets.Messages.Server
             {
 
                 this.Data.AddInt((int)(Home.Timestamp - DateTime.UtcNow).TotalSeconds);
-                this.Data.AddInt(-1);
 
                 this.Data.AddRange(Home.ToBytes);
                 this.Data.AddRange(Player.Avatar.ToBytes);

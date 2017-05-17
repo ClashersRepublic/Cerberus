@@ -230,15 +230,20 @@ namespace BL.Servers.CoC.Extensions
                         Mission_Finish(Player, DependenciesID);
                     }
                 }
-                 if (!string.IsNullOrEmpty(Mission.AttackNPC))
+                if (!string.IsNullOrEmpty(Mission.AttackNPC))
                 {
-                   Npcs CSV_Npcs = CSV.Tables.Get(Gamefile.Npcs).GetData(Mission.AttackNPC) as Npcs;
+                    Npcs CSV_Npcs = CSV.Tables.Get(Gamefile.Npcs).GetData(Mission.AttackNPC) as Npcs;
 
                     if (Player.Npcs.FindIndex(N => N.NPC_Id == CSV_Npcs.GetGlobalID()) > -1)
                     {
                         Player.Resources.Plus(Logic.Enums.Resource.Gold, CSV_Npcs.Gold);
                         Player.Resources.Plus(Logic.Enums.Resource.Elixir, CSV_Npcs.Elixir);
                     }
+                }
+                if (Mission.ChangeName)
+                {
+                    Player.Resources.Plus(Logic.Enums.Resource.Gold, 900);
+                    Player.Resources.Plus(Logic.Enums.Resource.Elixir, 400);
                 }
 
                 Player.AddExperience(Mission.RewardXP);

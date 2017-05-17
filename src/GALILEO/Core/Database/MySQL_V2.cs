@@ -54,7 +54,7 @@ namespace BL.Servers.CoC.Core.Database
         internal static List<long> GetTopPlayer()
         {
             const string SQL = "SELECT ID FROM player ORDER BY TROPHIES DESC LIMIT 100";
-            List<long> Seed = new List<long>(150);
+            List<long> Seed = new List<long>(100);
 
             using (MySqlConnection Conn = new MySqlConnection(Credentials))
             {

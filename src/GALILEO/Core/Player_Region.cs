@@ -33,12 +33,12 @@ namespace BL.Servers.CoC.Core
 
             foreach (var _Id in MySQL_V2.GetTopPlayer())
             {
-                this.Add("INTERNATIONAL", Resources.Players.Get(_Id, Constants.Database, false));
+                this.Add("INTERNATIONAL", Resources.Players.Get(_Id, Constants.Database, true));
             }
             
             Timer Timer = new Timer
             {
-                Interval = TimeSpan.FromMinutes(3).TotalMilliseconds,
+                Interval = TimeSpan.FromMinutes(2).TotalMilliseconds,
                 AutoReset = true,
             };
 

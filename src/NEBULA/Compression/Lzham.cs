@@ -6,10 +6,10 @@
     internal class Lzham
     {
 
-        [DllImport("SupercellUtil.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"Library\SupercellUtil.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern bool Decompress([MarshalAs(UnmanagedType.LPStr)] string path);
 
-        [DllImport("SupercellUtil.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"Library\SupercellUtil.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern bool Compress([MarshalAs(UnmanagedType.LPStr)] string path); //Buggy
 
 

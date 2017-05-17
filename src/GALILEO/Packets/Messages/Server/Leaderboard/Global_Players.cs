@@ -13,16 +13,25 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Leaderboard
 {
     internal class Global_Players : Message
     {
+
+        internal List<Level> Players;
+    
         public Global_Players(Device client) : base(client)
         {
             this.Identifier = 24403;
+            this.Players = Resources.PRegion.Get_Region("INTERNATIONAL").ToList();
+
+            if (this.Players == null)
+            {
+                this.Players = new List<Level>();
+            }
         }
 
         internal override void Encode()
         {
             List<byte> _Packet = new List<byte>();
             int i = 0;
-            foreach (var _Player in Resources.PRegion.Get_Region("INTERNATIONAL").Take(50))
+            foreach (var _Player in Players)
             {
                 _Packet.AddLong(_Player.Avatar.UserId);
                 _Packet.AddString(_Player.Avatar.Name);
@@ -54,9 +63,9 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Leaderboard
             }
 
             this.Data.AddInt(i);
-            this.Data.AddRange(_Packet);
+            this.Data.AddRange(_Packet.ToArray());
             this.Data.AddInt(i);
-            this.Data.AddRange(_Packet);
+            this.Data.AddRange(_Packet.ToArray());
 
             this.Data.AddInt((int)(DateTime.UtcNow.LastDayOfMonth() - DateTime.UtcNow).TotalSeconds);
             this.Data.AddInt(DateTime.UtcNow.Year);

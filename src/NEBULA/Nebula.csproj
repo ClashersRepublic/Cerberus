@@ -195,20 +195,22 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TCCLogo.png" />
     <Resource Include="Server.ico" />
+    <None Include="Resources\Logo-Red-512-40%25.png" />
     <Content Include="SupercellUtil.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>cd "$(TargetDir)"
+del /F /Q *.xml
+del /F /Q *.pdb
+move /Y *.dll "Library\"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>RMDIR /S /Q "$(TargetDir)Library\"
+MKDIR "$(TargetDir)Library\"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

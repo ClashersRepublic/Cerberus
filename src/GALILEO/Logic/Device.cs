@@ -76,7 +76,7 @@ namespace BL.Servers.CoC.Logic
 
                         _Message.Reader = Reader;
 
-                        //try
+                        try
                         {
                             _Message.Decrypt();
 #if DEBUG
@@ -86,9 +86,9 @@ namespace BL.Servers.CoC.Logic
                             _Message.Decode();
                             _Message.Process();
                         }
-                        //catch (Exception Exception)
+                        catch (Exception Exception)
                         {
-                          //   Loggers.Log(Utils.Padding(Exception.GetType().Name, 15) + " : " + Exception.Message + ". [" + (this.Player != null ? this.Player.Avatar.UserId + ":" + GameUtils.GetHashtag(this.Player.Avatar.UserId) : "---") + ']' + Environment.NewLine + Exception.StackTrace, true, Defcon.ERROR);
+                             Loggers.Log(Utils.Padding(Exception.GetType().Name, 15) + " : " + Exception.Message + ". [" + (this.Player != null ? this.Player.Avatar.UserId + ":" + GameUtils.GetHashtag(this.Player.Avatar.UserId) : "---") + ']' + Environment.NewLine + Exception.StackTrace, true, Defcon.ERROR);
                         }
                     }
                     else

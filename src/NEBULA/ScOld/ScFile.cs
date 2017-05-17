@@ -170,9 +170,9 @@ namespace BL.Assets.Editor.ScOld
 
             // Saving metadata/header.
             input.Seek(0, SeekOrigin.Begin);
-            input.Write(BitConverter.GetBytes((ushort) _shapes.Count), 0, 2);
-            input.Write(BitConverter.GetBytes((ushort) _movieClips.Count), 0, 2);
-            input.Write(BitConverter.GetBytes((ushort) _textures.Count), 0, 2);
+            input.Write(BitConverter.GetBytes((ushort)_shapes.Count), 0, 2);
+            input.Write(BitConverter.GetBytes((ushort)_movieClips.Count), 0, 2);
+            input.Write(BitConverter.GetBytes((ushort)_textures.Count), 0, 2);
         }
 
         public void Load()
@@ -180,9 +180,11 @@ namespace BL.Assets.Editor.ScOld
             var sw = Stopwatch.StartNew();
             while (true)
             {
+                
                 using (var texReader = new BinaryReader(File.OpenRead(_textureFile)))
                 {
-                    if (BitConverter.ToString(texReader.ReadBytes(2)) == "53-43")
+                    Byte[] IsCompressed = texReader.ReadBytes(2);
+                    if (BitConverter.ToString(IsCompressed) == "53-43")
                     {
                         texReader.BaseStream.Seek(26, SeekOrigin.Begin);
                         DialogResult result =
@@ -197,13 +199,22 @@ namespace BL.Assets.Editor.ScOld
                             if (IsSc == "53-43")
                                 Lzham.DecompressSc(_textureFile);
                             else
-                                Lzma.Decompress(_textureFile);
+                                Lzma.DecompressCR(_textureFile);
                             continue;
                         }
                         break;
                     }
-
-
+                    else if (BitConverter.ToString(IsCompressed) == "5D-00")
+                    {
+                        DialogResult result =  MessageBox.Show("The tool detected that you have load a compressed file.\nWould you like to decompress and load it?\nPlease note,Choosing to decompressed will override the compressed file with a new one", "SC File Is Compresed", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2);
+                        if (result == DialogResult.Yes)
+                        {
+                            texReader.Close();
+                            Lzma.DecompressCoC(_textureFile);
+                            continue;
+                        }
+                        break;
+                    }
                     texReader.BaseStream.Seek(0, SeekOrigin.Begin);
                     while (true)
                     {
@@ -233,8 +244,8 @@ namespace BL.Assets.Editor.ScOld
             {
                 using (var reader = new BinaryReader(File.OpenRead(_infoFile)))
                 {
-
-                    if (BitConverter.ToString(reader.ReadBytes(2)) == "53-43")
+                    Byte[] IsCompressed = reader.ReadBytes(2);
+                    if (BitConverter.ToString(IsCompressed) == "53-43")
                     {
                         reader.BaseStream.Seek(26, SeekOrigin.Begin);
                         DialogResult result =
@@ -249,7 +260,18 @@ namespace BL.Assets.Editor.ScOld
                             if (IsSc == "53-43")
                                 Lzham.DecompressSc(_infoFile);
                             else
-                                Lzma.Decompress(_infoFile);
+                                Lzma.DecompressCR(_infoFile);
+                            continue;
+                        }
+                        break;
+                    }
+                    else if (BitConverter.ToString(IsCompressed) == "5D-00")
+                    {
+                        DialogResult result = MessageBox.Show("The tool detected that you have load a compressed file.\nWould you like to decompress and load it?\nPlease note,Choosing to decompressed will override the compressed file with a new one", "SC File Is Compresed", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2);
+                        if (result == DialogResult.Yes)
+                        {
+                            reader.Close();
+                            Lzma.DecompressCoC(_infoFile);
                             continue;
                         }
                         break;
@@ -293,7 +315,7 @@ namespace BL.Assets.Editor.ScOld
                     {
                         var nameLength = reader.ReadByte();
                         var name = Encoding.UTF8.GetString(reader.ReadBytes(nameLength));
-                        var export = (Export) _exports[i];
+                        var export = (Export)_exports[i];
                         export.SetExportName(name);
                     }
 
@@ -321,7 +343,7 @@ namespace BL.Assets.Editor.ScOld
                                 {
                                     int index = _movieClips.FindIndex(movie => movie.Id == t.Id);
                                     if (index != -1)
-                                        ((Export) t).SetDataObject((MovieClip) _movieClips[index]);
+                                        ((Export)t).SetDataObject((MovieClip)_movieClips[index]);
                                 }
                                 break;
                             case "01":

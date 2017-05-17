@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BL.Servers.CoC.Core.Events
@@ -62,6 +63,8 @@ namespace BL.Servers.CoC.Core.Events
                         }
                     }
                 }
+
+                Thread.Sleep((int)TimeSpan.FromSeconds(0.5).TotalMilliseconds);
             }
             catch (Exception)
             {

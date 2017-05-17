@@ -375,6 +375,8 @@
     <Compile Include="Packets\Messages\Client\Go_Home.cs" />
     <Compile Include="Packets\Messages\Client\Keep_Alive.cs" />
     <Compile Include="Packets\Messages\Client\Leaderboard\Request_Global_Players.cs" />
+    <Compile Include="Packets\Messages\Client\Leaderboard\Request_Local_Players.cs" />
+    <Compile Include="Packets\Messages\Client\Request_Name_Change.cs" />
     <Compile Include="Packets\Messages\Server\API\Facebook_Connect_OK.cs" />
     <Compile Include="Packets\Messages\Server\API\Friend_List_Data.cs" />
     <Compile Include="Packets\Messages\Server\Authentication\Authentication_Failed.cs" />
@@ -395,10 +397,14 @@
     <Compile Include="Packets\Messages\Server\Clans\Alliance_Stream_Entry.cs" />
     <Compile Include="Packets\Messages\Server\Clans\War\Visit_War_Player.cs" />
     <Compile Include="Packets\Messages\Server\Clans\War\War_Map.cs" />
+    <Compile Include="Packets\Messages\Server\Errors\Server_Error.cs" />
     <Compile Include="Packets\Messages\Server\Global_Chat_Entry.cs" />
     <Compile Include="Packets\Messages\Server\Keep_Alive_OK.cs" />
     <Compile Include="Packets\Messages\Server\Leaderboard\Global_Players.cs" />
+    <Compile Include="Packets\Messages\Server\Leaderboard\Local_Players.cs" />
     <Compile Include="Packets\Messages\Server\League_Players.cs" />
+    <Compile Include="Packets\Messages\Server\Name_Change_Response.cs" />
+    <Compile Include="Packets\Messages\Server\Errors\Out_Of_Sync.cs" />
     <Compile Include="Packets\Messages\Server\Own_Home_Data.cs" />
     <Compile Include="Packets\Messages\Server\Server_Commands.cs" />
     <Compile Include="Packets\Messages\Server\Visit_Home_Data.cs" />

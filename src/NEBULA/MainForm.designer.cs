@@ -35,15 +35,16 @@
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compressionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lzmaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LZMACRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LZMACoCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lzhamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewPolygonsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportAllShapeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportAllChunkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportAllAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -124,26 +125,34 @@
             // compressionToolStripMenuItem
             // 
             this.compressionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lzmaToolStripMenuItem,
+            this.LZMACRToolStripMenuItem,
+            this.LZMACoCToolStripMenuItem,
             this.lzhamToolStripMenuItem});
             this.compressionToolStripMenuItem.Name = "compressionToolStripMenuItem";
             this.compressionToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.compressionToolStripMenuItem.Text = "Compress";
             this.compressionToolStripMenuItem.Visible = false;
             // 
-            // lzmaToolStripMenuItem
+            // LZMACRToolStripMenuItem
             // 
-            this.lzmaToolStripMenuItem.Name = "lzmaToolStripMenuItem";
-            this.lzmaToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
-            this.lzmaToolStripMenuItem.Text = "Lzma";
-            this.lzmaToolStripMenuItem.Click += new System.EventHandler(this.lzmaToolStripMenuItem_Click);
+            this.LZMACRToolStripMenuItem.Name = "LZMACRToolStripMenuItem";
+            this.LZMACRToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.LZMACRToolStripMenuItem.Text = "LZMA (CR)";
+            this.LZMACRToolStripMenuItem.Click += new System.EventHandler(this.LZMACRToolStripMenuItem_Click);
+            // 
+            // LZMACoCToolStripMenuItem
+            // 
+            this.LZMACoCToolStripMenuItem.Name = "LZMACoCToolStripMenuItem";
+            this.LZMACoCToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.LZMACoCToolStripMenuItem.Text = "LZMA (CoC)";
+            this.LZMACoCToolStripMenuItem.Click += new System.EventHandler(this.LZMACoCToolStripMenuItem_Click);
             // 
             // lzhamToolStripMenuItem
             // 
             this.lzhamToolStripMenuItem.CheckOnClick = true;
             this.lzhamToolStripMenuItem.Enabled = false;
             this.lzhamToolStripMenuItem.Name = "lzhamToolStripMenuItem";
-            this.lzhamToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.lzhamToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.lzhamToolStripMenuItem.Text = "Lzham";
             this.lzhamToolStripMenuItem.Click += new System.EventHandler(this.lzhamToolStripMenuItem_Click);
             // 
@@ -190,6 +199,15 @@
             this.exportAllChunkToolStripMenuItem.Visible = false;
             this.exportAllChunkToolStripMenuItem.Click += new System.EventHandler(this.exportAllChunkToolStripMenuItem_Click);
             // 
+            // exportAllAnimationToolStripMenuItem
+            // 
+            this.exportAllAnimationToolStripMenuItem.Enabled = false;
+            this.exportAllAnimationToolStripMenuItem.Name = "exportAllAnimationToolStripMenuItem";
+            this.exportAllAnimationToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.exportAllAnimationToolStripMenuItem.Text = "Export All Animation";
+            this.exportAllAnimationToolStripMenuItem.Visible = false;
+            this.exportAllAnimationToolStripMenuItem.Click += new System.EventHandler(this.exportAllAnimationToolStripMenuItem_Click);
+            // 
             // addTextureToolStripMenuItem
             // 
             this.addTextureToolStripMenuItem.Enabled = false;
@@ -198,16 +216,6 @@
             this.addTextureToolStripMenuItem.Text = "Add Texture";
             this.addTextureToolStripMenuItem.Visible = false;
             this.addTextureToolStripMenuItem.Click += new System.EventHandler(this.addTextureToolStripMenuItem_Click);
-            // 
-            // exportAllAnimationToolStripMenuItem
-            // 
-            this.exportAllAnimationToolStripMenuItem.Enabled = false;
-            this.exportAllAnimationToolStripMenuItem.Name = "exportAllAnimationToolStripMenuItem";
-            this.exportAllAnimationToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.exportAllAnimationToolStripMenuItem.Text = "Export All Animation";
-            this.exportAllAnimationToolStripMenuItem.Visible = false;
-
-            this.exportAllAnimationToolStripMenuItem.Click += new System.EventHandler(this.exportAllAnimationToolStripMenuItem_Click);
             // 
             // textureToolStripMenuItem
             // 
@@ -223,21 +231,21 @@
             // exportToolStripMenuItem1
             // 
             this.exportToolStripMenuItem1.Name = "exportToolStripMenuItem1";
-            this.exportToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.exportToolStripMenuItem1.Size = new System.Drawing.Size(116, 22);
             this.exportToolStripMenuItem1.Text = "Export...";
             this.exportToolStripMenuItem1.Click += new System.EventHandler(this.exportToolStripMenuItem1_Click);
             // 
             // duplicateToolStripMenuItem
             // 
             this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
-            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.duplicateToolStripMenuItem.Text = "Clone";
             this.duplicateToolStripMenuItem.Click += new System.EventHandler(this.duplicateToolStripMenuItem_Click);
             // 
             // replaceTextureToolStripMenuItem
             // 
             this.replaceTextureToolStripMenuItem.Name = "replaceTextureToolStripMenuItem";
-            this.replaceTextureToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.replaceTextureToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.replaceTextureToolStripMenuItem.Text = "Replace";
             this.replaceTextureToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
@@ -334,8 +342,8 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(198, 171);
             this.label1.TabIndex = 8;
-            this.label1.Text = "TeamCrayCray Magic Editor\r\nVersion: 1.1\r\nteamcraycraycoc.com\r\n\r\nGet help at: \r\nte" +
-    "amcraycraycoc.com/forum\r\n";
+            this.label1.Text = "Barbarianland Magic Editor\r\nVersion: 1.2.1\r\n\r\nGet help at: \r\nhttps://barbarianlan" +
+    "d.com\r\n\r\n";
             // 
             // treeView1
             // 
@@ -365,12 +373,12 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::BL.Assets.Editor.Properties.Resources.TCCLogo;
+            this.pictureBox1.Image = global::BL.Assets.Editor.Properties.Resources.Logo_Red_512_40_;
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(2, 2);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(768, 768);
+            this.pictureBox1.Size = new System.Drawing.Size(410, 410);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
@@ -386,7 +394,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
-            this.Text = "Magic Editor";
+            this.Text = "BarbarianLand Magic Editor";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -429,12 +437,13 @@
         private System.Windows.Forms.ToolStripMenuItem reloadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem replaceTextureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem compressionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lzmaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem LZMACRToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lzhamToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addTextureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportAllShapeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportAllChunkToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportAllAnimationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem LZMACoCToolStripMenuItem;
     }
 }
 

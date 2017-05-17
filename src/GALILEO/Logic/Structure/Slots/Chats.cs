@@ -31,7 +31,7 @@ namespace BL.Servers.CoC.Logic.Structure.Slots
         {
             lock (this.Gate)
             {
-                Message.Message_LowID = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+                Message.Message_LowID = Seed++;
 
                 if (this.Slots.Count < this.Slots.Capacity)
                 {

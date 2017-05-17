@@ -4,6 +4,7 @@ using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Packets.Messages.Server.Battle;
+using BL.Servers.CoC.Packets.Messages.Server.Errors;
 
 namespace BL.Servers.CoC.Packets.Commands.Client.Battle
 {
@@ -54,7 +55,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
                     this.Enemy_ID = Core.Resources.Random.Next(1, Convert.ToInt32(Core.Resources.Players.Seed - 1));
                 }
             }
-
+            
             if (this.Enemy_Player != null)
                 new Pc_Battle_Data(this.Device) { Enemy = this.Enemy_Player }.Send();
             else
