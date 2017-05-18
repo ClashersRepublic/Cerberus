@@ -25,12 +25,13 @@ namespace BL.Servers.CoC.Core.Database
                         CMD.Parameters.AddWithValue("@FacebookID", _ID);
                         CMD.Prepare();
                         long UserID = Convert.ToInt64(CMD.ExecuteScalar());
-                        Level.Add(Resources.Players.Get(UserID, Constants.Database, false));
+                        Level User = Resources.Players.Get(UserID, Constants.Database, false);
+                        if (User != null)
+                            Level.Add(User);
                     }
                 }
             }
             return Level;
-
         }
 
         internal static long GetClanSeed()

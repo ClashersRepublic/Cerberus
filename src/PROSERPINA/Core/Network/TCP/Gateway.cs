@@ -51,7 +51,7 @@ namespace BL.Servers.CR.Core.Network.TCP
 
         internal void Initialize()
         {
-            for (int Index = 0; Index < Constants.MaxPlayers + 1; Index++)
+            for (int Index = 0; Index < Constants.MaxPlayers + 100; Index++)
             {
                 SocketAsyncEventArgs ReadEvent = new SocketAsyncEventArgs();
                 ReadEvent.SetBuffer(new byte[Constants.ReceiveBuffer], 0, Constants.ReceiveBuffer);
@@ -185,7 +185,7 @@ namespace BL.Servers.CR.Core.Network.TCP
 
             Token.Aborting = true;
 
-            if (Token.Device.Player != null)
+            if (Token.Device.Player?.Avatar != null)
             {
                 if (Resources.Players.ContainsValue(Token.Device.Player))
                 {

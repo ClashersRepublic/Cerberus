@@ -24,7 +24,6 @@ namespace BL.Servers.CR.Core.Network
 #if DEBUG
                 if (Message.Device.Connected())
                 {
-                    Console.WriteLine("Alive");
                     Console.WriteLine(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " +  Message.GetType().Name);
                 }
 #endif

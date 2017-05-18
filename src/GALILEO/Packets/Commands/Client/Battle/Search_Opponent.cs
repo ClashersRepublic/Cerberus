@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.Binary;
@@ -31,8 +32,11 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
                 this.Device.Player.Tick();
             }
 
-            this.Device.State = Logic.Enums.State.REPLAY;
+            this.Device.State = Logic.Enums.State.SEARCH_BATTLE;
             this.Enemy_ID = Core.Resources.Random.Next(1, (int)Core.Resources.Players.Seed);
+
+            if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20 || this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count == Core.Resources.Players.Seed - 1)
+                this.Device.Player.Avatar.Last_Attack_Enemy_ID = new List<long>();
 
             while (this.Enemy_Player == null && this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count < Core.Resources.Players.Seed - 1)
             {

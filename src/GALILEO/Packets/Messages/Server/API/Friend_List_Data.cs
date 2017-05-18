@@ -6,8 +6,6 @@ using BL.Servers.CoC.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Servers.CoC.Packets.Messages.Server.API
 {
@@ -17,7 +15,8 @@ namespace BL.Servers.CoC.Packets.Messages.Server.API
         public Friend_List_Data(Device Device, List<string> ID) : base(Device)
         {
             this.Identifier = 20105;
-            this.Players = MySQL_V2.GetPlayerViaFID(ID).OrderByDescending(t => t.Avatar.Trophies).ToList();
+            this.Players = MySQL_V2.GetPlayerViaFID(ID);
+            this.Players = this.Players?.OrderByDescending(t => t.Avatar.Trophies).ToList();
         }
 
         internal override void Encode()

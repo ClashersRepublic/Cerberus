@@ -27,7 +27,6 @@ namespace BL.Servers.CoC.Packets.Messages.Client.API
             for (int i = 0; i < Count; i++)
             {
                 this.Friends.Add(this.Reader.ReadString());
-                Console.WriteLine(this.Friends[i]);
             }
         }
         internal override void Process()

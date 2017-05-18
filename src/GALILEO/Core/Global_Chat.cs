@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Collections.Generic;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Structure.Slots.Items;
 
