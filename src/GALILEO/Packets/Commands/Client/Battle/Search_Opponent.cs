@@ -33,24 +33,22 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
             }
 
             this.Device.State = Logic.Enums.State.SEARCH_BATTLE;
-            this.Enemy_ID = Core.Resources.Random.Next(1, (int)Core.Resources.Players.Seed);
-
-            if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20 || this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count == Core.Resources.Players.Seed - 1)
-                this.Device.Player.Avatar.Last_Attack_Enemy_ID = new List<long>();
-
-            while (this.Enemy_Player == null && this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count < Core.Resources.Players.Seed - 1)
+            if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20 || this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count == (Core.Resources.Players.Seed - 2))
+                this.Device.Player.Avatar.Last_Attack_Enemy_ID.RemoveAt(0);
+            while (this.Enemy_Player == null && this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count < Core.Resources.Players.Seed - 2)
             {
+
                 if (this.Enemy_ID != this.Device.Player.Avatar.UserId && this.Enemy_ID > 0)
                 {
                     if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.FindIndex(P => P == this.Enemy_ID) < 0)
                     {
                         this.Enemy_Player = Core.Resources.Players.Get(this.Enemy_ID, Constants.Database, false);
 
-                        if (this.Enemy_Player != null)
+                        if (this.Enemy_Player == null)
                         {
-                            this.Device.Player.Avatar.Last_Attack_Enemy_ID.Add(this.Enemy_Player.Avatar.UserId);
+                            this.Device.Player.Avatar.Last_Attack_Enemy_ID.Add(Enemy_ID);
 
-                            if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20 || this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count == Core.Resources.Players.Seed - 1)
+                            if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20 || this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > Core.Resources.Players.Seed - 2)
                                 this.Device.Player.Avatar.Last_Attack_Enemy_ID.RemoveAt(0);
                         }
                     }

@@ -60,6 +60,17 @@ namespace BL.Servers.CoC
              Console.WriteLine("Total second {0:N0}",  s.Elapsed.TotalSeconds);
              Console.WriteLine("{0:N0} queries per second", count / s.Elapsed.TotalSeconds);*/
             Console.WriteLine(@"-------------------------------------" + Environment.NewLine);
+            int i = 1;
+            int b = i;
+            Console.WriteLine(i);
+            Console.WriteLine(b);
+            Console.WriteLine(i++);
+            Console.WriteLine(i++);
+            Console.WriteLine(i++);
+            Console.WriteLine(i++);
+            Console.WriteLine(i++);
+            Console.WriteLine(i++);
+            Console.WriteLine(b);
             Thread.Sleep(Timeout.Infinite);
 
         }

@@ -6,7 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="7e0e73b6519e4c77aca7e9df22457448" Name="Diagram1">
         <EntityTypeShape EntityType="MysqlModel.Clan" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MysqlModel.Player" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MysqlModel.Player" Width="1.5" PointX="2.375" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MysqlModel.Battle" Width="1.5" PointX="4.125" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -114,6 +114,42 @@ namespace BL.Servers.CoC.Logic.Structure.Slots
             }
         }
 
+        internal void ResourceChangeHelper(int GlobalID, int count)
+        {
+            int current = this.Get(GlobalID);
+            int newResourceValue = Math.Max(current + count, 0);
+            if (count >= 1)
+            {
+                int resourceCap = this.Player.Resources_Cap.Get(GlobalID);
+                if (current < resourceCap)
+                {
+                    if (newResourceValue > resourceCap)
+                    {
+                        newResourceValue = resourceCap;
+                    }
+                }
+            }
+            this.Set(GlobalID, newResourceValue);
+        }
+
+        internal void ResourceChangeHelper(Enums.Resource resource, int count)
+        {
+            int current = this.Get(resource);
+            int newResourceValue = Math.Max(current + count, 0);
+            if (count >= 1)
+            {
+                int resourceCap = this.Player.Resources_Cap.Get(resource);
+                if (current < resourceCap)
+                {
+                    if (newResourceValue > resourceCap)
+                    {
+                        newResourceValue = resourceCap;
+                    }
+                }
+            }
+            this.Set(resource, newResourceValue);
+        }
+
         internal void Initialize()
         {
 #if DEBUG

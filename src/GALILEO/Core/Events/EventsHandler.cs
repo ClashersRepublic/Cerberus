@@ -64,6 +64,23 @@ namespace BL.Servers.CoC.Core.Events
                     }
                 }
 
+                lock (Resources.Battles.Gate)
+                {
+                    if (Resources.Battles.Count > 0)
+                    {
+                        List<Battle> Battles = Resources.Battles.Values.ToList();
+
+                        foreach (Battle _Battle in Battles)
+                        {
+                            if (_Battle != null)
+                            {
+                                Resources.Battles.Save(_Battle, Constants.Database);
+                                //Redis.Battles.KeyDelete(Battles.LowID.ToString());
+                            }
+                        }
+                    }
+                }
+
                 Thread.Sleep((int)TimeSpan.FromSeconds(0.5).TotalMilliseconds);
             }
             catch (Exception)

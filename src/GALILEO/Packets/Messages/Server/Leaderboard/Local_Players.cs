@@ -28,7 +28,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Leaderboard
         {
             this.Data.AddInt(this.Players.Count);
 
-            int i = 0;
+            int i = 1;
             foreach (var _Player in Players)
             {
                 this.Data.AddLong(_Player.Avatar.UserId);

@@ -26,7 +26,7 @@ namespace BL.Servers.CoC.Logic.Components
         {
             if (this.Timer != null)
             {
-                var ca = GetParent.Avatar.Avatar;
+                var ca = GetParent.Level.Avatar;
                 var currentLevel = ca.GetUnitUpgradeLevel(this.HeroData);
                 var rd = this.HeroData.GetUpgradeResource(currentLevel);
                 var cost = this.HeroData.GetUpgradeCost(currentLevel);
@@ -34,8 +34,8 @@ namespace BL.Servers.CoC.Logic.Components
                     .NumberValue;
                 var resourceCount = (int)((cost * multiplier * (long)1374389535) >> 32);
                 resourceCount = Math.Max((resourceCount >> 5) + (resourceCount >> 31), 0);
-                ca.CommodityCountChangeHelper(0, rd, resourceCount);
-                GetParent.Avatar.WorkerManager.DeallocateWorker(GetParent);
+                ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), resourceCount);
+                GetParent.Level.WorkerManager.DeallocateWorker(GetParent);
                 this.Timer = null;
             }
         }
@@ -45,11 +45,11 @@ namespace BL.Servers.CoC.Logic.Components
             var result = false;
             if (this.Timer == null)
             {
-                var currentLevel = GetParent.Avatar.Avatar.GetUnitUpgradeLevel(this.HeroData);
+                var currentLevel = GetParent.Level.Avatar.GetUnitUpgradeLevel(this.HeroData);
                 if (!IsMaxLevel())
                 {
                     var requiredThLevel = this.HeroData.GetRequiredTownHallLevel(currentLevel + 1);
-                    result = GetParent.Avatar.Avatar.TownHall_Level >= requiredThLevel;
+                    result = GetParent.Level.Avatar.TownHall_Level >= requiredThLevel;
                 }
             }
             return result;
@@ -57,20 +57,20 @@ namespace BL.Servers.CoC.Logic.Components
 
         internal void FinishUpgrading()
         {
-            var ca = GetParent.Avatar.Avatar;
+            var ca = GetParent.Level.Avatar;
             var currentLevel = ca.GetUnitUpgradeLevel(this.HeroData);
             ca.SetUnitUpgradeLevel(this.HeroData, currentLevel + 1);
-            GetParent.Avatar.WorkerManager.DeallocateWorker(GetParent);
+            GetParent.Level.WorkerManager.DeallocateWorker(GetParent);
             this.Timer = null;
         }
 
-        internal int GetRemainingUpgradeSeconds() => this.Timer.GetRemainingSeconds(GetParent.Avatar.Avatar.LastTick);
+        internal int GetRemainingUpgradeSeconds() => this.Timer.GetRemainingSeconds(GetParent.Level.Avatar.LastTick);
 
-        internal int GetTotalSeconds() => this.HeroData.GetUpgradeTime(GetParent.Avatar.Avatar.GetUnitUpgradeLevel(this.HeroData));
+        internal int GetTotalSeconds() => this.HeroData.GetUpgradeTime(GetParent.Level.Avatar.GetUnitUpgradeLevel(this.HeroData));
 
         internal bool IsMaxLevel()
         {
-            var ca = GetParent.Avatar.Avatar;
+            var ca = GetParent.Level.Avatar;
             var currentLevel = ca.GetUnitUpgradeLevel(this.HeroData);
             var maxLevel = this.HeroData.GetUpgradeLevelCount() - 1;
             return currentLevel >= maxLevel;
@@ -85,7 +85,7 @@ namespace BL.Servers.CoC.Logic.Components
             {
                 this.Timer = new Timer();
                 var remainingTime = unitUpgradeObject["t"].ToObject<int>();
-                this.Timer.StartTimer(remainingTime, GetParent.Avatar.Avatar.LastTick);
+                this.Timer.StartTimer(remainingTime, GetParent.Level.Avatar.LastTick);
                 this.UpgradeLevelInProgress = unitUpgradeObject["level"].ToObject<int>();
             }
         }
@@ -97,7 +97,7 @@ namespace BL.Servers.CoC.Logic.Components
                 var unitUpgradeObject = new JObject
                 {
                     {"level", this.UpgradeLevelInProgress},
-                    {"t", this.Timer.GetRemainingSeconds(GetParent.Avatar.Avatar.LastTick)}
+                    {"t", this.Timer.GetRemainingSeconds(GetParent.Level.Avatar.LastTick)}
                 };
                 jsonObject.Add("hero_upg", unitUpgradeObject);
             }
@@ -109,10 +109,10 @@ namespace BL.Servers.CoC.Logic.Components
             var remainingSeconds = 0;
             if (IsUpgrading())
             {
-                remainingSeconds = this.Timer.GetRemainingSeconds(GetParent.Avatar.Avatar.LastTick);
+                remainingSeconds = this.Timer.GetRemainingSeconds(GetParent.Level.Avatar.LastTick);
             }
             var cost = GameUtils.GetSpeedUpCost(remainingSeconds);
-            var ca = GetParent.Avatar.Avatar;
+            var ca = GetParent.Level.Avatar;
             if (ca.Resources.Gems >= cost)
             {
                 ca.Resources.Minus(Resource.Diamonds, cost);
@@ -124,16 +124,16 @@ namespace BL.Servers.CoC.Logic.Components
         {
             if (CanStartUpgrading())
             {
-                GetParent.Avatar.WorkerManager.AllocateWorker(GetParent);
+                GetParent.Level.WorkerManager.AllocateWorker(GetParent);
                 this.Timer = new Timer();
-                this.Timer.StartTimer(GetTotalSeconds(), GetParent.Avatar.Avatar.LastTick);
-                this.UpgradeLevelInProgress = GetParent.Avatar.Avatar.GetUnitUpgradeLevel(this.HeroData) + 1;
+                this.Timer.StartTimer(GetTotalSeconds(), GetParent.Level.Avatar.LastTick);
+                this.UpgradeLevelInProgress = GetParent.Level.Avatar.GetUnitUpgradeLevel(this.HeroData) + 1;
             }
         }
 
         internal override void Tick()
         {
-            if (this.Timer?.GetRemainingSeconds(GetParent.Avatar.Avatar.LastTick) <= 0)
+            if (this.Timer?.GetRemainingSeconds(GetParent.Level.Avatar.LastTick) <= 0)
             {
                 FinishUpgrading();
             }

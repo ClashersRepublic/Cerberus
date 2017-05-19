@@ -43,6 +43,10 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
             {
                 this.Device.Player.Avatar.Resources.Minus(ResourceID, Cost);
                 this.Device.Player.Avatar.ClanId = Clan.Clan_ID;
+                this.Device.Player.Avatar.Alliance_Level = Clan.Level;
+                this.Device.Player.Avatar.Alliance_Name = Clan.Name;
+                this.Device.Player.Avatar.Alliance_Role = (int)Role.Leader;
+                this.Device.Player.Avatar.Badge_ID = Clan.Badge;
 
                 this.Clan.Members.Add(this.Device.Player.Avatar);
 

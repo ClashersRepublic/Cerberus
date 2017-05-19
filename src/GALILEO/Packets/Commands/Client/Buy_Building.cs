@@ -46,7 +46,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                 if (bd.IsWorkerBuilding() || this.Device.Player.HasFreeWorkers)
                 {
                     var rd = bd.GetBuildResource(0);
-                    ca.CommodityCountChangeHelper(0, rd, -bd.GetBuildCost(0));
+                    ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
 
                     b.StartConstructing(this.Vector);
                     this.Device.Player.GameObjectManager.AddGameObject(b);

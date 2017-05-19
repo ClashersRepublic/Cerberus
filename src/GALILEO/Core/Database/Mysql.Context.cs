@@ -27,5 +27,6 @@ namespace BL.Servers.CoC.Core.Database
     
         public virtual DbSet<Clan> Clan { get; set; }
         public virtual DbSet<Player> Player { get; set; }
+        public virtual DbSet<Battle> Battle { get; set; }
     }
 }

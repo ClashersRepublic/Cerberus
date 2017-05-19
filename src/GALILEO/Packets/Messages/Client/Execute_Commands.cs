@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BL.Servers.CoC.Core;
+using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic;
 
@@ -37,8 +39,8 @@ namespace BL.Servers.CoC.Packets.Messages.Client
         internal override void Process()
         {
             if (this.Device.State == Logic.Enums.State.IN_PC_BATTLE)
-                this.Device.Player.Avatar.Battle.Battle_Tick = (int)this.CTick;
-            if (this.Count > -1 && this.Count <= 50)
+                Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database).Battle_Tick = (int)this.CTick;
+            if (this.Count > -1 && this.Count <= 400)
             {
                 this.Device.Player.Tick();
                 using (Reader Reader = new Reader(this.Commands))

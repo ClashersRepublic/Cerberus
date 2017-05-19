@@ -41,25 +41,27 @@ namespace BL.Servers.CoC.Core
                 }
             }
         }
+
         internal void Remove(Level Player)
         {
-            if (Player.Client.Player != null)
+            if (Player != null)
             {
                 if (this.Remove(Player.Avatar.UserId))
                 {
                     this.Save(Player, Constants.Database);
                     Player.Client.Player = null;
                 }
-            }
 
-            if (Player.Client != null)
-            {
-                if (Resources.Devices.ContainsKey(Player.Client.SocketHandle))
+
+                if (Player.Client != null)
                 {
+                    if (Resources.Devices.ContainsKey(Player.Client.SocketHandle))
+                    {
 
-                    Resources.GChat.Remove(Player.Client);
-                    Resources.Devices.Remove(Player.Client);
-                    Player.Client = null;
+                        Resources.GChat.Remove(Player.Client);
+                        Resources.Devices.Remove(Player.Client);
+                        Player.Client = null;
+                    }
                 }
             }
         }
@@ -136,6 +138,7 @@ namespace BL.Servers.CoC.Core
             }
             return this[UserId];
         }
+
         internal Level New(long UserId = 0, DBMS DBMS = DBMS.Mysql, bool Store = true)
         {
             Level Player = null;

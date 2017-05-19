@@ -22,9 +22,9 @@ namespace BL.Servers.CoC.Logic.Structure
             }
         }
 
-        readonly List<Component> Components;
-        readonly Data Data;
-        readonly Level Level;
+        internal List<Component> Components;
+        internal Data Data;
+        internal Level Level;
 
         internal virtual int ClassId => -1;
 
@@ -41,7 +41,7 @@ namespace BL.Servers.CoC.Logic.Structure
             }
             else
             {
-                //this.Level.GetComponentManager().AddComponent(c);
+                this.Level.GetComponentManager.AddComponent(c);
                 this.Components[c.Type] = c;
             }
         }
@@ -57,7 +57,6 @@ namespace BL.Servers.CoC.Logic.Structure
         }
 
         public Data GetData() => this.Data;
-        public Level Avatar => this.Level;
 
         public Vector GetPosition() => new Vector(X, Y);
 
@@ -128,12 +127,13 @@ namespace BL.Servers.CoC.Logic.Structure
             return jsonObject;
         }
 
-        public void SetPositionXY(int newX, int newY, int Layout)
+        public void SetPositionXY(Vector vector /*, int Layout*/)
         {
             /*if (Layout == LayoutID())
             {*/
-            X = newX;
-            Y = newY;
+
+            X = (int) vector.X;
+            Y = (int) vector.Y;
             //}
             /*if (Layout == Convert.ToInt32(Layouts.Layout.WarLayout1))
             {

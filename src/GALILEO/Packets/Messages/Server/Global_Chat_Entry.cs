@@ -33,7 +33,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server
             this.Data.AddLong(this.Message_Sender.UserId);
 
             this.Data.AddBool(this.Message_Sender.ClanId > 0);
-            if (this.Message_Sender.ClanLowID > 0)
+            if (this.Message_Sender.ClanId > 0)
             {
                 Logic.Clan _Clan = Resources.Clans.Get(this.Message_Sender.ClanId, Constants.Database, false);
 

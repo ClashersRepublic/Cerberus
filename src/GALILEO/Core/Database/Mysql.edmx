@@ -24,9 +24,17 @@
           <Property Name="FacebookID" Type="text" Nullable="false" />
           <Property Name="Data" Type="text" Nullable="false" />
         </EntityType>
+        <EntityType Name="Battle">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="Data" Type="text" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="MysqlModelStoreContainer">
           <EntitySet Name="Clan" EntityType="Self.Clan" Schema="Mysql" store:Type="Tables" />
           <EntitySet Name="Player" EntityType="Self.Player" Schema="Mysql" store:Type="Tables" />
+          <EntitySet Name="Battle" EntityType="Self.Battle" Schema="Mysql" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -51,9 +59,17 @@
           <Property Name="FacebookID" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="Data" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Battle">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="Data" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityContainer Name="MysqlEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Clan" EntityType="Self.Clan" />
           <EntitySet Name="Player" EntityType="Self.Player" />
+          <EntitySet Name="Battle" EntityType="Self.Battle" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -75,6 +91,14 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Trophies" ColumnName="Trophies" />
                 <ScalarProperty Name="FacebookID" ColumnName="FacebookID" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Battle">
+            <EntityTypeMapping TypeName="MysqlModel.Battle">
+              <MappingFragment StoreEntitySet="Battle">
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Data" ColumnName="Data" />
               </MappingFragment>
             </EntityTypeMapping>

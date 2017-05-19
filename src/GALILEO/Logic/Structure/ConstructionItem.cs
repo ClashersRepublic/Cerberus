@@ -31,7 +31,7 @@ namespace BL.Servers.CoC.Logic.Structure
         public void BoostBuilding()
         {
             IsBoosted = true;
-            this.BoostEndTime = Avatar.Avatar.LastTick.AddMinutes(GetBoostDuration());
+            this.BoostEndTime = Level.Avatar.LastTick.AddMinutes(GetBoostDuration());
         }
         
         internal int GetUpgradeLevel() => this.UpgradeLevel;
@@ -77,7 +77,7 @@ namespace BL.Servers.CoC.Logic.Structure
                 int multiplier = (CSV.Tables.Get(Gamefile.Globals).GetData("BUILD_CANCEL_MULTIPLIER") as Globals).NumberValue;
                 int resourceCount = (int)((cost * multiplier * (long)1374389535) >> 32);
                 resourceCount = Math.Max((resourceCount >> 5) + (resourceCount >> 31), 0);
-                this.Level.Avatar.CommodityCountChangeHelper(0, rd, resourceCount);
+                this.Level.Avatar.Resources.ResourceChangeHelper(rd.GetGlobalID(), resourceCount);
                 this.Level.WorkerManager.DeallocateWorker(this);
                 if (UpgradeLevel == -1)
                 {
@@ -145,9 +145,9 @@ namespace BL.Servers.CoC.Logic.Structure
             {
                 Buildings data = (Buildings)GetData();
                 Heroes hd = CSV.Tables.Get(Gamefile.Heroes).GetData(data.HeroType) as Heroes;
-                Avatar.Avatar.SetUnitUpgradeLevel(hd, 0);
-                Avatar.Avatar.SetHeroHealth(hd, 0);
-                Avatar.Avatar.SetHeroState(hd, 3);
+                Level.Avatar.SetUnitUpgradeLevel(hd, 0);
+                Level.Avatar.SetHeroHealth(hd, 0);
+                Level.Avatar.SetHeroState(hd, 3);
             }
         }
 

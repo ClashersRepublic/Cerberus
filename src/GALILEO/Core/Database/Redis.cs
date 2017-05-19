@@ -7,6 +7,7 @@ namespace BL.Servers.CoC.Core.Database
     {
         internal static IDatabase Players;
         internal static IDatabase Clans;
+        internal static IDatabase Battles;
 
         internal Redis()
         {
@@ -21,6 +22,7 @@ namespace BL.Servers.CoC.Core.Database
 
             Redis.Players = Connection.GetDatabase((int)Logic.Enums.Database.Players);
             Redis.Clans = Connection.GetDatabase((int)Logic.Enums.Database.Clans);
+            Redis.Battles = Connection.GetDatabase((int)Logic.Enums.Database.Battles);
 
             Loggers.Log("Redis Database has been succesfully loaded.", true);
         }

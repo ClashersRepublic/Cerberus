@@ -14,9 +14,9 @@ using Resource = BL.Servers.CoC.Logic.Enums.Resource;
 
 namespace BL.Servers.CoC.Logic
 {
-    internal class Player
+    internal class Player : ICloneable
     {
-        [JsonIgnore] internal Battle Battle;
+        [JsonIgnore] internal long Battle_ID;
 
         [JsonIgnore]
         internal long UserId
@@ -59,11 +59,11 @@ namespace BL.Servers.CoC.Logic
         }
 
 
-        [JsonProperty("acc_hi")] internal int UserHighId;
-        [JsonProperty("acc_lo")] internal int UserLowId;
+        [JsonProperty("avatar_id_high")] internal int UserHighId;
+        [JsonProperty("avatar_id_low")] internal int UserLowId;
 
-        [JsonProperty("clan_hi")] internal int ClanHighID;
-        [JsonProperty("clan_lo")] internal int ClanLowID;
+        [JsonProperty("alliance_id_high")] internal int ClanHighID;
+        [JsonProperty("alliance_id_low")] internal int ClanLowID;
 
         [JsonProperty("token")] internal string Token;
         [JsonProperty("password")] internal string Password;
@@ -71,8 +71,9 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("name")] internal string Name = "NoNameYet";
         [JsonProperty("IpAddress")] internal string IpAddress;
         [JsonProperty("region")] internal string Region;
+        [JsonProperty("alliance_name")] internal string Alliance_Name;
 
-        [JsonProperty("lvl")] internal int Level = 1;
+        [JsonProperty("xp_level")] internal int Level = 1;
         [JsonProperty("xp")] internal int Experience;
 
         [JsonProperty("wins")] internal int Wons;
@@ -84,7 +85,7 @@ namespace BL.Servers.CoC.Logic
 
         [JsonProperty("shield")] internal int Shield;
         [JsonProperty("guard")] internal int Guard;
-        [JsonProperty("trophies")] internal int Trophies;
+        [JsonProperty("score")] internal int Trophies;
         [JsonProperty("legend_troph")] internal int Legendary_Trophies;
         [JsonProperty("league_type")] internal int League;
 
@@ -105,8 +106,13 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("bookmarks")] internal List<long> Bookmarks = new List<long>();
         [JsonProperty("tutorials")] internal List<int> Tutorials = new List<int>();
         [JsonProperty("last_search_enemy_id")] internal List<long> Last_Attack_Enemy_ID = new List<long>();
+        [JsonProperty("stream")] internal List<long[]> Stream = new List<long[]>();
+
         [JsonProperty("account_locked")] internal bool Locked = false;
 
+        [JsonProperty("badge_id")] internal int Badge_ID = -1;
+        [JsonProperty("alliance_role")] internal int Alliance_Role = -1;
+        [JsonProperty("alliance_level")] internal int Alliance_Level = -1;
 
         [JsonProperty("units")] internal Units Units;
         [JsonProperty("spells")] internal Units Spells;
@@ -125,6 +131,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("resources")] internal Resources Resources;
         [JsonProperty("resources_cap")] internal Resources Resources_Cap;
         [JsonProperty("npcs")] internal Npcs Npcs;
+        [JsonProperty("variable")] internal Slots Variables;
 
 
         [JsonProperty("login_count")] internal int Login_Count;
@@ -154,6 +161,7 @@ namespace BL.Servers.CoC.Logic
             this.Resources = new Resources(this);
             this.Resources_Cap = new Resources(this);
             this.Npcs = new Npcs();
+            this.Variables = new Slots();
 
             this.Units = new Units(this);
             this.Spells = new Units(this);
@@ -181,6 +189,7 @@ namespace BL.Servers.CoC.Logic
             this.Resources = new Resources(this, true);
             this.Resources_Cap = new Resources(this, false);
             this.Npcs = new Npcs();
+            this.Variables = new Slots();
 
             this.Units = new Units(this);
             this.Spells = new Units(this);
@@ -226,7 +235,17 @@ namespace BL.Servers.CoC.Logic
                     }
                     else
                     {
-                        Console.WriteLine("Name is null or empty");
+                        foreach (int userid in clan.Members.Keys)
+                        {
+                            var player = Core.Resources.Players.Get(userid, Constants.Database, false);
+                            player.Avatar.ClanId = 0;
+                            player.Avatar.Alliance_Role = -1;
+                            player.Avatar.Alliance_Level = -1;
+                            player.Avatar.Alliance_Name = string.Empty;
+                            player.Avatar.Badge_ID = -1;
+
+                        }
+                        Core.Resources.Clans.Delete(clan);
                     }
                 }
 
@@ -335,7 +354,7 @@ namespace BL.Servers.CoC.Logic
 
                 _Packet.AddRange(this.Npcs.ToBytes);
 
-                _Packet.AddInt(0); //Var
+                _Packet.AddDataSlots(this.Variables);
 
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
@@ -525,32 +544,17 @@ namespace BL.Servers.CoC.Logic
             }
         }
 
-        public void CommodityCountChangeHelper(int commodityType, Data data, int count)
-        {
-            if (data.Type == 2)
-            {
-                if (commodityType == 0)
-                {
-                    int resourceCount = this.Resources.Get(data.GetGlobalID());
-                    int newResourceValue = Math.Max(resourceCount + count, 0);
-                    if (count >= 1)
-                    {
-                        int resourceCap = this.Resources_Cap.Get(data.GetGlobalID());
-                        if (resourceCount < resourceCap)
-                        {
-                            if (newResourceValue > resourceCap)
-                            {
-                                newResourceValue = resourceCap;
-                            }
-                        }
-                    }
-                    this.Resources.Set(data.GetGlobalID(), newResourceValue);
-                }
-            }
-        }
-
         public bool HasEnoughResources(Resource resource, int buildCost) => this.Resources.Get(resource) >= buildCost;
 
         public bool HasEnoughResources(int globalId, int buildCost) => this.Resources.Get(globalId) >= buildCost;
+        internal Player Clone()
+        {
+            return this.MemberwiseClone() as Player;
+        }
+
+        object ICloneable.Clone()
+        {
+            return this.Clone();
+        }
     }
 }

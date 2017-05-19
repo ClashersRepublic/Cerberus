@@ -55,6 +55,27 @@ namespace BL.Servers.CoC.Core.Database
             return Seed;
         }
 
+        internal static long GetBattleSeed()
+        {
+            const string SQL = "SELECT coalesce(MAX(ID), 0) FROM battle";
+            long Seed = -1;
+
+            using (MySqlConnection Conn = new MySqlConnection(Credentials))
+            {
+                Conn.Open();
+
+                using (MySqlCommand CMD = new MySqlCommand(SQL, Conn))
+                {
+                    CMD.Prepare();
+                    Seed = Convert.ToInt64(CMD.ExecuteScalar());
+                }
+                Conn.Close();
+            }
+
+
+            return Seed;
+        }
+
         internal static List<long> GetTopPlayer()
         {
             const string SQL = "SELECT ID FROM player ORDER BY TROPHIES DESC LIMIT 100";

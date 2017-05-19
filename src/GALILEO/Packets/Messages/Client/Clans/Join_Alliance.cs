@@ -33,6 +33,11 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
             {
                 Alliance.Members.Add(this.Device.Player.Avatar);
                 this.Device.Player.Avatar.ClanId = Alliance.Clan_ID;
+                this.Device.Player.Avatar.Alliance_Level = Alliance.Level;
+                this.Device.Player.Avatar.Alliance_Name = Alliance.Name;
+                this.Device.Player.Avatar.Alliance_Role = (int)Role.Member;
+                this.Device.Player.Avatar.Badge_ID = Alliance.Badge;
+
 
                 new Server_Commands(this.Device)
                 {

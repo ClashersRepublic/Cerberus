@@ -163,7 +163,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Battles.cs" />
     <Compile Include="Core\Classes.cs" />
+    <Compile Include="Core\Database\Battle.cs">
+      <DependentUpon>Mysql.tt</DependentUpon>
+    </Compile>
     <Compile Include="Core\Database\Clan.cs">
       <DependentUpon>Mysql.tt</DependentUpon>
     </Compile>
@@ -296,6 +300,7 @@
     <Compile Include="Logic\Structure\API\Gamecenter.cs" />
     <Compile Include="Logic\Structure\API\Google.cs" />
     <Compile Include="Logic\Structure\Building.cs" />
+    <Compile Include="Logic\Structure\Slots\Calendar.cs" />
     <Compile Include="Logic\Structure\Slots\Battle_Commands.cs" />
     <Compile Include="Logic\Structure\Component.cs" />
     <Compile Include="Logic\Structure\ComponentFilter.cs" />
@@ -307,14 +312,22 @@
     <Compile Include="Core\Global_Chat.cs" />
     <Compile Include="Logic\Structure\Slots\Castle_Units.cs" />
     <Compile Include="Logic\Structure\Slots\Chats.cs" />
+    <Compile Include="Logic\Structure\Slots\Inbox.cs" />
     <Compile Include="Logic\Structure\Slots\Items\Alliance_Unit.cs" />
+    <Compile Include="Logic\Structure\Slots\Items\Base.cs" />
     <Compile Include="Logic\Structure\Slots\Items\Battle_Command.cs" />
+    <Compile Include="Logic\Structure\Slots\Items\Command_Base.cs" />
     <Compile Include="Logic\Structure\Slots\Items\Entry.cs" />
+    <Compile Include="Logic\Structure\Slots\Items\Event.cs" />
+    <Compile Include="Logic\Structure\Slots\Items\Functions.cs" />
     <Compile Include="Logic\Structure\Slots\Items\List_Devices.cs" />
     <Compile Include="Logic\Structure\Obstacle.cs" />
     <Compile Include="Logic\Structure\Slots\Items\List_Regions.cs" />
+    <Compile Include="Logic\Structure\Slots\Items\Mail.cs" />
     <Compile Include="Logic\Structure\Slots\Items\Member.cs" />
     <Compile Include="Logic\Structure\Slots\Items\Npc.cs" />
+    <Compile Include="Logic\Structure\Slots\Items\Replay_Info.cs" />
+    <Compile Include="Logic\Structure\Slots\Items\Replay_Stats.cs" />
     <Compile Include="Logic\Structure\Slots\Items\Slot.cs" />
     <Compile Include="Logic\Structure\Slots\Members.cs" />
     <Compile Include="Logic\Structure\Slots\Npcs.cs" />
@@ -326,17 +339,22 @@
     <Compile Include="Logic\Structure\Trap.cs" />
     <Compile Include="Packets\Command.cs" />
     <Compile Include="Packets\CommandFactory.cs" />
+    <Compile Include="Packets\Commands\Client\Battle\Place_Alliance_Attacker.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Place_Attacker.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Search_Opponent.cs" />
+    <Compile Include="Packets\Commands\Client\Battle\Surrender_Attack.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Building.cs" />
     <Compile Include="Packets\Commands\Client\Mission_Progress.cs" />
+    <Compile Include="Packets\Commands\Client\Move_Building.cs" />
     <Compile Include="Packets\Commands\Client\My_League.cs" />
     <Compile Include="Packets\Commands\Client\Request_Alliance_Troops.cs" />
     <Compile Include="Packets\Commands\Client\Request_Amical_Challenge.cs" />
     <Compile Include="Packets\Commands\Client\SpeedUp_Construction.cs" />
+    <Compile Include="Packets\Commands\Client\Swap_Buildings.cs" />
     <Compile Include="Packets\Commands\Client\Train_Unit.cs" />
     <Compile Include="Packets\Commands\Client\Unlock_Building.cs" />
     <Compile Include="Packets\Commands\Client\Upgrade_Building.cs" />
+    <Compile Include="Packets\Commands\Client\Upgrade_Multiple_Buildings.cs" />
     <Compile Include="Packets\Commands\Server\Changed_Alliance_Setting.cs" />
     <Compile Include="Packets\Commands\Server\Donate_Troop_Callback.cs" />
     <Compile Include="Packets\Commands\Server\Joined_Alliance.cs" />
@@ -361,6 +379,7 @@
     <Compile Include="Packets\Messages\Client\Avatar_Profile.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Attack_NPC.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Attack_War.cs" />
+    <Compile Include="Packets\Messages\Client\Battle\Get_Replay.cs" />
     <Compile Include="Packets\Messages\Client\Change_Name.cs" />
     <Compile Include="Packets\Messages\Client\Clans\Add_Alliance_Message.cs" />
     <Compile Include="Packets\Messages\Client\Clans\Ask_Alliance.cs" />
@@ -376,6 +395,7 @@
     <Compile Include="Packets\Messages\Client\Keep_Alive.cs" />
     <Compile Include="Packets\Messages\Client\Leaderboard\Request_Global_Clans.cs" />
     <Compile Include="Packets\Messages\Client\Leaderboard\Request_Global_Players.cs" />
+    <Compile Include="Packets\Messages\Client\Leaderboard\Request_League_Players.cs" />
     <Compile Include="Packets\Messages\Client\Leaderboard\Request_Local_Clans.cs" />
     <Compile Include="Packets\Messages\Client\Leaderboard\Request_Local_Players.cs" />
     <Compile Include="Packets\Messages\Client\Request_Name_Change.cs" />
@@ -390,6 +410,7 @@
     <Compile Include="Packets\Messages\Server\Avatar_Stream.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Npc_Data.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Pc_Battle_Data.cs" />
+    <Compile Include="Packets\Messages\Server\Battle\Replay_Data.cs" />
     <Compile Include="Packets\Messages\Server\Clans\Alliance_Change_Role_Ok.cs" />
     <Compile Include="Packets\Messages\Server\Clans\Alliance_Data.cs" />
     <Compile Include="Packets\Messages\Server\Clans\Alliance_Full_Entry.cs" />
@@ -406,7 +427,7 @@
     <Compile Include="Packets\Messages\Server\Leaderboard\Global_Players.cs" />
     <Compile Include="Packets\Messages\Server\Leaderboard\Local_Clans.cs" />
     <Compile Include="Packets\Messages\Server\Leaderboard\Local_Players.cs" />
-    <Compile Include="Packets\Messages\Server\League_Players.cs" />
+    <Compile Include="Packets\Messages\Server\Leaderboard\League_Players.cs" />
     <Compile Include="Packets\Messages\Server\Name_Change_Response.cs" />
     <Compile Include="Packets\Messages\Server\Errors\Out_Of_Sync.cs" />
     <Compile Include="Packets\Messages\Server\Own_Home_Data.cs" />

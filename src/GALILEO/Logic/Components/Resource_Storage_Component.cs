@@ -37,7 +37,7 @@ namespace BL.Servers.CoC.Logic.Components
         public void SetMaxArray(List<int> resourceCaps)
         {
             this.MaxResources = resourceCaps;
-            GetParent.Avatar.GetComponentManager.RefreshResourcesCaps();
+            GetParent.Level.GetComponentManager.RefreshResourcesCaps();
         }
     }
 }

@@ -107,6 +107,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
         internal override void Process()
         {
+            ShowValues();
             if (this.UserId == 0)
             {
                 this.Device.Player = Resources.Players.New(0, Constants.Database);
@@ -201,6 +202,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
                 if (Alliance != null)
                 {
+                    this.Device.Player.Avatar.Alliance_Level = Alliance.Level;
                     new Alliance_Full_Entry(this.Device) {Clan = Alliance}.Send();
                     new War_Map(this.Device).Send();
 

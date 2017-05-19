@@ -31,22 +31,20 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Leaderboard
             var _Packet = new List<byte>();
             var i = 0;
 
+            this.Data.AddInt(this.Clans.Count);
+
             foreach (Clan Clan in this.Clans)
             {
-                _Packet.AddLong(Clan.Clan_ID);
-                _Packet.AddString(Clan.Name);
-                _Packet.AddInt((i++) + 1);
-                _Packet.AddInt(Clan.Trophies);
-                _Packet.AddInt(Resources.Random.Next(0, 10));
-                _Packet.AddInt(Clan.Badge);
-                _Packet.AddInt(Clan.Members.Count);
-                _Packet.AddInt(0);
-                _Packet.AddInt(Clan.Level);
-                i++;
+                this.Data.AddLong(Clan.Clan_ID);
+                this.Data.AddString(Clan.Name);
+                this.Data.AddInt(i++);
+                this.Data.AddInt(Clan.Trophies);
+                this.Data.AddInt(Resources.Random.Next(0, 10));
+                this.Data.AddInt(Clan.Badge);
+                this.Data.AddInt(Clan.Members.Count);
+                this.Data.AddInt(0);
+                this.Data.AddInt(Clan.Level);
             }
-
-            this.Data.AddInt(i);
-            this.Data.AddRange(_Packet);
 
             this.Data.AddInt((int)(DateTime.UtcNow.LastDayOfMonth() - DateTime.UtcNow).TotalSeconds);
 

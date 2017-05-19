@@ -19,9 +19,9 @@ namespace BL.Servers.CoC.Logic.Manager
             this.Level = l;
         }
 
-        readonly List<List<Component>> Components;
+        internal List<List<Component>> Components;
 
-        readonly Level Level;
+        internal Level Level;
 
         public void AddComponent(Component c) => this.Components[c.Type].Add(c);
 

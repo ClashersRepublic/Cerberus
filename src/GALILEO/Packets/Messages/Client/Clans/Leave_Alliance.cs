@@ -64,6 +64,10 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
 
                 Alliance.Members.Remove(this.Device.Player.Avatar);
                 this.Device.Player.Avatar.ClanId = 0;
+                this.Device.Player.Avatar.Alliance_Level = -1;
+                this.Device.Player.Avatar.Alliance_Name = string.Empty;
+                this.Device.Player.Avatar.Alliance_Role = -1;
+                this.Device.Player.Avatar.Badge_ID = -1;
 
                 new Server_Commands(this.Device) { Command = new Leaved_Alliance(this.Device) { AllianceID = Alliance.Clan_ID, Reason = 1 }.Handle() }.Send();
 
