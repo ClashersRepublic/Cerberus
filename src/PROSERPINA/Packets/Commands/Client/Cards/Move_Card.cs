@@ -21,13 +21,13 @@ namespace BL.Servers.CR.Packets.Commands.Client.Cards
 
         internal override void Decode()
         {
-            this.Tick = this.Reader.ReadRRInt32();
-            this.Tick = this.Reader.ReadRRInt32();
+            this.Tick = this.Reader.ReadVInt();
+            this.Tick = this.Reader.ReadVInt();
 
             this.Reader.ReadInt16();
 
-            this.ID = this.Reader.ReadRRInt32();
-            this.Position = this.Reader.ReadRRInt32();
+            this.ID = this.Reader.ReadVInt();
+            this.Position = this.Reader.ReadVInt();
         }
 
         internal override void Process()

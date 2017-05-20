@@ -9,7 +9,9 @@ namespace BL.Servers.CR.Packets.Messages.Client
     using BL.Servers.CR.Packets.Messages.Server;
     internal class Change_Name : Message
     {
-        internal string Name; 
+        internal string Name;
+        internal byte NameSet;
+
         public Change_Name(Device Device, Reader Reader) : base(Device, Reader)
         {
             // Change_Name.
@@ -21,7 +23,7 @@ namespace BL.Servers.CR.Packets.Messages.Client
         internal override void Decode()
         {
             this.Name = this.Reader.ReadString();
-            this.Reader.ReadBoolean();
+            this.NameSet = this.Reader.ReadByte();
         }
 
         /// <summary>
@@ -29,14 +31,10 @@ namespace BL.Servers.CR.Packets.Messages.Client
         /// </summary>
         internal override void Process()
         {
-            if (!string.IsNullOrEmpty(this.Name) && this.Name.Length < 16)
-            {
-                this.Device.Player.Avatar.Username = this.Name;
+            this.Device.Player.Avatar.Username = this.Name;
+            this.Device.Player.Avatar.NameSet += 1;
 
-                new Server_Commands(this.Device, new Name_Change_Callback(this.Device).Handle()).Send();
-            }
-          //  else
-            //    new Change_Name_Failed(this.Device).Send();
+            new Server_Commands(this.Device, new Name_Change_Callback(this.Device)).Send();
         }
     }
 }

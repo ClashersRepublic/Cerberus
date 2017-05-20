@@ -142,14 +142,13 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                         else if (this.Device.Player.Avatar.Banned)
                         {
                             this.Reason = new StringBuilder();
-                            this.Reason.AppendLine(
-                                "Your Player have been banned on our servers, please contact one of the server staff with these following informations if you are not satisfied with the ban:");
+                            this.Reason.AppendLine("Your account has been banned from our servers, please contact one of the server staff members with these following information:");
                             this.Reason.AppendLine();
-                            this.Reason.AppendLine("Your Player Name         : " + this.Device.Player.Avatar.Name);
-                            this.Reason.AppendLine("Your Player ID           : " + this.Device.Player.Avatar.UserId);
-                            this.Reason.AppendLine("Your Player Tag          : " + GameUtils.GetHashtag(this.Device.Player.Avatar.UserId));
-                            this.Reason.AppendLine("Your Player Ban Duration : " + Math.Round((this.Device.Player.Avatar.BanTime.AddDays(3) - DateTime.UtcNow).TotalDays, 3) + " Day");
-                            this.Reason.AppendLine("Your Player Unlock Date  : " + this.Device.Player.Avatar.BanTime.AddDays(3));
+                            this.Reason.AppendLine("Your Account Name: " + this.Device.Player.Avatar.Name);
+                            this.Reason.AppendLine("Your Account ID: " + this.Device.Player.Avatar.UserId);
+                            this.Reason.AppendLine("Your Account Tag: " + GameUtils.GetHashtag(this.Device.Player.Avatar.UserId));
+                            this.Reason.AppendLine("Your Account Ban Duration: " + Math.Round((this.Device.Player.Avatar.BanTime.AddDays(3) - DateTime.UtcNow).TotalDays, 3) + " Day");
+                            this.Reason.AppendLine("Your Account Unlock Date : " + this.Device.Player.Avatar.BanTime.AddDays(3));
                             this.Reason.AppendLine();
 
                             new Authentication_Failed(this.Device, Logic.Enums.Reason.Banned)
@@ -170,9 +169,9 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                 else
                 {
                     this.Reason = new StringBuilder();
-                    this.Reason.AppendLine("Your Device have been block from accessing our servers due to invalid Id, please  clear your game data or contact one of the BarbarianLand staff with these following informations if you are not able to clear you game data :");
-                    this.Reason.AppendLine("Your Device IP         : " + this.Device.IPAddress + ".");
-                    this.Reason.AppendLine("Your Requested ID       : " + this.UserId + ".");
+                    this.Reason.AppendLine("Your device have been block from accessing our servers due to invalid id, please clear your game data or contact one of the staff members with these following information if you are not able to clear you game data:");
+                    this.Reason.AppendLine("Your Device IP: " + this.Device.IPAddress + ".");
+                    this.Reason.AppendLine("Your Requested ID: " + this.UserId + ".");
                     this.Reason.AppendLine();
 
                     new Authentication_Failed(this.Device, (Reason)443)
@@ -186,8 +185,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
         internal void Login()
         {
             this.Device.Player.Client = this.Device;
-            this.Device.Player.Avatar.Region =
-                Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress = this.Device.IPAddress);
+            this.Device.Player.Avatar.Region = Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress = this.Device.IPAddress);
 
             Resources.GChat.Add(this.Device);
             Resources.PRegion.Add(this.Device.Player);

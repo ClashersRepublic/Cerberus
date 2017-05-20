@@ -26,20 +26,20 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
         {
             //Console.WriteLine(BitConverter.ToString(Reader.ReadFully()));
 
-            this.Reader.ReadRRInt32();
-            this.Reader.ReadRRInt32();
+            this.Reader.ReadVInt();
+            this.Reader.ReadVInt();
 
-            this.Reader.ReadRRInt32();
+            this.Reader.ReadVInt();
 
-            this.TroopID = this.Reader.ReadRRInt32();
+            this.TroopID = this.Reader.ReadVInt();
 
             this.Reader.ReadInt16();
 
-            this.Reader.ReadRRInt32();
+            this.Reader.ReadVInt();
             this.Reader.ReadInt16();
 
-            this.X = this.Reader.ReadRRInt32();
-            this.Y = this.Reader.ReadRRInt32();
+            this.X = this.Reader.ReadVInt();
+            this.Y = this.Reader.ReadVInt();
         }
 
         internal override void Encode()

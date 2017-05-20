@@ -24,12 +24,12 @@ namespace BL.Servers.CR.Packets.Commands.Client.Chest
 
         internal override void Decode()
         {
-            this.Tick = this.Reader.ReadRRInt32();
-            this.Tick = this.Reader.ReadRRInt32();
+            this.Tick = this.Reader.ReadVInt();
+            this.Tick = this.Reader.ReadVInt();
             this.Reader.ReadInt16();
 
-            this.Reader.ReadRRInt32();
-            this.Chest_ID = this.Reader.ReadRRInt32();
+            this.Reader.ReadVInt();
+            this.Chest_ID = this.Reader.ReadVInt();
         }
 
         internal override void Process()

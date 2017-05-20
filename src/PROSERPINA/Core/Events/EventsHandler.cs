@@ -52,8 +52,6 @@ namespace BL.Servers.CR.Core.Events
                             {
                                 Resources.Players.Remove(_Player);
                                 Redis.Players.KeyDelete(_Player.Avatar.UserId.ToString());
-
-                                new Shutdown_Started(_Player.Client).Send();
                             }
                         });
                     }

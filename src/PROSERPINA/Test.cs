@@ -15,14 +15,14 @@ namespace BL.Servers.CR
 
         internal Test()
         {
-            this.Uncompress("00-00-55-8E".Replace("-", ""));        
+            this.Uncompress("89 03".Replace(" ", ""));        
         }
 
         internal void Uncompress(string Hexa)
         {
             Reader br = new Reader(Hexa.HexaToBytes());
 
-            Console.WriteLine(br.ReadInt32());
+            Console.WriteLine(br.ReadVInt());
 
             var data =  br.ReadFully();
 

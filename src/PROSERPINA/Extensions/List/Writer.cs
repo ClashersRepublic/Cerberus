@@ -1,4 +1,6 @@
-﻿namespace BL.Servers.CR.Extensions.List
+﻿using System.IO;
+
+namespace BL.Servers.CR.Extensions.List
 {
     using BL.Servers.CR.Core;
     using BL.Servers.CR.Files.CSV_Helpers;
@@ -175,6 +177,44 @@
                     _Value >>= 6 & 0x7F;
             }
             _Packet.Add((byte) _Value);
+        }
+
+        public static void AddVInt(this List<byte> _Packet, long _Value)
+        {
+            var Stream = new MemoryStream(6);
+            byte Temp = 0;
+
+            Temp = (byte) ((_Value >> 57) & 0x40L);
+            _Value = _Value ^ (_Value >> 63);
+            Temp |= (byte) (_Value & 0x3FL);
+
+            _Value >>= 6;
+
+            if (_Value != 0)
+            {
+                Temp |= 0x80;
+                Stream.WriteByte(Temp);
+
+                while (true)
+                {
+                    Temp = (byte) (_Value & (0x7FL));
+                    _Value >>= 7;
+
+                    Temp |= (byte) ((_Value != 0 ? 1 : 0) << 7);
+
+                    Stream.WriteByte(Temp);
+
+                    if (_Value == 0)
+                        break;
+                }
+            }
+            else
+            {
+                Stream.WriteByte(Temp);
+            }
+
+            _Packet.Add(0);
+            _Packet.AddRange(Stream.ToArray());
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BL.Servers.CR.Packets.Commands.Client.Battles;
 using BL.Servers.CR.Packets.Commands.Client.Cards;
 using BL.Servers.CR.Packets.Commands.Client.Chest;
+using BL.Servers.CR.Packets.Commands.Server;
 using BL.Servers.CR.Packets.Commands.Server.Chest;
 
 
@@ -17,6 +18,8 @@ namespace BL.Servers.CR.Packets
             Commands = new Dictionary<int, Type>
             {
                 {1, typeof(Place_Troop)},
+                {201, typeof(Name_Change_Callback)},
+                {210, typeof(Buy_Chest_Callback)},
                 {500, typeof(Move_Card)},
                 {504, typeof(Upgrade_Card)},
                 {505, typeof(Open_Free_Chest)},

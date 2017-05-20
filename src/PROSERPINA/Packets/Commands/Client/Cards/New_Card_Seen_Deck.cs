@@ -18,8 +18,8 @@ namespace BL.Servers.CR.Packets.Commands.Client.Cards
 
         internal override void Decode()
         {
-            this.Tick = this.Reader.ReadRRInt32();
-            this.Tick = this.Reader.ReadRRInt32();
+            this.Tick = this.Reader.ReadVInt();
+            this.Tick = this.Reader.ReadVInt();
 
             this.Reader.ReadInt16();
         }

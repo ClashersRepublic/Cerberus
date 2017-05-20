@@ -280,7 +280,7 @@
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Extensions\Binary\Reader.cs" />
     <Compile Include="Extensions\GameTools.cs" />
-    <Compile Include="Extensions\List\Writter.cs" />
+    <Compile Include="Extensions\List\Writer.cs" />
     <Compile Include="Extensions\TimeUtils.cs" />
     <Compile Include="Extensions\Utils.cs" />
     <Compile Include="Extensions\VarInt.cs" />
@@ -776,9 +776,7 @@
       <DefaultIcon>Server.ico</DefaultIcon>
     </FileAssociation>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Packets\GameOpCommands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>RMDIR /S /Q "$(TargetDir)Library\"

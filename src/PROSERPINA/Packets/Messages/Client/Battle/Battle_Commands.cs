@@ -28,13 +28,13 @@ namespace BL.Servers.CR.Packets.Messages.Client.Battle
 
         internal override void Decode()
         {
-            this.CommandID = this.Reader.ReadRRInt32();
-            this.Reader.ReadRRInt32();
-            this.CommandSum = this.Reader.ReadRRInt32();
-            this.CommandUnk = this.Reader.ReadRRInt32();
-            this.CommandTick = this.Reader.ReadRRInt32();
+            this.CommandID = this.Reader.ReadVInt();
+            this.Reader.ReadVInt();
+            this.CommandSum = this.Reader.ReadVInt();
+            this.CommandUnk = this.Reader.ReadVInt();
+            this.CommandTick = this.Reader.ReadVInt();
             this.CommandUnk2 = this.Reader.ReadInt16();
-            this.CommandValue = this.Reader.ReadRRInt32();
+            this.CommandValue = this.Reader.ReadVInt();
         }
 
         internal override void Process()

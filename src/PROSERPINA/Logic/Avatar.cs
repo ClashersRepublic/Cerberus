@@ -59,8 +59,8 @@ namespace BL.Servers.CR.Logic
         [JsonProperty("IpAddress")] internal string IpAddress;
         [JsonProperty("region")] internal string Region;
 
-        [JsonProperty("lvl")] internal int Level = 13;
-        [JsonProperty("xp")] internal int Experience;
+        [JsonProperty("lvl")] internal int Level = 1;
+        [JsonProperty("xp")] internal int Experience = 0;
         [JsonProperty("arena")] internal int Arena = 21;
         [JsonProperty("tutorials")] internal byte Tutorial = 8;
         [JsonProperty("changes")] internal byte Changes = 0;
@@ -128,7 +128,7 @@ namespace BL.Servers.CR.Logic
 
                 List<byte> _Packet = new List<byte>();
 
-                _Packet.AddLong(UserId);
+                _Packet.AddLong(this.UserId);
 
                 _Packet.AddVInt(0);
 
@@ -332,7 +332,9 @@ namespace BL.Servers.CR.Logic
                 _Packet.AddVInt(0); // Count 1a00 stuff
 
                 _Packet.AddVInt(0);
+
                 _Packet.AddHexa("0A008D30AB10008D17A3147EB901");
+
                 return _Packet.ToArray();
             }
         }
@@ -345,19 +347,11 @@ namespace BL.Servers.CR.Logic
 
                 List<byte> _Packet = new List<byte>();
 
-                // UserID bullshit
+                _Packet.AddVInt(this.UserId);
 
-                _Packet.AddVInt(this.UserHighId);
+                _Packet.AddVInt(this.UserId);
 
-                _Packet.AddVInt(this.UserLowId);
-
-                _Packet.AddVInt(this.UserHighId);
-
-                _Packet.AddVInt(this.UserLowId);
-
-                _Packet.AddVInt(this.UserHighId);
-
-                _Packet.AddVInt(this.UserLowId);
+                _Packet.AddVInt(this.UserId);
 
                 _Packet.AddString(this.Username); // Name
 
@@ -406,6 +400,7 @@ namespace BL.Servers.CR.Logic
                 _Packet.Add(0);
 
                 _Packet.AddVInt(this.Achievements.Count);
+
                 foreach (Achievement _Achievement in this.Achievements)
                 {
                     _Packet.AddVInt(_Achievement.Type);
@@ -413,33 +408,41 @@ namespace BL.Servers.CR.Logic
                     _Packet.AddVInt(_Achievement.Value);
                 }
 
-                _Packet.AddVInt(0);
+                _Packet.AddVInt(this.Achievements.Completed.Count);
+                foreach (Achievement _Achievement in this.Achievements.Completed)
+                {
+                    _Packet.AddVInt(_Achievement.Type);
+                    _Packet.AddVInt(_Achievement.Identifier);
+                    _Packet.AddVInt(_Achievement.Value);
+                }
+
                 _Packet.AddVInt(0);
 
                 _Packet.Add(0);
                 _Packet.Add(0);
 
-                _Packet.AddVInt(this.Resources[0].Value); // Gems
+                _Packet.AddVInt(this.Resources.Gems); // Gems
 
-                _Packet.AddVInt(this.Resources[0].Value); // Gems
+                _Packet.AddVInt(this.Resources.Gems); // Gems
 
                 _Packet.AddVInt(this.Experience); // Experience
 
                 _Packet.AddVInt(this.Level); // Level
 
-                _Packet.Add(this.NameSet); // Unknown
+                _Packet.AddVInt(this.NameSet); // Name Set
 
+                // 7 = Name already set + no clan
                 // 8 = Set name popup + clan
                 // 9 = Name already set + clan
                 // < 8 =  Set name popup
 
-                _Packet.AddVInt(!string.IsNullOrEmpty(this.Username) ? 7 : 0);
+                _Packet.AddVInt(string.IsNullOrEmpty(this.Username) ? 0 : 7);
 
                 _Packet.AddVInt(this.Games_Played); // Games Played
 
                 _Packet.AddVInt(0); // Matched Played -> Tournament Stats
 
-                _Packet.Add(0); // Unknown
+                _Packet.AddVInt(0); // Unknown
 
                 _Packet.AddVInt(this.Wins); // Win
 
@@ -455,11 +458,11 @@ namespace BL.Servers.CR.Logic
 
                 _Packet.AddVInt(0); // Unknown
 
-                _Packet.AddVInt(TimeStamp);
+                _Packet.AddVInt(TimeStamp); // Countdown?
 
-                _Packet.AddVInt(TimeStamp);
+                _Packet.AddVInt((int) this.Created.Subtract(new DateTime(1970, 1, 1)).TotalSeconds); // Creation Date
 
-                _Packet.AddHexa("0B AC A3 2C".Replace(" ", ""));
+                _Packet.AddVInt((int) this.Update.Subtract(this.Created).TotalSeconds); // Time Played
 
                 return _Packet.ToArray();
             }

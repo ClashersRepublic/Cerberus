@@ -22,9 +22,9 @@
 
         internal override void Decode()
         {
-            this.CTick = (uint)this.Reader.ReadRRInt32();
-            this.Checksum = (uint)this.Reader.ReadRRInt32();
-            this.Count = (uint)this.Reader.ReadRRInt32();
+            this.CTick = (uint)this.Reader.ReadVInt();
+            this.Checksum = (uint)this.Reader.ReadVInt();
+            this.Count = (uint)this.Reader.ReadVInt();
 
             this.LCommands = new List<Command>((int)this.Count);
             this.Commands = this.Reader.ReadBytes((int) (this.Reader.BaseStream.Length - this.Reader.BaseStream.Position));
@@ -41,7 +41,7 @@
                 {
                     for (int _Index = 0; _Index < this.Count; _Index++)
                     {
-                        int CommandID = Reader.ReadRRInt32();
+                        int CommandID = Reader.ReadVInt();
                         if (CommandFactory.Commands.ContainsKey(CommandID))
                         {
                             Command Command = Activator.CreateInstance(CommandFactory.Commands[CommandID], Reader, this.Device, CommandID) as Command;

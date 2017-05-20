@@ -11,7 +11,7 @@
         }
         internal override void Decode()
         {
-            this.Device.Ping = this.Reader.ReadRRInt32();
+            this.Device.Ping = this.Reader.ReadVInt();
             this.Device.Interface = this.Reader.ReadString();
 
 #if DEBUG

@@ -14,7 +14,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Battle
 
         internal override void Decode()
         {
-            this.Reader.ReadRRInt32();
+            this.Reader.ReadVInt();
         }
 
         internal override void Process()

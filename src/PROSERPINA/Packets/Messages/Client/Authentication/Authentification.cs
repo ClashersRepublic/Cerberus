@@ -61,9 +61,9 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
 
             this.Token = this.Reader.ReadString();
 
-            this.Major = this.Reader.ReadRRInt32();
-            this.Minor = this.Reader.ReadRRInt32();
-            this.Revision = this.Reader.ReadRRInt32();
+            this.Major = this.Reader.ReadVInt();
+            this.Minor = this.Reader.ReadVInt();
+            this.Revision = this.Reader.ReadVInt();
 
             this.MasterHash = this.Reader.ReadString();
 
@@ -89,7 +89,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
 
             this.Reader.ReadByte();
             this.Reader.ReadString();
-            this.Reader.ReadRRInt32();
+            this.Reader.ReadVInt();
 
             this.Reader.ReadString();
             this.Reader.ReadString();

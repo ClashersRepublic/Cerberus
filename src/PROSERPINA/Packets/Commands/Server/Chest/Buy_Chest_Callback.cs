@@ -21,6 +21,11 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
 
         internal List<Card> Cards = new List<Card>();
 
+        public Buy_Chest_Callback(Reader _Reader, Device _Client, int _ID) : base(_Reader, _Client, _ID)
+        {
+            // Buy_Chest_Callback.
+        }
+
         public Buy_Chest_Callback(Device _Client) : base(_Client)
         {
             this.Identifier = 210;
