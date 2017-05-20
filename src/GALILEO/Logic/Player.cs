@@ -17,6 +17,7 @@ namespace BL.Servers.CoC.Logic
     internal class Player : ICloneable
     {
         [JsonIgnore] internal long Battle_ID;
+        [JsonIgnore] internal int Amical_ID;
 
         [JsonIgnore]
         internal long UserId
@@ -106,7 +107,6 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("bookmarks")] internal List<long> Bookmarks = new List<long>();
         [JsonProperty("tutorials")] internal List<int> Tutorials = new List<int>();
         [JsonProperty("last_search_enemy_id")] internal List<long> Last_Attack_Enemy_ID = new List<long>();
-        [JsonProperty("stream")] internal List<long[]> Stream = new List<long[]>();
 
         [JsonProperty("account_locked")] internal bool Locked = false;
 
@@ -147,6 +147,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("facebook")] internal Structure.API.Facebook Facebook;
         [JsonProperty("google")] internal Structure.API.Google Google;
         [JsonProperty("gamecenter")] internal Structure.API.Gamecenter Gamecenter;
+        [JsonProperty("inbox")] internal Inbox Inbox;
 
         internal bool Banned => this.BanTime > DateTime.UtcNow;
 
@@ -156,6 +157,7 @@ namespace BL.Servers.CoC.Logic
             this.Facebook = new Structure.API.Facebook(this);
             this.Google = new Structure.API.Google(this);
             this.Gamecenter = new Structure.API.Gamecenter(this);
+            this.Inbox = new Inbox(this);
 
             this.Castle_Resources = new Resources(this);
             this.Resources = new Resources(this);
@@ -184,6 +186,7 @@ namespace BL.Servers.CoC.Logic
             this.Facebook = new Structure.API.Facebook(this);
             this.Google = new Structure.API.Google(this);
             this.Gamecenter = new Structure.API.Gamecenter(this);
+            this.Inbox = new Inbox(this);
 
             this.Castle_Resources = new Resources(this, false);
             this.Resources = new Resources(this, true);

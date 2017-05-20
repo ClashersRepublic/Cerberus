@@ -1,6 +1,4 @@
 ﻿using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
 using BL.Servers.CoC.Logic;
 
 namespace BL.Servers.CoC.Packets.Messages.Server.Clans
@@ -17,6 +15,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Clans
 
         internal override void Encode()
         {
+            /*
             long Base_ID = 0;
             if (Resources.Clans.Seed - this.Alliance_Count > 0)
                 Base_ID = Resources.Random.Next(1, (int)Resources.Clans.Seed - (int)this.Alliance_Count);
@@ -26,6 +25,10 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Clans
             for (int Index = 0; Index < this.Alliance_Count; Index++)
             {
                 Clan _Clan = Resources.Clans.Get(Base_ID + Index, Constants.Database, false);
+                this.Data.AddRange(_Clan.ToBytes);
+            }*/
+            foreach (var _Clan in Resources.Clans.Values)
+            {
                 this.Data.AddRange(_Clan.ToBytes);
             }
         }

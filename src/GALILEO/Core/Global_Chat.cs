@@ -14,13 +14,22 @@ namespace BL.Servers.CoC.Core
         {
             if (this.Count > 0)
             {
-                if (this.OrderBy(C => C.Devices.Count).ToList()[0].Devices.Count >= Max_Devices_In_Chat && this.Count < Max_Chat)
+                int Index = this.FindIndex(C => C.Devices.ContainsKey(Device.Socket.Handle));
+
+                if (Index > -1)
                 {
-                    this.Add(new List_Devices(Device));
+                    if (this.OrderBy(C => C.Devices.Count).ToList()[0].Devices.Count >= Max_Devices_In_Chat &&
+                        this.Count < Max_Chat)
+                    {
+                        this.Add(new List_Devices(Device));
+                    }
+                    else
+                    {
+                        this.OrderBy(C => C.Devices.Count).ToList()[0].Devices.Add(Device);
+                    }
                 }
                 else
-                {
-                    this.OrderBy(C => C.Devices.Count).ToList()[0].Devices.Add(Device);
+                {   
                 }
             }
             else

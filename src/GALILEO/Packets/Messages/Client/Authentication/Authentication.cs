@@ -14,6 +14,7 @@ using BL.Servers.CoC.Packets.Messages.Server;
 using BL.Servers.CoC.Packets.Messages.Server.Clans;
 using BL.Servers.CoC.Packets.Messages.Server.Clans.War;
 using System.Security.Cryptography;
+using BL.Servers.CoC.Logic.Structure.Slots.Items;
 
 namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 {
@@ -194,7 +195,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
             new Authentication_OK(this.Device).Send();
             new Own_Home_Data(this.Device).Send();
-            new Avatar_Stream(this.Device).Send();
+            new Server.Avatar_Stream(this.Device).Send();
 
             if (this.Device.Player.Avatar.ClanId > 0)
             {

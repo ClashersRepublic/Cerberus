@@ -107,7 +107,7 @@ namespace BL.Servers.CoC.Logic
             Packet.AddLong(this.Clan_ID);
             Packet.AddString(this.Name);
             Packet.AddInt(this.Badge);
-            Packet.Add(0);
+            Packet.AddBool(this.Members.Count <= 1); //Founded a clan bool
             Packet.AddInt(Level);
             Packet.AddInt(1);
             Packet.AddInt(-1);

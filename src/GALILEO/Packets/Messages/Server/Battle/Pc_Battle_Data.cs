@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.List;
 using BL.Servers.CoC.Logic;
+using BL.Servers.CoC.Logic.Enums;
 
 namespace BL.Servers.CoC.Packets.Messages.Server.Battle
 {
     internal class Pc_Battle_Data : Message
     {
         internal Level Enemy = null;
+        internal Battle_Mode BattleMode;
 
         public Pc_Battle_Data(Device Device) : base(Device)
         {
@@ -30,7 +28,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Battle
                 this.Data.AddRange(Enemy.Avatar.ToBytes);
                 this.Data.AddRange(this.Device.Player.Avatar.ToBytes);
 
-                this.Data.AddInt(3); // 1 : Amical        2 : next button disabled       3 : PvP 
+                this.Data.AddInt((int)this.BattleMode);
                 this.Data.AddInt(0);
                 this.Data.Add(0);
             }

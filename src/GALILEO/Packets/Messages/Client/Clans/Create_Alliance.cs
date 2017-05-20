@@ -64,6 +64,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
                 });
 
                 Resources.Clans.Save(this.Clan);
+                
                 new Server_Commands(this.Device) { Command = new Joined_Alliance(this.Device) { Clan = this.Clan }.Handle() }.Send();
                 new Server_Commands(this.Device) { Command = new Role_Update(this.Device) { Clan = this.Clan, Role = (int)Role.Leader }.Handle() }.Send();
             }

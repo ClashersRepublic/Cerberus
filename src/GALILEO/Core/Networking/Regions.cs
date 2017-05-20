@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using MaxMind.Db;
 using MaxMind.GeoIP2;
@@ -21,6 +20,7 @@ namespace BL.Servers.CoC.Core.Networking
                 throw new FileNotFoundException($"{DbPath} does not exist in current directory!");
 
             Reader = new DatabaseReader(DbPath, FileAccessMode.Memory);
+            //Reader = new DatabaseReader(DbPath, FileAccessMode.MemoryMapped); //Lower ram usage on start but idk the speed
             Loggers.Log("Region database loaded into memory.", true);
         }
 

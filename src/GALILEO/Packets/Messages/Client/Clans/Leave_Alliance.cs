@@ -50,7 +50,6 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
                         while (UserID.Count > 1)
                         {
                             int index = Resources.Random.Next(0, UserID.Count);
-                            Console.WriteLine("Rand Item: " + UserID[index]);
                             UserID.RemoveAt(index);
                         }
                         var lucky = Alliance.Members[UserID[0]];
