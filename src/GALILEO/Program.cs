@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
+using System.Net;
 using System.Reflection;
 using System.Threading;
 using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Core.Database;
+using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic;
 
 namespace BL.Servers.CoC
 {
@@ -48,29 +47,8 @@ namespace BL.Servers.CoC
 
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
             Resources.Initialize();
-            /* var s = Stopwatch.StartNew();
-             int count = 200;
-             for (var i = 1; i < count; i++)
-             {
-                var a = Resources.Players.New(0, Constants.Database);
-                 a.Avatar.Name = $"Hi {i}";
-             }
-             s.Stop();
-
-             Console.WriteLine("Total second {0:N0}",  s.Elapsed.TotalSeconds);
-             Console.WriteLine("{0:N0} queries per second", count / s.Elapsed.TotalSeconds);*/
-            Console.WriteLine(@"-------------------------------------" + Environment.NewLine);
-            int i = 1;
-            int b = i;
-            Console.WriteLine(i);
-            Console.WriteLine(b);
-            Console.WriteLine(i++);
-            Console.WriteLine(i++);
-            Console.WriteLine(i++);
-            Console.WriteLine(i++);
-            Console.WriteLine(i++);
-            Console.WriteLine(i++);
-            Console.WriteLine(b);
+            //Resources.Region.Bench("Warm-up for Memory mode");
+            //Resources.Region.Bench("Memory mode");
             Thread.Sleep(Timeout.Infinite);
 
         }

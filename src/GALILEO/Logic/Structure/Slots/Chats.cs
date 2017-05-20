@@ -52,6 +52,7 @@ namespace BL.Servers.CoC.Logic.Structure.Slots
                 }
             }
         }
+
         internal void Remove(Entry Message)
         {
             if (Message != null)

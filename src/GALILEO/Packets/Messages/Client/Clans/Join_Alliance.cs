@@ -41,8 +41,10 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
 
                 new Server_Commands(this.Device)
                 {
-                    Command = new Joined_Alliance(this.Device) { Clan = Alliance }
+                    Command = new Joined_Alliance(this.Device) { Clan = Alliance }.Handle()
                 }.Send();
+
+                new Alliance_All_Stream_Entry(this.Device).Send();
 
                 Alliance.Chats.Add(new Entry
                 {
@@ -56,8 +58,6 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
                     Event_Player_ID = this.Device.Player.Avatar.UserId,
                     Event_Player_Name = this.Device.Player.Avatar.Name
                 });
-
-                new Alliance_All_Stream_Entry(this.Device).Send();
             }
         }
     }

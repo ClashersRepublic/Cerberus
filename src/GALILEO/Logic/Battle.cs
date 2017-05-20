@@ -34,12 +34,12 @@ namespace BL.Servers.CoC.Logic
                 if (this.Preparation_Time >= 1 && this.Commands.Count < 1)
                 {
                     this.Preparation_Time -= (value - this.Last_Tick) / 63;
-                    Console.WriteLine("Preparation Time : " + TimeSpan.FromSeconds(this.Preparation_Time).TotalSeconds);
+                    //Console.WriteLine("Preparation Time : " + TimeSpan.FromSeconds(this.Preparation_Time).TotalSeconds);
                 }
                 else
                 {
                     this.Attack_Time -= (value - this.Last_Tick) / 63;
-                    Console.WriteLine("Attack Time      : " + TimeSpan.FromSeconds(this.Attack_Time).TotalSeconds);
+                    //Console.WriteLine("Attack Time      : " + TimeSpan.FromSeconds(this.Attack_Time).TotalSeconds);
                 }
                 this.Last_Tick = value;
                 this.End_Tick = (int)value;

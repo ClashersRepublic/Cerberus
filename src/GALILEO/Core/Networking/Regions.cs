@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Text;
 using MaxMind.Db;
 using MaxMind.GeoIP2;
@@ -21,6 +23,7 @@ namespace BL.Servers.CoC.Core.Networking
                 throw new FileNotFoundException($"{DbPath} does not exist in current directory!");
 
             Reader = new DatabaseReader(DbPath, FileAccessMode.Memory);
+            //Reader = new DatabaseReader(DbPath, FileAccessMode.MemoryMapped); //Lower ram usage on start but idk the speed
             Loggers.Log("Region database loaded into memory.", true);
         }
 
@@ -84,6 +87,26 @@ namespace BL.Servers.CoC.Core.Networking
             {
                 return "BarbarianLand";
             }
+        }
+
+        internal void Bench(string name)
+        {
+            Console.Write($"\n{name}: ");
+            var rand = new Random(1);
+            var s = Stopwatch.StartNew();
+            int count = 9000;
+            for (var i = 0; i < count; i++)
+            {
+                var ip = new IPAddress(rand.Next(int.MaxValue));
+                try
+                {
+                    this.Reader.City(ip);
+                }
+                catch (AddressNotFoundException) { }
+            }
+            s.Stop();
+            Console.WriteLine("Total second {0:N0}", s.Elapsed.TotalSeconds);
+            Console.WriteLine("{0:N0} queries per second", count / s.Elapsed.TotalSeconds);
         }
     }
 }

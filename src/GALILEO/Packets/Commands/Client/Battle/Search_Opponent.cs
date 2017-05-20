@@ -4,6 +4,7 @@ using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic;
+using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Packets.Messages.Server.Battle;
 using BL.Servers.CoC.Packets.Messages.Server.Errors;
 
@@ -85,9 +86,9 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
             }
 
             if (this.Enemy_Player != null)
-                new Pc_Battle_Data(this.Device) { Enemy = this.Enemy_Player }.Send();
+                new Pc_Battle_Data(this.Device) { Enemy = this.Enemy_Player,  BattleMode = Battle_Mode.PVP}.Send();
             else
-                new Npc_Data(this.Device) { Npc_ID = 17000020 }.Send();
+                new Battle_Failed(this.Device).Send();
         }
     }
 }

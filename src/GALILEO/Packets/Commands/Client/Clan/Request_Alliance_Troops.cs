@@ -6,7 +6,7 @@ using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Logic.Structure.Slots.Items;
 
-namespace BL.Servers.CoC.Packets.Commands.Client
+namespace BL.Servers.CoC.Packets.Commands.Client.Clan
 {
     internal class Request_Alliance_Troops : Command
     {

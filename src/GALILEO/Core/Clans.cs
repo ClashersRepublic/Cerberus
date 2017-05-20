@@ -61,7 +61,7 @@ namespace BL.Servers.CoC.Core
 
         internal void Delete(Clan Clan, DBMS DBMS = DBMS.Mysql)
         {
-            if (this.ContainsValue(Clan))
+            if (this.ContainsKey(Clan.Clan_ID))
             {
                 this.Remove(Clan.Clan_ID);
             }
@@ -73,7 +73,9 @@ namespace BL.Servers.CoC.Core
                     case DBMS.Mysql:
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.Clan.Remove(Database.Clan.Find(Clan.Clan_ID));
+                            var index = Database.Clan.Find(Clan.Clan_ID);
+                            if (index != null)
+                            Database.Clan.Remove(index);
                             Database.SaveChanges();
                         }
                         break;

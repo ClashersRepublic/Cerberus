@@ -4,13 +4,8 @@ using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Logic.Structure.Slots.Items;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BL.Servers.CoC.Packets.Commands.Client
+namespace BL.Servers.CoC.Packets.Commands.Client.Clan
 {
     internal class Request_Amical_Challenge : Command
     {
@@ -47,6 +42,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                     Sender_Level = this.Device.Player.Avatar.Level,
                     Sender_League = this.Device.Player.Avatar.League,
                     Sender_Role = Clan.Members[this.Device.Player.Avatar.UserId].Role,
+                    Amical_State = Amical_Mode.ATTACK,
                     Message = this.Message
                 });
 

@@ -8,7 +8,7 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
 {
     internal class Entry
     {
-        [JsonProperty("type")] internal Alliance_Stream Stream_Type = 0;
+        [JsonProperty("type")] internal Alliance_Stream Stream_Type = Alliance_Stream.NONE;
         [JsonProperty("high_id")] internal int Message_HighID;
         [JsonProperty("low_id")] internal int Message_LowID;
 
@@ -35,13 +35,17 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
         // Stream 1/2/3
         [JsonProperty("message", DefaultValueHandling = DefaultValueHandling.Ignore)] internal string Message = string.Empty;
 
+        // Stream 3InviteState
+        [JsonProperty("judge_name", DefaultValueHandling = DefaultValueHandling.Ignore)] internal string Judge_Name = string.Empty;
+        [JsonProperty("status", DefaultValueHandling = DefaultValueHandling.Ignore)] internal InviteState Stream_State = InviteState.WAITING;
+
         // Stream 4
         [JsonProperty("event_id", DefaultValueHandling = DefaultValueHandling.Ignore)] internal Events Event_ID = 0;
-
         [JsonProperty("event_pl_id", DefaultValueHandling = DefaultValueHandling.Ignore)] internal long Event_Player_ID = 0;
-        
-
         [JsonProperty("event_pl_name", DefaultValueHandling = DefaultValueHandling.Ignore)] internal string Event_Player_Name = string.Empty;
+
+        // Steam 12
+        [JsonProperty("amical_status", DefaultValueHandling = DefaultValueHandling.Ignore)] internal Amical_Mode Amical_State = Amical_Mode.ATTACK;
 
         [JsonIgnore]
         internal int GetTime => (int)DateTime.UtcNow.Subtract(this.Sent).TotalSeconds;
@@ -126,6 +130,8 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
                     break;
                 case Alliance_Stream.INVITATION:
                     _Packet.AddString(this.Message);
+                    _Packet.AddString(this.Judge_Name);
+                    _Packet.AddInt((int)this.Stream_State);
                     break;
                 case Alliance_Stream.EVENT:
                     _Packet.AddInt((int)this.Event_ID);
@@ -134,7 +140,7 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
                     break;
                 case Alliance_Stream.AMICAL_BATTLE:
                     _Packet.AddString(this.Message);
-                    _Packet.AddInt(0);  // 0 = Cancle Button, 1 = In Battle (Watch Live)
+                    _Packet.AddInt((int)this.Amical_State);
                     break;
             }
             return _Packet.ToArray();

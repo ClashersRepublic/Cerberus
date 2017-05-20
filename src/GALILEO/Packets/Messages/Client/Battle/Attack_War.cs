@@ -2,6 +2,7 @@
 using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic;
+using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Packets.Messages.Server.Battle;
 
 namespace BL.Servers.CoC.Packets.Messages.Client.Battle
@@ -22,7 +23,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Battle
 
         internal override void Process()
         {
-            new Pc_Battle_Data(this.Device) { Enemy = this.Device.Player}.Send();
+            new Pc_Battle_Data(this.Device) { Enemy = this.Device.Player, BattleMode = Battle_Mode.NEXT_BUTTON_DISABLE}.Send();
         }
     }
 }

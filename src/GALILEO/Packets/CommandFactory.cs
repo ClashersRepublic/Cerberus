@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BL.Servers.CoC.Packets.Commands.Client;
 using BL.Servers.CoC.Packets.Commands.Client.Battle;
+using BL.Servers.CoC.Packets.Commands.Client.Clan;
 
 namespace BL.Servers.CoC.Packets
 {
@@ -21,12 +22,14 @@ namespace BL.Servers.CoC.Packets
                 {511, typeof(Request_Alliance_Troops)},
                 {519, typeof(Mission_Progress)},
                 {520, typeof(Unlock_Building)},
+                {537, typeof(Send_Mail)},
                 {538, typeof(My_League)},
                 {549, typeof(Upgrade_Multiple_Buildings)},
                 {574, typeof(Request_Amical_Challenge)},
                 {577, typeof(Swap_Buildings)},
                 {600, typeof(Place_Attacker)},
                 {601, typeof(Place_Alliance_Attacker)},
+                {603, typeof(Surrender_Attack)},
                 {700, typeof(Search_Opponent)}
             };
         }
