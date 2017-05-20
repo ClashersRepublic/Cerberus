@@ -1,4 +1,5 @@
 ﻿using BL.Servers.CoC.Core;
+using BL.Servers.CoC.Extensions.List;
 using BL.Servers.CoC.Logic;
 
 namespace BL.Servers.CoC.Packets.Messages.Server.Clans
@@ -27,6 +28,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Clans
                 Clan _Clan = Resources.Clans.Get(Base_ID + Index, Constants.Database, false);
                 this.Data.AddRange(_Clan.ToBytes);
             }*/
+            this.Data.AddInt((int)Resources.Clans.Count);
             foreach (var _Clan in Resources.Clans.Values)
             {
                 this.Data.AddRange(_Clan.ToBytes);
