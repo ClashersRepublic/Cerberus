@@ -108,7 +108,6 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
         internal override void Process()
         {
-            ShowValues();
             if (this.UserId == 0)
             {
                 this.Device.Player = Resources.Players.New(0, Constants.Database);
