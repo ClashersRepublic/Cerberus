@@ -1,5 +1,7 @@
-﻿using BL.Servers.CR.Extensions.Binary;
+﻿using BL.Servers.CR.Core.Network;
+using BL.Servers.CR.Extensions.Binary;
 using BL.Servers.CR.Logic;
+using BL.Servers.CR.Packets.Messages.Server;
 
 namespace BL.Servers.CR.Packets.Messages.Client
 {
@@ -18,7 +20,7 @@ namespace BL.Servers.CR.Packets.Messages.Client
 
         internal override void Process()
         {
-            
+            new Profile_Data(this.Device).Send();
         }
     }
 }

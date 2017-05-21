@@ -18,10 +18,19 @@ namespace BL.Servers.CR.Packets.Commands.Client.Cards
 
         internal override void Decode()
         {
-            this.Tick = this.Reader.ReadVInt();
-            this.Tick = this.Reader.ReadVInt();
+            Console.WriteLine(BitConverter.ToString(Reader.ReadFully()));
 
-            this.Reader.ReadInt16();
+            //this.Tick = this.Reader.ReadVInt();
+            //this.Tick = this.Reader.ReadVInt();
+
+            //this.Reader.ReadInt16();
+
+            //this.Reader.ReadString();
+        }
+
+        internal override void Process()
+        {
+            //this.ShowValues();
         }
     }
 }

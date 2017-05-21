@@ -8,7 +8,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
     {
         internal long Sender;
 
-        internal Logic.Slots.Items.Battle Battle;
+        internal Logic.Slots.Items.Battle Battle = null;
         internal Battle_Command_Data(Device Device) : base(Device)
         {
             this.Identifier = 21902;

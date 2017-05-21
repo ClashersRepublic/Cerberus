@@ -251,6 +251,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Clans.cs" />
     <Compile Include="Core\Classes.cs" />
     <Compile Include="Core\Consoles\Prefixed.cs" />
     <Compile Include="Core\Devices.cs" />
@@ -342,29 +343,36 @@
     <Compile Include="Files\Home.cs" />
     <Compile Include="Logic\Achivements.cs" />
     <Compile Include="Logic\Avatar.cs" />
+    <Compile Include="Logic\Clan.cs" />
     <Compile Include="Logic\Enums\CVersion.cs" />
     <Compile Include="Logic\Enums\Database.cs" />
     <Compile Include="Logic\Enums\DBMS.cs" />
     <Compile Include="Logic\Enums\Defcon.cs" />
     <Compile Include="Logic\Enums\Exits.cs" />
     <Compile Include="Logic\Enums\Gamefile.cs" />
+    <Compile Include="Logic\Enums\Hiring.cs" />
     <Compile Include="Logic\Enums\Reason.cs" />
     <Compile Include="Logic\Enums\Resource.cs" />
+    <Compile Include="Logic\Enums\Role.cs" />
     <Compile Include="Logic\Enums\Save.cs" />
     <Compile Include="Logic\Enums\State.cs" />
     <Compile Include="Logic\Enums\UnlockReason.cs" />
     <Compile Include="Logic\Level.cs" />
     <Compile Include="Core\Battles.cs" />
+    <Compile Include="Logic\Slots\Chats.cs" />
     <Compile Include="Logic\Slots\Chests.cs" />
     <Compile Include="Logic\Slots\Decks.cs" />
     <Compile Include="Logic\Slots\Items\Achievement.cs" />
     <Compile Include="Logic\Slots\Items\Battle.cs" />
     <Compile Include="Logic\Slots\Items\Card.cs" />
     <Compile Include="Logic\Slots\Items\Chest.cs" />
+    <Compile Include="Logic\Slots\Items\Entry.cs" />
     <Compile Include="Logic\Slots\Items\Facebook.cs" />
     <Compile Include="Logic\Slots\Items\Google.cs" />
+    <Compile Include="Logic\Slots\Items\Member.cs" />
     <Compile Include="Logic\Slots\Items\Resource.cs" />
     <Compile Include="Logic\Slots\Items\Slot.cs" />
+    <Compile Include="Logic\Slots\Members.cs" />
     <Compile Include="Logic\Slots\Resources.cs" />
     <Compile Include="Logic\Vector.cs" />
     <Compile Include="Packets\Commands\Client\Battles\Place_Troop.cs" />
@@ -419,6 +427,8 @@
     <Compile Include="Library\LZMA\Compress\RangeCoder\RangeCoderBitTree.cs" />
     <Compile Include="Library\LZMA\ICoder.cs" />
     <Compile Include="Packets\Messages\Client\Alliance\Request_Create_Alliance.cs" />
+    <Compile Include="Packets\Messages\Client\Alliance\Request_Joinable.cs" />
+    <Compile Include="Packets\Messages\Client\Alliance\Send_Clan_Message.cs" />
     <Compile Include="Packets\Messages\Client\API\Bind_Facebook.cs" />
     <Compile Include="Packets\Messages\Client\API\Bind_Google.cs" />
     <Compile Include="Packets\Messages\Client\Ask_Profile.cs" />
@@ -440,6 +450,8 @@
     <Compile Include="Packets\Messages\Client\Keep_Alive.cs" />
     <Compile Include="Packets\Messages\Client\Request_Name_Change.cs" />
     <Compile Include="Packets\Messages\Client\Set_Device_Token.cs" />
+    <Compile Include="Packets\Messages\Client\UnknownPacket.cs" />
+    <Compile Include="Packets\Messages\Server\Alliance\Joinable_Data.cs" />
     <Compile Include="Packets\Messages\Server\Alliance\Response_Create_Alliance.cs" />
     <Compile Include="Packets\Messages\Server\API\Facebook_Bind_OK.cs" />
     <Compile Include="Packets\Messages\Server\Authentication\Authentication_Ok.cs" />
@@ -460,6 +472,7 @@
     <Compile Include="Packets\Messages\Server\Matchmake_Failed.cs" />
     <Compile Include="Packets\Messages\Server\Name_Change_Response.cs" />
     <Compile Include="Packets\Messages\Server\Own_Home_Data.cs" />
+    <Compile Include="Packets\Messages\Server\Profile_Data.cs" />
     <Compile Include="Packets\Messages\Server\Server_Commands.cs" />
     <Compile Include="Packets\Messages\Server\Shutdown_Started.cs" />
     <Compile Include="Packets\Messages\Server\Stream\Avatar_Stream_Entry.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using BL.Servers.CR.Extensions.List;
+using BL.Servers.CR.Library.ZLib;
 using BL.Servers.CR.Logic;
 
 namespace BL.Servers.CR.Packets.Messages.Server
@@ -21,6 +22,8 @@ namespace BL.Servers.CR.Packets.Messages.Server
             this.Data.AddVInt(TimeStamp);
 
             this.Data.AddHexa("0B AC A3 2C".Replace(" ", ""));
+
+            ZlibStream.CompressBuffer(this.Data.ToArray());
         }
     }
 }

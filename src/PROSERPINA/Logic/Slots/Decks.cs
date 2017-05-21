@@ -94,10 +94,10 @@ namespace BL.Servers.CR.Logic.Slots
         {
             List<byte> _Packet = new List<byte>();
 
-            foreach (Card _Card in this.GetRange(0, 8).OrderBy(_Card => Core.Resources.Random.Next()))
+            foreach (Card _Card in this.GetRange(0, 8))
             {
-                _Packet.AddVInt(_Card.ID);      // Card ID
-                _Packet.AddVInt(_Card.Level);   // Card Level
+                _Packet.AddVInt(_Card.Type == 28 ? _Card.ID + 64 : _Card.ID); // Card ID
+                _Packet.AddVInt(_Card.Level); // Card Level
             }
 
             return _Packet.ToArray();

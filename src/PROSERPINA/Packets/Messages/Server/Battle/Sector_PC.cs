@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
     using BL.Servers.CR.Core.Network;
+    using BL.Servers.CR.Extensions;
     using BL.Servers.CR.Extensions.List;
+    using BL.Servers.CR.Library.ZLib;
     using BL.Servers.CR.Logic;
 
 namespace BL.Servers.CR.Packets.Messages.Server.Battle
@@ -19,58 +21,77 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
         }
 
         internal override void Encode()
-
         {
             int Count = 6;
+
             this.Data.AddBool(false);
-            this.Data.AddHexa("0021A381A2900B0B00F3660944F693DC890701");
+
+            this.Data.AddVInt(0);
+            this.Data.AddVInt(21);
+            this.Data.AddVInt((int)TimeUtils.ToUnixTimestamp(DateTime.Now)); // Timestamp
+            this.Data.AddVInt(11);
+            this.Data.AddVInt(0);
+
+            this.Data.AddHexa("F3660944F693DC890701"); // Battle Checksum?
 
             if (this.Battle.Player1 == this.Device.Player.Avatar)
             {
-
                 this.Data.AddRange(this.Battle.Player2.Battle);
-                this.Data.AddHexa("220004");
+
+                this.Data.AddVInt(34);
+                this.Data.AddVInt(0);
+                this.Data.AddVInt(4);
+
                 this.Data.AddRange(this.Battle.Player1.Battle);
 
-
                 this.Data.AddVInt(0);
                 this.Data.AddVInt(0);
                 this.Data.AddVInt(0);
 
-                this.Data.AddVInt(9);
+                this.Data.AddVInt(14); // Arena Base
                 this.Data.AddVInt(2);
                 this.Data.AddVInt(0);
-                this.Data.AddVInt(8);
+                this.Data.AddVInt(21); // Arena but not actually arena?
 
                 this.Data.AddVInt(this.Battle.Player2.UserHighId);
                 this.Data.AddVInt(this.Battle.Player2.UserLowId);
+
                 this.Data.AddVInt(0);
+
                 this.Data.AddVInt(this.Battle.Player1.UserHighId);
                 this.Data.AddVInt(this.Battle.Player1.UserLowId);
+
                 this.Data.AddVInt(0);
             }
             else
             {
                 this.Data.AddRange(this.Battle.Player1.Battle);
-                this.Data.AddHexa("220004");
+
+                this.Data.AddVInt(34);
+                this.Data.AddVInt(0);
+                this.Data.AddVInt(4);
+
                 this.Data.AddRange(this.Battle.Player2.Battle);
 
-
                 this.Data.AddVInt(0);
                 this.Data.AddVInt(0);
                 this.Data.AddVInt(0);
 
-                this.Data.AddVInt(9);
+                this.Data.AddVInt(14); // Arena Base
                 this.Data.AddVInt(2);
                 this.Data.AddVInt(0);
-                this.Data.AddVInt(8);
+                this.Data.AddVInt(21); // Arena but not actually arena?
+
                 this.Data.AddVInt(this.Battle.Player1.UserHighId);
                 this.Data.AddVInt(this.Battle.Player1.UserLowId);
+
                 this.Data.AddVInt(0);
+
                 this.Data.AddVInt(this.Battle.Player2.UserHighId);
                 this.Data.AddVInt(this.Battle.Player2.UserLowId);
                 this.Data.AddVInt(0);
             }
+
             this.Data.AddVInt(0);
             this.Data.AddVInt(0);
             this.Data.AddVInt(0);
@@ -82,6 +103,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
             this.Data.AddVInt(0);
 
             this.Data.AddBool(false); //Is Trainer battle
+
             this.Data.AddVInt(0);
             this.Data.AddVInt(0);
             this.Data.AddVInt(0);
@@ -185,8 +207,10 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
                 this.Data.AddRange("00000000000000A401A401".HexaToBytes());
             }
 
+            this.Data.AddRange("FF0184010A2A0B1F0B190B2509020B0707060B00".HexaToBytes()); //Deck - Card Type-ID-Level 
 
-            this.Data.AddHexa("FF01");
+            this.Data.AddHexa("FE03");
+
             if (this.Battle.Player1 == this.Device.Player.Avatar)
             {
                 this.Data.AddRange(this.Battle.Player1.Decks.Hand());
@@ -196,7 +220,9 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
                 this.Data.AddRange(this.Battle.Player2.Decks.Hand());
             }
 
-            this.Data.AddHexa("0000050602020402010300000000000000010701010000000000000000000000010000000000000000000000000C000000F3C8DAAF00002A002B");
+            this.Data.AddRange("0000050602020402010300000000000000060901010000000000000000000000010000000000000000000000000C00000080A1B0A80F002A002B".HexaToBytes());
+
+            ZlibStream.CompressBuffer(this.Data.ToArray());
         }
     }
 }

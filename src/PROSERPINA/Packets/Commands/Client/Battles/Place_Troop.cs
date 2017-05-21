@@ -19,7 +19,7 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
         }
         public Place_Troop(Device _Client) : base(_Client)
         {
-            this.Identifier = 3;
+            this.Identifier = 1;
         }
 
         internal override void Decode()

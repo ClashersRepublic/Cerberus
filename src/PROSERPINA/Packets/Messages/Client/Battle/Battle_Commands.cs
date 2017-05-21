@@ -39,13 +39,13 @@ namespace BL.Servers.CR.Packets.Messages.Client.Battle
 
         internal override void Process()
         {
-            ShowValues();
             Thread.Sleep((int)TimeSpan.FromSeconds(5).TotalSeconds);
 
             Avatar _Enemy = Resources.Battles.GetEnemy(this.Device.Player.Avatar.BattleID, this.Device.Player.Avatar.UserId);
 
             Resources.Battles[this.Device.Player.Avatar.BattleID].Tick = this.CommandTick;
             Resources.Battles[this.Device.Player.Avatar.BattleID].Checksum = this.CommandSum;
+
             if (this.CommandID == 1)
             {
                 Resources.Battles[this.Device.Player.Avatar.BattleID].Commands.Enqueue(new Place_Troop(_Enemy.Device)
@@ -54,19 +54,15 @@ namespace BL.Servers.CR.Packets.Messages.Client.Battle
                     SenderLow =  this.Device.Player.Avatar.UserLowId
                 });
 
-                /* new Battle_Command_Data(this.Client)
+                new Battle_Command_Data(this.Device)
                 {
-                    Sender      = this.Client.Level.PlayerID,
-                    Tick        = this.CommandTick,
-                    Checksum    = this.CommandSum
+                    Battle = Resources.Battles[this.Device.Player.Avatar.BattleID]
                 }.Send();
 
-                new Battle_Command_Data(_Enemy.Client)
+                new Battle_Command_Data(_Enemy.Device)
                 {
-                    Sender      = this.Client.Level.PlayerID,
-                    Tick        = this.CommandTick,
-                    Checksum    = this.CommandSum
-                }.Send(); */
+                    Battle = Resources.Battles[_Enemy.Decks.Player.BattleID]
+                }.Send();
             }
             else if (this.CommandID == 3)
             {

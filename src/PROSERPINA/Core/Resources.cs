@@ -15,6 +15,7 @@ namespace BL.Servers.CR.Core
         internal static Gateway Gateway;
         internal static Devices Devices;
         internal static Players Players;
+        internal static Clans Clans;
         internal static Battles Battles;
         internal static Region Region;
         internal static Random Random;
@@ -24,6 +25,7 @@ namespace BL.Servers.CR.Core
             Resources.Classes = new Classes();
             Resources.Devices = new Devices();
             Resources.Players = new Players();
+            Resources.Clans = new Clans();
             Resources.Battles = new Battles();
             Resources.Random = new Random();
             Resources.Region = new Region();

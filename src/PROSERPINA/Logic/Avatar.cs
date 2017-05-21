@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BL.Servers.CR.Core;
 using BL.Servers.CR.Extensions.List;
 using BL.Servers.CR.Files;
 using BL.Servers.CR.Logic.Enums;
@@ -12,6 +13,7 @@ using BL.Servers.CR.Packets;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Google = BL.Servers.CR.Logic.Slots.Items.Google;
+using Resources = BL.Servers.CR.Logic.Slots.Resources;
 
 namespace BL.Servers.CR.Logic
 {
@@ -59,7 +61,7 @@ namespace BL.Servers.CR.Logic
         [JsonProperty("IpAddress")] internal string IpAddress;
         [JsonProperty("region")] internal string Region;
 
-        [JsonProperty("lvl")] internal int Level = 1;
+        [JsonProperty("lvl")] internal int Level = 13;
         [JsonProperty("xp")] internal int Experience = 0;
         [JsonProperty("arena")] internal int Arena = 21;
         [JsonProperty("tutorials")] internal byte Tutorial = 8;
@@ -140,6 +142,7 @@ namespace BL.Servers.CR.Logic
                 _Packet.AddVInt(TimeStamp);
 
                 _Packet.AddVInt(0);
+
                 _Packet.AddVInt(1);
                 {
                     _Packet.AddVInt(8);
@@ -222,9 +225,10 @@ namespace BL.Servers.CR.Logic
                 _Packet.AddVInt(0);
                 _Packet.AddVInt(0);
                 _Packet.AddVInt(0);
+
                 _Packet.AddVInt(127);
 
-                _Packet.AddVInt(1); // 0 = Tuto Upgrade Spell
+                _Packet.AddVInt(2); // 0 = Tuto Upgrade Spell
 
                 _Packet.AddVInt(0);
 
@@ -285,17 +289,11 @@ namespace BL.Servers.CR.Logic
             {
                 List<byte> _Packet = new List<byte>();
 
-                _Packet.AddVInt(this.UserHighId);
+                _Packet.AddVInt(this.UserId);
 
-                _Packet.AddVInt(this.UserLowId);
+                _Packet.AddVInt(this.UserId);
 
-                _Packet.AddVInt(this.UserHighId);
-
-                _Packet.AddVInt(this.UserLowId);
-
-                _Packet.AddVInt(this.UserHighId);
-
-                _Packet.AddVInt(this.UserLowId);
+                _Packet.AddVInt(this.UserId);
 
                 _Packet.AddString(this.Username); // Name
 
@@ -429,14 +427,31 @@ namespace BL.Servers.CR.Logic
 
                 _Packet.AddVInt(this.Level); // Level
 
-                _Packet.AddVInt(this.NameSet); // Name Set
+                _Packet.Add(this.NameSet); // Name Set
 
                 // 7 = Name already set + no clan
                 // 8 = Set name popup + clan
                 // 9 = Name already set + clan
                 // < 8 =  Set name popup
 
-                _Packet.AddVInt(string.IsNullOrEmpty(this.Username) ? 0 : 7);
+                if (this.ClanId > 0)
+                {
+                    Clan Clan = Core.Resources.Clans.Get(this.ClanId, Constants.Database, false);
+
+                    _Packet.Add(string.IsNullOrEmpty(this.Username) ? (byte)8 : (byte)9);
+
+                    _Packet.AddVInt(Clan.ClanID);
+
+                    _Packet.AddString(Clan.Name);
+
+                    _Packet.AddVInt(Clan.Badge);
+
+                    _Packet.AddVInt((int) Clan.Members[this.UserId].Role);
+                }
+                else
+                {
+                    _Packet.Add(string.IsNullOrEmpty(this.Username) ? (byte) 0 : (byte) 1);
+                }
 
                 _Packet.AddVInt(this.Games_Played); // Games Played
 
@@ -467,5 +482,9 @@ namespace BL.Servers.CR.Logic
                 return _Packet.ToArray();
             }
         }
+
+        public bool HasEnoughResources(Enums.Resource resource, int buildCost) => this.Resources.Get(resource) >= buildCost;
+
+        public bool HasEnoughResources(int globalId, int buildCost) => this.Resources.Get(globalId) >= buildCost;
     }
 }
