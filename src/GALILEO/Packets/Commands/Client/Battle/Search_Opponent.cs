@@ -34,8 +34,14 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
             }
 
             this.Device.State = Logic.Enums.State.SEARCH_BATTLE;
-            if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20 || this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count == (Core.Resources.Players.Seed - 2))
-                this.Device.Player.Avatar.Last_Attack_Enemy_ID.RemoveAt(0);
+            if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20 ||
+                this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count == (Core.Resources.Players.Seed - 2))
+            {
+                if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count != 0)
+                {
+                    this.Device.Player.Avatar.Last_Attack_Enemy_ID.RemoveAt(0);
+                }
+            }
             while (this.Enemy_Player == null && this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count < Core.Resources.Players.Seed - 2)
             {
 

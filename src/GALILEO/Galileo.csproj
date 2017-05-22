@@ -183,6 +183,7 @@
     <Compile Include="Core\Database\Redis.cs" />
     <Compile Include="Core\Devices.cs" />
     <Compile Include="Core\Events\EventsHandler.cs" />
+    <Compile Include="Core\Events\Parser.cs" />
     <Compile Include="Core\Loggers.cs" />
     <Compile Include="Core\Networking\Gateway.cs" />
     <Compile Include="Core\Networking\Processor.cs" />
@@ -481,8 +482,17 @@
       <DependentUpon>Mysql.edmx</DependentUpon>
       <LastGenOutput>Mysql.cs</LastGenOutput>
     </None>
+    <None Include="Tools\Patch.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Tools\BarbarianLand Assets Hasher.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\BarbarianLand Assets LZMA.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tools\database.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

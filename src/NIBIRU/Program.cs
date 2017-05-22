@@ -17,23 +17,13 @@ namespace BL.Assets.LZMA
 
             Console.ForegroundColor = ConsoleColor.Red;
 
-            Console.WriteLine(
-                @" ___________                   _________                      _________                      ");
-            Console.WriteLine(
-                @" \__    ___/___ _____    _____ \_   ___ \____________  ___.__.\_   ___ \____________  ___.__.");
-            Console.WriteLine(
-                @"   |    |_/ __ \\__  \  /     \/    \  \/\_  __ \__  \<   |  |/    \  \/\_  __ \__  \<   |  |");
-            Console.WriteLine(
-                @"   |    |\  ___/ / __ \|  Y Y  \     \____|  | \// __ \\___  |\     \____|  | \// __ \\___  |");
-            Console.WriteLine(
-                @"   |____| \___  >____  /__|_|  /\______  /|__|  (____  / ____| \______  /|__|  (____  / ____|");
-            Console.WriteLine(
-                @"              \/     \/      \/        \/            \/\/             \/            \/\/     ");
-            Console.WriteLine(@"                                                                        V1.0.0  ");
-            Console.WriteLine(@"+-------------------------------------------------------------+");
-            Console.WriteLine(@"|             This program is development version             |");
-            Console.WriteLine(@"|                     Of TCC Lzma Manager                     |");
-            Console.WriteLine(@"+-------------------------------------------------------------+");
+            Console.WriteLine(@"__________             ___.                .__                     .____                       .___");
+            Console.WriteLine(@"\______   \_____ ______\_ |__ _____ _______|__|____    ____   _____|    |   _____    ____    __| _/");
+            Console.WriteLine(@" |    |  _/\__  \\_  __ \ __ \\__  \\_  __ \  \__  \  /    \ /  ___/    |   \__  \  /    \  / __ | ");
+            Console.WriteLine(@" |    |   \ / __ \|  | \/ \_\ \/ __ \|  | \/  |/ __ \|   |  \\___ \|    |___ / __ \|   |  \/ /_/ | ");
+            Console.WriteLine(@" |______  /(____  /__|  |___  (____  /__|  |__(____  /___|  /____  >_______ (____  /___|  /\____ | ");
+            Console.WriteLine(@"        \/      \/          \/     \/              \/     \/     \/        \/    \/     \/      \/  ");
+            Console.WriteLine(@"                                                                           Developer Edition  ");
             Console.ResetColor();
 
             //args[0]: source directory
@@ -94,7 +84,7 @@ namespace BL.Assets.LZMA
 
                         Int32 dictionary = 1 << 24;
                         Int32 posStateBits = 2;
-                        Int32 litContextBits = 4; // for normal files
+                        Int32 litContextBits = 3; // for normal files
                         // UInt32 litContextBits = 0; // for 32-bit data
                         Int32 litPosBits = 0;
                         // UInt32 litPosBits = 2; // for 32-bit data
@@ -103,6 +93,14 @@ namespace BL.Assets.LZMA
                         string mf = "bt4";
                         bool eos = false;
 
+                        if (header)
+                        {
+                            litContextBits = 4; // for normal files
+                            output.Write(Encoding.UTF8.GetBytes("SC"), 0, 2);
+                            output.Write(BitConverter.GetBytes(1), 0, 4);
+                            output.Write(BitConverter.GetBytes(hash.Length), 0, 4);
+                            output.Write(hash, 0, 16);
+                        }
                         object[] properties =
                         {
                             dictionary,
@@ -114,14 +112,6 @@ namespace BL.Assets.LZMA
                             mf,
                             eos
                         };
-
-                        if (header)
-                        {
-                            output.Write(Encoding.UTF8.GetBytes("SC"), 0, 2);
-                            output.Write(BitConverter.GetBytes(1), 0, 4);
-                            output.Write(BitConverter.GetBytes(hash.Length), 0, 4);
-                            output.Write(hash, 0, 16);
-                        }
 
                         encoder.SetCoderProperties(propIDs, properties);
                         encoder.WriteCoderProperties(output);

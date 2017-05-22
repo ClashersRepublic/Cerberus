@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -60,6 +62,19 @@ namespace BL.Servers.CoC.Extensions
 
             return ConsoleColor.Green;
         }
+
+        internal static IPAddress LocalNetworkIP
+        {
+            get
+            {
+                using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.IP))
+                {
+                    socket.Connect("10.0.2.4", 65530);
+                    return ((IPEndPoint)socket.LocalEndPoint).Address;
+                }
+            }
+        }
+
         internal static bool IsOdd(int value)
         {
             return value % 2 != 0;

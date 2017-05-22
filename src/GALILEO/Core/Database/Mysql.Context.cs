@@ -17,7 +17,7 @@ namespace BL.Servers.CoC.Core.Database
     using System.Data.Entity.Validation;
     using System.Diagnostics;
     using BL.Servers.CoC.Extensions;
-    
+
     public partial class MysqlEntities : DbContext
     {
         public MysqlEntities()
@@ -51,11 +51,12 @@ namespace BL.Servers.CoC.Core.Database
                 throw ExceptionHelper.CreateFromDbUpdateException(dbUpdateException);
             }
         }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<Clan> Clan { get; set; }
         public virtual DbSet<Player> Player { get; set; }
         public virtual DbSet<Battle> Battle { get; set; }

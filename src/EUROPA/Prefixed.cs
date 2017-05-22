@@ -2,15 +2,12 @@
 using System.IO;
 using System.Text;
 
-namespace BL.Assets.LZMA
+namespace BL.Assets.Hasher
 {
     internal class Prefixed : TextWriter
     {
         internal readonly TextWriter Original;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Prefixed"/> class.
-        /// </summary>
         internal Prefixed()
         {
             this.Original = Console.Out;

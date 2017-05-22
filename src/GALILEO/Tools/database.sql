@@ -11,7 +11,7 @@ USE `Clash`;
 
 CREATE TABLE IF NOT EXISTS `clan` (
   `ID` bigint(20) NOT NULL COMMENT 'The ID of the Clan',
-  `Data` text CHARACTER SET utf8mb4 NOT NULL COMMENT 'The infos and members data of the clan',
+  `mediumtext` text CHARACTER SET utf8mb4 NOT NULL COMMENT 'The infos and members data of the clan',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -19,13 +19,13 @@ CREATE TABLE IF NOT EXISTS `player` (
   `ID` bigint(20) NOT NULL COMMENT 'The ID of the Player',  
   `Trophies` int(5) NOT NULL COMMENT 'The Trophies of the Player',
   `FacebookID` text CHARACTER SET utf8mb4 NOT NULL COMMENT 'The FacebookID of the player',
-  `Data` text CHARACTER SET utf8mb4 NOT NULL COMMENT 'The infos and data of the player',
+  `Data` mediumtext CHARACTER SET utf8mb4 NOT NULL COMMENT 'The infos and data of the player',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `battle` (
   `ID` bigint(20) NOT NULL COMMENT 'The ID of the battle',
-  `Data` text CHARACTER SET utf8mb4 NOT NULL COMMENT 'The infos and data of the battle',
+  `Data` mediumtext CHARACTER SET utf8mb4 NOT NULL COMMENT 'The infos and data of the battle',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1000000;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

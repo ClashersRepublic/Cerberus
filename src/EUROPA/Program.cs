@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Pluto
+namespace BL.Assets.Hasher
 {
     internal static class Program
     {
@@ -23,8 +23,16 @@ namespace Pluto
 
         internal static void Main(string[] args)
         {
+            Console.SetOut(new Prefixed());
+            Console.WriteLine(@"__________             ___.                .__                     .____                       .___");
+            Console.WriteLine(@"\______   \_____ ______\_ |__ _____ _______|__|____    ____   _____|    |   _____    ____    __| _/");
+            Console.WriteLine(@" |    |  _/\__  \\_  __ \ __ \\__  \\_  __ \  \__  \  /    \ /  ___/    |   \__  \  /    \  / __ | ");
+            Console.WriteLine(@" |    |   \ / __ \|  | \/ \_\ \/ __ \|  | \/  |/ __ \|   |  \\___ \|    |___ / __ \|   |  \/ /_/ | ");
+            Console.WriteLine(@" |______  /(____  /__|  |___  (____  /__|  |__(____  /___|  /____  >_______ (____  /___|  /\____ | ");
+            Console.WriteLine(@"        \/      \/          \/     \/              \/     \/     \/        \/    \/     \/      \/  ");
+            Console.WriteLine(@"                                                                           Developer Edition  ");
             Console.WriteLine("Please enter your desired hash version");
-            string Version = Console.ReadLine();
+            var Version = Console.ReadLine();
 
             var str = "{\"files\":[";
 
@@ -44,19 +52,30 @@ namespace Pluto
                 }
             }
 
-            var dateTimehash =
-                DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))
-                    .TotalSeconds.ToString(CultureInfo.InvariantCulture)
-                    .Hash();
+            var dateTimehash = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds
+                .ToString(CultureInfo.InvariantCulture).Hash();
             var str1 = str.TrimEnd(',') + "],\"sha\":\"" + dateTimehash + "\",\"version\":\"" + Version + "\"}";
-            var textWriter =
-                new StreamWriter(new FileStream(Path.Combine(args[2], "fingerprint.json"), FileMode.CreateNew),
-                    new UTF8Encoding(false));
-            textWriter.Write(str1);
-            textWriter.Dispose();
             Directory.CreateDirectory(args[1]);
             var destDirName = Path.Combine(args[1], dateTimehash);
             Directory.Move(args[0], destDirName);
+
+            var textWriter =
+                new StreamWriter(new FileStream(Path.Combine(destDirName, "fingerprint.json"), FileMode.CreateNew),
+                    new UTF8Encoding(false));
+            textWriter.Write(str1);
+            textWriter.Dispose();
+
+            if (File.Exists(Path.Combine(args[1], "VERSION")))
+                File.Move(Path.Combine(args[1], "VERSION"), Path.Combine(args[1], "VERSION.Old"));
+            var versionfile = new StringBuilder();
+            versionfile.AppendLine(Version);
+            versionfile.AppendLine(dateTimehash);
+            
+
+            var textWriter2 = new StreamWriter(new FileStream(Path.Combine(args[1], "VERSION"), FileMode.CreateNew),
+                new UTF8Encoding(false));
+            textWriter2.Write(versionfile.ToString());
+            textWriter2.Dispose();
         }
     }
 }

@@ -41,13 +41,14 @@ namespace BL.Servers.CoC.Core.Networking
 
             Program.Stopwatch.Stop();
             
-            Loggers.Log(Assembly.GetExecutingAssembly().GetName().Name + $" has been started on {this.Listener.LocalEndPoint} in {Math.Round(Program.Stopwatch.Elapsed.TotalSeconds, 4)} Seconds!", true);
+            Loggers.Log(Assembly.GetExecutingAssembly().GetName().Name + $" has been started on {Utils.LocalNetworkIP} in {Math.Round(Program.Stopwatch.Elapsed.TotalSeconds, 4)} Seconds!", true);
 
             SocketAsyncEventArgs AcceptEvent = new SocketAsyncEventArgs();
             AcceptEvent.Completed += this.OnAcceptCompleted;
 
             this.StartAccept(AcceptEvent);
         }
+
         internal void Initialize()
         {
             for (int Index = 0; Index < Constants.MaxPlayers + 100; Index++)

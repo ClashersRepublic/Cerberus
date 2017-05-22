@@ -42,12 +42,12 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
             {
                 //if (!Constants.Maintenance)
                 {
-                   // if (string.Equals(this.Hash, Fingerprint.Sha))
+                    if (string.Equals(this.Hash, Fingerprint.Sha))
                     {
                         new Pre_Authentication_OK(this.Device).Send();
                     }
-                    //else
-                      //  new Authentication_Failed(this.Device, Reason.Patch).Send();
+                    else
+                        new Authentication_Failed(this.Device, Reason.Patch).Send();
                     //   }
                     // else
                     //   new Authentification_Failed(this.Device, Reason.Maintenance).Send();

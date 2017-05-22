@@ -24,7 +24,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
 
 
         internal Reason Reason = Reason.Default;
-        internal string PatchingHost => Fingerprint.Custom ? "http://192.168.0.5/" : "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
+        internal string PatchingHost => Fingerprint.Custom ? "http://gamea.clashofclans.com/" : "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
 
         internal string Message;
         internal string RedirectDomain;
@@ -36,15 +36,15 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
             this.Data.AddInt((int)this.Reason);
             this.Data.AddString(Fingerprint.Json);
             this.Data.AddString(this.RedirectDomain);
-            this.Data.AddString("http://192.186.0.5");
+            this.Data.AddString(this.PatchingHost);
             this.Data.AddString(Constants.UpdateServer);
             this.Data.AddString(this.Message);
             this.Data.AddInt(this.Time);
             this.Data.AddByte(0);
             this.Data.AddCompressed(this.Reason == Reason.Patch ? Fingerprint.Json : null, false);
             this.Data.AddInt(-1);
-            this.Data.AddInt(-1);
-            this.Data.AddInt(-1);
+            this.Data.AddInt(2);
+            this.Data.AddInt(0);
             this.Data.AddInt(-1);
         }
 

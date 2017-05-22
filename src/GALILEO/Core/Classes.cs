@@ -22,6 +22,7 @@ namespace BL.Servers.CoC.Core
         internal Redis Redis;
         internal Fingerprint Fingerprint;
         internal EventsHandler Events;
+        internal Parser Parser;
         internal Test Test;
         internal Classes()
         {
@@ -41,6 +42,7 @@ namespace BL.Servers.CoC.Core
                     break;
             }
             this.Events = new EventsHandler();
+            this.Parser = new Parser();
 #if DEBUG
             Console.WriteLine("We loaded " + MessageFactory.Messages.Count + " messages, " + CommandFactory.Commands.Count + " commands, and 0 debug commands.\n");
 #endif

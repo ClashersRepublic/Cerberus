@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7EA6F76E-D8DB-4BC4-ACD3-5D53D54622CF}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Earth</RootNamespace>
+    <RootNamespace>BL.Assets.LZMA</RootNamespace>
     <AssemblyName>BarbarianLand Assets LZMA</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
