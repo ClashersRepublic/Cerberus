@@ -1,10 +1,10 @@
-﻿using System;
-using BL.Servers.CoC.Core;
+﻿using BL.Servers.CoC.Core;
 using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Packets.Messages.Server;
+using BL.Servers.CoC.Packets.Messages.Server.Clans;
 
 namespace BL.Servers.CoC.Packets.Messages.Client
 {
@@ -30,7 +30,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
 
                 if (this.Device.Player.Avatar.ClanId > 0)
                 {
-                    //Send alliance chat
+                    new Alliance_All_Stream_Entry(this.Device).Send();
                 }
             }
             else

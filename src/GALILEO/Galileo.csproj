@@ -195,6 +195,7 @@
     <Compile Include="Core\Timers.cs" />
     <Compile Include="Extensions\Binary\Reader.cs" />
     <Compile Include="Extensions\Constants.cs" />
+    <Compile Include="Extensions\ExceptionHelper.cs" />
     <Compile Include="Extensions\GameUtils.cs" />
     <Compile Include="Extensions\List\Writer.cs" />
     <Compile Include="Extensions\NativeCalls.cs" />
@@ -348,6 +349,7 @@
     <Compile Include="Packets\Commands\Client\Battle\Search_Opponent.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Surrender_Attack.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Building.cs" />
+    <Compile Include="Packets\Commands\Client\Buy_Resource.cs" />
     <Compile Include="Packets\Commands\Client\Clan\Send_Mail.cs" />
     <Compile Include="Packets\Commands\Client\Mission_Progress.cs" />
     <Compile Include="Packets\Commands\Client\Move_Building.cs" />

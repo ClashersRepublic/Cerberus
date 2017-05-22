@@ -44,6 +44,7 @@ namespace BL.Servers.CoC.Core
             _logger.Info("Logger has been started.");
             _logger.Warn("Logger has been started.");
             _logger.Error("Logger has been started.");
+            _logger.Trace("Logger has been started.");
             _logger.Debug("Logger has been started.");
 
         }
@@ -67,6 +68,12 @@ namespace BL.Servers.CoC.Core
                 case Defcon.ERROR:
                 {
                     _logger.Error(message);
+                    break;
+                }
+
+                case Defcon.TRACE:
+                {
+                    _logger.Trace(message);
                     break;
                 }
 

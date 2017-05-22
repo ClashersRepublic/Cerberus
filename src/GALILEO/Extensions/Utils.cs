@@ -60,6 +60,10 @@ namespace BL.Servers.CoC.Extensions
 
             return ConsoleColor.Green;
         }
+        internal static bool IsOdd(int value)
+        {
+            return value % 2 != 0;
+        }
 
         public class ArrayReferencePreservngConverter : JsonConverter
         {

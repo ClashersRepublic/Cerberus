@@ -53,7 +53,6 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
 
         internal override void Process()
         {
-            ShowValues();
             Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
             Entry Stream = Alliance.Chats.Get(this.StreamLowId);
             if (Stream != null)
@@ -88,13 +87,6 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
                 }
                 else
                 {
-                    Console.WriteLine(Stream.Max_Troops);
-                    Console.WriteLine(this.Troop.HousingSpace);
-                    Console.WriteLine((Stream.Max_Troops + this.Troop.HousingSpace));
-
-                    Console.WriteLine(Stream.Max_Troops <= (Stream.Max_Troops + this.Troop.HousingSpace));
-                    Console.WriteLine(Stream.Max_Troops >= (Stream.Max_Troops + this.Troop.HousingSpace));
-                    Console.WriteLine(Stream.Max_Troops >= Stream.Max_Troops + this.Troop.HousingSpace);
                     if (Stream.Max_Troops >= (Stream.Used_Space_Troops + this.Troop.HousingSpace))
                     {
 

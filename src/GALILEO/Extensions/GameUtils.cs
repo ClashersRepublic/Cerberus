@@ -13,18 +13,18 @@ namespace BL.Servers.CoC.Extensions
         internal const int SEARCH_TAG_LENGTH = 14;
 
         internal static readonly char[] SEARCH_TAG_CHARS = "0289PYLQGRJCUV".ToCharArray();
-        
+
         internal static string GetHashtag(long Identifier)
         {
             if (GameUtils.GetHighID(Identifier) <= 255)
             {
                 StringBuilder Stringer = new StringBuilder();
                 int Count = 11;
-                Identifier = ((long)GameUtils.GetLowID(Identifier) << 8) + GameUtils.GetHighID(Identifier);
+                Identifier = ((long) GameUtils.GetLowID(Identifier) << 8) + GameUtils.GetHighID(Identifier);
 
                 while (++Count > 0)
                 {
-                    Stringer.Append(GameUtils.SEARCH_TAG_CHARS[(int)(Identifier % GameUtils.SEARCH_TAG_LENGTH)]);
+                    Stringer.Append(GameUtils.SEARCH_TAG_CHARS[(int) (Identifier % GameUtils.SEARCH_TAG_LENGTH)]);
                     Identifier /= GameUtils.SEARCH_TAG_LENGTH;
                     if (Identifier <= 0)
                     {
@@ -40,27 +40,38 @@ namespace BL.Servers.CoC.Extensions
 
         internal static int GetLowID(long Identifier)
         {
-            return (int)(Identifier & 0xFFFFFFFF);
+            return (int) (Identifier & 0xFFFFFFFF);
         }
 
         internal static int GetHighID(long Identifier)
         {
-            return (int)(Identifier >> 32);
+            return (int) (Identifier >> 32);
         }
 
-        internal static double WinTrophies(/*this Battle _Battle*/int AttackerTrophies, int DefenderTrophies)
+        internal static double WinTrophies(this Battle _Battle)
         {
-            //double Difference = (_Battle.Attacker.Trophies - _Battle.Defender.Trophies) < 0 ? +(_Battle.Attacker.Trophies - _Battle.Defender.Trophies) : (_Battle.Attacker.Trophies - _Battle.Defender.Trophies);
-            double Difference = (AttackerTrophies - DefenderTrophies) < 0 ? +(DefenderTrophies - AttackerTrophies) : (AttackerTrophies - DefenderTrophies);
+            double Difference = (_Battle.Attacker.Trophies - _Battle.Defender.Trophies) < 0
+                ? +(_Battle.Attacker.Trophies - _Battle.Defender.Trophies)
+                : (_Battle.Attacker.Trophies - _Battle.Defender.Trophies);
+            //double Difference = (AttackerTrophies - DefenderTrophies) < 0 ? +(DefenderTrophies - AttackerTrophies) : (AttackerTrophies - DefenderTrophies);
             if (Difference >= 13 && Difference <= 34)
             {
-                return Math.Round(-0.0794 * (AttackerTrophies - DefenderTrophies) + 29.35838);
+                return Math.Round(-0.0794 * (_Battle.Attacker.Trophies - _Battle.Defender.Trophies) + 29.35838);
             }
-            else
-            {
-                return 0;
-            }
+            return Core.Resources.Random.Next(10, 15);
+
         }
+
+        internal static double LoseTrophies(this Battle _Battle)
+        {
+            if (_Battle.Attacker.Trophies >= 1000 && _Battle.Defender.Trophies >= 1000)
+            {
+                return Math.Round(0.0531 * (_Battle.Attacker.Trophies - _Battle.Defender.Trophies) + 19.60453);
+            }
+            return Core.Resources.Random.Next(10, 15);
+
+        }
+
         internal static void AddExperience(this Player User, int Value)
         {
             if (Value > 0)
@@ -83,17 +94,6 @@ namespace BL.Servers.CoC.Extensions
             }
         }
 
-        internal static double LoseTrophies(/*this Battle _Battle*/int AttackerTrophies, int DefenderTrophies)
-        {
-            if (AttackerTrophies >= 1000 && DefenderTrophies >= 1000)
-            {
-                return Math.Round(0.0531 * (AttackerTrophies - DefenderTrophies) + 19.60453);
-            }
-            else
-            {
-                return 0;
-            }
-        }
         internal static void Check_Missions(this Player Player)
         {
             if (Player != null)
@@ -104,7 +104,8 @@ namespace BL.Servers.CoC.Extensions
                     {
                         if (!string.IsNullOrEmpty(CSV_Missions.Dependencies))
                         {
-                            Missions Dependencies_Missions = CSV.Tables.Get(Gamefile.Missions).GetData(CSV_Missions.Dependencies) as Missions;
+                            Missions Dependencies_Missions =
+                                CSV.Tables.Get(Gamefile.Missions).GetData(CSV_Missions.Dependencies) as Missions;
 
                             if (Player.Tutorials.FindIndex(T => T == Dependencies_Missions.GetGlobalID()) < 0)
                             {
@@ -113,19 +114,20 @@ namespace BL.Servers.CoC.Extensions
                         }
                         if (!string.IsNullOrEmpty(CSV_Missions.BuildBuilding))
                         {
-                            Buildings CSV_Buildings = CSV.Tables.Get(Gamefile.Buildings).GetData(CSV_Missions.BuildBuilding) as Buildings;
+                            Buildings CSV_Buildings = CSV.Tables.Get(Gamefile.Buildings)
+                                .GetData(CSV_Missions.BuildBuilding) as Buildings;
 
                             //List<Building> Building = Player.Objects.Buildings.FindAll(B => B.Data == CSV_Buildings.GetGlobalID());
 
                             if (CSV_Missions.BuildBuildingCount == 1)
                             {
-                            //    if (Building.Count > 0)
+                                //    if (Building.Count > 0)
                                 {
-                              //      int Index = Building.FindIndex(B => B.Level + 1 >= CSV_Missions.BuildBuildingLevel);
+                                    //      int Index = Building.FindIndex(B => B.Level + 1 >= CSV_Missions.BuildBuildingLevel);
 
-                                //    if (Index > -1)
+                                    //    if (Index > -1)
                                     {
-                                  //      Player.Tutorials.Add(CSV_Missions.GetGlobalID());
+                                        //      Player.Tutorials.Add(CSV_Missions.GetGlobalID());
                                     }
                                 }
                             }
@@ -135,7 +137,7 @@ namespace BL.Servers.CoC.Extensions
 
                                 //if (Count >= CSV_Missions.BuildBuildingCount)
                                 {
-                                  //  Player.Tutorials.Add(CSV_Missions.GetGlobalID());
+                                    //  Player.Tutorials.Add(CSV_Missions.GetGlobalID());
                                 }
                             }
                         }
@@ -149,7 +151,7 @@ namespace BL.Servers.CoC.Extensions
 
                             //foreach (Slot Slot in Player.Units)
                             {
-                              //  Troops_Count += Slot.Count;
+                                //  Troops_Count += Slot.Count;
                             }
 
                             if (Troops_Count >= CSV_Missions.TrainTroops)
@@ -171,7 +173,7 @@ namespace BL.Servers.CoC.Extensions
                         else if (CSV_Missions.ChangeName)
                         {
                             //if (Player.NameSet > 0)
-                                Player.Tutorials.Add(CSV_Missions.GetGlobalID());
+                            Player.Tutorials.Add(CSV_Missions.GetGlobalID());
                         }
                         if (!string.IsNullOrEmpty(CSV_Missions.RewardResource))
                         {
@@ -225,7 +227,8 @@ namespace BL.Servers.CoC.Extensions
                     if (Player.Tutorials.FindIndex(M => M == DependenciesID) < 0)
                     {
 #if DEBUG
-                        Console.WriteLine($"Mission Dependencies {(CSV.Tables.Get(Gamefile.Missions).GetDataWithID(DependenciesID) as Missions).Name} marked as finished");
+                        Console.WriteLine(
+                            $"Mission Dependencies {(CSV.Tables.Get(Gamefile.Missions).GetDataWithID(DependenciesID) as Missions).Name} marked as finished");
 #endif
                         Mission_Finish(Player, DependenciesID);
                     }
@@ -275,7 +278,7 @@ namespace BL.Servers.CoC.Extensions
 
                                 Total_Gems =
                                     (int)
-                                    Math.Round((SupCost - Inf_Cost) * (long)(Count - 10000) / (100000 - 10000 * 1.0)) +
+                                    Math.Round((SupCost - Inf_Cost) * (long) (Count - 10000) / (100000 - 10000 * 1.0)) +
                                     Inf_Cost;
                             }
                             else
@@ -289,7 +292,7 @@ namespace BL.Servers.CoC.Extensions
 
                                 Total_Gems =
                                     (int)
-                                    Math.Round((SupCost - Inf_Cost) * (long)(Count - 1000) / (10000 - 1000 * 1.0)) +
+                                    Math.Round((SupCost - Inf_Cost) * (long) (Count - 1000) / (10000 - 1000 * 1.0)) +
                                     Inf_Cost;
                             }
                         }
@@ -303,7 +306,7 @@ namespace BL.Servers.CoC.Extensions
                                 .NumberValue;
 
                             Total_Gems =
-                                (int)Math.Round((SupCost - Inf_Cost) * (long)(Count - 100) / (1000 - 100 * 1.0)) +
+                                (int) Math.Round((SupCost - Inf_Cost) * (long) (Count - 100) / (1000 - 100 * 1.0)) +
                                 Inf_Cost;
                         }
                     }
@@ -316,18 +319,20 @@ namespace BL.Servers.CoC.Extensions
                             (CSV.Tables.Get(Gamefile.Globals).GetData("DARK_ELIXIR_DIAMOND_COST_10") as Globals)
                             .NumberValue;
 
-                        Total_Gems = (int)Math.Round((SupCost - Inf_Cost) * (long)(Count - 10) / (100 - 10 * 1.0)) +
+                        Total_Gems = (int) Math.Round((SupCost - Inf_Cost) * (long) (Count - 10) / (100 - 10 * 1.0)) +
                                      Inf_Cost;
                     }
                 }
                 else
                 {
                     int SupCost =
-                        (CSV.Tables.Get(Gamefile.Globals).GetData("DARK_ELIXIR_DIAMOND_COST_10") as Globals).NumberValue;
+                        (CSV.Tables.Get(Gamefile.Globals).GetData("DARK_ELIXIR_DIAMOND_COST_10") as Globals)
+                        .NumberValue;
                     int Inf_Cost =
                         (CSV.Tables.Get(Gamefile.Globals).GetData("DARK_ELIXIR_DIAMOND_COST_1") as Globals).NumberValue;
 
-                    Total_Gems = (int)Math.Round((SupCost - Inf_Cost) * (long)(Count - 1) / (10 - 1 * 1.0)) + Inf_Cost;
+                    Total_Gems = (int) Math.Round((SupCost - Inf_Cost) * (long) (Count - 1) / (10 - 1 * 1.0)) +
+                                 Inf_Cost;
                 }
             }
             return Total_Gems;
@@ -362,7 +367,7 @@ namespace BL.Servers.CoC.Extensions
 
                                     Total_Gems =
                                         (int)
-                                        Math.Round((SupCost - Inf_Cost) * (long)(Count - 1000000) /
+                                        Math.Round((SupCost - Inf_Cost) * (long) (Count - 1000000) /
                                                    (10000000 - 1000000 * 1.0)) + Inf_Cost;
                                 }
                                 else
@@ -376,14 +381,15 @@ namespace BL.Servers.CoC.Extensions
 
                                     Total_Gems =
                                         (int)
-                                        Math.Round((SupCost - Inf_Cost) * (long)(Count - 100000) /
+                                        Math.Round((SupCost - Inf_Cost) * (long) (Count - 100000) /
                                                    (1000000 - 100000 * 1.0)) + Inf_Cost;
                                 }
                             }
                             else
                             {
                                 int SupCost =
-                                    (CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_DIAMOND_COST_100000") as Globals)
+                                    (CSV.Tables.Get(Gamefile.Globals)
+                                        .GetData("RESOURCE_DIAMOND_COST_100000") as Globals)
                                     .NumberValue;
                                 int Inf_Cost =
                                     (CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_DIAMOND_COST_10000") as Globals)
@@ -391,7 +397,7 @@ namespace BL.Servers.CoC.Extensions
 
                                 Total_Gems =
                                     (int)
-                                    Math.Round((SupCost - Inf_Cost) * (long)(Count - 10000) / (100000 - 10000 * 1.0)) +
+                                    Math.Round((SupCost - Inf_Cost) * (long) (Count - 10000) / (100000 - 10000 * 1.0)) +
                                     Inf_Cost;
                             }
                         }
@@ -405,7 +411,7 @@ namespace BL.Servers.CoC.Extensions
                                 .NumberValue;
 
                             Total_Gems =
-                                (int)Math.Round((SupCost - Inf_Cost) * (long)(Count - 1000) / (10000 - 1000 * 1.0)) +
+                                (int) Math.Round((SupCost - Inf_Cost) * (long) (Count - 1000) / (10000 - 1000 * 1.0)) +
                                 Inf_Cost;
                         }
                     }
@@ -419,7 +425,7 @@ namespace BL.Servers.CoC.Extensions
                             .NumberValue;
 
                         Total_Gems =
-                            (int)Math.Round((SupCost - Inf_Cost) * (long)(Count - 100) / (1000 - 100 * 1.0)) +
+                            (int) Math.Round((SupCost - Inf_Cost) * (long) (Count - 100) / (1000 - 100 * 1.0)) +
                             Inf_Cost;
                     }
                 }
@@ -450,7 +456,7 @@ namespace BL.Servers.CoC.Extensions
                                 .NumberValue;
 
                             Total_Gems =
-                                (int)((SupCost - Inf_Cost) * (long)(Total_Seconds - 86400) / (604800 - 86400 * 1.0)) +
+                                (int) ((SupCost - Inf_Cost) * (long) (Total_Seconds - 86400) / (604800 - 86400 * 1.0)) +
                                 Inf_Cost;
                         }
                         else
@@ -463,7 +469,7 @@ namespace BL.Servers.CoC.Extensions
                                 .NumberValue;
 
                             Total_Gems =
-                                (int)((SupCost - Inf_Cost) * (long)(Total_Seconds - 3600) / (86400 - 3600 * 1.0)) +
+                                (int) ((SupCost - Inf_Cost) * (long) (Total_Seconds - 3600) / (86400 - 3600 * 1.0)) +
                                 Inf_Cost;
                         }
                     }
@@ -476,14 +482,15 @@ namespace BL.Servers.CoC.Extensions
                             (CSV.Tables.Get(Gamefile.Globals).GetData("SPEED_UP_DIAMOND_COST_1_MIN") as Globals)
                             .NumberValue;
 
-                        Total_Gems = (int)((SupCost - Inf_Cost) * (long)(Total_Seconds - 60) / (3600 - 60 * 1.0)) +
+                        Total_Gems = (int) ((SupCost - Inf_Cost) * (long) (Total_Seconds - 60) / (3600 - 60 * 1.0)) +
                                      Inf_Cost;
                     }
                 }
                 else
                 {
                     Total_Gems =
-                        (CSV.Tables.Get(Gamefile.Globals).GetData("SPEED_UP_DIAMOND_COST_1_MIN") as Globals).NumberValue;
+                        (CSV.Tables.Get(Gamefile.Globals).GetData("SPEED_UP_DIAMOND_COST_1_MIN") as Globals)
+                        .NumberValue;
                 }
             }
             return Total_Gems;

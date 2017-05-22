@@ -86,7 +86,7 @@ namespace BL.Servers.CoC.Logic
 
         [JsonProperty("shield")] internal int Shield;
         [JsonProperty("guard")] internal int Guard;
-        [JsonProperty("score")] internal int Trophies;
+        [JsonProperty("score")] internal int Trophies = Core.Resources.Random.Next(4000, 4050);
         [JsonProperty("legend_troph")] internal int Legendary_Trophies;
         [JsonProperty("league_type")] internal int League;
 

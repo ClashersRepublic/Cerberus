@@ -132,14 +132,14 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
                             new Entry
                             {
                                 Stream_Type = Alliance_Stream.EVENT,
-                                Sender_ID = this.Device.Player.Avatar.UserId,
-                                Sender_Name = this.Device.Player.Avatar.Name,
-                                Sender_Level = this.Device.Player.Avatar.Level,
-                                Sender_League = this.Device.Player.Avatar.League,
+                                Sender_ID = Device.Player.Avatar.UserId,
+                                Sender_Name = Device.Player.Avatar.Name,
+                                Sender_Level = Device.Player.Avatar.Level,
+                                Sender_League = Player.Avatar.League,
                                 Sender_Role = JudgeRole,
                                 Event_ID = this.Role > DefendantRole ? Events.PROMOTE_MEMBER : Events.DEPROMOTE_MEMBER,
-                                Event_Player_Name = Player.Avatar.Name,
-                                Event_Player_ID = Player.Avatar.UserId
+                                Event_Player_Name = this.Device.Player.Avatar.Name,
+                                Event_Player_ID = this.Device.Player.Avatar.UserId
                             });
                     }
                 }

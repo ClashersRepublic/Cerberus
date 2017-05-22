@@ -20,6 +20,7 @@ namespace BL.Servers.CoC.Packets
                 {504, typeof(SpeedUp_Construction)},
                 {508, typeof(Train_Unit)},
                 {511, typeof(Request_Alliance_Troops)},
+                {518, typeof(Buy_Resource)},
                 {519, typeof(Mission_Progress)},
                 {520, typeof(Unlock_Building)},
                 {537, typeof(Send_Mail)},

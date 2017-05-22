@@ -7,11 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using BL.Servers.CoC.Logic.Enums;
+
 namespace BL.Servers.CoC.Core.Database
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Validation;
+    using System.Diagnostics;
+    using BL.Servers.CoC.Extensions;
     
     public partial class MysqlEntities : DbContext
     {
@@ -19,7 +24,33 @@ namespace BL.Servers.CoC.Core.Database
             : base("name=MysqlEntities")
         {
         }
-    
+        public override int SaveChanges()
+        {
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation($"Class: {validationErrors.Entry.Entity.GetType().FullName}, Property: {validationError.PropertyName}, Error: {validationError.ErrorMessage}");
+                        Loggers.Log($"Class: {validationErrors.Entry.Entity.GetType().FullName}, Property: {validationError.PropertyName}, Error: {validationError.ErrorMessage}", false, Defcon.TRACE);
+                    }
+                }
+
+                Loggers.Log(Utils.Padding(dbEx.GetType().Name, 15) + " : " + dbEx.Message + Environment.NewLine + dbEx.StackTrace, true, Defcon.ERROR);
+                throw ExceptionHelper.CreateFromEntityValidation(dbEx);
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                Loggers.Log(Utils.Padding(dbUpdateException.GetType().Name, 15) + " : " + dbUpdateException.Message + Environment.NewLine + dbUpdateException.StackTrace, true, Defcon.ERROR);
+
+                throw ExceptionHelper.CreateFromDbUpdateException(dbUpdateException);
+            }
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

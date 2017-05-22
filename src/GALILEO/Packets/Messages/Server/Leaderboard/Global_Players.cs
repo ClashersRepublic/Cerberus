@@ -16,7 +16,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Leaderboard
         public Global_Players(Device client) : base(client)
         {
             this.Identifier = 24403;
-            this.Players = Resources.PRegion.Get_Region("INTERNATIONAL").ToList();
+            this.Players = Resources.PRegion.Get_Region("INTERNATIONAL").OrderByDescending(t => t.Avatar.Trophies).ToList();
 
             if (this.Players == null)
             {

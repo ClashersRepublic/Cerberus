@@ -9,7 +9,7 @@ namespace BL.Servers.CoC.Packets
 {
     internal class Command
     {
-        public const int MaxEmbeddedDepth = 10;
+        internal const int MaxEmbeddedDepth = 10;
 
         internal int Depth;
 

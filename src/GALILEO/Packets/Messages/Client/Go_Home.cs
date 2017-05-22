@@ -46,6 +46,31 @@ namespace BL.Servers.CoC.Packets.Messages.Client
                             Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
                         if (Battle.Commands.Count > 0)
                         {
+                            Level Player =  Core.Resources.Players.Get(Battle.Defender.UserId, Constants.Database, false);
+
+                            if (Utils.IsOdd(Resources.Random.Next(1, 1000)))
+                            {
+                                int lost = (int)Battle.LoseTrophies();
+                                Player.Avatar.Trophies += (int)Battle.WinTrophies();
+
+                                if (this.Device.Player.Avatar.Trophies >= lost)
+                                    this.Device.Player.Avatar.Trophies -= (int) Battle.LoseTrophies();
+                                else
+                                    this.Device.Player.Avatar.Trophies = 0;
+                            }
+                            else
+                            {
+                                int lost = (int)Battle.LoseTrophies();
+                                if (Player.Avatar.Trophies >= lost)
+                                    Player.Avatar.Trophies -= (int)Battle.LoseTrophies();
+                                else
+                                    Player.Avatar.Trophies = 0;
+
+                                this.Device.Player.Avatar.Trophies += (int)Battle.WinTrophies();
+                            }
+
+                            Battle.WinTrophies();
+                            Battle.LoseTrophies();
                             Battle.Set_Replay_Info();
                             this.Device.Player.Avatar.Inbox.Add(
                                 new Mail
@@ -56,9 +81,6 @@ namespace BL.Servers.CoC.Packets.Messages.Client
 
                             //if (Core.Resources.Players.Get(Battle.Defender.UserId, Constants.Database) == null)
                             {
-                                Level Player =
-                                    Core.Resources.Players.Get(Battle.Defender.UserId, Constants.Database, false);
-
                                 //if (Player.Avatar.Guard < 1)
                                 Player.Avatar.Inbox.Add(
                                     new Mail

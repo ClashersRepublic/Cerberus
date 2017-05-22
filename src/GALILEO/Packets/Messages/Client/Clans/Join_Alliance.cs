@@ -44,6 +44,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
                     Command = new Joined_Alliance(this.Device) { Clan = Alliance }.Handle()
                 }.Send();
 
+                new Alliance_Full_Entry(this.Device).Send();
                 new Alliance_All_Stream_Entry(this.Device).Send();
 
                 Alliance.Chats.Add(new Entry
