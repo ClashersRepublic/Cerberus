@@ -9,6 +9,7 @@ All programs developed by the BarbariansLand Development Team are licensed by a 
 * Eris - Boom Beach Server
 * Europa - Some Patcher
 * Galileo - Clash of Clans Server
+* Lyra - Supercell game's proxy
 * Nebula - SC Editor
 * Nibiru - LZMA Manager
 * Proserpina - Clash Royale Server
