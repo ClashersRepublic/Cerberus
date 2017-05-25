@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.List;
 
@@ -34,7 +35,7 @@ namespace BL.Servers.CoC.Logic
 
                 _Packet.AddCompressed(this.Json);
                 _Packet.AddCompressed("{\"event\":[]}");
-
+                _Packet.AddCompressed("{\"Village2\":{\"TownHallMaxLevel\":5}}");
                 return _Packet.ToArray();
             }
         }

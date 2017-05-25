@@ -21,7 +21,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
         public Pre_Authentication(Device Device, Reader Reader) : base(Device, Reader)
         {
-           this.Device.State = State.SESSION;
+            this.Device.State = State.SESSION;
         }
 
         internal override void Decode()
@@ -42,14 +42,14 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
             //  {
             //  if (!Constants.Maintenance)
             //    {
-            //  if (string.Equals(this.Hash, Fingerprint.Sha))
-            //  {
-            new Pre_Authentication_OK(this.Device).Send();
-            //    }
-            //  else
-            //  {
-            //   new Authentication_Failed(this.Device, Reason.Patch).Send();
-            //   }
+            if (string.Equals(this.Hash, Fingerprint.Sha))
+            {
+                new Pre_Authentication_OK(this.Device).Send();
+            }
+            else
+            {
+                new Authentication_Failed(this.Device, Reason.Patch).Send();
+            }
             //     }
             //    else
             //     new Authentification_Failed(this.Device, Reason.Maintenance).Send();

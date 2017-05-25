@@ -75,7 +75,8 @@ namespace BL.Servers.CoC.Logic
 
                     if (MessageFactory.Messages.ContainsKey(_Header[0]))
                     {
-                        Message _Message =  Activator.CreateInstance(MessageFactory.Messages[_Header[0]], this, Reader) as Message;
+                        Message _Message =
+                            Activator.CreateInstance(MessageFactory.Messages[_Header[0]], this, Reader) as Message;
                         _Message.Identifier = (ushort) _Header[0];
                         _Message.Length = (ushort) _Header[1];
                         _Message.Version = (ushort) _Header[2];
@@ -89,9 +90,11 @@ namespace BL.Servers.CoC.Logic
                                 _Message.DecryptRC4();
                             else
                                 _Message.DecryptPepper();
-                            
+
 #if DEBUG
-                            Loggers.Log(Utils.Padding(_Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " --> " + _Message.GetType().Name, true);
+                            Loggers.Log(
+                                Utils.Padding(_Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " --> " +
+                                _Message.GetType().Name, true);
                             Loggers.Log(_Message, Utils.Padding(_Message.Device.Socket.RemoteEndPoint.ToString(), 15));
 #endif
                             _Message.Decode();
@@ -99,17 +102,28 @@ namespace BL.Servers.CoC.Logic
                         }
                         catch (Exception Exception)
                         {
-                             Loggers.Log(Utils.Padding(Exception.GetType().Name, 15) + " : " + Exception.Message + ". [" + (this.Player != null ? this.Player.Avatar.UserId + ":" + GameUtils.GetHashtag(this.Player.Avatar.UserId) : "---") + ']' + Environment.NewLine + Exception.StackTrace, true, Defcon.ERROR);
+                            Loggers.Log(
+                                Utils.Padding(Exception.GetType().Name, 15) + " : " + Exception.Message + ". [" +
+                                (this.Player != null
+                                    ? this.Player.Avatar.UserId + ":" + GameUtils.GetHashtag(this.Player.Avatar.UserId)
+                                    : "---") + ']' + Environment.NewLine + Exception.StackTrace, true, Defcon.ERROR);
                         }
                     }
                     else
                     {
 #if DEBUG
-                        Loggers.Log(Utils.Padding(this.GetType().Name, 15) + " : Aborting, we can't handle the following message : ID " + _Header[0] + ", Length " + _Header[1] + ", Version " + _Header[2] + ".", true, Defcon.WARN);
+                        Loggers.Log(
+                            Utils.Padding(this.GetType().Name, 15) +
+                            " : Aborting, we can't handle the following message : ID " + _Header[0] + ", Length " +
+                            _Header[1] + ", Version " + _Header[2] + ".", true, Defcon.WARN);
 #endif
                         if (Constants.RC4)
-                            this.RC4.Decrypt(ref Buffer);
-                        this.Keys.SNonce.Increment();
+                        {
+                            var Data = Reader.ReadFully();
+                            this.RC4.Decrypt(ref Data);
+                        }
+                        else
+                            this.Keys.SNonce.Increment();
                     }
                     this.Token.Packet.RemoveRange(0, _Header[1] + 7);
 

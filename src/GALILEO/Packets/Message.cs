@@ -93,14 +93,14 @@ namespace BL.Servers.CoC.Packets
             byte[] Decrypted = this.Reader.ReadBytes(this.Length).ToArray();
             if (this.Identifier != 10100)
             {
-                Console.WriteLine($"Raw {BitConverter.ToString(Decrypted.ToArray()).Replace("-", "")}");
-                Console.WriteLine($"Buffer Lenght {Decrypted.ToArray().Length}");
+                //Console.WriteLine($"Raw {BitConverter.ToString(Decrypted.ToArray()).Replace("-", "")}");
+                //Console.WriteLine($"Buffer Lenght {Decrypted.ToArray().Length}");
                 this.Device.RC4.Decrypt(ref Decrypted);
             }
             this.Reader = new Reader(Decrypted);
             this.Length = (ushort) this.Reader.BaseStream.Length;
-            Console.WriteLine($"Decrypted {BitConverter.ToString(Decrypted.ToArray()).Replace("-", "")}");
-            Console.WriteLine(this.Length);
+            //Console.WriteLine($"Decrypted {BitConverter.ToString(Decrypted.ToArray()).Replace("-", "")}");
+            //Console.WriteLine(this.Length);
         }
 
         internal virtual void EncryptPepper()

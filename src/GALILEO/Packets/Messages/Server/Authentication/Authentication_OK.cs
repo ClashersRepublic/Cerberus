@@ -54,6 +54,9 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
             this.Data.AddString(avatar.Google.Identifier);
             this.Data.AddString(avatar.Region);
             this.Data.AddString(null);
+            this.Data.AddInt(1); //Unknown
+            this.Data.AddString("https://event-assets.clashofclans.com");
+            this.Data.AddString("http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/"); //Patch server?
             this.Data.AddString(null);
 
         }

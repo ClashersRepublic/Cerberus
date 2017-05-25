@@ -197,8 +197,8 @@ namespace BL.Servers.CoC.Extensions.Binary
             {
                 using (Reader br = new Reader(bytes))
                 {
-                    uint decompressedLength = br.ReadUInt32();
-                    string homeJson = ZlibStream.UncompressString(br.ReadBytes((int)decompressedLength));
+                    int decompressedLength = br.ReadInt32();
+                    string homeJson = ZlibStream.UncompressString(br.ReadFully());
                     return homeJson;
                 }
             }

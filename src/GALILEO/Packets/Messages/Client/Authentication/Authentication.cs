@@ -104,6 +104,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
             this.Reader.ReadString();
 
             this.ClientVersion = this.Reader.ReadString().Split('.');
+            ShowValues();
 
         }
 
@@ -137,7 +138,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                 this.Device.Player = Resources.Players.Get(this.UserId, Constants.Database);
                 if (this.Device.Player != null)
                 {
-                    if (!string.Equals(this.Token, this.Device.Player.Avatar.Token))
+                    if (string.Equals(this.Token, this.Device.Player.Avatar.Token))
                     {
                         if (this.Device.Player.Avatar.Locked)
                         {

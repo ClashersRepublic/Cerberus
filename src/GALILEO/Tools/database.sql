@@ -11,7 +11,7 @@ USE `Clash`;
 
 CREATE TABLE IF NOT EXISTS `clan` (
   `ID` bigint(20) NOT NULL COMMENT 'The ID of the Clan',
-  `mediumtext` text CHARACTER SET utf8mb4 NOT NULL COMMENT 'The infos and members data of the clan',
+  `Data` mediumtext CHARACTER SET utf8mb4 NOT NULL COMMENT 'The infos and members data of the clan',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
