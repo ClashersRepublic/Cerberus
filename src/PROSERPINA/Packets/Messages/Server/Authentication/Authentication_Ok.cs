@@ -23,10 +23,10 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
 
         internal override void Encode()
         {
-            this.Data.AddLong(this.Device.Player.Avatar.UserId);
-            this.Data.AddLong(this.Device.Player.Avatar.UserId);
+            this.Data.AddLong(this.Device.Player.UserId);
+            this.Data.AddLong(this.Device.Player.UserId);
 
-            this.Data.AddString(this.Device.Player.Avatar.Token);
+            this.Data.AddString(this.Device.Player.Token);
 
             this.Data.AddString(null); // Facebook
             this.Data.AddString(null); // Gamecenter

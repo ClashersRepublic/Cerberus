@@ -16,14 +16,14 @@ namespace BL.Servers.CR.Logic.Slots.Items
         [JsonProperty("joined")] internal DateTime Joined = DateTime.UtcNow;
 
         internal bool Connected => Core.Resources.Players.ContainsKey(this.UserID);
-        internal Level Player => Core.Resources.Players.Get(this.UserID, Constants.Database, false);
+        internal Player Player => Core.Resources.Players.Get(this.UserID, Constants.Database, false);
         internal bool New => this.Joined >= DateTime.UtcNow.AddDays(-1);
 
         internal Member()
         {
         }
 
-        internal Member(Avatar Player)
+        internal Member(Player Player)
         {
             this.UserID = Player.UserId;
 

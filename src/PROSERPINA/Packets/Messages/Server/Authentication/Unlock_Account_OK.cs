@@ -12,7 +12,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
 {
     internal class Unlock_Account_OK : Message
     {
-        internal Avatar Account;
+        internal Player Player;
         internal Unlock_Account_OK(Device Device) : base(Device)
         {
             this.Identifier = 20132;
@@ -20,8 +20,8 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
 
         internal override void Encode()
         {
-            this.Data.AddLong(this.Account.UserId);
-            this.Data.AddString(this.Account.Token);
+            this.Data.AddLong(this.Player.UserId);
+            this.Data.AddString(this.Player.Token);
         }
 
         internal override void Encrypt()

@@ -5,7 +5,7 @@ namespace BL.Servers.CR.Core
 
     internal class Constants
     {
-        internal const bool Local = false;
+        internal const bool Local = true;
 
         internal const int SendBuffer = 2048;
 

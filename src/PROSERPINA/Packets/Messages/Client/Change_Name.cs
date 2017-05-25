@@ -31,8 +31,7 @@ namespace BL.Servers.CR.Packets.Messages.Client
         /// </summary>
         internal override void Process()
         {
-            this.Device.Player.Avatar.Username = this.Name;
-            this.Device.Player.Avatar.NameSet += 1;
+            this.Device.Player.Username = this.Name;
 
             new Server_Commands(this.Device, new Name_Change_Callback(this.Device)).Send();
         }

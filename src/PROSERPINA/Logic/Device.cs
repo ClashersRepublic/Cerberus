@@ -12,7 +12,7 @@ namespace BL.Servers.CR.Logic
     internal class Device
     {
         internal Socket Socket;
-        internal Level Player;
+        internal Player Player;
         internal Token Token;
         internal Crypto Keys;
 
@@ -98,7 +98,7 @@ namespace BL.Servers.CR.Logic
                             }
                             catch (Exception Exception)
                             {
-                                Loggers.Log(Utils.Padding(Exception.GetType().Name, 15) + " : " + Exception.Message + ". [" + (this.Player != null ? this.Player.Avatar.UserHighId + ":" + this.Player.Avatar.UserLowId : "---") + ']' + Environment.NewLine + Exception.StackTrace, true, Defcon.ERROR);
+                                Loggers.Log(Utils.Padding(Exception.GetType().Name, 15) + " : " + Exception.Message + ". [" + (this.Player != null ? this.Player.UserHighId + ":" + this.Player.UserLowId : "---") + ']' + Environment.NewLine + Exception.StackTrace, true, Defcon.ERROR);
                             }
                         }
                         else

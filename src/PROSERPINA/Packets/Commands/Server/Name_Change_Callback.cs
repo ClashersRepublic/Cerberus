@@ -24,30 +24,29 @@ namespace BL.Servers.CR.Packets.Commands.Server
         
         internal override void Decode()
         {
-            Console.WriteLine(BitConverter.ToString(Reader.ReadFully()));
-
-            //this.Name = this.Reader.ReadString();
-            //this.Previous = this.Reader.ReadString();
+            this.Name = this.Reader.ReadString();
+            this.Previous = Name;
         }
 
         internal override void Encode()
         {
             //this.Data.AddHexa("00-00-00-03-61-73-64-00-00-00-01-00-00-86-02-86-02-00-11-FF-FF-FF-FF".Replace("-", ""));
 
-            this.Data.AddString(this.Device.Player.Avatar.Username);
-            this.Data.AddInt(1);
+            this.Data.AddString(this.Device.Player.Username);
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+            this.Data.AddBool(true);
             this.Data.AddVInt(0);
             this.Data.AddVInt(0);
-            this.Data.AddVInt(0);
-            this.Data.AddVInt(0);
-            this.Data.AddVInt(0);
-            this.Data.AddVInt(0);
-            this.Data.AddString(null);
+            this.Data.AddVInt(0); // Tick
+            this.Data.AddVInt(0); // Tick
+            this.Data.AddUShort(0);
         }
 
         internal override void Process()
         {
-            Console.WriteLine(this.Device.Player.Avatar.Username);
+            Console.WriteLine(this.Device.Player.Username);
         }
     }
 }

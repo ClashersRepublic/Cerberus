@@ -57,6 +57,8 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
 
         internal override void Decode()
         {
+            Console.WriteLine("Decoding packet..");
+
             this.UserId = this.Reader.ReadInt64();
 
             this.Token = this.Reader.ReadString();
@@ -76,7 +78,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
 
             this.Device.OSVersion = this.Reader.ReadString();
 
-            this.Reader.ReadBoolean();
+            //this.Reader.ReadBoolean();
             this.Reader.ReadString();
 
             this.Device.AndroidID = this.Reader.ReadString();
@@ -98,10 +100,16 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
             this.Reader.ReadString();
 
             this.Reader.ReadByte();
+
+            Console.WriteLine("Successfully read packet.");
         }
 
         internal override void Process()
         {
+            Console.WriteLine("Processing packet..");
+
+            Console.WriteLine(this.UserId);
+
             if (this.UserId == 0)
             {
                 this.Device.Player = Resources.Players.New();
@@ -121,21 +129,21 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
 
                 if (this.Device.Player != null)
                 {
-                    if (string.Equals(this.Token, this.Device.Player.Avatar.Token))
+                    if (string.Equals(this.Token, this.Device.Player.Token))
                     {
-                        if (this.Device.Player.Avatar.Locked)
+                        if (this.Device.Player.Locked)
                         {
                             new Authentification_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
                         }
-                        else if (this.Device.Player.Avatar.Banned)
+                        else if (this.Device.Player.Banned)
                         {
                             this.Reason = new StringBuilder();
                             this.Reason.AppendLine("You have been banned from our servers, please contact one of the BarbarianLand staff members with these following information if you are not happy with the ban:");
                             this.Reason.AppendLine();
-                            this.Reason.AppendLine("Your Name: " + this.Device.Player.Avatar.Username + ".");
-                            this.Reason.AppendLine("Your ID: " + this.Device.Player.Avatar.UserHighId + "-" + this.Device.Player.Avatar.UserLowId + ".");
-                            this.Reason.AppendLine("Your Ban Duration: " + Math.Round((this.Device.Player.Avatar.BanTime - DateTime.UtcNow).TotalDays, 3) + " Day.");
-                            this.Reason.AppendLine("Your Unlock Date: " + this.Device.Player.Avatar.BanTime);
+                            this.Reason.AppendLine("Your Name: " + this.Device.Player.Username + ".");
+                            this.Reason.AppendLine("Your ID: " + this.Device.Player.UserHighId + "-" + this.Device.Player.UserLowId + ".");
+                            this.Reason.AppendLine("Your Ban Duration: " + Math.Round((this.Device.Player.BanTime - DateTime.UtcNow).TotalDays, 3) + " Day.");
+                            this.Reason.AppendLine("Your Unlock Date: " + this.Device.Player.BanTime);
                             this.Reason.AppendLine();
 
                             new Authentification_Failed(this.Device, Logic.Enums.Reason.Banned)
@@ -171,8 +179,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
 
         internal void Login()
         {
-            this.Device.Player.Client = this.Device;
-            this.Device.Player.Avatar.Device = this.Device;
+            this.Device.Player.Device = this.Device;
 
             new Authentification_OK(this.Device).Send();
             new Own_Home_Data(this.Device).Send();

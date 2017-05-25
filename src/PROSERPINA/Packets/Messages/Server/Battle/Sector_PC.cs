@@ -34,15 +34,15 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
 
             this.Data.AddHexa("F3660944F693DC890701"); // Battle Checksum?
 
-            if (this.Battle.Player1 == this.Device.Player.Avatar)
+            if (this.Battle.Player1 == this.Device.Player)
             {
-                this.Data.AddRange(this.Battle.Player2.Battle);
+                this.Data.AddRange(this.Battle.Player2.Battle.ToBytes);
 
                 this.Data.AddVInt(34);
                 this.Data.AddVInt(0);
                 this.Data.AddVInt(4);
 
-                this.Data.AddRange(this.Battle.Player1.Battle);
+                this.Data.AddRange(this.Battle.Player1.Battle.ToBytes);
 
                 this.Data.AddVInt(0);
                 this.Data.AddVInt(0);
@@ -65,13 +65,13 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
             }
             else
             {
-                this.Data.AddRange(this.Battle.Player1.Battle);
+                this.Data.AddRange(this.Battle.Player1.Battle.ToBytes);
 
                 this.Data.AddVInt(34);
                 this.Data.AddVInt(0);
                 this.Data.AddVInt(4);
 
-                this.Data.AddRange(this.Battle.Player2.Battle);
+                this.Data.AddRange(this.Battle.Player2.Battle.ToBytes);
 
                 this.Data.AddVInt(0);
                 this.Data.AddVInt(0);
@@ -211,7 +211,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
 
             this.Data.AddHexa("FE03");
 
-            if (this.Battle.Player1 == this.Device.Player.Avatar)
+            if (this.Battle.Player1 == this.Device.Player)
             {
                 this.Data.AddRange(this.Battle.Player1.Decks.Hand());
             }

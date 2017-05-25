@@ -32,9 +32,6 @@
 
         internal override void Process()
         {
-#if DEBUG
-            this.Device.Player.Tick();
-#endif
             if (this.Count > -1 && this.Count <= 50)
             {
                 using (Reader Reader = new Reader(this.Commands))

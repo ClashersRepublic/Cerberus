@@ -31,7 +31,7 @@ namespace BL.Servers.CR.Logic
         {
             get
             {
-                return this.Members.Values.ToList().Sum(Member => (Member.Player.Avatar.Trophies / 2));
+                return this.Members.Values.ToList().Sum(Member => (Member.Player.Trophies / 2));
             }
         }
 

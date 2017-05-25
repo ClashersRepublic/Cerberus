@@ -31,12 +31,12 @@ namespace BL.Servers.CR.Packets.Commands.Client.Cards
 
         internal override void Process()
         {
-            int Index = this.Device.Player.Avatar.Decks.FindIndex(_Card => _Card.Type == this.Type && _Card.ID == this.CardID + 1);
+            int Index = this.Device.Player.Decks.FindIndex(_Card => _Card.Type == this.Type && _Card.ID == this.CardID + 1);
 
             Console.WriteLine(Index);
 
             if (Index > -1)
-                this.Device.Player.Avatar.Decks[Index].Upgrade();
+                this.Device.Player.Decks[Index].Upgrade();
         }
     }
 }

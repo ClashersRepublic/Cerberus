@@ -9,14 +9,14 @@ namespace BL.Servers.CR.Logic.Slots
 {
     internal class Decks : List<Card>
     {
-        internal Avatar Player;
+        internal Player Player;
         
         public Decks()
         {
             
         }
 
-        public Decks(Avatar _Player)
+        public Decks(Player _Player)
         {
             this.Player = _Player;
         }

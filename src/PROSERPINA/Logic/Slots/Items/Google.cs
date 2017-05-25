@@ -21,16 +21,16 @@ namespace BL.Servers.CR.Logic.Slots.Items
 
         internal UserCredential OCredentials;
         internal GamesService OClient;
-        internal Avatar Avatar;
+        internal Player Player;
 
         public Google()
         {
             
         }
 
-        public Google(Avatar Avatar)
+        public Google(Player Avatar)
         {
-            this.Avatar = Avatar;
+            this.Player = Player;
 
             if (this.Filled)
             {

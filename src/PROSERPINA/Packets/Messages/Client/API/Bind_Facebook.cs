@@ -26,10 +26,10 @@ namespace BL.Servers.CR.Packets.Messages.Client.API
  
         internal override void Process()
         {
-            this.Device.Player.Avatar.Facebook.Identifier = this.FBIdentifier;
-            this.Device.Player.Avatar.Facebook.Token = this.FBToken;
+            this.Device.Player.Facebook.Identifier = this.FBIdentifier;
+            this.Device.Player.Facebook.Token = this.FBToken;
 
-            this.Device.Player.Avatar.Facebook.Connect();
+            this.Device.Player.Facebook.Connect();
 
             new Facebook_Bind_OK(this.Device).Send();
         }

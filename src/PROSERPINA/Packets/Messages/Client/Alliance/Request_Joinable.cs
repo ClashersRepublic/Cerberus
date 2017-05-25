@@ -19,7 +19,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Alliance
 
         internal override void Process()
         {
-            new Joinable_Data(this.Device).Send();
+            //new Joinable_Data(this.Device).Send();
         }
     }
 }

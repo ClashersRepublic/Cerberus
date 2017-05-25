@@ -29,7 +29,7 @@
   <!-- MySql Username -->
   <add key="MysqlUsername" value="root" />
   <!-- MySql Username -->
-  <add key="MysqlPassword" value="Wr29rusb" />
+  <add key="MysqlPassword" value="" />
   <!--  MySql server password-->
   <add key="MysqlDatabase" value="bl.servers.cr" />
   <!--  Redis server password-->

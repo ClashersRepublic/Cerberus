@@ -47,13 +47,13 @@ namespace BL.Servers.CR.Packets.Messages.Client.Alliance
         {
             int Cost = (CSV.Tables.Get(Gamefile.Globals).GetData("ALLIANCE_CREATE_COST") as Globals).NumberValue;
 
-            if (this.Device.Player.Avatar.HasEnoughResources(Resource.Gold, Cost))
+            if (this.Device.Player.HasEnoughResources(Resource.Gold, Cost))
             {
-                this.Device.Player.Avatar.Resources.Minus(Resource.Gold, Cost);
+                this.Device.Player.Resources.Minus(Resource.Gold, Cost);
 
-                this.Device.Player.Avatar.ClanId = this.Clan.ClanID;
+                this.Device.Player.ClanId = this.Clan.ClanID;
 
-                this.Clan.Members.Add(this.Device.Player.Avatar);
+                this.Clan.Members.Add(this.Device.Player);
 
                 new Response_Create_Alliance(this.Device, this.Clan, 142, true).Send();
             }

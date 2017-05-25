@@ -14,14 +14,8 @@ namespace BL.Servers.CR.Packets.Messages.Server
 
         internal override void Encode()
         {
-            int TimeStamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-            this.Data.AddRange(this.Device.Player.Avatar.Components);
-            this.Data.AddRange(this.Device.Player.Avatar.Profile);
-            this.Data.AddVInt(TimeStamp);
-
-            this.Data.AddVInt(TimeStamp);
-
-            this.Data.AddHexa("0B AC A3 2C".Replace(" ", ""));
+            this.Data.AddRange(this.Device.Player.Component.ToBytes);
+            this.Data.AddRange(this.Device.Player.Profile.ToBytes);
 
             ZlibStream.CompressBuffer(this.Data.ToArray());
         }

@@ -185,7 +185,7 @@ namespace BL.Servers.CR.Core.Network.TCP
 
             Token.Aborting = true;
 
-            if (Token.Device.Player?.Avatar != null)
+            if (Token.Device.Player != null)
             {
                 if (Resources.Players.ContainsValue(Token.Device.Player))
                 {

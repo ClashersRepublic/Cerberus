@@ -41,22 +41,22 @@ namespace BL.Servers.CR.Packets.Messages.Client.Battle
         {
             Thread.Sleep((int)TimeSpan.FromSeconds(5).TotalSeconds);
 
-            Avatar _Enemy = Resources.Battles.GetEnemy(this.Device.Player.Avatar.BattleID, this.Device.Player.Avatar.UserId);
+            Logic.Player _Enemy = Resources.Battles.GetEnemy(this.Device.Player.BattleID, this.Device.Player.UserId);
 
-            Resources.Battles[this.Device.Player.Avatar.BattleID].Tick = this.CommandTick;
-            Resources.Battles[this.Device.Player.Avatar.BattleID].Checksum = this.CommandSum;
+            Resources.Battles[this.Device.Player.BattleID].Tick = this.CommandTick;
+            Resources.Battles[this.Device.Player.BattleID].Checksum = this.CommandSum;
 
             if (this.CommandID == 1)
             {
-                Resources.Battles[this.Device.Player.Avatar.BattleID].Commands.Enqueue(new Place_Troop(_Enemy.Device)
+                Resources.Battles[this.Device.Player.BattleID].Commands.Enqueue(new Place_Troop(_Enemy.Device)
                 {
-                    SenderHigh = this.Device.Player.Avatar.UserHighId,
-                    SenderLow =  this.Device.Player.Avatar.UserLowId
+                    SenderHigh = this.Device.Player.UserHighId,
+                    SenderLow =  this.Device.Player.UserLowId
                 });
 
                 new Battle_Command_Data(this.Device)
                 {
-                    Battle = Resources.Battles[this.Device.Player.Avatar.BattleID]
+                    Battle = Resources.Battles[this.Device.Player.BattleID]
                 }.Send();
 
                 new Battle_Command_Data(_Enemy.Device)
@@ -73,8 +73,8 @@ namespace BL.Servers.CR.Packets.Messages.Client.Battle
                     CommandTick = this.CommandTick,
                     CommandUnk = this.CommandUnk,
                     CommandUnk2 = this.CommandUnk2,
-                    CommandSenderHigh = this.Device.Player.Avatar.UserHighId,
-                    CommandSenderLow = this.Device.Player.Avatar.UserLowId,
+                    CommandSenderHigh = this.Device.Player.UserHighId,
+                    CommandSenderLow = this.Device.Player.UserLowId,
                 }.Send();
             }
         }

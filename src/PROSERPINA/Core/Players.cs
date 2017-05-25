@@ -10,7 +10,7 @@ namespace BL.Servers.CR.Core
     using BL.Servers.CR.Logic.Enums;
     using Newtonsoft.Json;
 
-    internal class Players : Dictionary<long, Level>
+    internal class Players : Dictionary<long, Logic.Player>
     {
         internal JsonSerializerSettings Settings = new JsonSerializerSettings
         {
@@ -29,64 +29,57 @@ namespace BL.Servers.CR.Core
             this.Seed = Mysql_Backup.GetPlayerSeed() + 1;
         }
 
-        internal void Add(Level Player)
+        internal void Add(Logic.Player Player)
         {
             lock (this.GateAdd)
             {
-                if (this.ContainsKey(Player.Avatar.UserId))
+                if (this.ContainsKey(Player.UserId))
                 {
-                    this[Player.Avatar.UserId] = Player;
+                    this[Player.UserId] = Player;
                 }
                 else
                 {
-                    this.Add(Player.Avatar.UserId, Player);
+                    this.Add(Player.UserId, Player);
                 }
             }
         }
 
-        internal void Remove(Level Player)
+        internal void Remove(Logic.Player Player)
         {
-            if (this.Remove(Player.Avatar.UserId))
+            if (this.Remove(Player.UserId))
             {
                 this.Save(Player);
-                Player.Client.Player = null;
+                Player.Device.Player = null;
             }
 
-            if (Player.Client != null)
+            if (Player.Device != null)
             {
-                if (Resources.Devices.ContainsKey(Player.Client.SocketHandle))
+                if (Resources.Devices.ContainsKey(Player.Device.SocketHandle))
                 {
-                    Resources.Devices.Remove(Player.Client);
-                    Player.Client = null;
+                    Resources.Devices.Remove(Player.Device);
+                    Player.Device = null;
                 }
             }
         }
 
-        internal Level Get(long UserId, DBMS DBMS = Constants.Database, bool Store = true)
+        internal Logic.Player Get(long UserId, DBMS DBMS = Constants.Database, bool Store = true)
         {
             if (!this.ContainsKey(UserId))
             {
-                Level Player = null;
+                Logic.Player Player = null;
 
                 switch (DBMS)
                 {
                     case DBMS.MySQL:
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Player Data = Database.Player.Find(UserId);
+                            BL.Servers.CR.Database.Player Data = Database.Player.Find(UserId);
 
                             if (!string.IsNullOrEmpty(Data?.Data))
                             {
-                                string[] _Datas =
-                                    Data.Data.Split(new string[1] {"#:#:#:#"}, StringSplitOptions.None);
-
-                                if (!string.IsNullOrEmpty(_Datas[0]) && !string.IsNullOrEmpty(_Datas[1]))
+                                if (!string.IsNullOrEmpty(Data?.Data))
                                 {
-                                    Player = new Level
-                                    {
-                                        Avatar = JsonConvert.DeserializeObject<Avatar>(_Datas[0], this.Settings)
-                                    };
-                                    Player.LoadFromJSON(_Datas[1]);
+                                    Player = JsonConvert.DeserializeObject<Logic.Player>(Data.Data, this.Settings);
 
                                     if (Store)
                                     {
@@ -101,20 +94,11 @@ namespace BL.Servers.CR.Core
 
                         if (!string.IsNullOrEmpty(Property))
                         {
-                            string[] _Datas = Property.Split(new string[1] {"#:#:#:#"}, StringSplitOptions.None);
+                            Player = JsonConvert.DeserializeObject<Logic.Player>(Property, this.Settings);
 
-                            if (!string.IsNullOrEmpty(_Datas[0]) && !string.IsNullOrEmpty(_Datas[1]))
+                            if (Store)
                             {
-                                Player = new Level
-                                {
-                                    Avatar = JsonConvert.DeserializeObject<Avatar>(_Datas[0], this.Settings)
-                                };
-                                Player.LoadFromJSON(_Datas[1]);
-
-                                if (Store)
-                                {
-                                    this.Add(Player);
-                                }
+                                this.Add(Player);
                             }
                         }
                         break;
@@ -135,42 +119,42 @@ namespace BL.Servers.CR.Core
             return this[UserId];
         }
 
-        internal Level New(long UserId = 0, DBMS DBMS = Constants.Database, bool Store = true)
+        internal Logic.Player New(long UserId = 0, DBMS DBMS = Constants.Database, bool Store = true)
         {
-            Level Player = null;
+            Logic.Player Player = null;
 
             if (UserId == 0)
             {
                 lock (this.Gate)
                 {
-                    Player = new Level(this.Seed++);
+                    Player = new Logic.Player(null, this.Seed++);
                 }
             }
             else
             {
-                Player = new Level(UserId);
+                Player = new Logic.Player(null, UserId);
             }
 
-            if (string.IsNullOrEmpty(Player.Avatar.Token))
+            if (string.IsNullOrEmpty(Player.Token))
             {
                 for (int i = 0; i < 20; i++)
                 {
                     char Letter = (char) Resources.Random.Next('A', 'Z');
-                    Player.Avatar.Token += Letter;
+                    Player.Token += Letter;
                 }
             }
-            if (string.IsNullOrEmpty(Player.Avatar.Password))
+            if (string.IsNullOrEmpty(Player.Password))
             {
                 for (int i = 0; i < 6; i++)
                 {
                     char Letter = (char) Resources.Random.Next('A', 'Z');
                     char Number = (char) Resources.Random.Next('1', '9');
-                    Player.Avatar.Password += Letter;
-                    Player.Avatar.Password += Number;
+                    Player.Password += Letter;
+                    Player.Password += Number;
                 }
             }
-            Player.Avatar.Decks = JsonConvert.DeserializeObject<Logic.Slots.Decks>(Files.Home.Starting_Home, this.Settings);
-            Player.LoadFromJSON(Files.Home.Starting_Home);
+            Player.Decks = JsonConvert.DeserializeObject<Logic.Slots.Decks>(Files.Home.Starting_Home, this.Settings);
+            //Player.LoadFromJSON(Files.Home.Starting_Home);
 
             while (true)
             {
@@ -181,11 +165,10 @@ namespace BL.Servers.CR.Core
 
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.Player.Add(new Player
+                            Database.Player.Add(new BL.Servers.CR.Database.Player
                             {
-                                ID = Player.Avatar.UserId,
-                                Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" +
-                                       Player.SaveToJSON(),
+                                ID = Player.UserId,
+                                Data = JsonConvert.SerializeObject(Player, this.Settings)
                             });
 
                             Database.SaveChanges();
@@ -228,7 +211,7 @@ namespace BL.Servers.CR.Core
             return Player;
         }
 
-        internal void Save(Level Player, DBMS DBMS = Constants.Database)
+        internal void Save(Logic.Player Player, DBMS DBMS = Constants.Database)
         {
             while (true)
             {
@@ -240,12 +223,11 @@ namespace BL.Servers.CR.Core
 
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            var Data = Database.Player.Find(Player.Avatar.UserId);
+                            var Data = Database.Player.Find(Player.UserId);
 
                             if (Data != null)
                             {
-                                Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" +
-                                            Player.SaveToJSON();
+                                Data.Data = JsonConvert.SerializeObject(Player, this.Settings);
                                 Database.SaveChanges();
                             }
                         }
@@ -255,8 +237,8 @@ namespace BL.Servers.CR.Core
 
                     case DBMS.Redis:
                     {
-                        Redis.Players.StringSet(Player.Avatar.UserId.ToString(),
-                            JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.SaveToJSON(),
+                        Redis.Players.StringSet(Player.UserId.ToString(),
+                            JsonConvert.SerializeObject(Player, this.Settings),
                             TimeSpan.FromHours(4));
                         break;
                     }

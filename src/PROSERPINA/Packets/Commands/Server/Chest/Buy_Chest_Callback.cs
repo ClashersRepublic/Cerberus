@@ -254,7 +254,7 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
         {
             Parallel.ForEach(this.Cards, (_Card) =>
             {
-                this.Device.Player.Avatar.Decks.Add(_Card);
+                this.Device.Player.Decks.Add(_Card);
             });
         }
     }

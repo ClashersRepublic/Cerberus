@@ -8,11 +8,11 @@ namespace BL.Servers.CR.Core
     {
         internal int Seed = 1;
 
-        internal List<Avatar> Waiting = null;
+        internal List<Player> Waiting = null;
 
         public Battles()
         {
-            this.Waiting = new List<Avatar>();
+            this.Waiting = new List<Player>();
         }
 
         public new void Add(Battle Battle)
@@ -35,7 +35,7 @@ namespace BL.Servers.CR.Core
             }
         }
 
-        public void Enqueue(Avatar Player)
+        public void Enqueue(Player Player)
         {
             lock (this.Waiting)
             {
@@ -43,7 +43,7 @@ namespace BL.Servers.CR.Core
             }
         }
 
-        public void Dequeue(Avatar Player)
+        public void Dequeue(Player Player)
         {
             lock (this.Waiting)
             {
@@ -51,9 +51,9 @@ namespace BL.Servers.CR.Core
             }
         }
 
-        public Avatar Dequeue()
+        public Player Dequeue()
         {
-            Avatar _Player = null;
+            Player _Player = null;
 
             lock (this.Waiting)
             {
@@ -64,7 +64,7 @@ namespace BL.Servers.CR.Core
             return _Player;
         }
 
-        public Avatar GetEnemy(long BattleID, long UserID)
+        public Player GetEnemy(long BattleID, long UserID)
         {
             if (this.ContainsKey(BattleID))
             {
