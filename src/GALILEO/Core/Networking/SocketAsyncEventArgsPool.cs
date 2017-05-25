@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net.Sockets;
+using BL.Servers.CoC.Extensions;
 
 namespace BL.Servers.CoC.Core.Networking
 {
@@ -31,7 +32,7 @@ namespace BL.Servers.CoC.Core.Networking
         {
             lock (this.Gate)
             {
-                // if (this.Pool.Count < Constants.MaxPlayers)
+                if (this.Pool.Count < Constants.MaxPlayers)
                 {
                     this.Pool.Push(Args);
                 }

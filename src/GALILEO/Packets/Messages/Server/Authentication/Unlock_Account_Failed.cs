@@ -22,7 +22,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
             this.Data.AddInt((int)this.Reason);
         }
 
-        internal override void Encrypt()
+        internal override void EncryptPepper()
         {
             this.Device.Keys.RNonce.Increment();
 

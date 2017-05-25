@@ -19,6 +19,9 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public string LevelFile { get; set; }
         public int Gold { get; set; }
         public int Elixir { get; set; }
+        public bool AlwaysUnlocked { get; set; }
+        public string PlayerName { get; set; }
+        public string AllianceName { get; set; }
 
     }
 }

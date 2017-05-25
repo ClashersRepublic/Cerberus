@@ -1,6 +1,7 @@
 ﻿using BL.Servers.CoC.Extensions.List;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
+using BL.Servers.CoC.Packets.Cryptography;
 
 namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
 {

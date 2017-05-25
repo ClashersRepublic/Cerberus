@@ -14,7 +14,6 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         {
             Load(Row);
         }
-
         public string Name { get; set; }
         public string TID { get; set; }
         public string InfoTID { get; set; }
@@ -76,8 +75,10 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public int[] ExtraHealthMin { get; set; }
         public int[] ExtraHealthMax { get; set; }
         public int[] PoisonDPS { get; set; }
+        public bool PoisonIncreaseSlowly { get; set; }
         public int[] AttackSpeedBoost { get; set; }
         public bool BoostLinkedToPoison { get; set; }
+        public bool PoisonAffectAir { get; set; }
         public bool ScaleDeployEffects { get; set; }
         public int[] InvulnerabilityTime { get; set; }
         public int MaxUnitsHit { get; set; }
@@ -91,6 +92,6 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public int[] SpawnFirstGroupSize { get; set; }
         public int DamageTHPercent { get; set; }
         public bool ScaleByTH { get; set; }
-
+        public bool EnabledByCalendar { get; set; }
     }
 }

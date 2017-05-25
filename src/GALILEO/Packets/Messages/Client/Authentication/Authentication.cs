@@ -13,8 +13,7 @@ using BL.Servers.CoC.Packets.Messages.Server.Authentication;
 using BL.Servers.CoC.Packets.Messages.Server;
 using BL.Servers.CoC.Packets.Messages.Server.Clans;
 using BL.Servers.CoC.Packets.Messages.Server.Clans.War;
-using System.Security.Cryptography;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
+using BL.Servers.CoC.Packets.Cryptography;
 
 namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 {
@@ -34,10 +33,15 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
         internal string[] ClientVersion;
 
-        internal override void Decrypt()
+
+        internal override void DecryptPepper()
         {
             byte[] Buffer = this.Reader.ReadBytes(this.Length);
+            Console.WriteLine($"Raw {BitConverter.ToString(Buffer.ToArray()).Replace("-", "")}");
+            Console.WriteLine($"Buffer Lenght {Buffer.ToArray().Length}");
             this.Device.Keys.PublicKey = Buffer.Take(32).ToArray();
+
+            Console.WriteLine($"Public Key {BitConverter.ToString(this.Device.Keys.PublicKey).Replace("-", "")}");
 
             Blake2BHasher Blake = new Blake2BHasher();
 
@@ -45,23 +49,20 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
             Blake.Update(Key.PublicKey);
 
             this.Device.Keys.RNonce = Blake.Finish();
-
-            Buffer = Sodium.Decrypt(Buffer.Skip(32).ToArray(), this.Device.Keys.RNonce, Key.PrivateKey, this.Device.Keys.PublicKey);
-
-            if (Buffer == null)
-            {
-                throw new CryptographicException("Tried to decrypt an incomplete message.");
-            }
+            
+            Buffer = Sodium.Decrypt(Buffer.Skip(68).ToArray(), this.Device.Keys.RNonce, Key.PrivateKey, this.Device.Keys.PublicKey);
 
             this.Device.Keys.SNonce = Buffer.Skip(24).Take(24).ToArray();
             this.Reader = new Reader(Buffer.Skip(48).ToArray());
 
+            Console.WriteLine($"Decrypted {BitConverter.ToString(Buffer.Skip(48).ToArray()).Replace("-", "")}");
             this.Length = (ushort)Buffer.Length;
+            Console.WriteLine(this.Length);
 
         }
 
         internal override void Decode()
-        {
+        { 
             this.UserId = this.Reader.ReadInt64();
 
             this.Token = this.Reader.ReadString();
@@ -108,6 +109,9 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
         internal override void Process()
         {
+            if (Constants.RC4)
+                new Session_Key(this.Device).Send();
+            
             if (this.UserId == 0)
             {
                 this.Device.Player = Resources.Players.New(0, Constants.Database);
@@ -133,7 +137,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                 this.Device.Player = Resources.Players.Get(this.UserId, Constants.Database);
                 if (this.Device.Player != null)
                 {
-                    if (string.Equals(this.Token, this.Device.Player.Avatar.Token))
+                    if (!string.Equals(this.Token, this.Device.Player.Avatar.Token))
                     {
                         if (this.Device.Player.Avatar.Locked)
                         {
@@ -190,9 +194,10 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
             Resources.GChat.Add(this.Device);
             Resources.PRegion.Add(this.Device.Player);
 
+            //new Authentication_Failed(this.Device,(Reason)19).Send();
             new Authentication_OK(this.Device).Send();
             new Own_Home_Data(this.Device).Send();
-            new Server.Avatar_Stream(this.Device).Send();
+            //new Server.Avatar_Stream(this.Device).Send();
 
             if (this.Device.Player.Avatar.ClanId > 0)
             {

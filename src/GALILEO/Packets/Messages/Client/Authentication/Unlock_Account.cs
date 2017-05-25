@@ -76,7 +76,7 @@ namespace BL.Servers.CoC.Packets.Client.Authentication
             }
         }
 
-        internal override void Decrypt()
+        internal override void DecryptPepper()
         {
             Console.WriteLine(BitConverter.ToString(this.Device.Keys.SNonce));
             //this.Device.Keys.SNonce.Increment(0);

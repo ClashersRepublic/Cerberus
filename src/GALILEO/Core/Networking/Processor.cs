@@ -10,12 +10,12 @@ namespace BL.Servers.CoC.Core.Networking
 {
     internal static class Processor
     {
-        internal static void Recept(this Message Message)
+       /* internal static void Recept(this Message Message)
         {
-            Message.Decrypt();
+            Message.Decryptpe();
             Message.Decode();
             Message.Process();
-        }
+        }*/
 
         internal static void Send(this Message Message)
         {
@@ -27,12 +27,17 @@ namespace BL.Servers.CoC.Core.Networking
 #if DEBUG
                 Loggers.Log(Message, Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15));
 #endif
-                Message.Encrypt();
+                if (Constants.RC4)
+                    Message.EncryptRC4();
+                else
+                    Message.EncryptPepper();
+
                 Resources.Gateway.Send(Message);
 #if DEBUG
                 if (Message.Device.Connected())
                 {
-                    Console.WriteLine(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " +  Message.GetType().Name);
+                    Console.WriteLine(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " +
+                                      Message.GetType().Name);
                 }
 #endif
                 Message.Process();

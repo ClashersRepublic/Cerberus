@@ -75,6 +75,13 @@ namespace BL.Servers.CoC.Extensions
             }
         }
 
+        internal static byte[] CreateRandomByteArray()
+        {
+            var buffer = new byte[Core.Resources.Random.Next(20)];
+            Core.Resources.Random.NextBytes(buffer);
+            return buffer;
+        }
+
         internal static bool IsOdd(int value)
         {
             return value % 2 != 0;

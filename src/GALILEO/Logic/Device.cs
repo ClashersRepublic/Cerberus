@@ -10,6 +10,7 @@ using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Packets;
+using BL.Servers.CoC.Packets.Cryptography;
 
 namespace BL.Servers.CoC.Logic
 {
@@ -19,6 +20,7 @@ namespace BL.Servers.CoC.Logic
         internal Level Player;
         internal Token Token;
         internal Crypto Keys;
+        internal RC4Core RC4;
         internal string AndroidID, OpenUDID, Model, OSVersion, MACAddress, AdvertiseID, VendorID, IPAddress;
         internal bool Android, Advertising;
 
@@ -29,6 +31,8 @@ namespace BL.Servers.CoC.Logic
         {
             this.Socket = so;
             this.Keys = new Crypto();
+            if (true) //RC4
+                this.RC4 = new RC4Core();
             this.SocketHandle = so.Handle;
         }
 
@@ -36,6 +40,8 @@ namespace BL.Servers.CoC.Logic
         {
             this.Socket = so;
             this.Keys = new Crypto();
+            if (true) //RC4
+                this.RC4 = new RC4Core();
             this.Token = token;
             this.SocketHandle = so.Handle;
         }
@@ -78,7 +84,12 @@ namespace BL.Servers.CoC.Logic
 
                         try
                         {
-                            _Message.Decrypt();
+
+                            if (Constants.RC4)
+                                _Message.DecryptRC4();
+                            else
+                                _Message.DecryptPepper();
+                            
 #if DEBUG
                             Loggers.Log(Utils.Padding(_Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " --> " + _Message.GetType().Name, true);
                             Loggers.Log(_Message, Utils.Padding(_Message.Device.Socket.RemoteEndPoint.ToString(), 15));
@@ -96,6 +107,8 @@ namespace BL.Servers.CoC.Logic
 #if DEBUG
                         Loggers.Log(Utils.Padding(this.GetType().Name, 15) + " : Aborting, we can't handle the following message : ID " + _Header[0] + ", Length " + _Header[1] + ", Version " + _Header[2] + ".", true, Defcon.WARN);
 #endif
+                        if (Constants.RC4)
+                            this.RC4.Decrypt(ref Buffer);
                         this.Keys.SNonce.Increment();
                     }
                     this.Token.Packet.RemoveRange(0, _Header[1] + 7);

@@ -11,15 +11,19 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         }
         public string Name { get; set; }
         public string Dependencies { get; set; }
+        public int MissionCategory { get; set; }
+        public int VillageType { get; set; }
         public bool FirstStep { get; set; }
         public bool WarStates { get; set; }
-        public bool WarTutorial { get; set; }
         public bool Deprecated { get; set; }
         public bool OpenInfo { get; set; }
         public bool ShowWarBase { get; set; }
         public bool ShowDonate { get; set; }
         public bool SwitchSides { get; set; }
         public bool OpenAchievements { get; set; }
+        public string Action { get; set; }
+        public string Character { get; set; }
+        public string FixVillageObject { get; set; }
         public string BuildBuilding { get; set; }
         public int BuildBuildingLevel { get; set; }
         public int BuildBuildingCount { get; set; }
@@ -36,6 +40,8 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public string[] TutorialTextBox { get; set; }
         public string[] TutorialCharacter { get; set; }
         public string[] CharacterSWF { get; set; }
+        public bool LoopAnim { get; set; }
+        public bool[] SwitchAnim { get; set; }
         public string[] SpeechBubble { get; set; }
         public bool[] RightAlignTextBox { get; set; }
         public string[] ButtonText { get; set; }
@@ -50,6 +56,9 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public int CustomData { get; set; }
         public bool ShowGooglePlusSignin { get; set; }
         public bool HideGooglePlusSignin { get; set; }
+        public bool[] ShowInstructor { get; set; }
+        public int Villagers { get; set; }
+
 
     }
 }

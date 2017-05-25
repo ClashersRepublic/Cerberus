@@ -24,17 +24,13 @@
             get
             {
                 var index = default(int);
-                if (!_name2index.TryGetValue(name, out index))
-                    return null;
-
-                return _columns[index];
+                return !_name2index.TryGetValue(name, out index) ? null : _columns[index];
             }
         }
         public void Add(Column column)
         {
             if (column == null)
                 throw new ArgumentNullException(nameof(column));
-
             _name2index.Add(column.Name, _columns.Count);
             _columns.Add(column);
         }

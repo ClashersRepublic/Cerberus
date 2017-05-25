@@ -26,6 +26,7 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public int TextGreen { get; set; }
         public int TextBlue { get; set; }
         public string WarRefResource { get; set; }
+        public string BundleIconExportName { get; set; }
 
     }
 }

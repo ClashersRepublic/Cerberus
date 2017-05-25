@@ -119,6 +119,17 @@ namespace BL.Servers.CoC.Extensions.List
             }
         }
 
+        internal static void AddByteArray(this List<byte> _Packet, byte[] data)
+        {
+            if (data == null)
+                _Packet.AddInt(-1);
+            else
+            {
+                _Packet.AddInt(data.Length);
+                _Packet.AddRange(data);
+            }
+        }
+
         internal static void Shuffle<T>(this IList<T> List)
         {
             int c = List.Count;

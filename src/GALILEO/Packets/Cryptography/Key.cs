@@ -1,6 +1,6 @@
 ﻿using BL.Servers.CoC.External.Sodium;
 
-namespace BL.Servers.CoC.Packets
+namespace BL.Servers.CoC.Packets.Cryptography
 {
     internal class Key
     {

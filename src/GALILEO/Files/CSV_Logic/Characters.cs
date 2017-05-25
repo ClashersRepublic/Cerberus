@@ -24,6 +24,7 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public string TrainingResource { get; set; }
         public int[] TrainingCost { get; set; }
         public int[] UpgradeTimeH { get; set; }
+        public int[] UpgradeTimeM { get; set; }
         public string UpgradeResource { get; set; }
         public int[] UpgradeCost { get; set; }
         public int DonateCost { get; set; }
@@ -39,17 +40,21 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public string BigPicture { get; set; }
         public string BigPictureSWF { get; set; }
         public string[] Projectile { get; set; }
+        public string AltProjectile { get; set; }
         public string PreferedTargetBuilding { get; set; }
         public string PreferedTargetBuildingClass { get; set; }
+        public bool PreferredTargetNoTargeting { get; set; }
         public string DeployEffect { get; set; }
         public string[] AttackEffect { get; set; }
+        public string AttackEffect2 { get; set; }
         public string[] HitEffect { get; set; }
         public string[] HitEffect2 { get; set; }
         public bool IsFlying { get; set; }
         public bool AirTargets { get; set; }
         public bool GroundTargets { get; set; }
         public int AttackCount { get; set; }
-        public string DieEffect { get; set; }
+        public string[] DieEffect { get; set; }
+        public string DieEffect2 { get; set; }
         public string[] Animation { get; set; }
         public int[] UnitOfType { get; set; }
         public bool IsJumper { get; set; }
@@ -74,6 +79,7 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public string SummonEffect { get; set; }
         public int[] SummonLimit { get; set; }
         public int SpawnIdle { get; set; }
+        public bool SpawnOnAttack { get; set; }
         public int[] StrengthWeight { get; set; }
         public string ChildTroop { get; set; }
         public int ChildTroopCount { get; set; }
@@ -113,6 +119,7 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public bool TriggersTraps { get; set; }
         public int ChainShootingDistance { get; set; }
         public string PreAttackEffect { get; set; }
+        public string MoveStartsEffect { get; set; }
         public string MoveTrailEffect { get; set; }
         public string BecomesTargetableEffect { get; set; }
         public bool BoostedIfAlone { get; set; }
@@ -120,8 +127,22 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public int BoostDmgPerfect { get; set; }
         public int BoostAttackSpeed { get; set; }
         public string HideEffect { get; set; }
+        public int VillageType { get; set; }
+        public int[] UnitsInCamp { get; set; }
+        public int[] SpecialAbilityLevel { get; set; }
+        public string SpecialAbilityName { get; set; }
+        public string SpecialAbilityInfo { get; set; }
+        public string SpecialAbilityType { get; set; }
+        public int[] SpecialAbilityAttribute { get; set; }
+        public int[] SpecialAbilityAttribute2 { get; set; }
+        public int[] SpecialAbilityAttribute3 { get; set; }
+        public string SpecialAbilitySpell { get; set; }
+        public string SpecialAbilityEffect { get; set; }
         public bool DisableDonate { get; set; }
         public bool ScaleByTH { get; set; }
+        public bool EnabledByCalendar { get; set; }
+        public int LoseHpPerTick { get; set; }
+
 
         public override int GetCombatItemType() => 0;
 

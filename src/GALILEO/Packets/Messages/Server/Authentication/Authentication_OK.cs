@@ -7,6 +7,7 @@ using BL.Servers.CoC.External.Sodium;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
 using System;
+using BL.Servers.CoC.Packets.Cryptography;
 
 namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
 {
@@ -56,7 +57,8 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
             this.Data.AddString(null);
 
         }
-        internal override void Encrypt()
+
+        internal override void EncryptPepper()
         {
             Blake2BHasher blake = new Blake2BHasher();
 

@@ -43,7 +43,7 @@ namespace BL.Servers.CoC.Core.Events
                     // Emergency Close
                     case ConsoleKey.E:
                     {
-                        Environment.Exit(0);
+                        //Environment.Exit(0);
                         break;
                     }
 

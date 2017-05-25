@@ -20,11 +20,9 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public string SWF { get; set; }
         public string ExportName { get; set; }
         public string ExportNameBase { get; set; }
-        public string ExportNameNpc { get; set; }
         public int ClearTimeSeconds { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public string Resource { get; set; }
         public bool Passable { get; set; }
         public string ClearResource { get; set; }
         public int ClearCost { get; set; }
@@ -44,6 +42,21 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public int SpawnCount { get; set; }
         public int MaxSpawned { get; set; }
         public int MaxLifetimeSpawns { get; set; }
+        public int LootDefensePercentage { get; set; }
+        public int RedMul { get; set; }
+        public int GreenMul { get; set; }
+        public int BlueMul { get; set; }
+        public int RedAdd { get; set; }
+        public int GreenAdd { get; set; }
+        public int BlueAdd { get; set; }
+        public bool LightsOn { get; set; }
+        public int VillageType { get; set; }
+        public int Village2RespawnCount { get; set; }
+        public int VariationCount { get; set; }
+        public bool TallGrass { get; set; }
+        public bool TallGrassSpawnPoint { get; set; }
+        public int LootHighlightPercentage { get; set; }
+        public string HighlightExportName { get; set; }
 
-    }
+}
 }

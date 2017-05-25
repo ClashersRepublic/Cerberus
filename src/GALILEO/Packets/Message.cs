@@ -69,7 +69,7 @@ namespace BL.Servers.CoC.Packets
 
         }
 
-        internal virtual void Decrypt()
+        internal virtual void DecryptPepper()
         {
             if (this.Device.State >= State.LOGGED)
             {
@@ -86,10 +86,24 @@ namespace BL.Servers.CoC.Packets
                 this.Reader = new Reader(Decrypted);
                 this.Length = (ushort) this.Reader.BaseStream.Length;
             }
-
         }
 
-        internal virtual void Encrypt()
+        internal virtual void DecryptRC4()
+        {
+            byte[] Decrypted = this.Reader.ReadBytes(this.Length).ToArray();
+            if (this.Identifier != 10100)
+            {
+                Console.WriteLine($"Raw {BitConverter.ToString(Decrypted.ToArray()).Replace("-", "")}");
+                Console.WriteLine($"Buffer Lenght {Decrypted.ToArray().Length}");
+                this.Device.RC4.Decrypt(ref Decrypted);
+            }
+            this.Reader = new Reader(Decrypted);
+            this.Length = (ushort) this.Reader.BaseStream.Length;
+            Console.WriteLine($"Decrypted {BitConverter.ToString(Decrypted.ToArray()).Replace("-", "")}");
+            Console.WriteLine(this.Length);
+        }
+
+        internal virtual void EncryptPepper()
         {
             if (this.Device.State >= State.LOGGED)
             {
@@ -101,6 +115,17 @@ namespace BL.Servers.CoC.Packets
                     .ToArray());
             }
 
+            this.Length = (ushort) this.Data.Count;
+        }
+
+        internal virtual void EncryptRC4()
+        {
+
+            byte[] Encrypted = this.Data.ToArray();
+            if (this.Device.State > State.SESSION_OK)
+                this.Device.RC4.Encrypt(ref Encrypted);
+
+            this.Data = new List<byte>(Encrypted);
             this.Length = (ushort) this.Data.Count;
         }
 

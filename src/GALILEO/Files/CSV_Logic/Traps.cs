@@ -67,6 +67,14 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public int[] NumSpawns { get; set; }
         public int SpawnInitialDelayMs { get; set; }
         public int TimeBetweenSpawnsMs { get; set; }
+        public bool Disabled { get; set; }
+        public int ThrowDistance { get; set; }
+        public int VillageType { get; set; }
+        public int[] Pushback { get; set; }
+        public bool[] DoNotScalePushByDamage { get; set; }
+        public bool EnabledByCalendar { get; set; }
+        public int DirectionCount { get; set; }
+
 
     }
 }

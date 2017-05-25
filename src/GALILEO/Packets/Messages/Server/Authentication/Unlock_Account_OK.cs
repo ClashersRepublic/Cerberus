@@ -21,7 +21,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
             this.Data.AddString(this.Account.Token);
         }
 
-        internal override void Encrypt()
+        internal override void EncryptPepper()
         {
             this.Device.Keys.RNonce.Increment();
 

@@ -10,6 +10,7 @@ using BL.Servers.CoC.External.Sodium;
 using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
+using BL.Servers.CoC.Packets.Cryptography;
 
 namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
 {
@@ -48,7 +49,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
             this.Data.AddInt(-1);
         }
 
-        internal override void Encrypt()
+        internal override void EncryptPepper()
         {
             if (this.Device.State >= State.LOGIN)
             {

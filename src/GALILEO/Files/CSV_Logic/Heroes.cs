@@ -40,6 +40,7 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public string AttackEffect { get; set; }
         public string AttackEffectAlt { get; set; }
         public string HitEffect { get; set; }
+        public string HitEffectActive { get; set; }
         public bool IsFlying { get; set; }
         public bool AirTargets { get; set; }
         public bool GroundTargets { get; set; }
@@ -47,6 +48,10 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public int AttackCount { get; set; }
         public string DieEffect { get; set; }
         public string[] Animation { get; set; }
+        public int ActivationTime { get; set; }
+        public int ActiveDuration { get; set; }
+        public int AbilityAttackCount { get; set; }
+        public string[] AnimationActivated { get; set; }
         public int MaxSearchRadiusForDefender { get; set; }
         public int HousingSpace { get; set; }
         public string SpecialAbilityEffect { get; set; }
@@ -111,6 +116,10 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public int EnemyGroupWeight { get; set; }
         public string AttackEffectShared { get; set; }
         public int TargetedEffectOffset { get; set; }
+        public bool TriggersTraps { get; set; }
+        public int VillageType { get; set; }
+        public bool NoDefence { get; set; }
+
 
         public override int GetCombatItemType() => 2;
 
