@@ -35,10 +35,10 @@ namespace BL.Servers.CoC
 #if DEBUG
             Console.ForegroundColor = Utils.ChooseRandomColor();
             Console.WriteLine(Environment.NewLine);
-            Console.WriteLine("Initialized Fluxcapacitor v7.79");
-            Console.WriteLine("Loading hastables to run Fluxcapacitor v7.79 to connect to the International Space Station.");
-            Console.WriteLine("Connecting to the custom MongoDB v5.2.0 server powered by nuclear energy (Uranium & Plutonium).");
-            Console.WriteLine("Hacking into the NSA to get the CSV tables.");
+            Console.WriteLine("Initialized Flux capacitor v6.69");
+            Console.WriteLine("Loading hash tables to run flux capacitor v6.69 to connect with the International Space Station.");
+            Console.WriteLine("Connecting to custom MongoDB v5.2.0 server powered by nuclear energy (Uranium & Plutonium).");
+            Console.WriteLine("Hacking into the NSA to get CSV tables.");
             Console.WriteLine("Hacking into Supercell's Amazon Web Service to extract the latest keys.");
             Console.WriteLine("Server is ready to start sending nuclear warheads into space and handle Clash Of Clans connections.");
             Console.ResetColor();

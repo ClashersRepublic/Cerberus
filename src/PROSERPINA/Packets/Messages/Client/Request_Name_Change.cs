@@ -21,7 +21,7 @@ namespace BL.Servers.CR.Packets.Messages.Client
 
         internal override void Process()
         {
-            this.Device.Player.Avatar.Username = this.Name;
+            this.Device.Player.Username = this.Name;
 
             new Name_Change_Response(Device, this.Name).Send();
         }

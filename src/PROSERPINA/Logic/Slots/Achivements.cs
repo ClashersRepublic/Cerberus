@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BL.Servers.CR.Logic.Slots.Items;
 
-namespace BL.Servers.CR.Logic
+namespace BL.Servers.CR.Logic.Slots
 {
     internal class Achievements : List<Achievement>
     {

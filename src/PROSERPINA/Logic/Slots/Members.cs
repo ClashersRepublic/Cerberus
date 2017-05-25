@@ -18,7 +18,7 @@ namespace BL.Servers.CR.Logic.Slots
             this.Alliance = Alliance;
         }
 
-        internal void Add(Avatar Player)
+        internal void Add(Player Player)
         {
             lock (this.Gate)
             {
@@ -49,7 +49,7 @@ namespace BL.Servers.CR.Logic.Slots
                     this.Add(_Member.UserID, _Member);
             }
         }
-        internal void Remove(Avatar Player)
+        internal void Remove(Player Player)
         {
             lock (this.Gate)
             {

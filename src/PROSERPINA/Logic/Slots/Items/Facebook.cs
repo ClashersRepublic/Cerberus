@@ -18,15 +18,15 @@ namespace BL.Servers.CR.Logic.Slots.Items
         [JsonProperty("fb_token")] internal string Token;
 
         internal FacebookClient FBClient;
-        internal Avatar Avatar;
+        internal Player Player;
 
         public Facebook()
         {
         }
 
-        public Facebook(Avatar Avatar)
+        public Facebook(Player Player)
         {
-            this.Avatar = Avatar;
+            this.Player = Player;
 
             if (this.Filled)
             {

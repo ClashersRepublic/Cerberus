@@ -40,7 +40,7 @@ namespace BL.Servers.CR.Core.Events
 
             try
             {
-                List<Level> Players = Resources.Players.Values.ToList();
+                List<Logic.Player> Players = Resources.Players.Values.ToList();
 
                 lock (Resources.Players.Gate)
                 {
@@ -51,7 +51,7 @@ namespace BL.Servers.CR.Core.Events
                             if (_Player != null)
                             {
                                 Resources.Players.Remove(_Player);
-                                Redis.Players.KeyDelete(_Player.Avatar.UserId.ToString());
+                                Redis.Players.KeyDelete(_Player.UserId.ToString());
                             }
                         });
                     }

@@ -16,8 +16,8 @@ namespace BL.Servers.CR.Packets.Messages.Client
 
         internal override void Process()
         {
-            Resources.Battles.Dequeue(this.Device.Player.Avatar);
-            Console.WriteLine($"Removed {this.Device.Player.Avatar.UserId} from the queue!");
+            Resources.Battles.Dequeue(this.Device.Player);
+            Console.WriteLine($"Removed {this.Device.Player.UserId} from the queue!");
             new Cancel_Battle_OK(Device).Send();
         }
     }

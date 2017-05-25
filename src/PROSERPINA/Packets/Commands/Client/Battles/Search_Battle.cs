@@ -34,16 +34,16 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
             {
                 if (Resources.Battles.Waiting.Count == 0)
                 {
-                    Resources.Battles.Enqueue(this.Device.Player.Avatar);
+                    Resources.Battles.Enqueue(this.Device.Player);
 
-                    Console.WriteLine($"Added {this.Device.Player.Avatar.UserId} into the queue!");
+                    Console.WriteLine($"Added {this.Device.Player.UserId} into the queue!");
 
                     new Matchmaking_Info(this.Device).Send();                    // Player 1
                 }
                 else
                 {
-                    Avatar Enemy = Resources.Battles.Dequeue();
-                    Battle Battle = new Battle(Enemy, this.Device.Player.Avatar);
+                    Player Enemy = Resources.Battles.Dequeue();
+                    Battle Battle = new Battle(Enemy, this.Device.Player);
 
                     Resources.Battles.Add(Battle);
 

@@ -30,10 +30,10 @@ namespace BL.Servers.CR.Packets.Commands.Client.Cards
         {
             this.ShowValues();
 
-            int Index = this.Device.Player.Avatar.Decks.FindIndex(_Card => _Card.Type == this.Type && _Card.ID == this.CardID + 1);
+            int Index = this.Device.Player.Decks.FindIndex(_Card => _Card.Type == this.Type && _Card.ID == this.CardID + 1);
 
             if (Index > -1)
-            this.Device.Player.Avatar.Decks[Index].New = 0;
+            this.Device.Player.Decks[Index].New = 0;
         }
     }
 }

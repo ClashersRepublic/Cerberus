@@ -20,7 +20,7 @@ namespace BL.Servers.CR.Packets.Messages.Server
             this.Data.AddInt(1);
        
             this.Data.AddString("https://56f230c6d142ad8a925f-b174a1d8fb2cf6907e1c742c46071d76.ssl.cf2.rackcdn.com/inbox/ClashRoyale_logo_small.png");
-            this.Data.AddString("Welcome to BarbarianLand!");
+            this.Data.AddString("Welcome to <c4>BarbarianLand</c>!");
             this.Data.AddString("Click the 'Visit Site' button to check out our site!");
             this.Data.AddString("Visit site!");
             this.Data.AddString("https://www.barbarianland.com");

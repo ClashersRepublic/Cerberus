@@ -16,12 +16,12 @@ namespace BL.Servers.CR.Packets.Messages.Server.Alliance
 
         internal override void Encode()
         {
-            List<Clan> Clans = new List<Clan>();
+            //List<Clan> Clans = new List<Clan>();
 
-            foreach (Clan _Clan in Clans)
-            {
-                this.Data.AddRange(_Clan.FullHeader());
-            }
+            //foreach (Clan _Clan in Clans)
+            //{
+            //    this.Data.AddRange(_Clan.FullHeader());
+            //}
         }
     }
 }

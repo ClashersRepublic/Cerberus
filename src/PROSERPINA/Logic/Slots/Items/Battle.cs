@@ -14,8 +14,8 @@ namespace BL.Servers.CR.Logic.Slots.Items
         internal int Checksum;
         internal bool Started;
 
-        internal Avatar Player1;
-        internal Avatar Player2;
+        internal Player Player1;
+        internal Player Player2;
 
         internal Timer Timer = new Timer();
         internal Queue<Command> Commands = new Queue<Command>();
@@ -25,7 +25,7 @@ namespace BL.Servers.CR.Logic.Slots.Items
             
         }
 
-        public Battle(Avatar _Player1, Avatar _Player2)
+        public Battle(Player _Player1, Player _Player2)
         {
             this.Player1 = _Player1;
             this.Player2 = _Player2;

@@ -48,13 +48,13 @@ namespace BL.Servers.CR.Core
                     {
                         if (Resources.Players.Count > 0)
                         {
-                            List<Level> Players = Resources.Players.Values.ToList();
+                            List<Logic.Player> Players = Resources.Players.Values.ToList();
 
                             Parallel.ForEach(Players, (_Player) =>
                             {
                                 if (_Player != null)
                                 {
-                                    _Player.Tick();
+                                    //_Player.Tick();
                                     Resources.Players.Save(_Player);
                                 }
                             });

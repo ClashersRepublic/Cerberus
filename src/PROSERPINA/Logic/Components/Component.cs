@@ -1,136 +1,31 @@
-﻿using System;
+﻿using BL.Servers.CR.Extensions.List;
+using BL.Servers.CR.Logic.Slots.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CR.Core;
-using BL.Servers.CR.Extensions.List;
-using BL.Servers.CR.Files;
-using BL.Servers.CR.Logic.Enums;
-using BL.Servers.CR.Logic.Slots;
-using BL.Servers.CR.Logic.Slots.Items;
-using BL.Servers.CR.Packets;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Google = BL.Servers.CR.Logic.Slots.Items.Google;
-using Resources = BL.Servers.CR.Logic.Slots.Resources;
 
-namespace BL.Servers.CR.Logic
+namespace BL.Servers.CR.Logic.Components
 {
-    internal class Avatar
+    internal class Component
     {
-        [JsonIgnore]
-        internal Device Device;
-        [JsonIgnore]
-        internal long BattleID;
+        internal Player Player;
 
-        #region Long Ids
-
-        internal long UserId
+        internal Component(Player Player)
         {
-            get => (((long) this.UserHighId << 32) | (this.UserLowId & 0xFFFFFFFFL));
-            set
-            {
-                this.UserHighId = Convert.ToInt32(value >> 32);
-                this.UserLowId = (int) value;
-            }
+            this.Player = Player;
         }
 
-        internal long ClanId
-        {
-            get => (((long) this.ClanHighID << 32) | (this.ClanLowID & 0xFFFFFFFFL));
-            set
-            {
-                this.ClanHighID = Convert.ToInt32(value >> 32);
-                this.ClanLowID = (int) value;
-            }
-        }
-
-        #endregion
-
-        [JsonProperty("acc_hi")] internal int UserHighId;
-        [JsonProperty("acc_lo")] internal int UserLowId;
-
-        [JsonProperty("clan_hi")] internal int ClanHighID;
-        [JsonProperty("clan_lo")] internal int ClanLowID;
-
-        [JsonProperty("token")] internal string Token;
-        [JsonProperty("password")] internal string Password;
-
-        [JsonProperty("name")] internal string Username = String.Empty;
-        [JsonProperty("IpAddress")] internal string IpAddress;
-        [JsonProperty("region")] internal string Region;
-
-        [JsonProperty("lvl")] internal int Level = 13;
-        [JsonProperty("xp")] internal int Experience = 0;
-        [JsonProperty("arena")] internal int Arena = 21;
-        [JsonProperty("tutorials")] internal byte Tutorial = 8;
-        [JsonProperty("changes")] internal byte Changes = 0;
-        [JsonProperty("nameset")] internal byte NameSet = 0;
-
-        [JsonProperty("wins")] internal int Wins = 0;
-        [JsonProperty("loses")] internal int Loses = 0;
-        [JsonProperty("games_played")] internal int Games_Played = 0;
-
-        [JsonProperty("trophies")] internal int Trophies = 9999;
-        [JsonProperty("legendary_trophies")] internal int Legendary_Trophies = 0;
-
-        [JsonProperty("resources")] internal Resources Resources;
-        [JsonProperty("resources_cap")] internal Resources Resources_Cap;
-        [JsonProperty("decks")] internal Decks Decks;
-        [JsonProperty("achievements")] internal Achievements Achievements;
-        [JsonProperty("chests")] internal Chests Chests;
-
-        [JsonProperty("account_locked")] internal bool Locked = false;
-
-        [JsonProperty("last_tick")] internal DateTime LastTick = DateTime.UtcNow;
-        [JsonProperty("update_date")] internal DateTime Update = DateTime.UtcNow;
-        [JsonProperty("creation_date")] internal DateTime Created = DateTime.UtcNow;
-        [JsonProperty("ban_date")] internal DateTime BanTime = DateTime.UtcNow;
-
-        [JsonProperty("google")] internal Slots.Items.Google Google;
-
-        [JsonProperty("facebook")] internal Slots.Items.Facebook Facebook;
-
-
-        internal bool Banned => this.BanTime > DateTime.UtcNow;
-
-        internal Avatar()
-        {
-            this.Resources = new Resources(this);
-            this.Resources_Cap = new Resources(this);
-            this.Decks = new Decks(this);
-            this.Google = new Slots.Items.Google(this);
-            this.Facebook = new Slots.Items.Facebook(this);
-
-            this.Achievements = new Achievements();
-            this.Chests = new Chests();
-        }
-
-        internal Avatar(long UserId)
-        {
-            this.UserId = UserId;
-
-
-            this.Resources = new Resources(this, true);
-            this.Resources_Cap = new Resources(this, false);
-            this.Decks = new Decks(this);
-            this.Google = new Slots.Items.Google(this);
-            this.Facebook = new Slots.Items.Facebook(this);
-
-            this.Achievements = new Achievements();
-            this.Chests = new Chests();
-        }
-
-        internal byte[] Components
+        internal byte[] ToBytes
         {
             get
             {
-                int TimeStamp = (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+                int TimeStamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
 
                 List<byte> _Packet = new List<byte>();
 
-                _Packet.AddLong(this.UserId);
+                _Packet.AddLong(this.Player.UserId);
 
                 _Packet.AddVInt(0);
 
@@ -147,7 +42,7 @@ namespace BL.Servers.CR.Logic
                 {
                     _Packet.AddVInt(8);
 
-                    foreach (Card _Card in this.Decks.GetRange(0, 8))
+                    foreach (Card _Card in this.Player.Decks.GetRange(0, 8))
                     {
                         _Packet.AddVInt(_Card.GId);
                     }
@@ -155,11 +50,11 @@ namespace BL.Servers.CR.Logic
 
                 _Packet.Add(255); // Deck Thingy
 
-                _Packet.AddRange(this.Decks.ToBytes());
+                _Packet.AddRange(this.Player.Decks.ToBytes());
 
-                _Packet.AddVInt(this.Decks.Count - 8);
+                _Packet.AddVInt(this.Player.Decks.Count() - 8);
 
-                foreach (Card _Card in this.Decks.Skip(8))
+                foreach (Card _Card in this.Player.Decks.Skip(8))
                 {
                     _Packet.AddVInt(_Card.ID);
                     _Packet.AddVInt(_Card.Level);
@@ -246,11 +141,11 @@ namespace BL.Servers.CR.Logic
 
                 _Packet.AddVInt(2); // 0, 1 = Animation Page Card (Tuto)
 
-                _Packet.AddVInt(this.Level); // Old Level
+                _Packet.AddVInt(this.Player.Level); // Old Level
 
                 _Packet.AddVInt(55);
 
-                _Packet.AddVInt(this.Arena); // Old Arena
+                _Packet.AddVInt(this.Player.Arena); // Old Arena
 
                 _Packet.AddHexa("DD CE A7 DB 0E 05 05 B0 B9 B6 01 B0 B9".Replace(" ", ""));
 
@@ -282,209 +177,5 @@ namespace BL.Servers.CR.Logic
                 return _Packet.ToArray();
             }
         }
-
-        internal byte[] Battle
-        {
-            get
-            {
-                List<byte> _Packet = new List<byte>();
-
-                _Packet.AddVInt(this.UserId);
-
-                _Packet.AddVInt(this.UserId);
-
-                _Packet.AddVInt(this.UserId);
-
-                _Packet.AddString(this.Username); // Name
-
-                _Packet.AddVInt(this.Arena); // Arena
-
-                _Packet.AddVInt(this.Trophies); // Trophies
-
-                _Packet.AddRange("AC04000AA38909BC33001E919133B82E000000".HexaToBytes());
-
-                _Packet.AddVInt(this.Device.Player.Avatar.Resources.Count);
-                _Packet.AddVInt(this.Device.Player.Avatar.Resources.Count);
-
-                foreach (var _Resource in this.Device.Player.Avatar.Resources.OrderBy(r => r.Identifier))
-                {
-                    _Packet.AddVInt(_Resource.Type);
-                    _Packet.AddVInt(_Resource.Identifier);
-                    _Packet.AddVInt(_Resource.Value);
-                }
-
-                _Packet.AddVInt(0); // Count
-
-                _Packet.AddVInt(this.Device.Player.Avatar.Achievements.Count); // Achievement Count
-
-                foreach (var _Achievement in this.Device.Player.Avatar.Achievements)
-                {
-                    _Packet.AddVInt(_Achievement.Type);
-                    _Packet.AddVInt(_Achievement.Identifier);
-                    _Packet.AddVInt(_Achievement.Value);
-                }
-
-                _Packet.AddVInt(this.Device.Player.Avatar.Achievements.Completed.Count);
-
-                _Packet.AddVInt(0); // Count 0506  stuff
-                _Packet.AddVInt(0); // Count 1a00 stuff
-
-                _Packet.AddVInt(0);
-
-                _Packet.AddHexa("0A008D30AB10008D17A3147EB901");
-
-                return _Packet.ToArray();
-            }
-        }
-
-        internal byte[] Profile
-        {
-            get
-            {
-                int TimeStamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-
-                List<byte> _Packet = new List<byte>();
-
-                _Packet.AddVInt(this.UserId);
-
-                _Packet.AddVInt(this.UserId);
-
-                _Packet.AddVInt(this.UserId);
-
-                _Packet.AddString(this.Username); // Name
-
-                _Packet.AddVInt(this.Changes); // Changes
-
-                _Packet.AddVInt(this.Arena); // Arena
-
-                _Packet.AddVInt(this.Trophies); // Trophies
-
-                _Packet.AddVInt(0); // Unknown
-
-                _Packet.AddVInt(this.Legendary_Trophies); // Legend Trophies
-
-                _Packet.AddVInt(0); // Current Trophies => Season Higheset
-
-                _Packet.AddVInt(0); // Unknown
-
-                _Packet.AddVInt(0); // Leaderboard NR => Best Season
-
-                _Packet.AddVInt(0); // Trophies => Best Season
-
-                _Packet.AddVInt(0); // Unknown
-
-                _Packet.AddVInt(30); // Unknown
-
-                _Packet.AddVInt(0); // Leaderboard NR => Previous Season
-
-                _Packet.AddVInt(0); // Trophies => Previous Season
-
-                _Packet.AddVInt(0); // Highest Trophies
-
-                _Packet.AddVInt(0); // Unknown
-
-                _Packet.AddVInt(0); // Unknown
-
-                _Packet.AddVInt(this.Resources.Count);
-                _Packet.AddVInt(this.Resources.Count);
-
-                foreach (Slots.Items.Resource _Resource in this.Resources.OrderBy(r => r.Identifier))
-                {
-                    _Packet.AddVInt(_Resource.Type);
-                    _Packet.AddVInt(_Resource.Identifier);
-                    _Packet.AddVInt(_Resource.Value);
-                }
-
-                _Packet.Add(0);
-
-                _Packet.AddVInt(this.Achievements.Count);
-
-                foreach (Achievement _Achievement in this.Achievements)
-                {
-                    _Packet.AddVInt(_Achievement.Type);
-                    _Packet.AddVInt(_Achievement.Identifier);
-                    _Packet.AddVInt(_Achievement.Value);
-                }
-
-                _Packet.AddVInt(this.Achievements.Completed.Count);
-                foreach (Achievement _Achievement in this.Achievements.Completed)
-                {
-                    _Packet.AddVInt(_Achievement.Type);
-                    _Packet.AddVInt(_Achievement.Identifier);
-                    _Packet.AddVInt(_Achievement.Value);
-                }
-
-                _Packet.AddVInt(0);
-
-                _Packet.Add(0);
-                _Packet.Add(0);
-
-                _Packet.AddVInt(this.Resources.Gems); // Gems
-
-                _Packet.AddVInt(this.Resources.Gems); // Gems
-
-                _Packet.AddVInt(this.Experience); // Experience
-
-                _Packet.AddVInt(this.Level); // Level
-
-                _Packet.Add(this.NameSet); // Name Set
-
-                // 7 = Name already set + no clan
-                // 8 = Set name popup + clan
-                // 9 = Name already set + clan
-                // < 8 =  Set name popup
-
-                if (this.ClanId > 0)
-                {
-                    Clan Clan = Core.Resources.Clans.Get(this.ClanId, Constants.Database, false);
-
-                    _Packet.Add(string.IsNullOrEmpty(this.Username) ? (byte)8 : (byte)9);
-
-                    _Packet.AddVInt(Clan.ClanID);
-
-                    _Packet.AddString(Clan.Name);
-
-                    _Packet.AddVInt(Clan.Badge);
-
-                    _Packet.AddVInt((int) Clan.Members[this.UserId].Role);
-                }
-                else
-                {
-                    _Packet.Add(string.IsNullOrEmpty(this.Username) ? (byte) 0 : (byte) 1);
-                }
-
-                _Packet.AddVInt(this.Games_Played); // Games Played
-
-                _Packet.AddVInt(0); // Matched Played -> Tournament Stats
-
-                _Packet.AddVInt(0); // Unknown
-
-                _Packet.AddVInt(this.Wins); // Win
-
-                _Packet.AddVInt(this.Loses); // Loses
-
-                _Packet.AddVInt(0); // Win Streak
-
-                _Packet.AddVInt(this.Tutorial); // Tutorial
-
-                _Packet.AddVInt(0); // Tournament?
-
-                _Packet.AddVInt(0); // Unknown
-
-                _Packet.AddVInt(0); // Unknown
-
-                _Packet.AddVInt(TimeStamp); // Countdown?
-
-                _Packet.AddVInt((int) this.Created.Subtract(new DateTime(1970, 1, 1)).TotalSeconds); // Creation Date
-
-                _Packet.AddVInt((int) this.Update.Subtract(this.Created).TotalSeconds); // Time Played
-
-                return _Packet.ToArray();
-            }
-        }
-
-        public bool HasEnoughResources(Enums.Resource resource, int buildCost) => this.Resources.Get(resource) >= buildCost;
-
-        public bool HasEnoughResources(int globalId, int buildCost) => this.Resources.Get(globalId) >= buildCost;
     }
 }

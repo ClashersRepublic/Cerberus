@@ -20,7 +20,7 @@ namespace BL.Servers.CR.Logic.Slots
 
     internal class Resources : List<Items.Resource>
     {
-        internal Avatar Player;
+        internal Player Player;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Resources"/> class.
@@ -30,7 +30,7 @@ namespace BL.Servers.CR.Logic.Slots
             // Resources.
         }
 
-        internal Resources(Avatar _Player, bool Initialize = false)
+        internal Resources(Player _Player, bool Initialize = false)
         {
             this.Player = _Player;
 

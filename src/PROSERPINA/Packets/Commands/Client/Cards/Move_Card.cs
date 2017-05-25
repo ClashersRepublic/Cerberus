@@ -32,7 +32,7 @@ namespace BL.Servers.CR.Packets.Commands.Client.Cards
 
         internal override void Process()
         {
-            this.Device.Player.Avatar.Decks.Invert(this.ID, this.Position);
+            this.Device.Player.Decks.Invert(this.ID, this.Position);
         }
     }
 }

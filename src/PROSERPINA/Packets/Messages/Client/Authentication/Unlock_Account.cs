@@ -24,7 +24,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
         internal string UserPassword;
         public Unlock_Account(Device Device, Reader Reader) : base(Device, Reader)
         {
-            this.UserPassword = this.Device.Player.Avatar.Password;
+            this.UserPassword = this.Device.Player.Password;
         }
 
         internal override void Decode()
@@ -52,8 +52,8 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
                     var account = Resources.Players.Get(n);
                     if (account != null)
                     {
-                        account.Avatar.Locked = true;
-                        new Unlock_Account_OK(this.Device) {Account = account.Avatar}.Send();
+                        account.Locked = true;
+                        new Unlock_Account_OK(this.Device) {Player = account}.Send();
                     }
                     else
                     {
@@ -67,8 +67,8 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
             }
             if (string.Equals(this.UnlockCode, this.UserPassword))
             {
-                this.Device.Player.Avatar.Locked = false;
-                new Unlock_Account_OK(this.Device) {Account = this.Device.Player.Avatar}.Send();
+                this.Device.Player.Locked = false;
+                new Unlock_Account_OK(this.Device) {Player = this.Device.Player}.Send();
             }
             else
             {

@@ -38,23 +38,25 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
         internal override void Process()
         {
-            //if (this.Major == (int)CVersion.Major && this.Minor == (int)CVersion.Minor)
-            {
-                //if (!Constants.Maintenance)
-                {
-                    //if (string.Equals(this.Hash, Fingerprint.Sha))
-                    {
-                        new Pre_Authentication_OK(this.Device).Send();
-                    }
-                   // else
-                     //   new Authentication_Failed(this.Device, Reason.Patch).Send();
-                //}
-                // else
-                    //   new Authentification_Failed(this.Device, Reason.Maintenance).Send();
-                }
-                // else
-                //   new Authentification_Failed(this.Device, Reason.Update).Send();
-            }
+            // if (this.Major == (int)CVersion.Major && this.Minor == (int)CVersion.Minor)
+            //  {
+            //  if (!Constants.Maintenance)
+            //    {
+            //  if (string.Equals(this.Hash, Fingerprint.Sha))
+            //  {
+            new Pre_Authentication_OK(this.Device).Send();
+            //    }
+            //  else
+            //  {
+            //   new Authentication_Failed(this.Device, Reason.Patch).Send();
+            //   }
+            //     }
+            //    else
+            //     new Authentification_Failed(this.Device, Reason.Maintenance).Send();
+            //   }
+            //  else
+            //    new Authentification_Failed(this.Device, Reason.Update).Send();
+            //  }
         }
     }
 }
