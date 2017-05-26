@@ -10,6 +10,7 @@ using BL.Servers.CR.Library.Blake2B;
 using BL.Servers.CR.Library.Sodium;
 using BL.Servers.CR.Logic;
 using BL.Servers.CR.Logic.Enums;
+using BL.Servers.CR.Packets.Cryptography;
 
 namespace BL.Servers.CR.Packets.Messages.Server.Authentication
 {
@@ -51,20 +52,20 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
         /// <summary>
         /// Encrypts this message.
         /// </summary>
-        internal override void Encrypt()
+        internal override void EncryptSodium()
         {
             if (this.Device.PlayerState >= State.LOGIN)
             {
                 Blake2BHasher Blake = new Blake2BHasher();
 
-                Blake.Update(this.Device.Keys.SNonce);
-                Blake.Update(this.Device.Keys.PublicKey);
+                Blake.Update(this.Device.Crypto.SNonce);
+                Blake.Update(this.Device.Crypto.PublicKey);
                 Blake.Update(Key.Crypto.PublicKey);
 
                 byte[] Nonce = Blake.Finish();
-                byte[] Encrypted = this.Device.Keys.RNonce.Concat(this.Device.Keys.PublicKey).Concat(this.Data).ToArray();
+                byte[] Encrypted = this.Device.Crypto.RNonce.Concat(this.Device.Crypto.PublicKey).Concat(this.Data).ToArray();
 
-                this.Data = new List<byte>(Sodium.Encrypt(Encrypted, Nonce, Key.Crypto.PrivateKey, this.Device.Keys.PublicKey));
+                this.Data = new List<byte>(Sodium.Encrypt(Encrypted, Nonce, Key.Crypto.PrivateKey, this.Device.Crypto.PublicKey));
             }
 
             this.Length = (ushort)this.Data.Count;

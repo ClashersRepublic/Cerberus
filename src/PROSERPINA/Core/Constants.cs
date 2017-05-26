@@ -25,13 +25,17 @@ namespace BL.Servers.CR.Core
 
         internal const DBMS Database = DBMS.Both;
 
+        internal const Crypto Encryption = Crypto.RC4;
+
         internal const int ServerPort = 9339;
 
         internal static string[] AuthorizedIP =
         {
             "192.168.0.65",
             "115.133.41.158",
-            "70.68.246.228"
+            "70.68.246.228",
+            "64.114.207.71",
+            "192.168.0.26"
         };
     }
 }

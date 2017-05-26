@@ -6,6 +6,7 @@ using BL.Servers.CR.Extensions;
 using BL.Servers.CR.Extensions.Binary;
 using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Packets;
+using BL.Servers.CR.Packets.Cryptography.RC4;
 
 namespace BL.Servers.CR.Logic
 {
@@ -14,18 +15,21 @@ namespace BL.Servers.CR.Logic
         internal Socket Socket;
         internal Player Player;
         internal Token Token;
-        internal Crypto Keys;
+        internal Packets.Crypto Crypto;
+        internal RC4_Core RC4;
 
         public Device(Socket so)
         {
             this.Socket = so;
-            this.Keys = new Crypto();
+            this.Crypto = new Packets.Crypto();
+            this.RC4 = new RC4_Core();
             this.SocketHandle = so.Handle;
         }
         public Device(Socket so, Token token)
         {
             this.Socket = so;
-            this.Keys = new Crypto();
+            this.Crypto = new Packets.Crypto();
+            this.RC4 = new RC4_Core();
             this.Token = token;
             this.SocketHandle = so.Handle;
         }
@@ -65,24 +69,22 @@ namespace BL.Servers.CR.Logic
         {
             if (Buffer.Length >= 7)
             {
-                int[] _Header = new int[3];
-
                 using (Reader Reader = new Reader(Buffer))
                 {
-                    _Header[0] = Reader.ReadUInt16(); // Message ID
+                    ushort Identifier = Reader.ReadUInt16();
                     Reader.Seek(1);
-                    _Header[1] = Reader.ReadUInt16(); // Length
-                    _Header[2] = Reader.ReadUInt16(); // Version
+                    ushort Length = Reader.ReadUInt16();
+                    ushort Version = Reader.ReadUInt16();
 
-                    if (Buffer.Length - 7 >= _Header[1])
+                    if (Buffer.Length - 7 >= Length)
                     {
-                        if (MessageFactory.Messages.ContainsKey(_Header[0]))
+                        if (MessageFactory.Messages.ContainsKey(Identifier))
                         {
-                            Message _Message =  Activator.CreateInstance(MessageFactory.Messages[_Header[0]], this, Reader) as Message;
+                            Message _Message =  Activator.CreateInstance(MessageFactory.Messages[Identifier], this, Reader) as Message;
 
-                            _Message.Identifier = (ushort)_Header[0];
-                            _Message.Length = (ushort)_Header[1];
-                            _Message.Version = (ushort)_Header[2];
+                            _Message.Identifier = Identifier;
+                            _Message.Length = Length;
+                            _Message.Version = Version;
 
                             _Message.Reader = Reader;
 
@@ -92,7 +94,13 @@ namespace BL.Servers.CR.Logic
 #if DEBUG
                                 Loggers.Log(Utils.Padding(_Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " --> " + _Message.GetType().Name, true);
 #endif
-                                _Message.Decrypt();
+
+                                if (Constants.Encryption == Enums.Crypto.RC4)
+                                    _Message.DecryptRC4();
+                                else
+                                    _Message.DecryptSodium();
+
+
                                 _Message.Decode();
                                 _Message.Process();
                             }
@@ -105,22 +113,25 @@ namespace BL.Servers.CR.Logic
                         {
 #if DEBUG
 
-                            Loggers.Log(Utils.Padding(this.GetType().Name, 15) + " : Aborting, we can't handle the following message : ID " + _Header[0] + ", Length " + _Header[1] + ", Version " + _Header[2] + ".", true, Defcon.WARN);
+                            Loggers.Log(Utils.Padding(this.GetType().Name, 15) + " : Aborting, we can't handle the following message : ID " + Identifier + ", Length " + Length + ", Version " + Version + ".", true, Defcon.WARN);
 
 #endif
-                            this.Keys.SNonce.Increment();
+                            if (Constants.Encryption == Enums.Crypto.RC4)
+                            {
+                                var Data = Reader.ReadFully();
+
+                                this.RC4.Decrypt(ref Data);
+                            }
+                            else
+                                this.Crypto.SNonce.Increment();
                         }
 
-                        this.Token.Packet.RemoveRange(0, _Header[1] + 7);
+                        this.Token.Packet.RemoveRange(0, Length + 7);
 
-                        if ((Buffer.Length - 7) - _Header[1] >= 7)
+                        if ((Buffer.Length - 7) - Length >= 7)
                         {
-                            this.Process(Reader.ReadBytes((Buffer.Length - 7) - _Header[1]));
+                            this.Process(Reader.ReadBytes((Buffer.Length - 7) - Length));
                         }
-                       // else
-                        //{
-                         //   this.Token.Reset();
-                        //}
                     }
                 }
             }

@@ -110,8 +110,6 @@ namespace BL.Servers.CR.Logic.Components
 
                 _Packet.AddVInt(this.Player.Level); // Level
 
-                _Packet.Add(this.Player.NameSet); // Name Set
-
                 // 7 = Name already set + no clan
                 // 8 = Set name popup + clan
                 // 9 = Name already set + clan
@@ -119,6 +117,8 @@ namespace BL.Servers.CR.Logic.Components
 
                 if (this.Player.ClanId > 0)
                 {
+                    _Packet.Add(1); // Name Set
+
                     Clan Clan = Core.Resources.Clans.Get(this.Player.ClanId, Constants.Database, false);
 
                     _Packet.Add(string.IsNullOrEmpty(this.Player.Username) ? (byte)8 : (byte)9);
@@ -133,6 +133,8 @@ namespace BL.Servers.CR.Logic.Components
                 }
                 else
                 {
+                    _Packet.Add(1); // Name Set
+
                     _Packet.Add(string.IsNullOrEmpty(this.Player.Username) ? (byte)0 : (byte)1);
                 }
 

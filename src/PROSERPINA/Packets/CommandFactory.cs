@@ -5,7 +5,7 @@ using BL.Servers.CR.Packets.Commands.Client.Cards;
 using BL.Servers.CR.Packets.Commands.Client.Chest;
 using BL.Servers.CR.Packets.Commands.Server;
 using BL.Servers.CR.Packets.Commands.Server.Chest;
-
+using BL.Servers.CR.Packets.Commands.Client.Tournaments;
 
 namespace BL.Servers.CR.Packets
 {
@@ -27,6 +27,7 @@ namespace BL.Servers.CR.Packets
                 {516, typeof(Buy_Chest)},
                 {525, typeof(Search_Battle)},
                 {526, typeof(Next_Card)},
+                {531, typeof(Create_Custom_Tournament)},
                 {545, typeof(New_Card_Seen_Deck)}
             };
         }

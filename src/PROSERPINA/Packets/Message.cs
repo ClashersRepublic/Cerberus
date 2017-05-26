@@ -10,6 +10,8 @@ using BL.Servers.CR.Core;
 using BL.Servers.CR.Extensions;
 using BL.Servers.CR.Extensions.List;
 using BL.Servers.CR.Logic;
+using BL.Servers.CR.Packets.Messages.Server.Authentication;
+using BL.Servers.CR.Core.Network;
 
 namespace BL.Servers.CR.Packets
 {
@@ -70,13 +72,13 @@ namespace BL.Servers.CR.Packets
 
         }
 
-        internal virtual void Decrypt()
+        internal virtual void DecryptSodium()
         {
             if (this.Device.PlayerState >= State.LOGGED)
             {
-                this.Device.Keys.SNonce.Increment();
+                this.Device.Crypto.SNonce.Increment();
 
-                byte[] Decrypted = Sodium.Decrypt(new byte[16].Concat(this.Reader.ReadBytes(this.Length)).ToArray(), this.Device.Keys.SNonce, this.Device.Keys.PublicKey);
+                byte[] Decrypted = Sodium.Decrypt(new byte[16].Concat(this.Reader.ReadBytes(this.Length)).ToArray(), this.Device.Crypto.SNonce, this.Device.Crypto.PublicKey);
 
                 if (Decrypted == null)
                 {
@@ -88,17 +90,41 @@ namespace BL.Servers.CR.Packets
             }
         }
 
-        internal virtual void Encrypt()
+        internal virtual void EncryptSodium()
         {
             if (this.Device.PlayerState >= State.LOGGED)
             {
-                this.Device.Keys.RNonce.Increment();
+                this.Device.Crypto.RNonce.Increment();
 
-                this.Data = new List<byte>(Sodium.Encrypt(this.Data.ToArray(), this.Device.Keys.RNonce, this.Device.Keys.PublicKey).Skip(16).ToArray());
+                this.Data = new List<byte>(Sodium.Encrypt(this.Data.ToArray(), this.Device.Crypto.RNonce, this.Device.Crypto.PublicKey).Skip(16).ToArray());
             }
 
             this.Length = (ushort)this.Data.Count;
         }
+
+        internal virtual void DecryptRC4()
+        {
+            byte[] Decrypted = this.Reader.ReadBytes(this.Length);
+
+            if (this.Identifier != 10100)
+            {
+                this.Device.RC4.Decrypt(ref Decrypted);
+            }
+
+            this.Reader = new Reader(Decrypted);
+            this.Length = (ushort)this.Reader.BaseStream.Length;
+        }
+
+        internal virtual void EncryptRC4()
+        {
+            byte[] Encrypted = this.Data.ToArray();
+            if (this.Device.PlayerState > State.SESSION_OK)
+                this.Device.RC4.Encrypt(ref Encrypted);
+
+            this.Data = new List<byte>(Encrypted);
+            this.Length = (ushort)this.Data.Count;
+        }
+
         internal void Debug()
         {
             Console.WriteLine(this.GetType().Name + " : " + BitConverter.ToString(this.Reader.ReadBytes((int)(this.Reader.BaseStream.Length - this.Reader.BaseStream.Position))));

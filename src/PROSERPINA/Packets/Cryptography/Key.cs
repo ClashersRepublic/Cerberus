@@ -1,9 +1,10 @@
-﻿namespace BL.Servers.CR.Packets
+﻿using BL.Servers.CR.Library.Sodium;
+
+namespace BL.Servers.CR.Packets.Cryptography
 {
-    using BL.Servers.CR.Library.Sodium;
     internal class Key
     {
-        public static KeyPairBL Crypto    => new KeyPairBL((byte[])PublicKey.Clone(), (byte[])PrivateKey.Clone());
+        public static KeyPairBL Crypto { get => new KeyPairBL((byte[])PublicKey.Clone(), (byte[])PrivateKey.Clone()); }
 
         internal static readonly byte[] PrivateKey =
         {
