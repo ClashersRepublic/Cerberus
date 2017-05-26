@@ -37,7 +37,6 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                 a.Attack_Mode = !a.Attack_Mode;
                 a.Attack_Mode_Draft = !a.Attack_Mode_Draft;
             }
-            base.Process();
         }
     }
 }

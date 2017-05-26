@@ -27,6 +27,7 @@ namespace BL.Servers.CoC.Packets
                 {537, typeof(Send_Mail)},
                 {538, typeof(My_League)},
                 {549, typeof(Upgrade_Multiple_Buildings)},
+                {554, typeof(Change_Weapon_Heading)},
                 {574, typeof(Request_Amical_Challenge)},
                 {577, typeof(Swap_Buildings)},
                 {591, typeof(Change_Village_Mode)},

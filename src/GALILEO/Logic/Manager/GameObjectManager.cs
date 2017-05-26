@@ -69,8 +69,6 @@ namespace BL.Servers.CoC.Logic.Manager
         public GameObject GetGameObjectByID(int id)
         {
             var classId = GlobalID.GetType(id) - 500;
-            Console.WriteLine(classId);
-            Console.WriteLine(this.GameObjects.Capacity);
             if (this.GameObjects.Capacity < classId)
                 return null;
             return this.GameObjects[classId].Find(g => g.GlobalId == id);
@@ -79,8 +77,6 @@ namespace BL.Servers.CoC.Logic.Manager
         public GameObject GetBuilderVillageGameObjectByID(int id)
         {
             var classId = GlobalID.GetType(id) - 493;
-            Console.WriteLine(classId);
-            Console.WriteLine(this.GameObjects.Capacity);
             if (this.GameObjects.Capacity < classId)
                 return null;
             return this.GameObjects[classId].Find(g => g.GlobalId == id);

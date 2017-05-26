@@ -47,19 +47,10 @@ namespace BL.Servers.CoC
             Console.ResetColor();
             Console.WriteLine(Environment.NewLine);
 #endif*/
+            Resources.Initialize();
 
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is sponsored by GobelinLand");
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
-            Resources.Initialize();
-            int GlobalID = 39000000;
-            int Type = 0;
-
-            while (GlobalID >= 1000000)
-            {
-                Type += 1;
-                GlobalID -= 1000000;
-            }
-            Console.WriteLine(Type);
             //Resources.Region.Bench("Warm-up for Memory mode");
             //Resources.Region.Bench("Memory mode");
             Thread.Sleep(Timeout.Infinite);
