@@ -83,8 +83,8 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
                         _Packet.AddString(Battle.Replay_Info.Json);
                         _Packet.AddInt(0);
                         _Packet.AddBool(true);
-                        _Packet.AddInt(8);
-                        _Packet.AddInt(709);
+                        _Packet.AddInt(9);
+                        _Packet.AddInt(24);
                         _Packet.AddInt(0);
 
                         _Packet.AddBool(true);

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using BL.Servers.CoC.Core;
+﻿using BL.Servers.CoC.Core;
 using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic;
@@ -22,7 +21,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
         
         internal override void Process()
         {
-            foreach (var _Device in Resources.GChat.Get_Chat(this.Device).Values.SkipWhile(device => device == this.Device))
+            foreach (var _Device in Resources.GChat.Get_Chat(this.Device).Values)
             {
               new Global_Chat_Entry (_Device){ Message = this.Message, Message_Sender = this.Device.Player.Avatar, Sender = this.Device == _Device }.Send();
             }

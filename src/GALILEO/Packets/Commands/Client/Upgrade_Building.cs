@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BL.Servers.CoC.Core;
+﻿using BL.Servers.CoC.Core;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Files.CSV_Logic;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Structure;
-using NLog;
 
 namespace BL.Servers.CoC.Packets.Commands.Client
 {
@@ -32,25 +26,25 @@ namespace BL.Servers.CoC.Packets.Commands.Client
         internal override void Process()
         {
             var ca = this.Device.Player.Avatar;
-            var go = this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId);
+            var go = this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId);
             if (go != null)
             {
                 var b = (ConstructionItem)go;
                 if (b.CanUpgrade())
                 {
                     var bd = (Buildings) b.GetConstructionItemData();
-                    if (ca.HasEnoughResources(bd.GetBuildResource(b.GetUpgradeLevel()).GetGlobalID(), bd.GetBuildCost(b.GetUpgradeLevel())))
+                   // if (ca.HasEnoughResources(bd.GetBuildResource(b.GetUpgradeLevel()).GetGlobalID(), bd.GetBuildCost(b.GetUpgradeLevel())))
                     {
                         if (this.Device.Player.HasFreeWorkers)
                         {
-                            var name = this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId).GetData().Row.Name;
+                            var name = this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId).GetData().Row.Name;
 #if DEBUG
                             Loggers.Log($"Building: Upgrading {name} with ID {BuildingId}", true);
 #endif
                             
                             if (bd.IsAllianceCastle())
                             {
-                                var a = (Building)this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId);
+                                var a = (Building)this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId);
                                 var al = a.GetBuildingData;
 
                                 ca.Castle_Level++;

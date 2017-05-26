@@ -152,16 +152,21 @@ namespace BL.Servers.CoC.Logic.Structure.Slots
 
         internal void Initialize()
         {
-            this.Set(Enums.Resource.Diamonds, 100000000);
+#if DEBUG
+            this.Set(Enums.Resource.Diamonds, 200000000);
 
-            this.Set(Enums.Resource.Gold, 100000000);
-            this.Set(Enums.Resource.Elixir, 100000000);
-            this.Set(Enums.Resource.DarkElixir, 100000000);
-
-            //this.Set(Enums.Resource.Diamonds, (CSV.Tables.Get(Enums.Gamefile.Globals).GetData("STARTING_DIAMONDS") as Globals).NumberValue);
-
-            //this.Set(Enums.Resource.Gold, (CSV.Tables.Get(Enums.Gamefile.Globals).GetData("STARTING_GOLD") as Globals).NumberValue);
-            //this.Set(Enums.Resource.Elixir, (CSV.Tables.Get(Enums.Gamefile.Globals).GetData("STARTING_ELIXIR") as Globals).NumberValue);
+            this.Set(Enums.Resource.Gold, 200000000);
+            this.Set(Enums.Resource.Elixir, 200000000);
+            this.Set(Enums.Resource.DarkElixir, 200000000);
+            this.Set(Enums.Resource.Builder_Elixir, 200000000);
+            this.Set(Enums.Resource.Builder_Gold, 200000000);
+#else
+            this.Set(Enums.Resource.Diamonds, (CSV.Tables.Get(Enums.Gamefile.Globals).GetData("STARTING_DIAMONDS") as Globals).NumberValue);
+            this.Set(Enums.Resource.Gold, (CSV.Tables.Get(Enums.Gamefile.Globals).GetData("STARTING_GOLD") as Globals).NumberValue);
+            this.Set(Enums.Resource.Elixir, (CSV.Tables.Get(Enums.Gamefile.Globals).GetData("STARTING_ELIXIR") as Globals).NumberValue);
+            this.Set(Enums.Resource.Builder_Elixir, (CSV.Tables.Get(Enums.Gamefile.Globals).GetData("STARTING_GOLD2") as Globals).NumberValue);
+            this.Set(Enums.Resource.Builder_Gold, (CSV.Tables.Get(Enums.Gamefile.Globals).GetData("STARTING_ELIXIR2") as Globals).NumberValue);
+#endif
         }
     }
 }

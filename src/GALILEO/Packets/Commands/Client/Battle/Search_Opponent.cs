@@ -92,7 +92,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
             }
 
             if (this.Enemy_Player != null)
-                new Pc_Battle_Data(this.Device) { Enemy = this.Enemy_Player,  BattleMode = Battle_Mode.PVP}.Send();
+                new Pc_Battle_Data(this.Device) { Enemy = this.Device.Player,  BattleMode = Battle_Mode.PVP}.Send();
             else
                 new Battle_Failed(this.Device).Send();
         }

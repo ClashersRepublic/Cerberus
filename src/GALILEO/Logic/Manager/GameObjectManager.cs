@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Files.CSV_Helpers;
@@ -18,7 +19,7 @@ namespace BL.Servers.CoC.Logic.Manager
             this.GameObjects          = new List<List<GameObject>>();
             GameObjectRemoveList = new List<GameObject>();
             this.GameObjectsIndex     = new List<int>();
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 14; i++)
             {
                 this.GameObjects.Add(new List<GameObject>());
                 this.GameObjectsIndex.Add(0);
@@ -34,13 +35,27 @@ namespace BL.Servers.CoC.Logic.Manager
 
 		public void AddGameObject(GameObject go)
         {
-            go.GlobalId = GenerateGameObjectGlobalId(go);
-            if (go.ClassId == 0)
+            if (go.ClassId <= 6)
             {
-                var b = (Building) go;
-                var bd = b.GetBuildingData;
-                if (bd.IsWorkerBuilding())
-                    this.Level.WorkerManager.IncreaseWorkerCount();
+                go.GlobalId = GenerateGameObjectGlobalId(go);
+                if (go.ClassId == 0)
+                {
+                    var b = (Building) go;
+                    var bd = b.GetBuildingData;
+                    if (bd.IsWorkerBuilding())
+                        this.Level.WorkerManager.IncreaseWorkerCount();
+                }
+            }
+            else
+            {
+                go.GlobalId = GenerateBuilderVillageGameObjectGlobalId(go);
+                if (go.ClassId == 7)
+                {
+                    var b = (Builder_Building)go;
+                    var bd = b.GetBuildingData;
+                    if (bd.IsWorkerBuilding())
+                        this.Level.WorkerManager.IncreaseWorkerCount();
+                }
             }
             this.GameObjects[go.ClassId].Add(go);
         }
@@ -58,6 +73,17 @@ namespace BL.Servers.CoC.Logic.Manager
                 return null;
             return this.GameObjects[classId].Find(g => g.GlobalId == id);
         }
+
+        public GameObject GetBuilderVillageGameObjectByID(int id)
+        {
+            var classId = GlobalID.GetType(id) - 493;
+            Console.WriteLine(classId);
+            Console.WriteLine(this.GameObjects.Capacity);
+            if (this.GameObjects.Capacity < classId)
+                return null;
+            return this.GameObjects[classId].Find(g => g.GlobalId == id);
+        }
+
 
         public List<GameObject> GetGameObjects(int id) => this.GameObjects[id];
 
@@ -77,6 +103,17 @@ namespace BL.Servers.CoC.Logic.Manager
                     c++;
                 }
 
+                JArray JObstacles = new JArray();
+                int o = 0;
+                foreach (GameObject go in new List<GameObject>(this.GameObjects[3]))
+                {
+                    Obstacle d = (Obstacle)go;
+                    JObject j = new JObject { { "data", d.GetObstacleData().GetGlobalID() }, { "id", 503000000 + o } };
+                    d.Save(j);
+                    JObstacles.Add(j);
+                    o++;
+                }
+
                 JArray JTraps = new JArray();
                 int u = 0;
                 foreach (GameObject go in new List<GameObject>(this.GameObjects[4]))
@@ -86,17 +123,6 @@ namespace BL.Servers.CoC.Logic.Manager
                     t.Save(j);
                     JTraps.Add(j);
                     u++;
-                }
-
-                JArray JObstacles = new JArray();
-                int o = 0;
-                foreach (GameObject go in new List<GameObject>(this.GameObjects[3]))
-                {
-                    Obstacle d = (Obstacle)go;
-                      JObject j = new JObject {{"data", d.GetObstacleData().GetGlobalID()}, {"id", 503000000 + o}};
-                    d.Save(j);
-                    JObstacles.Add(j);
-                    o++;
                 }
 
                 JArray JDecos = new JArray();
@@ -110,6 +136,51 @@ namespace BL.Servers.CoC.Logic.Manager
                     e++;
                 }
 
+                JArray JBuildings2 = new JArray();
+                int c2 = 0;
+                foreach (GameObject go in new List<GameObject>(this.GameObjects[7]))
+                {
+                    Builder_Building b = (Builder_Building)go;
+                    JObject j = new JObject { { "data", b.GetBuildingData.GetGlobalID() }, { "id", 500000000 + c2 } };
+                    b.Save(j);
+                    JBuildings2.Add(j);
+                    c2++;
+                }
+
+                JArray JObstacles2 = new JArray();
+                int o2 = 0;
+                foreach (GameObject go in new List<GameObject>(this.GameObjects[10]))
+                {
+                    Builder_Obstacle d = (Builder_Obstacle)go;
+                    JObject j = new JObject { { "data", d.GetObstacleData().GetGlobalID() }, { "id", 503000000 + o2 } };
+                    d.Save(j);
+                    JObstacles2.Add(j);
+                    o2++;
+                }
+
+                JArray JTraps2 = new JArray();
+                int u2 = 0;
+                foreach (GameObject go in new List<GameObject>(this.GameObjects[11]))
+                {
+                    Builder_Trap t = (Builder_Trap)go;
+                    JObject j = new JObject { { "data", t.GetTrapData().GetGlobalID() }, { "id", 504000000 + u2 } };
+                    t.Save(j);
+                    JTraps2.Add(j);
+                    u2++;
+                }
+
+
+                JArray JDecos2 = new JArray();
+                int e2 = 0;
+                foreach (GameObject go in new List<GameObject>(this.GameObjects[13]))
+                {
+                    Builder_Deco d = (Builder_Deco)go;
+                    JObject j = new JObject { { "data", d.GetDecoData().GetGlobalID() }, { "id", 506000000 + e2 } };
+                    d.Save(j);
+                    JDecos2.Add(j);
+                    e2++;
+                }
+
                 Player pl = this.Level.Avatar;
                 var jsonData = new JObject
                 {
@@ -121,7 +192,11 @@ namespace BL.Servers.CoC.Logic.Manager
                     {"buildings", JBuildings},
                     {"obstacles", JObstacles},
                     {"traps", JTraps},
-                    {"decos", JDecos}
+                    {"decos", JDecos},
+                    {"buildings2", JBuildings2},
+                    {"obstacles2", JObstacles2},
+                    {"traps2", JTraps2},
+                    {"decos2", JDecos2}
                 };
 
                 /*
@@ -185,6 +260,16 @@ namespace BL.Servers.CoC.Logic.Manager
                     AddGameObject(b);
                     b.Load(jsonBuilding);
                 }
+
+                var jsonObstacles = (JArray)value["obstacles"];
+                foreach (JObject jsonObstacle in jsonObstacles)
+                {
+                    var dd = CSV.Tables.Get(Gamefile.Obstacles).GetDataWithID(jsonObstacle["data"].ToObject<int>()) as Obstacles;
+                    var d = new Obstacle(dd, this.Level);
+                    AddGameObject(d);
+                    d.Load(jsonObstacle);
+                }
+
                 var jsonTraps = (JArray) value["traps"];
                 foreach (JObject jsonTrap in jsonTraps)
                 {
@@ -203,14 +288,45 @@ namespace BL.Servers.CoC.Logic.Manager
                     d.Load(jsonDeco);
                 }
 
-                var jsonObstacles = (JArray)value["obstacles"];
-                foreach (JObject jsonObstacle in jsonObstacles)
+
+                var jsonBuildings2 = (JArray)value["buildings2"];
+                foreach (JObject jsonBuilding2 in jsonBuildings2)
                 {
-                    var dd = CSV.Tables.Get(Gamefile.Obstacles).GetDataWithID(jsonObstacle["data"].ToObject<int>()) as Obstacles;
-                    var d = new Obstacle(dd, this.Level);
+                    var bd =
+                        CSV.Tables.Get(Gamefile.Buildings)
+                            .GetDataWithID(jsonBuilding2["data"].ToObject<int>()) as Buildings;
+                    var b = new Builder_Building(bd, this.Level);
+                    AddGameObject(b);
+                    b.Load(jsonBuilding2);
+                }
+
+                var jsonObstacles2 = (JArray)value["obstacles2"];
+                foreach (JObject jsonObstacle2 in jsonObstacles2)
+                {
+                    var dd = CSV.Tables.Get(Gamefile.Obstacles).GetDataWithID(jsonObstacle2["data"].ToObject<int>()) as Obstacles;
+                    var d = new Builder_Obstacle(dd, this.Level);
                     AddGameObject(d);
-                    d.Load(jsonObstacle);
-                }/*
+                    d.Load(jsonObstacle2);
+                }
+
+                var jsonTraps2 = (JArray)value["traps2"];
+                foreach (JObject jsonTrap2 in jsonTraps2)
+                {
+                    var td = CSV.Tables.Get(Gamefile.Traps).GetDataWithID(jsonTrap2["data"].ToObject<int>()) as Traps;
+                    var t = new Builder_Trap(td, this.Level);
+                    AddGameObject(t);
+                    t.Load(jsonTrap2);
+                }
+
+                var jsonDecos2 = (JArray)value["decos2"];
+                foreach (JObject jsonDeco2 in jsonDecos2)
+                {
+                    var dd = CSV.Tables.GetWithGlobalID(jsonDeco2["data"].ToObject<int>()) as Decos;
+                    var d = new Builder_Deco(dd, this.Level);
+                    AddGameObject(d);
+                    d.Load(jsonDeco2);
+                }
+                /*
     
                 m_vObstacleManager.Load(jsonObject); */
             }
@@ -256,6 +372,12 @@ namespace BL.Servers.CoC.Logic.Manager
             var index = this.GameObjectsIndex[go.ClassId];
             this.GameObjectsIndex[go.ClassId]++;
             return GlobalID.CreateGlobalID(go.ClassId + 500, index);
+        }
+        internal int GenerateBuilderVillageGameObjectGlobalId(GameObject go)
+        {
+            var index = this.GameObjectsIndex[go.ClassId];
+            this.GameObjectsIndex[go.ClassId]++;
+            return GlobalID.CreateGlobalID(go.ClassId + 493, index);
         }
 
         internal void RemoveGameObjectTotally(GameObject go)
