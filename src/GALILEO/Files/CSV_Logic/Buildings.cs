@@ -232,6 +232,7 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public int GetAltUnitStorageCapacity(int level) => HousingSpaceAlt[level];
 
         public override bool IsTownHall() => BuildingClass == "Town Hall";
+        public override bool IsTownHall2() => BuildingClass == "Town Hall2";
 
         public bool IsAllianceCastle() => Name == "Alliance Castle";
 

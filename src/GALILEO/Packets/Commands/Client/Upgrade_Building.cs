@@ -2,6 +2,7 @@
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Files.CSV_Logic;
 using BL.Servers.CoC.Logic;
+using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Logic.Structure;
 
 namespace BL.Servers.CoC.Packets.Commands.Client
@@ -26,25 +27,46 @@ namespace BL.Servers.CoC.Packets.Commands.Client
         internal override void Process()
         {
             var ca = this.Device.Player.Avatar;
-            var go = this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId);
+            var go = ca.Village_Mode == Village_Mode.NORMAL_VILLAGE ? this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId) : this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId);
             if (go != null)
             {
                 var b = (ConstructionItem)go;
                 if (b.CanUpgrade())
                 {
                     var bd = (Buildings) b.GetConstructionItemData();
-                   // if (ca.HasEnoughResources(bd.GetBuildResource(b.GetUpgradeLevel()).GetGlobalID(), bd.GetBuildCost(b.GetUpgradeLevel())))
+                    if (ca.HasEnoughResources(bd.GetBuildResource(b.GetUpgradeLevel()).GetGlobalID(), bd.GetBuildCost(b.GetUpgradeLevel())))
                     {
                         if (this.Device.Player.HasFreeWorkers)
                         {
-                            var name = this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId).GetData().Row.Name;
+                            var name = go.GetData().Row.Name;
 #if DEBUG
                             Loggers.Log($"Building: Upgrading {name} with ID {BuildingId}", true);
 #endif
-                            
+
+                            /*if (bd.IsTownHall2())
+                            {
+                                int c = 0;
+                                foreach (var _Object in this.Device.Player.GameObjectManager.GetGameObjects(7))
+                                {
+                                    var go2 = this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(500000000 + c++);
+                                    if (go2 != null)
+                                    {
+                                        var b2 = (ConstructionItem) go2;
+                                        var bd2 = (Buildings) b2.GetConstructionItemData();
+                                        if (bd2.Name == "WallStraight" || bd2.Name == "Clock Tower" || bd2.Name == "Gem Mine" || bd2.Name == "Hero Altar Warmachine")
+                                            return;
+#if DEBUG
+                                        var name2 = go2.GetData().Row.Name;
+                                        Loggers.Log($"Building: Unlocking {name2} with ID {500000000 + c}", true);
+#endif
+                                        b2.Unlock();
+                                    }
+                                }
+                            }*/
+
                             if (bd.IsAllianceCastle())
                             {
-                                var a = (Building)this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId);
+                                var a = (Building)go;
                                 var al = a.GetBuildingData;
 
                                 ca.Castle_Level++;

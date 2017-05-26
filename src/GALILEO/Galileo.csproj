@@ -260,6 +260,7 @@
     <Compile Include="Files\CSV_Logic\Resource.cs" />
     <Compile Include="Files\CSV_Logic\Spells.cs" />
     <Compile Include="Files\CSV_Logic\Traps.cs" />
+    <Compile Include="Files\CSV_Logic\Village_Objects.cs" />
     <Compile Include="Files\CSV_Reader\Column.cs" />
     <Compile Include="Files\CSV_Reader\ColumnCollection.cs" />
     <Compile Include="Files\CSV_Reader\CsvException.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Files\NPC.cs" />
     <Compile Include="Logic\Battle.cs" />
     <Compile Include="Logic\Clan.cs" />
+    <Compile Include="Logic\Components\Combat_Component.cs" />
     <Compile Include="Logic\Components\Hero_Base_Component.cs" />
     <Compile Include="Logic\Components\Resource_Production_Component.cs" />
     <Compile Include="Logic\Enums\Alliance_Stream.cs" />
@@ -285,6 +287,7 @@
     <Compile Include="Logic\Enums\Resource.cs" />
     <Compile Include="Logic\Enums\Role.cs" />
     <Compile Include="Logic\Enums\UnlockReason.cs" />
+    <Compile Include="Logic\Enums\Village_Mode.cs" />
     <Compile Include="Logic\Enums\WarState.cs" />
     <Compile Include="Logic\Objects.cs" />
     <Compile Include="Logic\Player.cs" />
@@ -347,6 +350,7 @@
     <Compile Include="Logic\Structure\Timer.cs" />
     <Compile Include="Logic\Structure\Builder_Trap.cs" />
     <Compile Include="Logic\Structure\Trap.cs" />
+    <Compile Include="Logic\Structure\Village_Object.cs" />
     <Compile Include="Packets\Command.cs" />
     <Compile Include="Packets\CommandFactory.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Place_Alliance_Attacker.cs" />
@@ -355,6 +359,9 @@
     <Compile Include="Packets\Commands\Client\Battle\Surrender_Attack.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Building.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Resource.cs" />
+    <Compile Include="Packets\Commands\Client\Change_Weapon_Heading.cs" />
+    <Compile Include="Packets\Commands\Client\Change_Weapon_Mode.cs" />
+    <Compile Include="Packets\Commands\Client\Change_Village_Mode.cs" />
     <Compile Include="Packets\Commands\Client\Clan\Send_Mail.cs" />
     <Compile Include="Packets\Commands\Client\Mission_Progress.cs" />
     <Compile Include="Packets\Commands\Client\Move_Building.cs" />

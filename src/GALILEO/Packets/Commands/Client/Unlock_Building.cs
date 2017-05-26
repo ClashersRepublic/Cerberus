@@ -2,6 +2,7 @@
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Files.CSV_Logic;
 using BL.Servers.CoC.Logic;
+using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Logic.Structure;
 
 namespace BL.Servers.CoC.Packets.Commands.Client
@@ -26,7 +27,8 @@ namespace BL.Servers.CoC.Packets.Commands.Client
         internal override void Process()
         {
             var ca = this.Device.Player.Avatar;
-            var go = this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId);
+
+            var go = ca.Village_Mode == Village_Mode.NORMAL_VILLAGE ? this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId) : this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId);
 
             var b = (ConstructionItem) go;
 
@@ -34,13 +36,13 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
             if (ca.HasEnoughResources(bd.GetBuildResource(b.GetUpgradeLevel()).GetGlobalID(), bd.GetBuildCost(b.GetUpgradeLevel())))
             {
-                var name = this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId).GetData().Row.Name;
+                var name = go.GetData().Row.Name;
 #if DEBUG
                 Loggers.Log($"Building: Unlocking {name} with ID {BuildingId}", true);
 #endif
                 if (bd.IsAllianceCastle())
                 {
-                    var a = (Building)this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId);
+                    var a = (Building)go;
                     var al = a.GetBuildingData;
 
                     ca.Castle_Level++;

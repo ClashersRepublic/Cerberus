@@ -32,6 +32,7 @@
         Hints,
         Heroes,
         Leagues,
-        News
+        News,
+        Village_Objects = 39,
     }
 }

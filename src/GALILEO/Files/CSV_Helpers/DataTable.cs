@@ -71,7 +71,9 @@ namespace BL.Servers.CoC.Files.CSV_Helpers
                 case 29:
                     _Data = new Leagues(_Row, this);
                     break;
-
+                case 39:
+                    _Data = new Village_Objects(_Row, this);
+                    break;
                 /*case 2:
                     _Data = new Locales(_Row, this);
                     break;

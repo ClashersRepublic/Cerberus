@@ -66,6 +66,8 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("alliance_id_high")] internal int ClanHighID;
         [JsonProperty("alliance_id_low")] internal int ClanLowID;
 
+        [JsonProperty("village_mode")] internal Village_Mode Village_Mode;
+
         [JsonProperty("token")] internal string Token;
         [JsonProperty("password")] internal string Password;
 

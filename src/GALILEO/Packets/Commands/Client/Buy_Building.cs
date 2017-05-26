@@ -39,17 +39,35 @@ namespace BL.Servers.CoC.Packets.Commands.Client
         {
             var ca = this.Device.Player.Avatar;
             var bd = (Buildings) CSV.Tables.Get(Gamefile.Buildings).GetDataWithID(BuildingId);
-            var b = new Building(bd, this.Device.Player);
-
-            if (ca.HasEnoughResources(bd.GetBuildResource(0).GetGlobalID(), bd.GetBuildCost(0)))
+            if (ca.Village_Mode == Village_Mode.NORMAL_VILLAGE)
             {
-                if (bd.IsWorkerBuilding() || this.Device.Player.HasFreeWorkers)
-                {
-                    var rd = bd.GetBuildResource(0);
-                    ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
+                var b = new Building(bd, this.Device.Player);
 
-                    b.StartConstructing(this.Vector);
-                    this.Device.Player.GameObjectManager.AddGameObject(b);
+                if (ca.HasEnoughResources(bd.GetBuildResource(0).GetGlobalID(), bd.GetBuildCost(0)))
+                {
+                    if (bd.IsWorkerBuilding() || this.Device.Player.HasFreeWorkers)
+                    {
+                        var rd = bd.GetBuildResource(0);
+                        ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
+
+                        b.StartConstructing(this.Vector);
+                        this.Device.Player.GameObjectManager.AddGameObject(b);
+                    }
+                }
+            }
+            else
+            {
+                var b = new Builder_Building(bd, this.Device.Player);
+                if (ca.HasEnoughResources(bd.GetBuildResource(0).GetGlobalID(), bd.GetBuildCost(0)))
+                {
+                    if (bd.IsWorkerBuilding() || this.Device.Player.HasFreeWorkers)
+                    {
+                        var rd = bd.GetBuildResource(0);
+                        ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
+
+                        b.StartConstructing(this.Vector);
+                        this.Device.Player.GameObjectManager.AddGameObject(b);
+                    }
                 }
             }
         }

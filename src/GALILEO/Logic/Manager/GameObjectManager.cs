@@ -35,7 +35,7 @@ namespace BL.Servers.CoC.Logic.Manager
 
 		public void AddGameObject(GameObject go)
         {
-            if (go.ClassId <= 6)
+            if (go.ClassId <= 6 || go.ClassId == 8)
             {
                 go.GlobalId = GenerateGameObjectGlobalId(go);
                 if (go.ClassId == 0)
@@ -69,6 +69,8 @@ namespace BL.Servers.CoC.Logic.Manager
         public GameObject GetGameObjectByID(int id)
         {
             var classId = GlobalID.GetType(id) - 500;
+            Console.WriteLine(classId);
+            Console.WriteLine(this.GameObjects.Capacity);
             if (this.GameObjects.Capacity < classId)
                 return null;
             return this.GameObjects[classId].Find(g => g.GlobalId == id);
@@ -136,6 +138,18 @@ namespace BL.Servers.CoC.Logic.Manager
                     e++;
                 }
 
+
+                JArray JObject = new JArray();
+                int jO = 0;
+                foreach (GameObject go in new List<GameObject>(this.GameObjects[8]))
+                {
+                    Village_Object d = (Village_Object)go;
+                    JObject j = new JObject { { "data", d.GetVillageObjectsData.GetGlobalID() }, { "id", 506000000 + jO } };
+                    d.Save(j);
+                    JObject.Add(j);
+                    jO++;
+                }
+
                 JArray JBuildings2 = new JArray();
                 int c2 = 0;
                 foreach (GameObject go in new List<GameObject>(this.GameObjects[7]))
@@ -181,6 +195,7 @@ namespace BL.Servers.CoC.Logic.Manager
                     e2++;
                 }
 
+
                 Player pl = this.Level.Avatar;
                 var jsonData = new JObject
                 {
@@ -193,6 +208,7 @@ namespace BL.Servers.CoC.Logic.Manager
                     {"obstacles", JObstacles},
                     {"traps", JTraps},
                     {"decos", JDecos},
+                    {"vobjs", JObject},
                     {"buildings2", JBuildings2},
                     {"obstacles2", JObstacles2},
                     {"traps2", JTraps2},
@@ -288,6 +304,14 @@ namespace BL.Servers.CoC.Logic.Manager
                     d.Load(jsonDeco);
                 }
 
+                var jsonObjects = (JArray)value["vobjs"];
+                foreach (JObject jsonObject in jsonObjects)
+                {
+                    var dd = CSV.Tables.GetWithGlobalID(jsonObject["data"].ToObject<int>()) as Village_Objects;
+                    var d = new Village_Object(dd, this.Level);
+                    AddGameObject(d);
+                    d.Load(jsonObject);
+                }
 
                 var jsonBuildings2 = (JArray)value["buildings2"];
                 foreach (JObject jsonBuilding2 in jsonBuildings2)

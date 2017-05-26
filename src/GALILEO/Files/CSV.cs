@@ -24,6 +24,7 @@ namespace BL.Servers.CoC.Files
             CSV.Gamefiles.Add((int)Gamefile.Decos, @"Gamefiles/logic/decos.csv");
             CSV.Gamefiles.Add((int)Gamefile.Missions, @"Gamefiles/logic/missions.csv");
             CSV.Gamefiles.Add((int)Gamefile.Heroes, @"Gamefiles/logic/heroes.csv");
+            CSV.Gamefiles.Add((int)Gamefile.Village_Objects, @"Gamefiles/logic/village_objects.csv");
             CSV.Gamefiles.Add((int)Gamefile.Leagues, @"Gamefiles/logic/leagues.csv");
             CSV.Tables = new Gamefiles();
 
