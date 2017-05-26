@@ -34,6 +34,7 @@ namespace BL.Servers.CoC
 
             Console.ResetColor();
 
+            /*
 #if DEBUG
             Console.ForegroundColor = Utils.ChooseRandomColor();
             Console.WriteLine(Environment.NewLine);
@@ -45,10 +46,12 @@ namespace BL.Servers.CoC
             Console.WriteLine("Server is ready to start sending nuclear warheads into space and handle Clash Of Clans connections.");
             Console.ResetColor();
             Console.WriteLine(Environment.NewLine);
-#endif
+#endif*/
 
+            Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is sponsored by GobelinLand");
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
             Resources.Initialize();
+
             //Resources.Region.Bench("Warm-up for Memory mode");
             //Resources.Region.Bench("Memory mode");
             Thread.Sleep(Timeout.Infinite);

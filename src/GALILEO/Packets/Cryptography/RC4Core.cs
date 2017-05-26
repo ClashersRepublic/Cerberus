@@ -5,8 +5,8 @@ namespace BL.Servers.CoC.Packets.Cryptography
 {
     internal class RC4Core
     {
-        internal const string InitialKey = "fhsd6f86f67rt8fw78fw789we78r9789wer6re";
-        internal const string InitialNonce = "nonce";
+        internal const string InitialKey = "gd3owc3ru26uqgfipjzy4z2bkhqe7rclmqz474";
+        internal const string InitialNonce = "3ru26";
         internal RC4 Encryptor { get; set; }
         internal RC4 Decryptor { get; set; }
 

@@ -305,7 +305,10 @@
     <Compile Include="Logic\Manager\WorkerManager.cs" />
     <Compile Include="Logic\Structure\API\Gamecenter.cs" />
     <Compile Include="Logic\Structure\API\Google.cs" />
+    <Compile Include="Logic\Structure\Builder_Building.cs" />
     <Compile Include="Logic\Structure\Building.cs" />
+    <Compile Include="Logic\Structure\Builder_Deco.cs" />
+    <Compile Include="Logic\Structure\Builder_Obstacle.cs" />
     <Compile Include="Logic\Structure\Slots\Calendar.cs" />
     <Compile Include="Logic\Structure\Slots\Battle_Commands.cs" />
     <Compile Include="Logic\Structure\Component.cs" />
@@ -342,6 +345,7 @@
     <Compile Include="Logic\Structure\Slots\Units.cs" />
     <Compile Include="Logic\Structure\Slots\Upgrades.cs" />
     <Compile Include="Logic\Structure\Timer.cs" />
+    <Compile Include="Logic\Structure\Builder_Trap.cs" />
     <Compile Include="Logic\Structure\Trap.cs" />
     <Compile Include="Packets\Command.cs" />
     <Compile Include="Packets\CommandFactory.cs" />

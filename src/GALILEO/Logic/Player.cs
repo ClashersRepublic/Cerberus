@@ -271,6 +271,24 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(this.Castle_Total_SP);
                 _Packet.AddInt(this.Castle_Used_SP);
 
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(this.League);
+
+                _Packet.AddString(null);
+
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+
                 _Packet.AddInt(this.TownHall_Level);
 
 #if DEBUG
@@ -300,19 +318,22 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(this.Castle_Resources.Get(Resource.WarDarkElixir));
 
                 _Packet.AddInt(0);
+                _Packet.AddInt(0);
 
                 _Packet.AddBool(true);
                 _Packet.AddInt(220);
                 _Packet.AddInt(1828055880);
 
                 _Packet.AddBool(this.NameState > 0);
+                
+                _Packet.AddString(null);
+
 
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
-                _Packet.AddInt(0);
                 _Packet.AddInt(this.WarState ? 1 : 0);
-                _Packet.AddInt(0); // Total Attack with shield
                 _Packet.AddInt(0);
+                _Packet.AddInt(0); // Total Attack with shield
 
                 _Packet.AddBool(this.NameState > 1);
 
@@ -357,14 +378,16 @@ namespace BL.Servers.CoC.Logic
 
                 _Packet.AddRange(this.Npcs.ToBytes);
 
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+
                 _Packet.AddDataSlots(this.Variables);
 
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
-                _Packet.AddInt(0);
-
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);

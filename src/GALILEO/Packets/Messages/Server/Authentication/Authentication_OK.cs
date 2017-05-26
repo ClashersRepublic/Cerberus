@@ -31,7 +31,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
 
             this.Data.AddString(avatar.Token);
 
-            this.Data.AddString(Convert.ToString(avatar.Facebook.Identifier));
+            this.Data.AddString(avatar.Facebook.Identifier);
             this.Data.AddString(avatar.Gamecenter.Identifier);
 
 

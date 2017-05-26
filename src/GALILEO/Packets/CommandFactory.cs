@@ -28,10 +28,10 @@ namespace BL.Servers.CoC.Packets
                 {549, typeof(Upgrade_Multiple_Buildings)},
                 {574, typeof(Request_Amical_Challenge)},
                 {577, typeof(Swap_Buildings)},
-                {600, typeof(Place_Attacker)},
-                {601, typeof(Place_Alliance_Attacker)},
-                {603, typeof(Surrender_Attack)},
-                {700, typeof(Search_Opponent)}
+                {700, typeof(Place_Attacker)},
+                {701, typeof(Place_Alliance_Attacker)},
+                {703, typeof(Surrender_Attack)},
+                {800, typeof(Search_Opponent)}
             };
         }
     }

@@ -34,6 +34,7 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt((int) TimeSpan.FromDays(365).TotalSeconds); //Personal break
 
                 _Packet.AddCompressed(this.Json);
+                //_Packet.AddCompressed(File.ReadAllText(@"starting_home.json"));
                 _Packet.AddCompressed("{\"event\":[]}");
                 _Packet.AddCompressed("{\"Village2\":{\"TownHallMaxLevel\":5}}");
                 return _Packet.ToArray();
