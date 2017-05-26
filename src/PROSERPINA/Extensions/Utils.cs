@@ -13,11 +13,26 @@ namespace BL.Servers.CR.Extensions
     internal static class Utils
     {
         
+        public static int CurrentTime()
+        {
+            DateTime Now = DateTime.Now;
+            DateTime Start = DateTime.MinValue;
+
+            return Now.Subtract(Start).Milliseconds;
+        }
+
         public static int ParseConfigInt(string str) => int.Parse(ConfigurationManager.AppSettings[str]);
 
         public static bool ParseConfigBoolean(string str) => bool.Parse(ConfigurationManager.AppSettings[str]);
 
         public static string ParseConfigString(string str) => ConfigurationManager.AppSettings[str];
+
+        public static byte[] CreateRandomByteArray()
+        {
+            var buffer = new byte[Core.Resources.Random.Next(20)];
+            Core.Resources.Random.NextBytes(buffer);
+            return buffer;
+        }
 
         public static string RandomString(int length)
         {

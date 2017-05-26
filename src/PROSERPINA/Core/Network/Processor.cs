@@ -9,7 +9,11 @@ namespace BL.Servers.CR.Core.Network
     {
         internal static void Recept(this Message Message)
         {
-            Message.Decrypt();
+            if (Constants.Encryption == Logic.Enums.Crypto.RC4)
+                Message.DecryptRC4();
+            else
+                Message.DecryptSodium();
+
             Message.Decode();
             Message.Process();
         }
@@ -19,7 +23,12 @@ namespace BL.Servers.CR.Core.Network
             try
             {
                 Message.Encode();
-                Message.Encrypt();
+
+                if (Constants.Encryption == Logic.Enums.Crypto.RC4)
+                    Message.EncryptRC4();
+                else
+                    Message.EncryptSodium();
+
                 Resources.Gateway.Send(Message);
 #if DEBUG
                 if (Message.Device.Connected())

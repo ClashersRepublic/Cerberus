@@ -33,6 +33,7 @@ namespace BL.Servers.CR.Packets
                 {14102, typeof(Execute_Commands)},
                 {14104, typeof(Battle_NPC)},
                 {14107, typeof(Cancel_Battle)},
+                //{14111, typeof(Cancel_Tournament_Battle)},
                 {14113, typeof(Ask_Profile)},
                 {14201, typeof(Bind_Facebook)},
                 {14301, typeof(Request_Create_Alliance)},

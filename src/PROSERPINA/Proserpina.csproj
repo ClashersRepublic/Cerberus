@@ -341,6 +341,7 @@
     <Compile Include="Files\CSV_Reader\RowCollection.cs" />
     <Compile Include="Files\CSV_Reader\Table.cs" />
     <Compile Include="Files\Home.cs" />
+    <Compile Include="Logic\Enums\Crypto.cs" />
     <Compile Include="Logic\Slots\Achivements.cs" />
     <Compile Include="Logic\Components\Battle.cs" />
     <Compile Include="Logic\Components\Component.cs" />
@@ -386,10 +387,13 @@
     <Compile Include="Packets\Commands\Client\Battles\Search_Battle.cs" />
     <Compile Include="Packets\Commands\Client\Chest\Next_Card.cs" />
     <Compile Include="Packets\Commands\Client\Chest\Open_Free_Chest.cs" />
+    <Compile Include="Packets\Commands\Client\Tournaments\Create_Custom_Tournament.cs" />
     <Compile Include="Packets\Commands\Server\Chest\Buy_Chest_Callback.cs" />
     <Compile Include="Packets\Commands\Server\Name_Change_Callback.cs" />
     <Compile Include="Packets\Crypto.cs" />
-    <Compile Include="Packets\Key.cs" />
+    <Compile Include="Packets\Cryptography\Key.cs" />
+    <Compile Include="Packets\Cryptography\RC4\RC4.cs" />
+    <Compile Include="Packets\Cryptography\RC4\Scrambler.cs" />
     <Compile Include="Library\Blake2B\Blake2BBase.cs" />
     <Compile Include="Library\Blake2B\Blake2BBuilder.cs" />
     <Compile Include="Library\Blake2B\Blake2BConfig.cs" />
@@ -440,6 +444,7 @@
     <Compile Include="Packets\Messages\Client\Battle\Battle_Commands.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Battle_End.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Battle_NPC.cs" />
+    <Compile Include="Packets\Messages\Client\Battle\Cancel_Tournament_Battle.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Client_Capabilities.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Sector_Command.cs" />
     <Compile Include="Packets\Messages\Client\Battle_Stream.cs" />

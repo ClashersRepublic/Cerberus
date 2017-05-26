@@ -22,12 +22,12 @@
             this.Data.AddInt((int)this.Reason);
         }
 
-        internal override void Encrypt()
+        internal override void EncryptSodium()
         {
-            this.Device.Keys.RNonce.Increment();
+            this.Device.Crypto.RNonce.Increment();
 
             this.Data = new List<byte>(Sodium
-                .Encrypt(this.Data.ToArray(), this.Device.Keys.RNonce, this.Device.Keys.PublicKey)
+                .Encrypt(this.Data.ToArray(), this.Device.Crypto.RNonce, this.Device.Crypto.PublicKey)
                 .Skip(16)
                 .ToArray());
 

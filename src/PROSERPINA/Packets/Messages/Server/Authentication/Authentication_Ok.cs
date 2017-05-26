@@ -9,6 +9,8 @@ using BL.Servers.CR.Library.Blake2B;
 using BL.Servers.CR.Library.Sodium;
 using BL.Servers.CR.Logic;
 using BL.Servers.CR.Logic.Enums;
+using BL.Servers.CR.Extensions;
+using BL.Servers.CR.Packets.Cryptography;
 
 namespace BL.Servers.CR.Packets.Messages.Server.Authentication
 {
@@ -23,56 +25,62 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
 
         internal override void Encode()
         {
-            this.Data.AddLong(this.Device.Player.UserId);
-            this.Data.AddLong(this.Device.Player.UserId);
+            string CurrentTime = DateTime.Now.ToLongTimeString();
 
-            this.Data.AddString(this.Device.Player.Token);
+            this.Data.AddLong(this.Device.Player.UserId); // UserID
 
-            this.Data.AddString(null); // Facebook
+            this.Data.AddLong(this.Device.Player.UserId); // HomeID
+
+            this.Data.AddString(this.Device.Player.Token); // Token
+
+            this.Data.AddString(this.Device.Player.Facebook.Identifier); // Facebook
+
             this.Data.AddString(null); // Gamecenter
 
-            this.Data.AddVInt(3); // VInt
-            this.Data.AddVInt(193); // VInt
-            this.Data.AddVInt(6); // VInt
+            this.Data.AddVInt(3); // Major
+            this.Data.AddVInt(193); // Minor
+            this.Data.AddVInt(6); // Revision
 
-            this.Data.AddString("prod");
+            this.Data.AddString("prod"); // Environment
 
+
+            this.Data.AddVInt(0); // Session Count
+            this.Data.AddVInt(0); // Total Play Time Seconds
+            this.Data.AddVInt(0); // Time since creation
+
+            this.Data.AddString("1475268786112433"); // Facebook ID
+            this.Data.AddString(TimeUtils.ToJavaTimestamp(DateTime.Now).ToString()); // Server Time
+            this.Data.AddString(TimeUtils.ToJavaTimestamp(this.Device.Player.Created).ToString()); // Account Creation Date
 
             this.Data.AddVInt(0); // VInt
-            this.Data.AddVInt(0); // VInt
-            this.Data.AddVInt(0); // VInt
 
-            this.Data.AddString("1475268786112433");
+            this.Data.AddString(this.Device.Player.Google.Identifier); // Google Service ID
+
             this.Data.AddString(null);
             this.Data.AddString(null);
-            this.Data.AddVInt(0); // VInt
 
-            this.Data.AddString("1493262974759");
-            this.Data.AddString("1493262332000");
-            this.Data.AddString(null);
+            this.Data.AddString("CA"); // Region
 
-            this.Data.AddString("CA");
-
-            this.Data.AddString("http://7166046b142482e67b30-2a63f4436c967aa7d355061bd0d924a1.r65.cf1.rackcdn.com");
-            this.Data.AddString("https://event-assets.clashroyale.com");
+            this.Data.AddString("http://7166046b142482e67b30-2a63f4436c967aa7d355061bd0d924a1.r65.cf1.rackcdn.com"); // Content URL
+            this.Data.AddString("https://event-assets.clashroyale.com"); // Event Asset URL
 
             this.Data.AddByte(1);
 
         }
-        internal override void Encrypt()
+        internal override void EncryptSodium()
         {
             if (this.Device.PlayerState >= State.LOGIN)
             {
                 Blake2BHasher Blake = new Blake2BHasher();
 
-                Blake.Update(this.Device.Keys.SNonce);
-                Blake.Update(this.Device.Keys.PublicKey);
+                Blake.Update(this.Device.Crypto.SNonce);
+                Blake.Update(this.Device.Crypto.PublicKey);
                 Blake.Update(Key.Crypto.PublicKey);
 
                 byte[] Nonce = Blake.Finish();
-                byte[] Encrypted = this.Device.Keys.RNonce.Concat(this.Device.Keys.PublicKey).Concat(this.Data).ToArray();
+                byte[] Encrypted = this.Device.Crypto.RNonce.Concat(this.Device.Crypto.PublicKey).Concat(this.Data).ToArray();
 
-                this.Data = new List<byte>(Sodium.Encrypt(Encrypted, Nonce, Key.Crypto.PrivateKey, this.Device.Keys.PublicKey));
+                this.Data = new List<byte>(Sodium.Encrypt(Encrypted, Nonce, Key.Crypto.PrivateKey, this.Device.Crypto.PublicKey));
             }
 
             this.Length = (ushort)this.Data.Count;

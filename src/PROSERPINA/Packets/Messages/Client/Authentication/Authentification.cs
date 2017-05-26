@@ -35,20 +35,20 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
         internal int Minor;
         internal int Revision;
 
-        internal override void Decrypt()
+        internal override void DecryptSodium()
         {
             byte[] Buffer = this.Reader.ReadBytes(this.Length);
-            this.Device.Keys.PublicKey = Buffer.Take(32).ToArray();
+            this.Device.Crypto.PublicKey = Buffer.Take(32).ToArray();
 
             Blake2BHasher Blake = new Blake2BHasher();
 
-            Blake.Update(this.Device.Keys.PublicKey);
-            Blake.Update(Key.PublicKey);
+            Blake.Update(this.Device.Crypto.PublicKey);
+            Blake.Update(Packets.Cryptography.Key.PublicKey);
 
-            this.Device.Keys.RNonce = Blake.Finish();
+            this.Device.Crypto.RNonce = Blake.Finish();
 
-            Buffer = Sodium.Decrypt(Buffer.Skip(32).ToArray(), this.Device.Keys.RNonce, Key.PrivateKey, this.Device.Keys.PublicKey);
-            this.Device.Keys.SNonce = Buffer.Skip(24).Take(24).ToArray();
+            Buffer = Sodium.Decrypt(Buffer.Skip(32).ToArray(), this.Device.Crypto.RNonce, Packets.Cryptography.Key.PrivateKey, this.Device.Crypto.PublicKey);
+            this.Device.Crypto.SNonce = Buffer.Skip(24).Take(24).ToArray();
             this.Reader = new Reader(Buffer.Skip(48).ToArray());
 
             this.Length = (ushort) Buffer.Length;
@@ -57,7 +57,8 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
 
         internal override void Decode()
         {
-            Console.WriteLine("Decoding packet..");
+
+            //Console.WriteLine(BitConverter.ToString(Reader.ReadFully()));
 
             this.UserId = this.Reader.ReadInt64();
 
@@ -78,8 +79,9 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
 
             this.Device.OSVersion = this.Reader.ReadString();
 
-            //this.Reader.ReadBoolean();
-            this.Reader.ReadString();
+            this.Reader.ReadByte();
+
+            this.Reader.Seek(4);
 
             this.Device.AndroidID = this.Reader.ReadString();
             this.Language = this.Reader.ReadString();
@@ -90,26 +92,16 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
             this.Reader.ReadString();
 
             this.Reader.ReadByte();
-            this.Reader.ReadString();
-            this.Reader.ReadVInt();
 
-            this.Reader.ReadString();
-            this.Reader.ReadString();
-
-            this.Reader.ReadString();
-            this.Reader.ReadString();
+            this.Reader.Seek(4);
 
             this.Reader.ReadByte();
 
-            Console.WriteLine("Successfully read packet.");
+            this.Reader.Seek(17);
         }
 
         internal override void Process()
         {
-            Console.WriteLine("Processing packet..");
-
-            Console.WriteLine(this.UserId);
-
             if (this.UserId == 0)
             {
                 this.Device.Player = Resources.Players.New();

@@ -153,8 +153,8 @@ namespace BL.Servers.CR.Core
                     Player.Password += Number;
                 }
             }
+
             Player.Decks = JsonConvert.DeserializeObject<Logic.Slots.Decks>(Files.Home.Starting_Home, this.Settings);
-            //Player.LoadFromJSON(Files.Home.Starting_Home);
 
             while (true)
             {

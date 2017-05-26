@@ -6,6 +6,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
 {
     using BL.Servers.CR.Extensions.List;
     using BL.Servers.CR.Logic.Enums;
+    using BL.Servers.CR.Packets.Cryptography;
 
     internal class Pre_Authentification_OK : Message
     {

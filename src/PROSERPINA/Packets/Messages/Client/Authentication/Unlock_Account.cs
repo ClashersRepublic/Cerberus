@@ -77,20 +77,20 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
             }
         }
 
-        internal override void Decrypt()
+        internal override void DecryptSodium()
         {
-            this.Device.Keys.SNonce.Increment();
+            this.Device.Crypto.SNonce.Increment();
             var data = new byte[16].Concat(this.Reader.ReadBytes(this.Length)).ToArray();
             Console.WriteLine(Encoding.UTF8.GetString(data));
             Console.WriteLine(BitConverter.ToString(data));
 
-            byte[] Decrypted = Sodium.Decrypt(data, this.Device.Keys.SNonce, this.Device.Keys.PublicKey);
+            byte[] Decrypted = Sodium.Decrypt(data, this.Device.Crypto.SNonce, this.Device.Crypto.PublicKey);
 
             if (Decrypted == null)
             {
                 Console.WriteLine("Second try");
-                this.Device.Keys.SNonce.Increment();
-                Decrypted = Sodium.Decrypt(data, this.Device.Keys.SNonce, this.Device.Keys.PublicKey);
+                this.Device.Crypto.SNonce.Increment();
+                Decrypted = Sodium.Decrypt(data, this.Device.Crypto.SNonce, this.Device.Crypto.PublicKey);
                 if (Decrypted == null)
                 {
                     throw new CryptographicException("Tried to decrypt an incomplete message.");

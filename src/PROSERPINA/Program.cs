@@ -42,6 +42,7 @@ namespace BL.Servers.CR
             Resources.Initialize();
 
             Console.WriteLine(@"-------------------------------------" + Environment.NewLine);
+
             while (true);
         }
     }

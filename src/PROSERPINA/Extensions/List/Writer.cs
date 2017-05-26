@@ -32,6 +32,17 @@ namespace BL.Servers.CR.Extensions.List
             _Packet.AddRange(BitConverter.GetBytes(_Value).Reverse());
         }
 
+        public static void AddByteArray(this List<byte> _Packet, byte[] data)
+        {
+            if (data == null)
+                _Packet.AddInt(-1);
+            else
+            {
+                _Packet.AddInt(data.Length);
+                _Packet.AddRange(data);
+            }
+        }
+
         /// <summary>
         /// Adds the int endian.
         /// </summary>
@@ -273,17 +284,6 @@ namespace BL.Servers.CR.Extensions.List
                 T Value = List[r];
                 List[r] = List[c];
                 List[c] = Value;
-            }
-        }
-
-        public static void AddByteArray(this List<byte> list, byte[] data)
-        {
-            if (data == null)
-                list.AddInt(-1);
-            else
-            {
-                list.AddInt(data.Length);
-                list.AddRange(data);
             }
         }
     }
