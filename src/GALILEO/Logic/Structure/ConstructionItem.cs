@@ -164,12 +164,14 @@ namespace BL.Servers.CoC.Logic.Structure
             UpgradeLevel = jsonObject["lvl"].ToObject<int>();
             this.Level.WorkerManager.DeallocateWorker(this);
             var constTimeToken = jsonObject["const_t"];
-            if (constTimeToken != null)
+            var constTimeEndToken = jsonObject["const_t_end"];
+            if (constTimeToken != null && constTimeEndToken != null)
             {
                 this.Timer = new Timer();
                 this.IsConstructing = true;
                 var remainingConstructionTime = constTimeToken.ToObject<int>();
-                this.Timer.StartTimer(remainingConstructionTime, this.Level.Avatar.LastTick);
+                this.Timer.StartTimer(this.Level.Avatar.LastTick, remainingConstructionTime);
+                this.Timer.EndTime = constTimeEndToken.ToObject<int>();
                 this.Level.WorkerManager.AllocateWorker(this);
             }
             Locked = false;
@@ -186,7 +188,10 @@ namespace BL.Servers.CoC.Logic.Structure
         {
             jsonObject.Add("lvl", UpgradeLevel);
             if (IsConstructing)
+            {
                 jsonObject.Add("const_t", this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick));
+                jsonObject.Add("const_t_end", this.Timer.EndTime);
+            }
             if (Locked)
                 jsonObject.Add("locked", true);
             base.Save(jsonObject);
@@ -221,7 +226,7 @@ namespace BL.Servers.CoC.Logic.Structure
             else
             {
                 this.Timer = new Timer();
-                this.Timer.StartTimer(constructionTime, this.Level.Avatar.LastTick);
+                this.Timer.StartTimer(this.Level.Avatar.LastTick, constructionTime);
                 this.Level.WorkerManager.AllocateWorker(this);
                 this.IsConstructing = true;
             }
@@ -237,7 +242,7 @@ namespace BL.Servers.CoC.Logic.Structure
             {
                 this.IsConstructing = true;
                 this.Timer = new Timer();
-                this.Timer.StartTimer(constructionTime, this.Level.Avatar.LastTick);
+                this.Timer.StartTimer(this.Level.Avatar.LastTick, constructionTime);
                 this.Level.WorkerManager.AllocateWorker(this);
             }
         }

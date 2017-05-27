@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BL.Servers.CoC.Files.CSV_Helpers;
 using BL.Servers.CoC.Files.CSV_Reader;
+using BL.Servers.CoC.Logic.Enums;
 
 namespace BL.Servers.CoC.Files.CSV_Logic
 {
@@ -57,6 +58,7 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public bool TallGrassSpawnPoint { get; set; }
         public int LootHighlightPercentage { get; set; }
         public string HighlightExportName { get; set; }
+        public Resource GetClearingResource() => CSV.Tables.Get(Gamefile.Resources).GetData(ClearResource) as Resource;
 
-}
+    }
 }

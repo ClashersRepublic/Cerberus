@@ -18,6 +18,7 @@ namespace BL.Servers.CoC.Packets
                 {501, typeof(Move_Building)},
                 {502, typeof(Upgrade_Building)},
                 {504, typeof(SpeedUp_Construction)},
+                {507, typeof(Remove_Obstacle)},
                 {508, typeof(Train_Unit)},
                 {511, typeof(Request_Alliance_Troops)},
                 {518, typeof(Buy_Resource)},

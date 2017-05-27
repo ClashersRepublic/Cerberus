@@ -20,15 +20,5 @@ namespace BL.Servers.CoC.Logic.Structure
 
         public Decos GetDecoData() => (Decos)GetData();
 
-        public new void Load(JObject jsonObject)
-        {
-            base.Load(jsonObject);
-        }
-
-        public new JObject Save(JObject jsonObject)
-        {
-            base.Save(jsonObject);
-            return jsonObject;
-        }
     }
 }

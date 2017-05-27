@@ -85,7 +85,7 @@ namespace BL.Servers.CoC.Logic.Components
             {
                 this.Timer = new Timer();
                 var remainingTime = unitUpgradeObject["t"].ToObject<int>();
-                this.Timer.StartTimer(remainingTime, GetParent.Level.Avatar.LastTick);
+                this.Timer.StartTimer(GetParent.Level.Avatar.LastTick, remainingTime);
                 this.UpgradeLevelInProgress = unitUpgradeObject["level"].ToObject<int>();
             }
         }
@@ -126,7 +126,7 @@ namespace BL.Servers.CoC.Logic.Components
             {
                 GetParent.Level.WorkerManager.AllocateWorker(GetParent);
                 this.Timer = new Timer();
-                this.Timer.StartTimer(GetTotalSeconds(), GetParent.Level.Avatar.LastTick);
+                this.Timer.StartTimer(GetParent.Level.Avatar.LastTick, GetTotalSeconds());
                 this.UpgradeLevelInProgress = GetParent.Level.Avatar.GetUnitUpgradeLevel(this.HeroData) + 1;
             }
         }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Files.CSV_Helpers;
 using BL.Servers.CoC.Files.CSV_Logic;
@@ -375,9 +376,9 @@ namespace BL.Servers.CoC.Logic.Manager
         public void Tick()
         {
             this.ComponentManager.Tick();
-            foreach (var l in this.GameObjects)
+            foreach (var l in this.GameObjects.ToList())
             {
-                foreach (var go in l)
+                foreach (var go in l.ToList())
                     go.Tick();
             }
             foreach (var g in new List<GameObject>(this.GameObjectRemoveList))

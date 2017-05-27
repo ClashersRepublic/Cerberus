@@ -1,14 +1,18 @@
-﻿namespace BL.Servers.CoC.Logic.Structure
+﻿using BL.Servers.CoC.Extensions;
+
+namespace BL.Servers.CoC.Logic.Structure
 {
     using System;
     internal class Timer
     {
         internal int Seconds;
         internal DateTime StartTime;
+        internal int EndTime;
 
         internal Timer()
         {
             this.StartTime = new DateTime(1970, 1, 1);
+            this.EndTime = 0;
             this.Seconds = 0;
         }
         internal void FastForward(int seconds) => this.Seconds -= seconds;
@@ -46,11 +50,13 @@
             return result;
         }
         internal DateTime GetStartTime() => this.StartTime;
+        internal DateTime GetEndTime() => this.StartTime;
 
-        internal void StartTimer(int seconds, DateTime time)
+        internal void StartTimer(DateTime time, int durationSeconds)
         {
             this.StartTime = time;
-            this.Seconds = seconds;
+            this.EndTime = (int)TimeUtils.ToUnixTimestamp(time) + durationSeconds;
+            this.Seconds = durationSeconds;
         }
     }
 }
