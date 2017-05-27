@@ -172,7 +172,26 @@ namespace BL.Servers.CR.Logic.Components
                 _Packet.AddVInt(0);
                 _Packet.AddVInt(127);
 
-                _Packet.AddHexa("00 00 00 00 00 00 00 00 00 00 00 09 00 00 00 00 F8 01 01 00 00 01 00 00 00 02 00 00 01 00 00 00 0E 00 00 01 00 00 00 82 01 00 00 01 00 00 00 81 01 00 00 01 00 00 00 04 00 00 01 00 00 00 01 AE EA E5 18 01 AE EA E5 18 00 00 00 00 01 B0 F3 B6 90 0B 00 00 01 01 8A E6 BF 33 00 00 00 00 00 00 00".Replace(" ", ""));
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
+
+                _Packet.AddVInt(9);
+
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
+                _Packet.AddVInt(0);
+
+                _Packet.AddHexa("F8 01 01 00 00 01 00 00 00 02 00 00 01 00 00 00 0E 00 00 01 00 00 00 82 01 00 00 01 00 00 00 81 01 00 00 01 00 00 00 04 00 00 01 00 00 00 01 AE EA E5 18 01 AE EA E5 18 00 00 00 00 01 B0 F3 B6 90 0B 00 00 01 01 8A E6 BF 33 00 00 00 00 00 00 00".Replace(" ", ""));
 
                 return _Packet.ToArray();
             }

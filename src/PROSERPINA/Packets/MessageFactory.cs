@@ -25,7 +25,7 @@ namespace BL.Servers.CR.Packets
                 {10121, typeof(Unlock_Account)},
                 {10212, typeof(Change_Name)},
                 {10513, typeof(Bind_Google)},
-                {10905, typeof(UnknownPacket)},
+                //{10905, typeof(UnknownPacket)},
                 {12904, typeof(Sector_Command)},
                 {12951, typeof(Battle_Commands)},
                 {14358, typeof(Request_Create_Alliance)},

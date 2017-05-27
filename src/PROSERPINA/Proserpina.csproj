@@ -691,6 +691,9 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Gamefiles\fingerprint.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Gamefiles\level\starting_home.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -701,6 +704,9 @@
       <SubType>Designer</SubType>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Tools\Patch.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -731,13 +737,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Server.ico" />
+    <Content Include="Tools\BarbarianLand Assets Hasher.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\BarbarianLand Assets LZMA.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tools\database.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tools\ucsbuildsha.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tools\ucsgflzma.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -779,9 +785,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Mysql.edmx</DependentUpon>
       <LastGenOutput>Mysql.cs</LastGenOutput>
-    </None>
-    <None Include="Tools\patch_generator.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="config.bl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

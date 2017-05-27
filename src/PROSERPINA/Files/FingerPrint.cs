@@ -6,78 +6,76 @@ using Newtonsoft.Json.Linq;
 
 namespace BL.Servers.CR.Files
 {
-    internal class FingerPrint
+    internal class Fingerprint
     {
-        public FingerPrint()
+        internal static string Json;
+
+        internal static string Sha;
+
+        internal static string[] Version;
+
+        internal static bool Custom;
+
+        internal Fingerprint()
         {
-
-            files           = new List<GameFile>();
-            string fpstring = null;
-
-            if (File.Exists(@"Gamefiles/fingerprint.json"))
+            try
             {
-                using (StreamReader sr = new StreamReader(@"Gamefiles/fingerprint.json"))
-                    fpstring = sr.ReadToEnd();
-                LoadFromJson(fpstring);
+                if (!this.Patches())
+                {
+                    if (File.Exists(@"Gamefiles\fingerprint.json"))
+                    {
+                        Fingerprint.Json = File.ReadAllText(Directory.GetCurrentDirectory() + @"\Gamefiles\fingerprint.json");
+                        JObject _Json = JObject.Parse(Fingerprint.Json);
+                        Fingerprint.Sha = _Json["sha"].ToObject<string>();
+                        Fingerprint.Version = _Json["version"].ToObject<string>().Split('.');
+
+                        Console.WriteLine("Fingerprint detected, with version " + string.Join(".", Fingerprint.Version) + "." + Environment.NewLine);
+                    }
+                    else
+                    {
+                        Console.WriteLine("The Fingerprint cannot be loaded, the file does not exist." + Environment.NewLine);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Custom patch detected, with version " + string.Join(".", Fingerprint.Version) + "." + Environment.NewLine);
+                }
             }
-            else
-                Console.WriteLine(
-                    "[BL.Servers.CR]    LoadFingerPrint: error! tried to load FingerPrint without file, run gen_patch first");
-        }
-
-        public List<GameFile> files { get; set; }
-        public string sha { get; set; }
-        public string version { get; set; }
-
-        public void LoadFromJson(string jsonString)
-        {
-            JObject jsonObject    = JObject.Parse(jsonString);
-            JArray jsonFilesArray = (JArray)jsonObject["files"];
-            foreach (JObject jsonFile in jsonFilesArray)
+            catch (Exception)
             {
-                GameFile gf = new GameFile();
-                gf.Load(jsonFile);
-                files.Add(gf);
+                Console.WriteLine("An error occured while parsing the fingerprint." + Environment.NewLine);
             }
-            sha = jsonObject["sha"].ToObject<string>();
-            version = jsonObject["version"].ToObject<string>();
         }
 
-        public string SaveToJson()
+        internal bool Patches()
         {
-            JObject jsonData       = new JObject();
-            JArray jsonFilesArray  = new JArray();
-            foreach (GameFile file in files)
+            bool _Result = false;
+
+            if (File.Exists(Directory.GetCurrentDirectory() + "\\Patchs\\VERSION"))
             {
-                JObject jsonObject = new JObject();
-                file.SaveToJson(jsonObject);
-                jsonFilesArray.Add(jsonObject);
+                string[] _Lines = File.ReadAllLines(Directory.GetCurrentDirectory() + "\\Patchs\\VERSION");
+
+                if (!string.IsNullOrEmpty(_Lines[0]))
+                {
+                    Fingerprint.Version = _Lines[0].Split('.');
+
+                    if (_Lines.Length > 1 && !string.IsNullOrEmpty(_Lines[1]))
+                    {
+                        Fingerprint.Sha = _Lines[1];
+
+                        if (File.Exists(Directory.GetCurrentDirectory() + "\\Patchs\\" + Fingerprint.Sha + "\\fingerprint.json"))
+                        {
+                            Fingerprint.Json = File.ReadAllText(Directory.GetCurrentDirectory() + "\\Patchs\\" + Fingerprint.Sha + "\\fingerprint.json");
+                            Fingerprint.Json.Trim('\n', '\r');
+
+                            _Result = true;
+                            Fingerprint.Custom = true;
+                        }
+                    }
+                }
             }
-            jsonData.Add("files", jsonFilesArray);
-            jsonData.Add("sha", sha);
-            jsonData.Add("version", version);
 
-            return JsonConvert.SerializeObject(jsonData).Replace("/", @"\/");
-        }
-    }
-
-    internal class GameFile
-    {
-        public string file { get; set; }
-        public string sha { get; set; }
-
-        public void Load(JObject jsonObject)
-        {
-            sha  = jsonObject["sha"].ToObject<string>();
-            file = jsonObject["file"].ToObject<string>();
-        }
-
-        public string SaveToJson(JObject fingerPrint)
-        {
-            fingerPrint.Add("sha", sha);
-            fingerPrint.Add("file", file);
-
-            return JsonConvert.SerializeObject(fingerPrint);
+            return _Result;
         }
     }
 }

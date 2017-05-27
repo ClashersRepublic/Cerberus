@@ -3,9 +3,11 @@
     using BL.Servers.CR.Core;
     using BL.Servers.CR.Core.Network;
     using BL.Servers.CR.Extensions.Binary;
+    using BL.Servers.CR.Files;
     using BL.Servers.CR.Logic;
     using BL.Servers.CR.Logic.Enums;
     using BL.Servers.CR.Packets.Messages.Server.Authentication;
+    using System;
 
     internal class Pre_Authentification : Message
     {
@@ -38,17 +40,33 @@
 
         internal override void Process()
         {
-            if (this.Major == (int) CVersion.Major && this.Minor == (int) CVersion.Minor)
+            if (string.Equals(this.Hash, Fingerprint.Sha))
             {
-                if (!Constants.Maintenance)
+                if (this.Major == (int)CVersion.Major && this.Minor == (int)CVersion.Minor)
                 {
-                    new Pre_Authentification_OK(Device).Send();
+                    if (!Constants.Maintenance)
+                    {
+                        new Pre_Authentification_OK(Device).Send();
+                    }
+                    else
+                        new Authentification_Failed(Device, Reason.Maintenance).Send();
                 }
                 else
-                    new Authentification_Failed(Device, Reason.Maintenance).Send();
+                    new Authentification_Failed(Device, Reason.Update).Send();
             }
             else
-                new Authentification_Failed(Device, Reason.Update).Send();
+            {
+                Console.WriteLine(this.Major);
+                Console.WriteLine(this.Revision);
+                Console.WriteLine(this.Minor);
+
+                Console.WriteLine(this.Hash);
+                Console.WriteLine(Fingerprint.Sha);
+
+                Console.WriteLine("Patching client..");
+
+                new Authentification_Failed(this.Device, Reason.Patch).Send();
+            }
         }
     }
 }

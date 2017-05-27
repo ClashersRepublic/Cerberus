@@ -18,6 +18,7 @@ namespace BL.Servers.CR.Core
         internal EventsHandler EventsHandler;
         internal Test Test;
         internal CSV CSV;
+        internal Fingerprint Fingerprint;
         internal Home Home;
         internal Redis Redis;
         internal Timers Checker;
@@ -28,6 +29,8 @@ namespace BL.Servers.CR.Core
             this.Loggers = new Loggers();
             this.CSV = new CSV();
             this.Home = new Home();
+            this.Fingerprint = new Fingerprint();
+
             switch (Constants.Database)
             {
                 case DBMS.Redis:
@@ -36,12 +39,14 @@ namespace BL.Servers.CR.Core
                     this.Redis = new Redis();
                     break;
             }
-                this.EventsHandler = new EventsHandler();
+
+            this.EventsHandler = new EventsHandler();
 
             this.Checker = new Timers();
+
 #if DEBUG
             Console.WriteLine("We loaded " + MessageFactory.Messages.Count + " messages, " + CommandFactory.Commands.Count + " commands, and 0 debug commands.\n");
-                       this.Test = new Test();
+            this.Test = new Test();
 #endif
         }
     }

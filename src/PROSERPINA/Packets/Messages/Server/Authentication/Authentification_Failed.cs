@@ -11,12 +11,14 @@ using BL.Servers.CR.Library.Sodium;
 using BL.Servers.CR.Logic;
 using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Packets.Cryptography;
+using BL.Servers.CR.Files;
 
 namespace BL.Servers.CR.Packets.Messages.Server.Authentication
 {
     internal class Authentification_Failed : Message
     {
-        internal string UpdateHost = "http://df70a89d32075567ba62-1e50fe9ed7ef652688e6e5fff773074c.r40.cf1.rackcdn.com/";
+        internal string UpdateURL = "https://barbarianland.com";
+        internal string RedirectURL = "https://barbarianland.com";
 
         internal string Message = string.Empty;
 
@@ -34,18 +36,18 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
             this.Version = 2;
         }
 
-        internal string PatchingHost => /*Fingerprint.Custom ? "bl" :*/ "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
+        internal string ContentURL => Fingerprint.Custom ? "http://patch.barbarianland.xyz/clashroyale/3f8f926ab56dae5eeec7ec5d9a151e4bc9955876/" : "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
 
         internal override void Encode()
         {
             this.Data.AddVInt((int)this.Reason);
-            this.Data.AddString(null); //Finger
-            this.Data.AddString(this.PatchingHost);
+            this.Data.AddString(Fingerprint.Json);
             this.Data.AddString(null);
-            this.Data.AddString(this.Reason != Reason.Patch ? this.UpdateHost : null);
-            this.Data.AddString(this.Message);
-            this.Data.AddVInt((int)TimeSpan.FromMinutes(5).Seconds);
-            this.Data.AddBool(false);
+            this.Data.AddString("http://gamea.barbarianland.xyz/clashroyale");
+            this.Data.AddString(null);
+            this.Data.AddString(null);
+            this.Data.AddVInt(0);
+            this.Data.AddByte(0);
             this.Data.AddString(null);
         }
 
