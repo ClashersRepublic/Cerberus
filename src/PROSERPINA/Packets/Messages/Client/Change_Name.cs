@@ -32,6 +32,7 @@ namespace BL.Servers.CR.Packets.Messages.Client
         internal override void Process()
         {
             this.Device.Player.Username = this.Name;
+            this.Device.Player.NameSet = this.NameSet;
 
             new Server_Commands(this.Device, new Name_Change_Callback(this.Device)).Send();
         }

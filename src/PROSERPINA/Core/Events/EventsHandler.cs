@@ -57,11 +57,28 @@ namespace BL.Servers.CR.Core.Events
                     }
                 }
 
+                List<Logic.Clan> Clans = Resources.Clans.Values.ToList();
+
+                lock (Resources.Clans.Gate)
+                {
+                    if (Resources.Clans.Count > 0)
+                    {
+                        Parallel.ForEach(Clans, (_Clan) =>
+                        {
+                            if (_Clan != null)
+                            {
+                                Resources.Clans.Remove(_Clan);
+                                Redis.Players.KeyDelete(_Clan.ClanID.ToString());
+                            }
+                        });
+                    }
+                }
+
                 Thread.Sleep(30000);
             }
-            catch
+            catch (Exception Exception)
             {
-                Console.WriteLine("There was an exception while saving players and clans.");
+                Resources.Exceptions.Catch(Exception);
             }
         }
 

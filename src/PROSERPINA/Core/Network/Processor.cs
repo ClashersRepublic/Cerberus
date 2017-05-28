@@ -2,6 +2,7 @@
 using BL.Servers.CR.Extensions;
 using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Packets;
+using System.Diagnostics;
 
 namespace BL.Servers.CR.Core.Network
 {
@@ -30,18 +31,17 @@ namespace BL.Servers.CR.Core.Network
                     Message.EncryptSodium();
 
                 Resources.Gateway.Send(Message);
-#if DEBUG
+
                 if (Message.Device.Connected())
                 {
-                    Console.WriteLine(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " +  Message.GetType().Name);
+                    Debug.WriteLine("[MESSAGE] " + Message.Device.Socket.RemoteEndPoint.ToString() + " <-- " +  Message.GetType().Name);
                 }
-#endif
 
                 Message.Process();
             }
             catch (Exception Exception)
             {
-                Loggers.Log(Utils.Padding(Exception.GetType().Name, 15) + " : " + Exception.Message + Environment.NewLine + Exception.StackTrace, true, Defcon.ERROR);
+                Resources.Exceptions.Catch(Exception);
             }
         }
 

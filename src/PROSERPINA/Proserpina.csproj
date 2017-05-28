@@ -213,6 +213,9 @@
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.5.0.0-beta07\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="SharpRaven, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpRaven.2.2.0\lib\net45\SharpRaven.dll</HintPath>
+    </Reference>
     <Reference Include="StackExchange.Redis, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\StackExchange.Redis.1.2.1\lib\net46\StackExchange.Redis.dll</HintPath>
     </Reference>
@@ -256,6 +259,7 @@
     <Compile Include="Core\Consoles\Prefixed.cs" />
     <Compile Include="Core\Devices.cs" />
     <Compile Include="Core\Events\Region.cs" />
+    <Compile Include="Core\Exceptions.cs" />
     <Compile Include="Core\Loggers.cs" />
     <Compile Include="Core\Network\Processor.cs" />
     <Compile Include="Core\Players.cs" />
@@ -342,6 +346,8 @@
     <Compile Include="Files\CSV_Reader\Table.cs" />
     <Compile Include="Files\Home.cs" />
     <Compile Include="Logic\Enums\Crypto.cs" />
+    <Compile Include="Logic\Enums\Rank.cs" />
+    <Compile Include="Logic\Enums\Server_Mode.cs" />
     <Compile Include="Logic\Slots\Achivements.cs" />
     <Compile Include="Logic\Components\Battle.cs" />
     <Compile Include="Logic\Components\Component.cs" />

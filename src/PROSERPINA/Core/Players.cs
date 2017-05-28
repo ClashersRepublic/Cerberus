@@ -228,7 +228,7 @@ namespace BL.Servers.CR.Core
                             if (Data != null)
                             {
                                 Data.Data = JsonConvert.SerializeObject(Player, this.Settings);
-                                Database.SaveChanges();
+                                Database.SaveChangesAsync();
                             }
                         }
 

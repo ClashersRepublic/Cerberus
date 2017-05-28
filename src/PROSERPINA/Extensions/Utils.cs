@@ -9,16 +9,17 @@ namespace BL.Servers.CR.Extensions
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using BL.Servers.CR.Core;
+    using System.Runtime.InteropServices;
+    using System.Diagnostics;
 
     internal static class Utils
     {
-        
-        public static int CurrentTime()
-        {
-            DateTime Now = DateTime.Now;
-            DateTime Start = DateTime.MinValue;
 
-            return Now.Subtract(Start).Milliseconds;
+        public static int GetSessionID()
+        {
+            Process proc = Process.GetCurrentProcess();
+
+            return proc.SessionId;
         }
 
         public static int ParseConfigInt(string str) => int.Parse(ConfigurationManager.AppSettings[str]);
@@ -102,8 +103,6 @@ namespace BL.Servers.CR.Extensions
                 }
             }
         }
-
-
 
         public class ArrayReferencePreservngConverter : JsonConverter
         {

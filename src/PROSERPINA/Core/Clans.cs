@@ -152,7 +152,7 @@ namespace BL.Servers.CR.Core
                                     Data = JsonConvert.SerializeObject(Clan, this.Settings)
                                 });
 
-                                Database.SaveChanges();
+                                Database.SaveChangesAsync();
                             }
 
                             if (Store)

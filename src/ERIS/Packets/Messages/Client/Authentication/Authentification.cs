@@ -51,7 +51,6 @@ namespace BL.Servers.BB.Packets.Messages.Client.Authentication
             this.Reader = new Reader(Buffer.Skip(48).ToArray());
 
             this.Length = (ushort) Buffer.Length;
-
         }
 
         internal override void Decode()

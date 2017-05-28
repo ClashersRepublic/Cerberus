@@ -12,6 +12,7 @@ namespace BL.Servers.CR.Core
     internal class Resources
     {
         internal static Classes Classes;
+        internal static Exceptions Exceptions;
         internal static Gateway Gateway;
         internal static Devices Devices;
         internal static Players Players;
@@ -23,6 +24,7 @@ namespace BL.Servers.CR.Core
         internal static void Initialize()
         {
             Resources.Classes = new Classes();
+            Resources.Exceptions = new Exceptions();
             Resources.Devices = new Devices();
             Resources.Players = new Players();
             Resources.Clans = new Clans();

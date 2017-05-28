@@ -82,7 +82,7 @@ namespace BL.Servers.CR.Packets
 
                 if (Decrypted == null)
                 {
-                    throw new CryptographicException("Tried to decrypt an incomplete message.");
+                    Resources.Exceptions.Catch(new CryptographicException(), this.Device.Model, this.Device.OSVersion, this.Device.Player.UserId);
                 }
 
                 this.Reader = new Reader(Decrypted);

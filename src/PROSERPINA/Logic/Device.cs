@@ -7,6 +7,7 @@ using BL.Servers.CR.Extensions.Binary;
 using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Packets;
 using BL.Servers.CR.Packets.Cryptography.RC4;
+using System.Diagnostics;
 
 namespace BL.Servers.CR.Logic
 {
@@ -80,7 +81,7 @@ namespace BL.Servers.CR.Logic
                     {
                         if (MessageFactory.Messages.ContainsKey(Identifier))
                         {
-                            Message _Message =  Activator.CreateInstance(MessageFactory.Messages[Identifier], this, Reader) as Message;
+                            Message _Message = Activator.CreateInstance(MessageFactory.Messages[Identifier], this, Reader) as Message;
 
                             _Message.Identifier = Identifier;
                             _Message.Length = Length;
@@ -91,9 +92,7 @@ namespace BL.Servers.CR.Logic
                             try
                             {
 
-#if DEBUG
-                                Loggers.Log(Utils.Padding(_Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " --> " + _Message.GetType().Name, true);
-#endif
+                                Debug.WriteLine("[MESSAGE] " + _Message.Device.Socket.RemoteEndPoint.ToString() + " --> " + _Message.GetType().Name);
 
                                 if (Constants.Encryption == Enums.Crypto.RC4)
                                     _Message.DecryptRC4();
@@ -106,20 +105,18 @@ namespace BL.Servers.CR.Logic
                             }
                             catch (Exception Exception)
                             {
-                                Loggers.Log(Utils.Padding(Exception.GetType().Name, 15) + " : " + Exception.Message + ". [" + (this.Player != null ? this.Player.UserHighId + ":" + this.Player.UserLowId : "---") + ']' + Environment.NewLine + Exception.StackTrace, true, Defcon.ERROR);
+                                Resources.Exceptions.Catch(Exception, Model, OSVersion, this.Player.UserId);
                             }
                         }
                         else
                         {
+                            var Data = Reader.ReadFully();
 #if DEBUG
-
-                            Loggers.Log(Utils.Padding(this.GetType().Name, 15) + " : Aborting, we can't handle the following message : ID " + Identifier + ", Length " + Length + ", Version " + Version + ".", true, Defcon.WARN);
-
+                            Debug.WriteLine("[MESSAGE] Message not found, ignoring the following message : ID " + Identifier + ", Length " + Length + ", Version " + Version + ".");
+                            Debug.WriteLine(Identifier + " Data: " + BitConverter.ToString(Data));
 #endif
                             if (Constants.Encryption == Enums.Crypto.RC4)
                             {
-                                var Data = Reader.ReadFully();
-
                                 this.RC4.Decrypt(ref Data);
                             }
                             else

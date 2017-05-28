@@ -34,7 +34,12 @@ namespace BL.Servers.CR.Logic.Components
 
                 _Packet.AddVInt(this.Player.UserId);
 
-                _Packet.AddString(this.Player.Username); // Name
+                if (Player.Rank == Enums.Rank.User)
+                    _Packet.AddString(this.Player.Username); // Name
+                else if (Player.Rank == Enums.Rank.Moderator)
+                    _Packet.AddString("[Mod]" + this.Player.Username);
+                else
+                    _Packet.AddString("[Dev]" + this.Player.Username);
 
                 _Packet.AddVInt(this.Player.Changes); // Changes
 
@@ -110,15 +115,15 @@ namespace BL.Servers.CR.Logic.Components
 
                 _Packet.AddVInt(this.Player.Level); // Level
 
+                _Packet.Add(this.Player.NameSet);
+
                 // 7 = Name already set + no clan
                 // 8 = Set name popup + clan
                 // 9 = Name already set + clan
-                // < 8 =  Set name popup
+                // < 7 =  Set name popup
 
-                if (this.Player.ClanId > 0)
+                if (this.Player.ClanId != 0)
                 {
-                    _Packet.Add(1); // Name Set
-
                     Clan Clan = Core.Resources.Clans.Get(this.Player.ClanId, Constants.Database, false);
 
                     _Packet.Add(string.IsNullOrEmpty(this.Player.Username) ? (byte)8 : (byte)9);
@@ -131,11 +136,13 @@ namespace BL.Servers.CR.Logic.Components
 
                     _Packet.AddVInt((int)Clan.Members[this.Player.UserId].Role);
                 }
+                else if (!string.IsNullOrEmpty(this.Player.Username) && this.Player.ClanId == 0)
+                {
+                    _Packet.Add(7);
+                }
                 else
                 {
-                    _Packet.Add(1); // Name Set
-
-                    _Packet.Add(string.IsNullOrEmpty(this.Player.Username) ? (byte)0 : (byte)1);
+                    _Packet.Add(0);
                 }
 
                 _Packet.AddVInt(this.Player.Games_Played); // Games Played

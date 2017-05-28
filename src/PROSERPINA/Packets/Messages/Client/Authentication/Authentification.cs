@@ -178,6 +178,9 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
         {
             this.Device.Player.Device = this.Device;
 
+            if (this.Language.Length > 2)
+                this.Device.Player.Region = this.Language.Substring(this.Language.Length - 2);
+
             new Authentification_OK(this.Device).Send();
             new Own_Home_Data(this.Device).Send();
             new Inbox_Data(this.Device).Send();

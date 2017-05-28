@@ -14,7 +14,7 @@ namespace BL.Servers.CR
         internal static void Main()
         {
 #if DEBUG
-            Console.Title = $"[DEBUG] BarbarianLand Royale Server - © BarbarianLand Development";
+            Console.Title = $"[DEBUG] BarbarianLand Royale Server - © BarbarianLand Development [Session ID: " + Utils.GetSessionID() + "]";
 #else
             Console.Title = $"BarbarianLand Royale Server - © BarbarianLand Development";
 #endif

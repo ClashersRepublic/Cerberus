@@ -27,6 +27,8 @@ namespace BL.Servers.CR.Core
 
         internal const Crypto Encryption = Crypto.RC4;
 
+        internal const Server_Mode Mode = Server_Mode.PRODUCTION;
+
         internal const int ServerPort = 9339;
 
         internal static string[] AuthorizedIP =

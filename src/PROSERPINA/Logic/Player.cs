@@ -66,14 +66,16 @@ namespace BL.Servers.CR.Logic
         [JsonProperty("clan_hi")] internal int ClanHighID;
         [JsonProperty("clan_lo")] internal int ClanLowID;
 
-        [JsonProperty("token")] internal string Token;
-        [JsonProperty("password")] internal string Password;
+        [JsonProperty("rank")] internal Rank Rank = Rank.User;
 
-        [JsonProperty("name")] internal string Username = String.Empty;
+        [JsonProperty("token")] internal string Token = string.Empty;
+        [JsonProperty("password")] internal string Password = string.Empty;
+
+        [JsonProperty("name")] internal string Username = string.Empty;
         [JsonProperty("IpAddress")] internal string IpAddress;
         [JsonProperty("region")] internal string Region;
 
-        [JsonProperty("lvl")] internal int Level = 13;
+        [JsonProperty("lvl")] internal int Level = 1;
         [JsonProperty("xp")] internal int Experience = 0;
         [JsonProperty("arena")] internal int Arena = 21;
         [JsonProperty("tutorials")] internal byte Tutorial = 8;
@@ -84,7 +86,7 @@ namespace BL.Servers.CR.Logic
         [JsonProperty("loses")] internal int Loses = 0;
         [JsonProperty("games_played")] internal int Games_Played = 0;
 
-        [JsonProperty("trophies")] internal int Trophies = 9999;
+        [JsonProperty("trophies")] internal int Trophies = 0;
         [JsonProperty("legendary_trophies")] internal int Legendary_Trophies = 0;
 
         [JsonProperty("resources")] internal Resources Resources;

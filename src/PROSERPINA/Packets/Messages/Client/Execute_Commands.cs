@@ -45,11 +45,8 @@
 
                             if (Command != null)
                             {
-#if DEBUG
-                                Console.ForegroundColor = ConsoleColor.Blue;
-                                Console.WriteLine("Command " + CommandID + " has  been handled.");
-                                Console.ResetColor();
-#endif
+                                System.Diagnostics.Debug.WriteLine("[COMMAND] " + CommandID + " has been handled.");
+
                                 Command.Decode();
                                 Command.Process();
 
@@ -57,14 +54,10 @@
                             }
                         }
                         else
-                        {
-#if DEBUG
+                        {              
+                            System.Diagnostics.Debug.WriteLine("[COMMAND] " + CommandID + " has not been handled.");
+                            System.Diagnostics.Debug.WriteIf(this.LCommands.Any(), "[PREVIOUS] " + this.LCommands.Last().Identifier + " [" + (_Index + 1) + " / " + this.Count + "]");
 
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Command " + CommandID + " has not been handled.");
-                            if (this.LCommands.Any()) Console.WriteLine("Previous command was " + this.LCommands.Last().Identifier + ". [" + (_Index + 1) + " / " + this.Count + "]");
-                            Console.ResetColor();
-#endif
                             break;
                         }
                     }

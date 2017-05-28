@@ -11,6 +11,7 @@ using BL.Servers.CR.Logic;
 using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Extensions;
 using BL.Servers.CR.Packets.Cryptography;
+using BL.Servers.CR.Core;
 
 namespace BL.Servers.CR.Packets.Messages.Server.Authentication
 {
@@ -41,14 +42,19 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
             this.Data.AddVInt(193); // Minor
             this.Data.AddVInt(6); // Revision
 
-            this.Data.AddString("prod"); // Environment
-
+            if (Constants.Mode == Server_Mode.PRODUCTION)
+                this.Data.AddString("prod");
+            else if (Constants.Mode == Server_Mode.STAGE)
+                this.Data.AddString("stage");
+            else if (Constants.Mode == Server_Mode.DEVELOPEMENT)
+                this.Data.AddString("dev");
 
             this.Data.AddVInt(0); // Session Count
             this.Data.AddVInt(0); // Total Play Time Seconds
             this.Data.AddVInt(0); // Time since creation
 
-            this.Data.AddString("1475268786112433"); // Facebook ID
+            this.Data.AddString("1609113955765603"); // Facebook ID
+
             this.Data.AddString(TimeUtils.ToJavaTimestamp(DateTime.Now).ToString()); // Server Time
             this.Data.AddString(TimeUtils.ToJavaTimestamp(this.Device.Player.Created).ToString()); // Account Creation Date
 
@@ -59,13 +65,12 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
             this.Data.AddString(null);
             this.Data.AddString(null);
 
-            this.Data.AddString("CA"); // Region
+            this.Data.AddString(this.Device.Player.Region); // Region
 
             this.Data.AddString("http://7166046b142482e67b30-2a63f4436c967aa7d355061bd0d924a1.r65.cf1.rackcdn.com"); // Content URL
             this.Data.AddString("https://event-assets.clashroyale.com"); // Event Asset URL
 
             this.Data.AddByte(1);
-
         }
         internal override void EncryptSodium()
         {
