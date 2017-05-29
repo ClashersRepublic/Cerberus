@@ -43,6 +43,8 @@ namespace BL.Servers.CR
 
             Console.WriteLine(@"-------------------------------------" + Environment.NewLine);
 
+            Resources.Exceptions.Catch(new Exception(), "Test 123");
+
             while (true);
         }
     }

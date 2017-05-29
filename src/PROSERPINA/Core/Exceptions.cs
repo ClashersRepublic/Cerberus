@@ -41,10 +41,13 @@ namespace BL.Servers.CR.Core
             this.RavenClient.CaptureAsync(Event);
         }
 
-        public void Catch(Exception Exception, string Model, string OS = "", long ID = 0)
+        public void Catch(Exception Exception, string Message, string Model = "", string OS = "", string Token = "", long ID = 0)
         {
             SentryEvent Event = new SentryEvent(Exception);
 
+            Event.Message = Message;
+
+            Event.Tags.Add("token", Token);
             Event.Tags.Add("userid", ID.ToString());
             Event.Tags.Add("model", Model);
             Event.Tags.Add("os", OS);

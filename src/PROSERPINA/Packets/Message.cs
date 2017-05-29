@@ -82,7 +82,7 @@ namespace BL.Servers.CR.Packets
 
                 if (Decrypted == null)
                 {
-                    Resources.Exceptions.Catch(new CryptographicException(), this.Device.Model, this.Device.OSVersion, this.Device.Player.UserId);
+                    Resources.Exceptions.Catch(new CryptographicException(), "Decrypted message is null.", this.Device.Model, this.Device.OSVersion, this.Device.Player.Token, this.Device.Player.UserId);
                 }
 
                 this.Reader = new Reader(Decrypted);

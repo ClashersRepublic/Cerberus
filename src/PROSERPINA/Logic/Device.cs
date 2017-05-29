@@ -105,7 +105,7 @@ namespace BL.Servers.CR.Logic
                             }
                             catch (Exception Exception)
                             {
-                                Resources.Exceptions.Catch(Exception, Model, OSVersion, this.Player.UserId);
+                                Resources.Exceptions.Catch(Exception, "There was an exception while decrypting the message.", Model, OSVersion, this.Player.Token, this.Player.UserId);
                             }
                         }
                         else

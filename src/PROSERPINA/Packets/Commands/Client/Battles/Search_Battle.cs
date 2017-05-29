@@ -36,9 +36,9 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
                 {
                     Resources.Battles.Enqueue(this.Device.Player);
 
-                    Console.WriteLine($"Added {this.Device.Player.UserId} into the queue!");
+                    this.Device.PlayerState = Logic.Enums.State.SEARCH_BATTLE;
 
-                    new Matchmaking_Info(this.Device).Send();                    // Player 1
+                    new Matchmaking_Info(this.Device).Send();
                 }
                 else
                 {
@@ -50,8 +50,7 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
                     Battle.Player1.BattleID = Battle.BattleID;
                     Battle.Player2.BattleID = Battle.BattleID;
 
-                    Console.WriteLine($"Player 1: {Battle.Player1.UserId}");
-                    Console.WriteLine($"Player 2: {Battle.Player2.UserId}");
+                    this.Device.PlayerState = Logic.Enums.State.IN_BATTLE;
 
                     // Player 1
                     new Sector_PC(Battle.Player1.Device)

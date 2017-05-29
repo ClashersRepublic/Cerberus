@@ -11,7 +11,6 @@
         SEARCH_BATTLE = 7,
         IN_BATTLE = 8,
         VISIT = 9,
-        WAR_EMODE = 10,
         REPLAY = 11,
     }
 }

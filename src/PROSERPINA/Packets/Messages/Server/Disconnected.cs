@@ -17,7 +17,7 @@ namespace BL.Servers.CR.Packets.Messages.Server
 
         internal override void Process()
         {
-            //Resources.Gateway.Disconnect(this.Device.Token.Args);
+            Resources.Gateway.Disconnect(this.Device.Token.Args);
         }
     }
 }

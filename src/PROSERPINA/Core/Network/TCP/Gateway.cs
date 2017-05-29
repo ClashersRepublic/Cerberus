@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using BL.Servers.CR.Logic;
 using BL.Servers.CR.Logic.Enums;
+using BL.Servers.CR.Packets.Messages.Server;
 
 namespace BL.Servers.CR.Core.Network.TCP
 {
@@ -189,7 +190,16 @@ namespace BL.Servers.CR.Core.Network.TCP
             {
                 if (Resources.Players.ContainsValue(Token.Device.Player))
                 {
-                    Resources.Players.Remove(Token.Device.Player);
+                    if (Token.Device.PlayerState == State.IN_BATTLE)
+                    {
+                        Token.Device.Socket.Shutdown(SocketShutdown.Both);
+
+                        Resources.Players.Remove(Token.Device.Player);
+                    }
+                    else
+                    {
+                        Resources.Players.Remove(Token.Device.Player);
+                    }
                 }
             }
             else if (!Token.Device.Connected())
@@ -211,6 +221,8 @@ namespace BL.Servers.CR.Core.Network.TCP
 
             if (WriteEvent != null)
             {
+                Console.WriteLine("WriteEvent is not null!");
+
                 WriteEvent.SetBuffer(Message.ToBytes, Message.Offset, Message.Length + 7 - Message.Offset);
 
                 WriteEvent.AcceptSocket = Message.Device.Socket;
@@ -223,6 +235,8 @@ namespace BL.Servers.CR.Core.Network.TCP
             }
             else
             {
+                Console.WriteLine("WriteEvent is null!");
+
                 WriteEvent = new SocketAsyncEventArgs();
 
                 WriteEvent.SetBuffer(Message.ToBytes, Message.Offset, Message.Length + 7 - Message.Offset);
@@ -250,6 +264,7 @@ namespace BL.Servers.CR.Core.Network.TCP
                     if (!Message.Device.Socket.SendAsync(Args))
                     {
                         this.ProcessSend(Message, Args);
+                        Console.WriteLine("Process send complete!");
                     }
                 }
             }
