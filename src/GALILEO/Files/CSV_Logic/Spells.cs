@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BL.Servers.CoC.Logic.Enums;
 
 namespace BL.Servers.CoC.Files.CSV_Logic
 {
@@ -93,5 +94,6 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public int DamageTHPercent { get; set; }
         public bool ScaleByTH { get; set; }
         public bool EnabledByCalendar { get; set; }
+        public override Resource GetUpgradeResource() => CSV.Tables.Get(Gamefile.Resources).GetData(UpgradeResource) as Resource;
     }
 }

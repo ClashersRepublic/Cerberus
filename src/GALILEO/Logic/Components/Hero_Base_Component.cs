@@ -28,7 +28,7 @@ namespace BL.Servers.CoC.Logic.Components
             {
                 var ca = GetParent.Level.Avatar;
                 var currentLevel = ca.GetUnitUpgradeLevel(this.HeroData);
-                var rd = this.HeroData.GetUpgradeResource(currentLevel);
+                var rd = this.HeroData.GetUpgradeResource();
                 var cost = this.HeroData.GetUpgradeCost(currentLevel);
                 var multiplier = (CSV.Tables.Get(Gamefile.Globals).GetData("HERO_UPGRADE_CANCEL_MULTIPLIER") as Globals)
                     .NumberValue;

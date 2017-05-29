@@ -32,7 +32,7 @@ namespace BL.Servers.CoC.Files.CSV_Logic
 
         public virtual int GetUpgradeLevelCount() => -1;
 
-        public virtual Resource GetUpgradeResource(int level) => null;
+        public virtual Resource GetUpgradeResource() => null;
 
         public virtual int GetUpgradeTime(int level) => -1;
     }

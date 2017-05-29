@@ -59,12 +59,21 @@ namespace BL.Servers.CoC.Logic.Manager
             var result = 0;
             var components = this.Components[3];
             if (components.Count > 0)
-                //foreach (UnitProductionComponent c in components)
-                  //  if (!c.IsSpellForge())
+                foreach (Unit_Production_Component c in components)
+                    if (!c.IsSpellForge)
                     {
-                    //    var level = ((Building) c.GetParent()).GetUpgradeLevel();
-                      //  if (level > result)
-                        //    result = level;
+                        if (c.GetParent.ClassId == 0)
+                        {
+                            var level = ((Building) c.GetParent).GetUpgradeLevel();
+                            if (level > result)
+                                result = level;
+                        }
+                        else if (c.GetParent.ClassId == 7)
+                        {
+                            var level = ((Builder_Building)c.GetParent).GetUpgradeLevel();
+                            if (level > result)
+                                result = level;
+                        }
                     }
             return result;
         }
@@ -74,16 +83,29 @@ namespace BL.Servers.CoC.Logic.Manager
             var result = 0;
             var components = this.Components[3];
             if (components.Count > 0)
-                //foreach (UnitProductionComponent c in components)
-                  //  if (c.IsSpellForge())
-                    //{
-                      //  var b = (Building) c.GetParent();
-                       // if (!b.IsConstructing || b.IsUpgrading())
+                foreach (Unit_Production_Component c in components)
+                    if (c.IsSpellForge)
+                    {
+                        if (c.GetParent.ClassId == 0)
                         {
-                        //    var level = b.GetUpgradeLevel();
-                         //   if (level > result)
-                           //     result = level;
-                        //}
+                            var b = (Building) c.GetParent;
+                            if (!b.IsConstructing || b.IsUpgrading())
+                            {
+                                var level = b.GetUpgradeLevel();
+                                if (level > result)
+                                    result = level;
+                            }
+                        }
+                        else if (c.GetParent.ClassId == 7)
+                        {
+                            var b = (Builder_Building)c.GetParent;
+                            if (!b.IsConstructing || b.IsUpgrading())
+                            {
+                                var level = b.GetUpgradeLevel();
+                                if (level > result)
+                                    result = level;
+                            }
+                        }
                     }
             return result;
         }

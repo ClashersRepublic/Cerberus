@@ -1,4 +1,8 @@
-﻿using BL.Servers.CoC.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BL.Servers.CoC.Core;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Files.CSV_Logic;
 using BL.Servers.CoC.Logic;
@@ -27,57 +31,105 @@ namespace BL.Servers.CoC.Packets.Commands.Client
         internal override void Process()
         {
             var ca = this.Device.Player.Avatar;
-            var go = ca.Village_Mode == Village_Mode.NORMAL_VILLAGE ? this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId) : this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId);
+            var go = this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId) : this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId);
             if (go != null)
             {
                 var b = (ConstructionItem)go;
                 if (b.CanUpgrade())
                 {
-                    var bd = (Buildings) b.GetConstructionItemData();
-                    if (ca.HasEnoughResources(bd.GetBuildResource(b.GetUpgradeLevel()).GetGlobalID(), bd.GetBuildCost(b.GetUpgradeLevel())))
+                    Console.WriteLine(b.ClassId);
+                    if (b.ClassId == 0 || b.ClassId == 7)
                     {
-                        if (this.Device.Player.HasFreeWorkers)
+                        var bd = (Buildings) b.GetConstructionItemData();
+                        if (ca.HasEnoughResources(bd.GetBuildResource(b.GetUpgradeLevel()).GetGlobalID(),
+                            bd.GetBuildCost(b.GetUpgradeLevel())))
                         {
-                            var name = go.GetData().Row.Name;
-#if DEBUG
-                            Loggers.Log($"Building: Upgrading {name} with ID {BuildingId}", true);
-#endif
-
-                            /*if (bd.IsTownHall2())
+                            if (this.Device.Player.HasFreeWorkers)
                             {
-                                int c = 0;
-                                foreach (var _Object in this.Device.Player.GameObjectManager.GetGameObjects(7))
+                                var name = go.GetData().Row.Name;
+#if DEBUG
+                                Loggers.Log(b.ClassId == 0 ? "Building" : "Builder Building" + $" : Upgrading {name} with ID {BuildingId}", true);
+#endif
+                                if (bd.IsTownHall2())
                                 {
-                                    var go2 = this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(500000000 + c++);
-                                    if (go2 != null)
+                                    if (ca.Builder_TownHall_Level == 0)
                                     {
-                                        var b2 = (ConstructionItem) go2;
-                                        var bd2 = (Buildings) b2.GetConstructionItemData();
-                                        if (bd2.Name == "WallStraight" || bd2.Name == "Clock Tower" || bd2.Name == "Gem Mine" || bd2.Name == "Hero Altar Warmachine")
-                                            return;
+                                        Parallel.ForEach(this.Device.Player.GameObjectManager.GetGameObjects(7), Object =>
+                                        {
+                                            Builder_Building b2 = (Builder_Building) Object;
+                                            var bd2 = b2.GetBuildingData;
+                                            if (b2.Locked)
+                                            {
+                                                if (bd2.Locked)
+                                                    return;
 #if DEBUG
-                                        var name2 = go2.GetData().Row.Name;
-                                        Loggers.Log($"Building: Unlocking {name2} with ID {500000000 + c}", true);
+                                                Loggers.Log(
+                                                    $"Builder Building: Unlocking {bd2.Name} with ID {Object.GlobalId}",
+                                                    true);
 #endif
-                                        b2.Unlock();
+                                                b2.Unlock();
+                                            }
+                                        });
+
                                     }
+
+                                    ca.Builder_TownHall_Level++;
                                 }
-                            }*/
+                               
 
-                            if (bd.IsAllianceCastle())
-                            {
-                                var a = (Building)go;
-                                var al = a.GetBuildingData;
+                                if (bd.IsAllianceCastle())
+                                {
+                                    var a = (Building) go;
+                                    var al = a.GetBuildingData;
 
-                                ca.Castle_Level++;
-                                ca.Castle_Total = al.GetUnitStorageCapacity(ca.Castle_Level);
-                                ca.Castle_Total_SP = al.GetAltUnitStorageCapacity(ca.Castle_Level);
+                                    ca.Castle_Level++;
+                                    ca.Castle_Total = al.GetUnitStorageCapacity(ca.Castle_Level);
+                                    ca.Castle_Total_SP = al.GetAltUnitStorageCapacity(ca.Castle_Level);
+                                }
+                                else if (bd.IsTownHall())
+                                    ca.TownHall_Level++;
+
+                                var rd = bd.GetBuildResource(b.GetUpgradeLevel() + 1);
+                                ca.Resources.Minus(rd.GetGlobalID(), bd.GetBuildCost(b.GetUpgradeLevel()));
+                                b.StartUpgrading();
                             }
-                            else if (bd.IsTownHall())
-                                ca.TownHall_Level++;
-                            var rd = bd.GetBuildResource(b.GetUpgradeLevel() + 1 );
-                            ca.Resources.Minus(rd.GetGlobalID(), bd.GetBuildCost(b.GetUpgradeLevel()));
-                            b.StartUpgrading();
+                        }
+                    }
+                    else if (b.ClassId == 4 || b.ClassId == 11)
+                    {
+                        var bd = (Traps)b.GetConstructionItemData();
+                        if (ca.HasEnoughResources(bd.GetBuildResource(b.GetUpgradeLevel()).GetGlobalID(), bd.GetBuildCost(b.GetUpgradeLevel())))
+                        {
+                            if (this.Device.Player.HasFreeWorkers)
+                            {
+                                var name = go.GetData().Row.Name;
+#if DEBUG
+                                Loggers.Log($"Trap: Upgrading {name} with ID {BuildingId}", true);
+#endif
+
+                                var rd = bd.GetBuildResource(b.GetUpgradeLevel() + 1);
+                                ca.Resources.Minus(rd.GetGlobalID(), bd.GetBuildCost(b.GetUpgradeLevel()));
+                                b.StartUpgrading();
+                            }
+                        }
+                    }
+                    else if (b.ClassId == 8 || b.ClassId == 15)
+                    {
+                        var bd = (Village_Objects) b.GetConstructionItemData();
+                        if (ca.HasEnoughResources(bd.GetBuildResource(b.GetUpgradeLevel()).GetGlobalID(),
+                            bd.GetBuildCost(b.GetUpgradeLevel())))
+                        {
+                            if (this.Device.Player.HasFreeWorkers)
+                            {
+                                var name = go.GetData().Row.Name;
+#if DEBUG
+                                Loggers.Log($"Village Object: Upgrading {name} with ID {BuildingId}", true);
+#endif
+
+                                var rd = bd.GetBuildResource(b.GetUpgradeLevel() + 1);
+                                ca.Resources.Minus(rd.GetGlobalID(), bd.GetBuildCost(b.GetUpgradeLevel()));
+                                b.StartUpgrading();
+                            }
                         }
                     }
                 }

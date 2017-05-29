@@ -21,17 +21,19 @@ namespace BL.Servers.CoC.Logic
         internal Token Token;
         internal Crypto Keys;
         internal RC4Core RC4;
+        internal IntPtr SocketHandle;
         internal string AndroidID, OpenUDID, Model, OSVersion, MACAddress, AdvertiseID, VendorID, IPAddress;
         internal bool Android, Advertising;
-
+        internal volatile int Dropped;
         internal uint ClientSeed;
-        internal IntPtr SocketHandle;
+
+
 
         public Device(Socket so)
         {
             this.Socket = so;
             this.Keys = new Crypto();
-            if (true) //RC4
+            if (Constants.RC4) 
                 this.RC4 = new RC4Core();
             this.SocketHandle = so.Handle;
         }
@@ -40,7 +42,7 @@ namespace BL.Servers.CoC.Logic
         {
             this.Socket = so;
             this.Keys = new Crypto();
-            if (true) //RC4
+            if (Constants.RC4)
                 this.RC4 = new RC4Core();
             this.Token = token;
             this.SocketHandle = so.Handle;

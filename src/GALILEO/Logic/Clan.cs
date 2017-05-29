@@ -80,6 +80,7 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(this.Members.Values.Count);
 
                 _Packet.AddInt(this.Trophies);
+                _Packet.AddInt(1); //Builder base Trophies
                 _Packet.AddInt(this.Required_Trophies);
 
                 _Packet.AddInt(this.Won_War);

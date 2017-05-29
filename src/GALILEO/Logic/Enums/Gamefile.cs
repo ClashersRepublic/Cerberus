@@ -33,6 +33,7 @@
         Heroes,
         Leagues,
         News,
+        Variables = 37,
         Village_Objects = 39,
     }
 }

@@ -23,6 +23,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Battle
 
         internal override void Process()
         {
+            ShowValues();
             new Replay_Data(this.Device) { Battle_ID = this.Replay_ID }.Send();
         }
     }

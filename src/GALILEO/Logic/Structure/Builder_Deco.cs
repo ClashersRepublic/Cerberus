@@ -9,16 +9,13 @@ namespace BL.Servers.CoC.Logic.Structure
 
     internal class Builder_Deco : GameObject
     {
-        internal Level Level;
-
         public Builder_Deco(Data data, Level l) : base(data, l)
         {
-            this.Level = l;
         }
 
         internal override int ClassId => 13;
 
-        public Decos GetDecoData() => (Decos)GetData();
+        public Decos GetDecoData => (Decos)GetData();
 
     }
 }

@@ -21,17 +21,34 @@ namespace BL.Servers.CoC.Packets.Commands.Client
         internal override void Process()
         {
             ShowValues();
-            var Object = (Obstacle)this.Device.Player.GameObjectManager.GetGameObjectByID(this.ObstacleID);
-            if (Object != null)
+            if (!this.Device.Player.Avatar.Variables.IsBuilderVillage)
             {
-                var obstacleData = Object.GetObstacleData();
-                int ResourceID = obstacleData.GetClearingResource().GetGlobalID();
-                if (this.Device.Player.Avatar.HasEnoughResources(ResourceID, obstacleData.ClearCost) &&
-                    this.Device.Player.HasFreeWorkers)
+                var Object = (Obstacle) this.Device.Player.GameObjectManager.GetGameObjectByID(this.ObstacleID);
+                if (Object != null)
                 {
-                    Console.WriteLine("Sup");
-                    this.Device.Player.Avatar.Resources.Minus(ResourceID, obstacleData.ClearCost);
-                    Object.StartClearing();
+                    var obstacleData = Object.GetObstacleData();
+                    int ResourceID = obstacleData.GetClearingResource().GetGlobalID();
+                    if (this.Device.Player.Avatar.HasEnoughResources(ResourceID, obstacleData.ClearCost) &&
+                        this.Device.Player.HasFreeWorkers)
+                    {
+                        this.Device.Player.Avatar.Resources.Minus(ResourceID, obstacleData.ClearCost);
+                        Object.StartClearing();
+                    }
+                }
+            }
+            else
+            {
+                var Object = (Builder_Obstacle)this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(this.ObstacleID);
+                if (Object != null)
+                {
+                    var obstacleData = Object.GetObstacleData;
+                    int ResourceID = obstacleData.GetClearingResource().GetGlobalID();
+                    if (this.Device.Player.Avatar.HasEnoughResources(ResourceID, obstacleData.ClearCost) &&
+                        this.Device.Player.HasFreeWorkers)
+                    {
+                        this.Device.Player.Avatar.Resources.Minus(ResourceID, obstacleData.ClearCost);
+                        Object.StartClearing();
+                    }
                 }
             }
         }

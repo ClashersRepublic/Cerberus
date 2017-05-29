@@ -4,6 +4,7 @@ using System.Net;
 using System.Reflection;
 using System.Threading;
 using BL.Servers.CoC.Core;
+using BL.Servers.CoC.Core.Database;
 using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Files;
@@ -51,6 +52,15 @@ namespace BL.Servers.CoC
 
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is sponsored by GobelinLand");
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
+            int GlobalID = 23000082;
+            int Type = 0;
+
+            while (GlobalID >= 1000000)
+            {
+                Type += 1;
+                GlobalID -= 1000000;
+            }
+            Console.WriteLine(Type);
             //Resources.Region.Bench("Warm-up for Memory mode");
             //Resources.Region.Bench("Memory mode");
             Thread.Sleep(Timeout.Infinite);

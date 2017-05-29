@@ -14,35 +14,49 @@ namespace BL.Servers.CoC.Logic.Structure
     {
         public ConstructionItem(Data data, Level level) : base(data, level)
         {
-            this.Level = level;
             this.IsBoosted = false;
+            this.IsBoostPause = false;
             this.IsConstructing = false;
             this.UpgradeLevel = -1;
         }
-
-        internal Level Level;
-        internal DateTime BoostEndTime;
+        
+        internal Timer BoostTimer;
         internal Timer Timer;
 
         internal bool Locked;
         internal bool IsBoosted;
+        internal bool IsBoostPause;
         internal int  UpgradeLevel;
         internal bool IsConstructing;
         public void BoostBuilding()
         {
-            IsBoosted = true;
-            this.BoostEndTime = Level.Avatar.LastTick.AddMinutes(GetBoostDuration());
+            this.IsBoosted = true;
+            this.IsBoostPause = false;
+            this.BoostTimer = new Timer();
+            this.BoostTimer.StartTimer(this.Level.Avatar.LastTick, GetBoostDuration());
         }
-        
+
+        internal DateTime GetBoostEndTime => this.BoostTimer.GetEndTime;
+
         internal int GetUpgradeLevel() => this.UpgradeLevel;
 
-        public bool IsMaxUpgradeLevel() => UpgradeLevel >= GetConstructionItemData().GetUpgradeLevelCount() - 1;
+        internal bool IsMaxUpgradeLevel() => UpgradeLevel >= GetConstructionItemData().GetUpgradeLevelCount() - 1;
 
-        public bool IsUpgrading() => this.IsConstructing && UpgradeLevel >= 0;
+        internal bool IsUpgrading() => this.IsConstructing && UpgradeLevel >= 0;
 
-        public Construction_Item GetConstructionItemData() => (Construction_Item)GetData();
+        internal Construction_Item GetConstructionItemData() => (Construction_Item)GetData();
 
-        public Resource_Storage_Component GetResourceStorageComponent(bool enabled = false)
+        internal Resource_Production_Component GetResourceProductionComponent(bool enabled = false)
+        {
+            var comp = GetComponent(5, enabled);
+            if (comp != null && comp.Type != -1)
+            {
+                return (Resource_Production_Component)comp;
+            }
+            return null;
+        }
+
+        internal Resource_Storage_Component GetResourceStorageComponent(bool enabled = false)
         {
             Component comp = GetComponent(6, enabled);
             if (comp != null && comp.Type != -1)
@@ -51,12 +65,34 @@ namespace BL.Servers.CoC.Logic.Structure
             }
             return null;
         }
-        public Hero_Base_Component GetHeroBaseComponent(bool enabled = false)
+
+
+        internal Hero_Base_Component GetHeroBaseComponent(bool enabled = false)
         {
             Component comp = GetComponent(10, enabled);
             if (comp != null && comp.Type != -1)
             {
                 return (Hero_Base_Component)comp;
+            }
+            return null;
+        }
+
+        internal Unit_Upgrade_Component GetUnitUpgradeComponent(bool enabled = false)
+        {
+            var comp = GetComponent(9, enabled);
+            if (comp != null && comp.Type != -1)
+            {
+                return (Unit_Upgrade_Component)comp;
+            }
+            return null;
+        }
+
+        internal Unit_Production_Component GetUnitProductionComponent(bool enabled = false)
+        {
+            var comp = GetComponent(3, enabled);
+            if (comp != null && comp.Type != -1)
+            {
+                return (Unit_Production_Component)comp;
             }
             return null;
         }
@@ -85,23 +121,46 @@ namespace BL.Servers.CoC.Logic.Structure
                 }
             }
         }
+
         internal int GetBoostDuration()
         {
-            /*if (GetResourceProductionComponent() != null)
+            if (GetResourceProductionComponent() != null)
             {
                 return ((Globals)CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_PRODUCTION_BOOST_MINS")).NumberValue;
             }
            if (GetUnitProductionComponent() != null)
             {
-                if (GetUnitProductionComponent().IsSpellForge())
+                if (GetUnitProductionComponent().IsSpellForge)
                 {
                     return ((Globals)CSV.Tables.Get(Gamefile.Globals).GetData("SPELL_FACTORY_BOOST_MINS")).NumberValue;
                 }
                 return ((Globals)CSV.Tables.Get(Gamefile.Globals).GetData("BARRACKS_BOOST_MINS")).NumberValue;
-            }*/
+            }
             if (GetHeroBaseComponent() != null)
             {
                 return ((Globals)CSV.Tables.Get(Gamefile.Globals).GetData("HERO_REST_BOOST_MINS")).NumberValue;
+            }
+
+            return 0;
+        }
+
+        internal float GetBoostMultipier()
+        {
+            if (GetResourceProductionComponent() != null)
+            {
+                return ((Globals)CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_PRODUCTION_BOOST_MULTIPLIER")).NumberValue;
+            }
+            if (GetUnitProductionComponent() != null)
+            {
+                if (GetUnitProductionComponent().IsSpellForge)
+                {
+                    return ((Globals)CSV.Tables.Get(Gamefile.Globals).GetData("SPELL_FACTORY_BOOST_MULTIPLIER")).NumberValue;
+                }
+                return ((Globals)CSV.Tables.Get(Gamefile.Globals).GetData("BARRACKS_BOOST_MULTIPLIER")).NumberValue;
+            }
+            if (GetHeroBaseComponent() != null)
+            {
+                return ((Globals)CSV.Tables.Get(Gamefile.Globals).GetData("HERO_REST_BOOST_MULTIPLIER")).NumberValue;
             }
 
             return 0;
@@ -134,9 +193,9 @@ namespace BL.Servers.CoC.Logic.Structure
             this.IsConstructing = false;
             this.Level.WorkerManager.DeallocateWorker(this);
             SetUpgradeLevel(GetUpgradeLevel() + 1);
-         //   if (GetResourceProductionComponent() != null)
+             if (GetResourceProductionComponent() != null)
             {
-           //     GetResourceProductionComponent().Reset();
+                 GetResourceProductionComponent().Reset();
             }
 
             int constructionTime = GetConstructionItemData().GetConstructionTime(GetUpgradeLevel());
@@ -163,16 +222,38 @@ namespace BL.Servers.CoC.Logic.Structure
         {
             UpgradeLevel = jsonObject["lvl"].ToObject<int>();
             this.Level.WorkerManager.DeallocateWorker(this);
+
             var constTimeToken = jsonObject["const_t"];
             var constTimeEndToken = jsonObject["const_t_end"];
             if (constTimeToken != null && constTimeEndToken != null)
             {
                 this.Timer = new Timer();
                 this.IsConstructing = true;
-                var remainingConstructionTime = constTimeToken.ToObject<int>();
-                this.Timer.StartTimer(this.Level.Avatar.LastTick, remainingConstructionTime);
-                this.Timer.EndTime = constTimeEndToken.ToObject<int>();
+
+                var remainingConstructionEndTime = constTimeEndToken.ToObject<int>();
+                var startTime = (int)TimeUtils.ToUnixTimestamp(this.Level.Avatar.LastTick);
+                var duration = remainingConstructionEndTime - startTime;
+
+                if (duration < 0)
+                    duration = 0;
+
+                this.Timer.StartTimer(this.Level.Avatar.LastTick, duration);
+
                 this.Level.WorkerManager.AllocateWorker(this);
+            }
+            var boostToken = jsonObject["boost_t"];
+            var boostEndToken = jsonObject["boost_t_end"];
+            if (boostToken != null && boostEndToken != null)
+            {
+                this.BoostTimer = new Timer();
+                this.IsBoosted = true;
+                //this.IsBoostPause = boostPauseToken.ToObject<bool>();
+
+                var remainingBoostEndTime = boostEndToken.ToObject<int>();
+                var startTime = (int)TimeUtils.ToUnixTimestamp(this.Level.Avatar.LastTick);
+                var duration = remainingBoostEndTime - startTime;
+
+                this.BoostTimer.StartTimer(this.Level.Avatar.LastTick, duration);
             }
             Locked = false;
             var lockedToken = jsonObject["locked"];
@@ -180,6 +261,7 @@ namespace BL.Servers.CoC.Logic.Structure
             {
                 Locked = lockedToken.ToObject<bool>();
             }
+
             SetUpgradeLevel(UpgradeLevel);
             base.Load(jsonObject);
         }
@@ -191,6 +273,11 @@ namespace BL.Servers.CoC.Logic.Structure
             {
                 jsonObject.Add("const_t", this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick));
                 jsonObject.Add("const_t_end", this.Timer.EndTime);
+            }
+            if (IsBoosted)
+            {
+                jsonObject.Add("boost_t", this.BoostTimer.GetRemainingSeconds(this.Level.Avatar.LastTick));
+                jsonObject.Add("boost_t_end", this.BoostTimer.EndTime);
             }
             if (Locked)
                 jsonObject.Add("locked", true);
@@ -283,6 +370,13 @@ namespace BL.Servers.CoC.Logic.Structure
                 if (this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick) <= 0)
                 {
                     FinishConstruction();
+                }
+            }
+            if (this.IsBoosted)
+            {
+                if (this.BoostTimer.GetRemainingSeconds(this.Level.Avatar.LastTick) <= 0)
+                {
+                    this.IsBoosted = false;
                 }
             }
         }

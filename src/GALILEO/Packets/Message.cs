@@ -120,8 +120,8 @@ namespace BL.Servers.CoC.Packets
 
         internal virtual void EncryptRC4()
         {
-
             byte[] Encrypted = this.Data.ToArray();
+
             if (this.Device.State > State.SESSION_OK)
                 this.Device.RC4.Encrypt(ref Encrypted);
 

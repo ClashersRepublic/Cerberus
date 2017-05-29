@@ -28,14 +28,20 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
         internal override void Process()
         {
-            var Object =  this.Device.Player.GameObjectManager.GetGameObjectByID(this.BuildingID);
+            var Object = this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(this.BuildingID) : this.Device.Player.GameObjectManager.GetGameObjectByID(this.BuildingID);
             if (Object?.GetComponent(1, true) == null)
                 return;
             var a = ((Combat_Component) Object.GetComponent(1, true));
             if (a.AltAttackMode)
             {
-                a.Attack_Mode = !a.Attack_Mode;
-                a.Attack_Mode_Draft = !a.Attack_Mode_Draft;
+                a.AttackMode = !a.AttackMode;
+                a.AttackModeDraft = !a.AttackModeDraft;
+            }
+
+            if (a.AltTrapAttackMode)
+            {
+                a.AirMode = !a.AirMode;
+                a.AirModeDraft = !a.AirModeDraft;
             }
         }
     }

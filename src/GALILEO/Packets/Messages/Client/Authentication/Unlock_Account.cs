@@ -23,7 +23,7 @@ namespace BL.Servers.CoC.Packets.Client.Authentication
 
         public Unlock_Account(Device Device, Reader Reader) : base(Device, Reader)
         {
-            this.UserPassword = this.Device.Player.Avatar.Password;
+            this.UserPassword = this.Device.Player != null ? this.Device.Player.Avatar.Password : String.Empty;
         }
 
         internal override void Decode()
@@ -46,6 +46,12 @@ namespace BL.Servers.CoC.Packets.Client.Authentication
 
              if (this.UnlockCode[0] == '/')
               {
+                  if (this.UnlockCode.Contains("reset"))
+                  {
+                      new Unlock_Account_OK(this.Device) {Account = Resources.Players.New().Avatar}.Send();
+                      return;
+                  }
+
                   if (int.TryParse(this.UnlockCode.Substring(1), out int n))
                   {
                       var account = Resources.Players.Get(n);

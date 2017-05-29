@@ -1,5 +1,6 @@
 ﻿using BL.Servers.CoC.Files.CSV_Helpers;
 using BL.Servers.CoC.Files.CSV_Reader;
+using BL.Servers.CoC.Logic.Enums;
 
 namespace BL.Servers.CoC.Files.CSV_Logic
 {
@@ -36,5 +37,27 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public bool HasInfoScreen { get; set; }
         public int VillageType { get; set; }
         public int UnitHousing { get; set; }
+
+        public override int GetUpgradeLevelCount() => 2;
+        public override int GetConstructionTime(int level)
+        {
+            int Total_Time = 0;
+            if (BuildTimeD.Length > level + 1)
+                Total_Time += BuildTimeD[level] * 86400;
+            if (BuildTimeH.Length > level + 1)
+                Total_Time += BuildTimeH[level] * 3600;
+            if (BuildTimeM.Length > level + 1)
+                Total_Time += BuildTimeM[level] * 60;
+            if (BuildTimeS.Length > level + 1)
+                Total_Time += BuildTimeS[level];
+
+
+            return Total_Time;
+            //return BuildTimeS[level] + BuildTimeM[level] * 60 + BuildTimeH[level] * 60 * 60 + BuildTimeD[level] * 60 * 60 * 24;
+        }
+
+        public override int GetRequiredTownHallLevel(int level) => TownHallLevel[level] - 1;
+        public override Resource GetBuildResource(int level) => CSV.Tables.Get(Gamefile.Resources).GetData(BuildResource) as Resource;
+        public override int GetBuildCost(int level) => BuildCost;
     }
 }

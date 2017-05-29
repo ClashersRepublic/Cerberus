@@ -42,7 +42,7 @@ namespace BL.Servers.CoC.Core
                     break;
             }
             this.Events = new EventsHandler();
-           // this.Parser = new Parser();
+            this.Parser = new Parser();
 #if DEBUG
             Console.WriteLine("We loaded " + MessageFactory.Messages.Count + " messages, " + CommandFactory.Commands.Count + " commands, and 0 debug commands.\n");
 #endif

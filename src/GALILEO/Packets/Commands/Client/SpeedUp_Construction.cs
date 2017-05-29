@@ -20,7 +20,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
         internal override void Process()
         {
-            var go =  this.Device.Player.Avatar.Village_Mode == Village_Mode.NORMAL_VILLAGE ? this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId) : this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId);
+            var go =  this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId) : this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId);
 
             if (go != null)
             {

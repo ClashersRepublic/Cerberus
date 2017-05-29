@@ -18,9 +18,9 @@ using BL.Servers.CoC.Packets.Cryptography;
 
 namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 {
-    internal class Authentification : Message
+    internal class Authentication : Message
     {
-        public Authentification(Device device, Reader reader) : base(device, reader)
+        public Authentication(Device device, Reader reader) : base(device, reader)
         {
             this.Device.State = State.LOGIN;
         }
@@ -111,6 +111,13 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
         {
             if (Constants.RC4)
                 new Session_Key(this.Device).Send();
+
+            if (Constants.Maintenance != null)
+            {
+                new Authentication_Failed(this.Device, Logic.Enums.Reason.Maintenance).Send();
+                return;
+            }
+ 
             if (string.Equals(this.MasterHash, Fingerprint.Sha))
             {
                 if (this.UserId == 0)
@@ -179,17 +186,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                     }
                     else
                     {
-                        this.Reason = new StringBuilder();
-                        this.Reason.AppendLine(
-                            "Your device have been block from accessing our servers due to invalid id, please clear your game data or contact one of the staff members with these following information if you are not able to clear you game data:");
-                        this.Reason.AppendLine("Your Device IP: " + this.Device.IPAddress + ".");
-                        this.Reason.AppendLine("Your Requested ID: " + this.UserId + ".");
-                        this.Reason.AppendLine();
-
-                        new Authentication_Failed(this.Device, (Reason) 443)
-                        {
-                            Message = Reason.ToString()
-                        }.Send();
+                        new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
                     }
                 }
             }

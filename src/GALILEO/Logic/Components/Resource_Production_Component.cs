@@ -1,13 +1,11 @@
-﻿/*using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using BL.Servers.CoC.Core;
+using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Files.CSV_Logic;
 using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Logic.Structure;
-using BL.Servers.CoC.Logic.Structure.Slots;
+using Newtonsoft.Json.Linq;
 
 namespace BL.Servers.CoC.Logic.Components
 {
@@ -17,7 +15,7 @@ namespace BL.Servers.CoC.Logic.Components
         {
             this.TimeSinceLastClick = level.Avatar.LastTick;
             this.ProductionResourceData = CSV.Tables.Get(Gamefile.Resources).GetData(((Buildings) ci.GetData()).ProducesResource) as Files.CSV_Logic.Resource;
-            this.ResourcesPerHour = ((Buildings)ci.GetData()).ResourcePerHour;
+            this.ResourcesPerHour = ((Buildings)ci.GetData()).ResourcePer100Hours;
             this.MaxResources = ((Buildings) ci.GetData()).ResourceMax;
         }
 
@@ -31,53 +29,107 @@ namespace BL.Servers.CoC.Logic.Components
         internal void CollectResources()
         {
             var ci = (ConstructionItem)GetParent;
-            var span = ci.Avatar.Avatar.LastTick - this.TimeSinceLastClick;
+            var span = ci.Level.Avatar.LastTick - this.TimeSinceLastClick;
             float currentResources = 0;
             if (!ci.IsBoosted)
             {
-                currentResources = this.ResourcesPerHour[ci.UpgradeLevel] / (60f * 60f) * (float)span.TotalSeconds;
+                currentResources = (float)(this.ResourcesPerHour[ci.UpgradeLevel] / 100.0) / (60f * 60f) * (float)span.TotalSeconds;
             }
             else
             {
-                if (ci.GetBoostEndTime() >= ci.Avatar.Avatar.LastTick)
+                if (ci.GetBoostEndTime >= ci.Level.Avatar.LastTick)
                 {
-                    currentResources = m_vResourcesPerHour[ci.UpgradeLevel] / (60f * 60f) * (float)span.TotalSeconds;
+                    currentResources = (float)(this.ResourcesPerHour[ci.UpgradeLevel] / 100.0) / (60f * 60f) * (float)span.TotalSeconds;
                     currentResources *= ci.GetBoostMultipier();
                 }
                 else
                 {
-                    var boostedTime = (float)span.TotalSeconds - (float)(ci.Avatar.Avatar.LastTick - ci.GetBoostEndTime()).TotalSeconds;
+                    var boostedTime = (float)span.TotalSeconds - (float)(ci.Level.Avatar.LastTick - ci.GetBoostEndTime).TotalSeconds;
                     var notBoostedTime = (float)span.TotalSeconds - boostedTime;
-                    currentResources = m_vResourcesPerHour[ci.UpgradeLevel] / (60f * 60f) * notBoostedTime;
-                    currentResources += m_vResourcesPerHour[ci.UpgradeLevel] / (60f * 60f) * boostedTime * ci.GetBoostMultipier();
+                    currentResources = (float)(this.ResourcesPerHour[ci.UpgradeLevel] / 100.0) / (60f * 60f) * notBoostedTime;
+                    currentResources += (float)(this.ResourcesPerHour[ci.UpgradeLevel] / 100.0) / (60f * 60f) * boostedTime * ci.GetBoostMultipier();
                     ci.IsBoosted = false;
                 }
             }
 
-            currentResources = Math.Min(Math.Max(currentResources, 0), m_vMaxResources[ci.UpgradeLevel]);
+            currentResources = Math.Min(Math.Max(currentResources, 0), this.MaxResources[ci.UpgradeLevel]);
 
             if (currentResources >= 1)
             {
-                var ca = ci.Avatar.Avatar;
-                if (ca.GetResourceCap(m_vProductionResourceData) >= ca.GetResourceCount(m_vProductionResourceData))
+                var ca = ci.Level.Avatar;
+                if (ca.Resources_Cap.Get(this.ProductionResourceData.GetGlobalID()) >= ca.Resources.Get(this.ProductionResourceData.GetGlobalID()) || this.ProductionResourceData.GetGlobalID() == 3000000)
                 {
-                    if (ca.GetResourceCap(m_vProductionResourceData) - ca.GetResourceCount(m_vProductionResourceData) <
-                        currentResources)
+                    if (this.ProductionResourceData.GetGlobalID() != 3000000)
                     {
-                        var newCurrentResources = ca.GetResourceCap(m_vProductionResourceData) - ca.GetResourceCount(m_vProductionResourceData);
-                        this.TimeSinceLastClick = ci.Avatar
-                            .Avatar.LastTickSaved
-                            .AddSeconds(-((currentResources - newCurrentResources) / (m_vResourcesPerHour[ci.UpgradeLevel] / (60f * 60f))));
-                        currentResources = newCurrentResources;
+                        if (ca.Resources_Cap.Get(this.ProductionResourceData.GetGlobalID()) -
+                            ca.Resources.Get(this.ProductionResourceData.GetGlobalID()) < currentResources)
+                        {
+                            var newCurrentResources =
+                                ca.Resources_Cap.Get(this.ProductionResourceData.GetGlobalID() -
+                                                     ca.Resources.Get(this.ProductionResourceData.GetGlobalID()));
+                            this.TimeSinceLastClick =
+                                ci.Level.Avatar.LastTick.AddSeconds(-((currentResources - newCurrentResources) /
+                                                                      ((float) (this.ResourcesPerHour[ci.UpgradeLevel] /
+                                                                                100.0) / (60f * 60f))));
+                            currentResources = newCurrentResources;
+                        }
+                        else
+                        {
+                            this.TimeSinceLastClick = ci.Level.Avatar.LastTick;
+                        }
                     }
                     else
                     {
-                        this.TimeSinceLastClick = ci.Avatar.Avatar.LastTick;
+                        this.TimeSinceLastClick = ci.Level.Avatar.LastTick;
                     }
-
-                    ca.CommodityCountChangeHelper(0, m_vProductionResourceData, (int)currentResources);
+#if DEBUG
+                    Loggers.Log($"Resource System : Collecting {currentResources} of {this.ProductionResourceData.Name}", true, Defcon.INFO);
+#endif
+                    ca.Resources.ResourceChangeHelper(this.ProductionResourceData.GetGlobalID(), (int)currentResources);
                 }
             }
         }
+
+        internal override void Load(JObject jsonObject)
+        {
+            var productionObject = (JObject)jsonObject["production"];
+            if (productionObject != null)
+            {
+                this.TimeSinceLastClick = TimeUtils.FromUnixTimestamp(productionObject["t_lastClick"].ToObject<int>());
+            }
+        }
+
+        internal void Reset()
+        {
+            this.TimeSinceLastClick = GetParent.Level.Avatar.LastTick;
+        }
+
+        internal override JObject Save(JObject jsonObject)
+        {
+            if (((ConstructionItem)GetParent).GetUpgradeLevel() != -1)
+            {
+                var productionObject = new JObject {{"t_lastClick", (int)TimeUtils.ToUnixTimestamp(this.TimeSinceLastClick)} };
+
+                jsonObject.Add("production", productionObject);
+                var ci = (ConstructionItem)GetParent;
+                var seconds = (float)(GetParent.Level.Avatar.LastTick - TimeSinceLastClick).TotalSeconds;
+                
+                if (ci.IsBoosted)
+                {
+                    if (ci.GetBoostEndTime >= ci.Level.Avatar.LastTick)
+                    {
+                        seconds *= ci.GetBoostMultipier();
+                    }
+                    else
+                    {
+                        var boostedTime = seconds - (float)(ci.Level.Avatar.LastTick - ci.GetBoostEndTime).TotalSeconds;
+                        var notBoostedTime = seconds - boostedTime;
+                        seconds = boostedTime * ci.GetBoostMultipier() + notBoostedTime;
+                    }
+                }
+                jsonObject.Add("res_time", (int)((this.MaxResources[ci.GetUpgradeLevel()] / (float)(this.ResourcesPerHour[ci.UpgradeLevel] / 100.0) * 3600f) - seconds));
+            }
+            return jsonObject;
+        }
     }
-}*/
+}

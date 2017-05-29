@@ -20,7 +20,7 @@ namespace BL.Servers.CoC.Packets
             Messages = new Dictionary<int, Type>
             {
                 {10100, typeof(Pre_Authentication)},
-                {10101, typeof(Authentification)},
+                {10101, typeof(Authentication)},
                 {10108, typeof(Keep_Alive)},
                 {10121, typeof(Unlock_Account)},
                 {10212, typeof(Change_Name)},

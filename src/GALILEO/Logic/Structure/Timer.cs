@@ -17,6 +17,12 @@ namespace BL.Servers.CoC.Logic.Structure
         }
         internal void FastForward(int seconds) => this.Seconds -= seconds;
 
+        internal void IncreaseTime(int seconds)
+        {
+            this.Seconds += seconds;
+            this.EndTime += seconds;
+        }
+
         internal int GetRemainingSeconds(DateTime time, bool boost, DateTime boostEndTime = default(DateTime), float multiplier = 0f)
         {
             int result;
@@ -40,6 +46,7 @@ namespace BL.Servers.CoC.Logic.Structure
                 result = 0;
             return result;
         }
+
         internal int GetRemainingSeconds(DateTime time)
         {
             int result = this.Seconds - (int)time.Subtract(this.StartTime).TotalSeconds;
@@ -49,8 +56,9 @@ namespace BL.Servers.CoC.Logic.Structure
             }
             return result;
         }
-        internal DateTime GetStartTime() => this.StartTime;
-        internal DateTime GetEndTime() => this.StartTime;
+
+        internal DateTime GetStartTime => this.StartTime;
+        internal DateTime GetEndTime => TimeUtils.FromUnixTimestamp(EndTime);
 
         internal void StartTimer(DateTime time, int durationSeconds)
         {

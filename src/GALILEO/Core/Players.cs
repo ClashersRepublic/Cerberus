@@ -49,7 +49,10 @@ namespace BL.Servers.CoC.Core
                 if (this.Remove(Player.Avatar.UserId))
                 {
                     this.Save(Player, Constants.Database);
-                    Player.Client.Player = null;
+                    if (Player.Client?.Player != null)
+                        Player.Client.Player = null;
+                    
+
                 }
 
 

@@ -7,7 +7,7 @@ All programs developed by the BarbariansLand Development Team are licensed by a 
 
 ## Project Codenames:
 * Eris - Boom Beach Server
-* Europa - Some Patcher
+* Europa - Hash Generator
 * Galileo - Clash of Clans Server
 * Lyra - Supercell Proxy
 * Nebula - SC Editor

@@ -42,12 +42,18 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
             this.Data.AddVInt(193); // Minor
             this.Data.AddVInt(6); // Revision
 
-            if (Constants.Mode == Server_Mode.PRODUCTION)
-                this.Data.AddString("prod");
-            else if (Constants.Mode == Server_Mode.STAGE)
-                this.Data.AddString("stage");
-            else if (Constants.Mode == Server_Mode.DEVELOPEMENT)
-                this.Data.AddString("dev");
+            switch (Constants.Mode)
+            {
+                case Server_Mode.PRODUCTION:
+                    this.Data.AddString("prod");
+                    break;
+                case Server_Mode.STAGE:
+                    this.Data.AddString("stage");
+                    break;
+                case Server_Mode.DEVELOPEMENT:
+                    this.Data.AddString("dev");
+                    break;
+            }
 
             this.Data.AddVInt(0); // Session Count
             this.Data.AddVInt(0); // Total Play Time Seconds

@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Files.CSV_Logic;
@@ -15,14 +13,13 @@ using BL.Servers.CoC.Logic.Structure;
 
 namespace BL.Servers.CoC.Packets.Commands.Client
 {
-
-    internal class Buy_Building : Command
+    internal class Buy_Trap : Command
     {
-        internal int BuildingId;
-        internal uint Unknown1;
         internal Vector Vector;
+        internal int TrapID;
+        internal int Tick;
 
-        public Buy_Building(Reader reader, Device client, int id) : base(reader, client, id)
+        public Buy_Trap(Reader reader, Device client, int id) : base(reader, client, id)
         {
             this.Vector = new Vector();
         }
@@ -31,24 +28,24 @@ namespace BL.Servers.CoC.Packets.Commands.Client
         {
             this.Vector.X = this.Reader.ReadInt32();
             this.Vector.Y = this.Reader.ReadInt32();
-            this.BuildingId = this.Reader.ReadInt32();
-            this.Unknown1 = this.Reader.ReadUInt32();
+            this.TrapID = this.Reader.ReadInt32();
+            this.Tick = this.Reader.ReadInt32();
         }
 
         internal override void Process()
         {
             var ca = this.Device.Player.Avatar;
-            var bd = (Buildings) CSV.Tables.Get(Gamefile.Buildings).GetDataWithID(BuildingId);
+            var td = (Traps) CSV.Tables.Get(Gamefile.Traps).GetDataWithID(this.TrapID);
             if (!ca.Variables.IsBuilderVillage)
             {
-                var b = new Building(bd, this.Device.Player);
+                var b = new Trap(td, this.Device.Player);
 
-                if (ca.HasEnoughResources(bd.GetBuildResource(0).GetGlobalID(), bd.GetBuildCost(0)))
+                if (ca.HasEnoughResources(td.GetBuildResource(0).GetGlobalID(), td.GetBuildCost(0)))
                 {
-                    if (bd.IsWorkerBuilding() || this.Device.Player.HasFreeWorkers)
+                    if (this.Device.Player.HasFreeWorkers)
                     {
-                        var rd = bd.GetBuildResource(0);
-                        ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
+                        var rd = td.GetBuildResource(0);
+                        ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -td.GetBuildCost(0));
 
                         b.StartConstructing(this.Vector);
                         this.Device.Player.GameObjectManager.AddGameObject(b);
@@ -57,13 +54,13 @@ namespace BL.Servers.CoC.Packets.Commands.Client
             }
             else
             {
-                var b = new Builder_Building(bd, this.Device.Player);
-                if (ca.HasEnoughResources(bd.GetBuildResource(0).GetGlobalID(), bd.GetBuildCost(0)))
+                var b = new Builder_Trap(td, this.Device.Player);
+                if (ca.HasEnoughResources(td.GetBuildResource(0).GetGlobalID(), td.GetBuildCost(0)))
                 {
-                    if (bd.IsWorkerBuilding() || this.Device.Player.HasFreeWorkers)
+                    if (this.Device.Player.HasFreeWorkers)
                     {
-                        var rd = bd.GetBuildResource(0);
-                        ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
+                        var rd = td.GetBuildResource(0);
+                        ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -td.GetBuildCost(0));
 
                         b.StartConstructing(this.Vector);
                         this.Device.Player.GameObjectManager.AddGameObject(b);

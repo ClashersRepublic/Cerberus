@@ -87,32 +87,32 @@
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Facebook.7.0.10-beta\lib\net45\Facebook.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Google.Apis.1.25.0\lib\net45\Google.Apis.dll</HintPath>
+    <Reference Include="Google.Apis, Version=1.26.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.1.26.2\lib\net45\Google.Apis.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Auth, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Google.Apis.Auth.1.25.0\lib\net45\Google.Apis.Auth.dll</HintPath>
+    <Reference Include="Google.Apis.Auth, Version=1.26.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.Auth.1.26.2\lib\net45\Google.Apis.Auth.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Google.Apis.Auth.1.25.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.26.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.Auth.1.26.2\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Core, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Google.Apis.Core.1.25.0\lib\net45\Google.Apis.Core.dll</HintPath>
+    <Reference Include="Google.Apis.Core, Version=1.26.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.Core.1.26.2\lib\net45\Google.Apis.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Games.v1, Version=1.25.0.847, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Google.Apis.Games.v1.1.25.0.847\lib\net45\Google.Apis.Games.v1.dll</HintPath>
+    <Reference Include="Google.Apis.Games.v1, Version=1.26.2.868, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.Games.v1.1.26.2.868\lib\net45\Google.Apis.Games.v1.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.PlatformServices, Version=1.25.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Google.Apis.1.25.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.26.2.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.1.26.2\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Protobuf, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Google.Protobuf.3.0.0\lib\net45\Google.Protobuf.dll</HintPath>
+    <Reference Include="Google.Protobuf, Version=3.3.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Protobuf.3.3.0\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="MaxMind.Db, Version=2.0.0.0, Culture=neutral, PublicKeyToken=66afa4cc5ae853ac, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MaxMind.Db.2.1.3\lib\net45\MaxMind.Db.dll</HintPath>
+      <HintPath>..\..\packages\MaxMind.Db.2.2.0\lib\net45\MaxMind.Db.dll</HintPath>
     </Reference>
     <Reference Include="MaxMind.GeoIP2, Version=2.6.0.0, Culture=neutral, PublicKeyToken=66afa4cc5ae853ac, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MaxMind.GeoIP2.2.7.2\lib\net45\MaxMind.GeoIP2.dll</HintPath>
+      <HintPath>..\..\packages\MaxMind.GeoIP2.2.8.0\lib\net45\MaxMind.GeoIP2.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
@@ -126,27 +126,49 @@
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.5.0.0-beta07\lib\net45\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="NLog.StructuredEvents, Version=0.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NLog.StructuredEvents.0.3.1\lib\net35\NLog.StructuredEvents.dll</HintPath>
+    <Reference Include="NLog.StructuredEvents, Version=0.4.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.StructuredEvents.0.4.0\lib\net35\NLog.StructuredEvents.dll</HintPath>
     </Reference>
-    <Reference Include="StackExchange.Redis, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\StackExchange.Redis.1.2.1\lib\net46\StackExchange.Redis.dll</HintPath>
+    <Reference Include="StackExchange.Redis, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StackExchange.Redis.1.2.3\lib\net46\StackExchange.Redis.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Net.Http.4.3.1\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Windows" />
@@ -155,7 +177,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
     <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b, processorArchitecture=MSIL">
@@ -260,6 +281,7 @@
     <Compile Include="Files\CSV_Logic\Resource.cs" />
     <Compile Include="Files\CSV_Logic\Spells.cs" />
     <Compile Include="Files\CSV_Logic\Traps.cs" />
+    <Compile Include="Files\CSV_Logic\Variables.cs" />
     <Compile Include="Files\CSV_Logic\Village_Objects.cs" />
     <Compile Include="Files\CSV_Reader\Column.cs" />
     <Compile Include="Files\CSV_Reader\ColumnCollection.cs" />
@@ -276,6 +298,8 @@
     <Compile Include="Logic\Components\Combat_Component.cs" />
     <Compile Include="Logic\Components\Hero_Base_Component.cs" />
     <Compile Include="Logic\Components\Resource_Production_Component.cs" />
+    <Compile Include="Logic\Components\Unit_Production_Component.cs" />
+    <Compile Include="Logic\Components\Unit_Upgrade_Component.cs" />
     <Compile Include="Logic\Enums\Alliance_Stream.cs" />
     <Compile Include="Logic\Enums\Amical_Mode.cs" />
     <Compile Include="Logic\Enums\Avatar_Stream.cs" />
@@ -287,6 +311,7 @@
     <Compile Include="Logic\Enums\Resource.cs" />
     <Compile Include="Logic\Enums\Role.cs" />
     <Compile Include="Logic\Enums\UnlockReason.cs" />
+    <Compile Include="Logic\Enums\Variable.cs" />
     <Compile Include="Logic\Enums\Village_Mode.cs" />
     <Compile Include="Logic\Enums\WarState.cs" />
     <Compile Include="Logic\Objects.cs" />
@@ -312,6 +337,7 @@
     <Compile Include="Logic\Structure\Building.cs" />
     <Compile Include="Logic\Structure\Builder_Deco.cs" />
     <Compile Include="Logic\Structure\Builder_Obstacle.cs" />
+    <Compile Include="Logic\Structure\Maintenance_Timer.cs" />
     <Compile Include="Logic\Structure\Slots\Calendar.cs" />
     <Compile Include="Logic\Structure\Slots\Battle_Commands.cs" />
     <Compile Include="Logic\Structure\Component.cs" />
@@ -324,6 +350,7 @@
     <Compile Include="Core\Global_Chat.cs" />
     <Compile Include="Logic\Structure\Slots\Castle_Units.cs" />
     <Compile Include="Logic\Structure\Slots\Chats.cs" />
+    <Compile Include="Logic\Structure\Slots\DataSlot.cs" />
     <Compile Include="Logic\Structure\Slots\Inbox.cs" />
     <Compile Include="Logic\Structure\Slots\Items\Alliance_Unit.cs" />
     <Compile Include="Logic\Structure\Slots\Items\Base.cs" />
@@ -343,6 +370,7 @@
     <Compile Include="Logic\Structure\Slots\Items\Slot.cs" />
     <Compile Include="Logic\Structure\Slots\Members.cs" />
     <Compile Include="Logic\Structure\Slots\Npcs.cs" />
+    <Compile Include="Logic\Structure\Slots\Variables.cs" />
     <Compile Include="Logic\Structure\Slots\Resources.cs" />
     <Compile Include="Logic\Structure\Slots\Slots.cs" />
     <Compile Include="Logic\Structure\Slots\Units.cs" />
@@ -350,6 +378,7 @@
     <Compile Include="Logic\Structure\Timer.cs" />
     <Compile Include="Logic\Structure\Builder_Trap.cs" />
     <Compile Include="Logic\Structure\Trap.cs" />
+    <Compile Include="Logic\Structure\Builder_Village_Object .cs" />
     <Compile Include="Logic\Structure\Village_Object.cs" />
     <Compile Include="Packets\Command.cs" />
     <Compile Include="Packets\CommandFactory.cs" />
@@ -357,12 +386,15 @@
     <Compile Include="Packets\Commands\Client\Battle\Place_Attacker.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Search_Opponent.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Surrender_Attack.cs" />
+    <Compile Include="Packets\Commands\Client\Boost_Building.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Building.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Resource.cs" />
+    <Compile Include="Packets\Commands\Client\Buy_Trap.cs" />
     <Compile Include="Packets\Commands\Client\Change_Weapon_Heading.cs" />
     <Compile Include="Packets\Commands\Client\Change_Weapon_Mode.cs" />
     <Compile Include="Packets\Commands\Client\Change_Village_Mode.cs" />
     <Compile Include="Packets\Commands\Client\Clan\Send_Mail.cs" />
+    <Compile Include="Packets\Commands\Client\Collect_Resources.cs" />
     <Compile Include="Packets\Commands\Client\Mission_Progress.cs" />
     <Compile Include="Packets\Commands\Client\Move_Building.cs" />
     <Compile Include="Packets\Commands\Client\My_League.cs" />
@@ -370,11 +402,13 @@
     <Compile Include="Packets\Commands\Client\Clan\Request_Amical_Challenge.cs" />
     <Compile Include="Packets\Commands\Client\Remove_Obstacle.cs" />
     <Compile Include="Packets\Commands\Client\SpeedUp_Construction.cs" />
+    <Compile Include="Packets\Commands\Client\SpeedUp_Upgrade_Unit.cs" />
     <Compile Include="Packets\Commands\Client\Swap_Buildings.cs" />
     <Compile Include="Packets\Commands\Client\Train_Unit.cs" />
     <Compile Include="Packets\Commands\Client\Unlock_Building.cs" />
     <Compile Include="Packets\Commands\Client\Upgrade_Building.cs" />
     <Compile Include="Packets\Commands\Client\Upgrade_Multiple_Buildings.cs" />
+    <Compile Include="Packets\Commands\Client\Upgrade_Unit.cs" />
     <Compile Include="Packets\Commands\Server\Changed_Alliance_Setting.cs" />
     <Compile Include="Packets\Commands\Server\Donate_Troop_Callback.cs" />
     <Compile Include="Packets\Commands\Server\New_Promotion.cs" />
@@ -452,6 +486,7 @@
     <Compile Include="Packets\Messages\Server\Clans\War\Visit_War_Player.cs" />
     <Compile Include="Packets\Messages\Server\Clans\War\War_Map.cs" />
     <Compile Include="Packets\Messages\Server\Errors\Server_Error.cs" />
+    <Compile Include="Packets\Messages\Server\Errors\Server_Shutdown.cs" />
     <Compile Include="Packets\Messages\Server\Global_Chat_Entry.cs" />
     <Compile Include="Packets\Messages\Server\Keep_Alive_OK.cs" />
     <Compile Include="Packets\Messages\Server\Leaderboard\Global_Clans.cs" />

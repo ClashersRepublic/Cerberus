@@ -18,6 +18,7 @@ namespace BL.Servers.CoC.Logic
     {
         [JsonIgnore] internal long Battle_ID;
         [JsonIgnore] internal int Amical_ID;
+        [JsonIgnore] internal int ObstacleClearCount;
 
         [JsonIgnore]
         internal long UserId
@@ -66,8 +67,6 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("alliance_id_high")] internal int ClanHighID;
         [JsonProperty("alliance_id_low")] internal int ClanLowID;
 
-        [JsonProperty("village_mode")] internal Village_Mode Village_Mode;
-
         [JsonProperty("token")] internal string Token;
         [JsonProperty("password")] internal string Password;
 
@@ -99,6 +98,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("rank")] internal Rank Rank = Rank.Player;
 
         [JsonProperty("town_hall_level")] internal int TownHall_Level;
+        [JsonProperty("builder_town_hall_level")] internal int Builder_TownHall_Level;
         [JsonProperty("castle_lvl")] internal int Castle_Level = -1;
         [JsonProperty("castle_total")] internal int Castle_Total;
         [JsonProperty("castle_used")] internal int Castle_Used;
@@ -133,7 +133,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("resources")] internal Resources Resources;
         [JsonProperty("resources_cap")] internal Resources Resources_Cap;
         [JsonProperty("npcs")] internal Npcs Npcs;
-        [JsonProperty("variable")] internal Slots Variables;
+        [JsonProperty("variable")] internal Structure.Slots.Variables Variables;
 
 
         [JsonProperty("login_count")] internal int Login_Count;
@@ -165,7 +165,7 @@ namespace BL.Servers.CoC.Logic
             this.Resources = new Resources(this);
             this.Resources_Cap = new Resources(this);
             this.Npcs = new Npcs();
-            this.Variables = new Slots();
+            this.Variables = new Structure.Slots.Variables(this);
 
             this.Units = new Units(this);
             this.Spells = new Units(this);
@@ -194,7 +194,7 @@ namespace BL.Servers.CoC.Logic
             this.Resources = new Resources(this, true);
             this.Resources_Cap = new Resources(this, false);
             this.Npcs = new Npcs();
-            this.Variables = new Slots();
+            this.Variables = new Structure.Slots.Variables(this, true);
 
             this.Units = new Units(this);
             this.Spells = new Units(this);
@@ -266,6 +266,22 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
 
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+
+                _Packet.AddInt(10000);
+                _Packet.AddInt(9999);
+                _Packet.AddInt(8888);
+                _Packet.AddInt(7777);
+                _Packet.AddInt(6666);
+                _Packet.AddInt(5555); //Builder base Versus Battle Win
+                _Packet.AddInt(4444); //5
+                _Packet.AddInt(3333); //8
+
                 _Packet.AddInt(this.League);
                 _Packet.AddInt(this.Castle_Level);
                 _Packet.AddInt(this.Castle_Total);
@@ -273,25 +289,8 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(this.Castle_Total_SP);
                 _Packet.AddInt(this.Castle_Used_SP);
 
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(this.League);
-
-                _Packet.AddString(null);
-
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
-
                 _Packet.AddInt(this.TownHall_Level);
+                _Packet.AddInt(this.Builder_TownHall_Level);  
 
 #if DEBUG
                 _Packet.AddString($"{this.Name} #{this.UserId}:{GameUtils.GetHashtag(this.UserId)}");
@@ -309,6 +308,7 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(0); // 60
 
                 _Packet.AddInt(this.Trophies);
+                _Packet.AddInt(this.Trophies);
 
                 _Packet.AddInt(this.Wons);
                 _Packet.AddInt(this.Loses);
@@ -318,8 +318,7 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(this.Castle_Resources.Get(Resource.WarGold));
                 _Packet.AddInt(this.Castle_Resources.Get(Resource.WarElixir));
                 _Packet.AddInt(this.Castle_Resources.Get(Resource.WarDarkElixir));
-
-                _Packet.AddInt(0);
+                
                 _Packet.AddInt(0);
 
                 _Packet.AddBool(true);
@@ -327,9 +326,8 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(1828055880);
 
                 _Packet.AddBool(this.NameState > 0);
-                
-                _Packet.AddString(null);
 
+                _Packet.AddInt(0);
 
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);

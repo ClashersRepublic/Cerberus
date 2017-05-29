@@ -28,7 +28,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
         {
             var ca = this.Device.Player.Avatar;
 
-            var go = ca.Village_Mode == Village_Mode.NORMAL_VILLAGE ? this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId) : this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId);
+            var go = this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId) : this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId);
 
             var b = (ConstructionItem) go;
 

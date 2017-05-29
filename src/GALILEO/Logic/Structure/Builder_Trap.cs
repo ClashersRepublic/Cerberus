@@ -9,10 +9,14 @@ namespace BL.Servers.CoC.Logic.Structure
         public Builder_Trap(Data data, Level l) : base(data, l)
         {
             AddComponent(new Trigger_Component());
+            if (GetTrapData.HasAltMode)
+            {
+                AddComponent(new Combat_Component(this));
+            }
         }
 
         internal override int ClassId => 11;
 
-        public Traps GetTrapData() => (Traps)GetData();
+        public Traps GetTrapData => (Traps)GetData();
     }
 }

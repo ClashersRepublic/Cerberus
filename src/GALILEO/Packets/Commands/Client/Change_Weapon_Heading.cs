@@ -30,14 +30,20 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
         internal override void Process()
         {
-            var Object = this.Device.Player.GameObjectManager.GetGameObjectByID(this.BuildingID);
+            var Object = this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(this.BuildingID) : this.Device.Player.GameObjectManager.GetGameObjectByID(this.BuildingID);
             if (Object?.GetComponent(1, true) == null)
                 return;
             var a = ((Combat_Component)Object.GetComponent(1, true));
             if (a.AimRotateStep)
             {
-                a.Aim_Angle = a.Aim_Angle == 360 ? 45 : a.Aim_Angle + 45;
-                a.Aim_Angle_Draft = a.Aim_Angle_Draft == 360 ? 45 : a.Aim_Angle_Draft + 45;
+                a.AimAngle = a.AimAngle == 360 ? 45 : a.AimAngle + 45;
+                a.AimAngleDraft = a.AimAngleDraft == 360 ? 45 : a.AimAngleDraft + 45;
+            }
+
+            if (a.AltDirectionMode)
+            {
+                a.TrapDirection = a.TrapDirection == 4 ? 0 : a.TrapDirection++;
+                a.TrapDirectionDraft = a.TrapDirectionDraft == 4 ? 0 : a.TrapDirectionDraft++;
             }
         }
     }

@@ -162,7 +162,7 @@ namespace BL.Servers.CoC.Files.CSV_Logic
 
         public override int GetUpgradeLevelCount() => UpgradeCost.Length;
 
-        public override Resource GetUpgradeResource(int level) => CSV.Tables.Get(Gamefile.Resources).GetData(UpgradeResource[level].ToString()) as Resource;
+        public override Resource GetUpgradeResource() => CSV.Tables.Get(Gamefile.Resources).GetData(UpgradeResource) as Resource;
 
         public override int GetUpgradeTime(int level) => UpgradeTimeH[level] * 3600;
 
