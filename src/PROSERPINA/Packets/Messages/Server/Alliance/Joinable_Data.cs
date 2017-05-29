@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BL.Servers.CR.Logic;
+using BL.Servers.CR.Extensions.List;
+using BL.Servers.CR.Core;
 
 namespace BL.Servers.CR.Packets.Messages.Server.Alliance
 {
@@ -16,12 +18,12 @@ namespace BL.Servers.CR.Packets.Messages.Server.Alliance
 
         internal override void Encode()
         {
-            //List<Clan> Clans = new List<Clan>();
+            this.Data.AddVInt((int)Resources.Clans.Count);
 
-            //foreach (Clan _Clan in Clans)
-            //{
-            //    this.Data.AddRange(_Clan.FullHeader());
-            //}
+            foreach (var _Clan in Resources.Clans.Values)
+            {
+                this.Data.AddRange(_Clan.FullHeader);
+            }
         }
     }
 }

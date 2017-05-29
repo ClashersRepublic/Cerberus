@@ -6,16 +6,16 @@ namespace BL.Servers.CR.Logic.Slots
 {
     internal class Members : Dictionary<long, Member>
     {
-        internal Clan Alliance;
+        internal Clan Clan;
 
         internal object Gate = new object();
         public Members()
         {
         }
 
-        internal Members(Clan Alliance) : base(50)
+        internal Members(Clan Clan) : base(50)
         {
-            this.Alliance = Alliance;
+            this.Clan = Clan;
         }
 
         internal void Add(Player Player)

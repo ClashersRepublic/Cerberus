@@ -213,6 +213,9 @@
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.5.0.0-beta07\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="Rollbar, Version=0.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Rollbar.0.3.2\lib\net45\Rollbar.dll</HintPath>
+    </Reference>
     <Reference Include="SharpRaven, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SharpRaven.2.2.0\lib\net45\SharpRaven.dll</HintPath>
     </Reference>
@@ -345,6 +348,7 @@
     <Compile Include="Files\CSV_Reader\RowCollection.cs" />
     <Compile Include="Files\CSV_Reader\Table.cs" />
     <Compile Include="Files\Home.cs" />
+    <Compile Include="Logic\Entry\Clan_Member_Entry.cs" />
     <Compile Include="Logic\Enums\Crypto.cs" />
     <Compile Include="Logic\Enums\Rank.cs" />
     <Compile Include="Logic\Enums\Server_Mode.cs" />
@@ -438,6 +442,7 @@
     <Compile Include="Library\LZMA\Compress\RangeCoder\RangeCoderBit.cs" />
     <Compile Include="Library\LZMA\Compress\RangeCoder\RangeCoderBitTree.cs" />
     <Compile Include="Library\LZMA\ICoder.cs" />
+    <Compile Include="Packets\Messages\Client\Alliance\Request_Alliance_Data.cs" />
     <Compile Include="Packets\Messages\Client\Alliance\Request_Create_Alliance.cs" />
     <Compile Include="Packets\Messages\Client\Alliance\Request_Joinable.cs" />
     <Compile Include="Packets\Messages\Client\Alliance\Send_Clan_Message.cs" />
@@ -464,6 +469,7 @@
     <Compile Include="Packets\Messages\Client\Request_Name_Change.cs" />
     <Compile Include="Packets\Messages\Client\Set_Device_Token.cs" />
     <Compile Include="Packets\Messages\Client\UnknownPacket.cs" />
+    <Compile Include="Packets\Messages\Server\Alliance\Alliance_Data.cs" />
     <Compile Include="Packets\Messages\Server\Alliance\Joinable_Data.cs" />
     <Compile Include="Packets\Messages\Server\Alliance\Response_Create_Alliance.cs" />
     <Compile Include="Packets\Messages\Server\API\Facebook_Bind_OK.cs" />

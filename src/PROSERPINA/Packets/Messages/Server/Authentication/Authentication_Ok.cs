@@ -46,8 +46,8 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
                 this.Data.AddString("prod");
             else if (Constants.Mode == Server_Mode.STAGE)
                 this.Data.AddString("stage");
-            else if (Constants.Mode == Server_Mode.DEVELOPEMENT)
-                this.Data.AddString("dev");
+            else
+                this.Data.AddString("integration");
 
             this.Data.AddVInt(0); // Session Count
             this.Data.AddVInt(0); // Total Play Time Seconds

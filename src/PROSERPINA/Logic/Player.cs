@@ -15,6 +15,7 @@ using Newtonsoft.Json.Serialization;
 using Google = BL.Servers.CR.Logic.Slots.Items.Google;
 using Resources = BL.Servers.CR.Logic.Slots.Resources;
 using BL.Servers.CR.Logic.Components;
+using BL.Servers.CR.Logic.Entry;
 
 namespace BL.Servers.CR.Logic
 {
@@ -30,8 +31,10 @@ namespace BL.Servers.CR.Logic
         internal Component Component;
 
         [JsonIgnore]
-        internal Components.Battle Battle;
+        internal Clan_Member_Entry MemberEntry;
 
+        [JsonIgnore]
+        internal Components.Battle Battle;
 
         [JsonIgnore]
         internal long BattleID;
@@ -75,7 +78,7 @@ namespace BL.Servers.CR.Logic
         [JsonProperty("IpAddress")] internal string IpAddress;
         [JsonProperty("region")] internal string Region;
 
-        [JsonProperty("lvl")] internal int Level = 1;
+        [JsonProperty("lvl")] internal int Level = 13;
         [JsonProperty("xp")] internal int Experience = 0;
         [JsonProperty("arena")] internal int Arena = 21;
         [JsonProperty("tutorials")] internal byte Tutorial = 8;
@@ -115,6 +118,8 @@ namespace BL.Servers.CR.Logic
             this.Component = new Component(this);
             this.Battle = new Components.Battle(this);
 
+            this.MemberEntry = new Clan_Member_Entry(this);
+
             this.Resources = new Resources(this);
             this.Resources_Cap = new Resources(this);
             this.Decks = new Decks(this);
@@ -134,6 +139,8 @@ namespace BL.Servers.CR.Logic
             this.Profile = new Profile(this);
             this.Component = new Component(this);
             this.Battle = new Components.Battle(this);
+
+            this.MemberEntry = new Clan_Member_Entry(this);
 
             this.Resources = new Resources(this, true);
             this.Resources_Cap = new Resources(this, false);

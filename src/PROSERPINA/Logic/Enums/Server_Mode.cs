@@ -4,6 +4,6 @@
     {
         PRODUCTION,
         STAGE,
-        DEVELOPEMENT,
+        INTEGRATION
     }
 }

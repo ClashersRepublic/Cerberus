@@ -153,6 +153,11 @@ namespace BL.Servers.CR.Extensions.List
             _Packet.AddVInt(GlobalID.GetType(_Value));
         }
 
+        public static void AddSCID(this List<byte> _Packet, int _Value)
+        {
+            _Packet.AddVInt(_Value * 1000000 + 0);
+        }
+
         /// <summary>
         /// Add the VInt.
         /// </summary>
