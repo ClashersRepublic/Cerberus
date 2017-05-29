@@ -37,6 +37,7 @@ namespace BL.Servers.CR.Packets
                 {14113, typeof(Ask_Profile)},
                 {14201, typeof(Bind_Facebook)},
                 {14301, typeof(Request_Create_Alliance)},
+                {14302, typeof(Request_Alliance_Data)},
                 {14303, typeof(Request_Joinable)},
                 {14315, typeof(Send_Clan_Message)},
                 {14405, typeof(Avatar_Stream)},

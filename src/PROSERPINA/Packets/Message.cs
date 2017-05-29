@@ -12,6 +12,7 @@ using BL.Servers.CR.Extensions.List;
 using BL.Servers.CR.Logic;
 using BL.Servers.CR.Packets.Messages.Server.Authentication;
 using BL.Servers.CR.Core.Network;
+using RollbarDotNet;
 
 namespace BL.Servers.CR.Packets
 {
@@ -82,7 +83,7 @@ namespace BL.Servers.CR.Packets
 
                 if (Decrypted == null)
                 {
-                    Resources.Exceptions.Catch(new CryptographicException(), "Decrypted message is null.", this.Device.Model, this.Device.OSVersion, this.Device.Player.Token, this.Device.Player.UserId);
+                    Resources.Exceptions.Catch(new CryptographicException(), ErrorLevel.Error);
                 }
 
                 this.Reader = new Reader(Decrypted);

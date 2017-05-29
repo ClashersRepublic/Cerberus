@@ -7,6 +7,7 @@ using BL.Servers.CR.Extensions.List;
 using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Logic.Slots;
 using Newtonsoft.Json;
+using BL.Servers.CR.Logic.Slots.Items;
 
 namespace BL.Servers.CR.Logic
 {
@@ -47,29 +48,25 @@ namespace BL.Servers.CR.Logic
             this.Members = new Members(this);
         }
 
-        internal byte[] FullHeader()
+        internal byte[] FullHeader
         {
-            var Packet = new List<byte>();
+            get
+            {
+                var Packet = new List<byte>();
 
-            Packet.AddLong(this.ClanID);
-            Packet.AddString(this.Name);
-            Packet.AddVInt(16);
-            Packet.AddVInt(this.Badge);
-            Packet.AddVInt(1);
-            Packet.AddVInt(0); // Member Count
-            Packet.AddVInt(this.Trophies);
-            Packet.AddVInt(this.Required_Score);
-            Packet.AddLong(57);
-            Packet.AddVInt(this.Origin);
+                Packet.AddLong(this.ClanID);
+                Packet.AddString(this.Name);
+                Packet.AddVInt(16);
+                Packet.AddVInt(this.Badge);
+                Packet.AddVInt(1);
+                Packet.AddVInt(this.Members.Count); // Member Count
+                Packet.AddVInt(this.Trophies);
+                Packet.AddVInt(this.Required_Score);
+                Packet.AddLong(57);
+                Packet.AddVInt(this.Origin);
 
-            return Packet.ToArray();
-        }
-
-        internal byte[] Header()
-        {
-            var Packet = new List<byte>();
-
-            return Packet.ToArray();
+                return Packet.ToArray();
+            }
         }
     }
 }
