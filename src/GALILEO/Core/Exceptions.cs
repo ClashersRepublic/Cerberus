@@ -27,10 +27,8 @@ namespace BL.Servers.CoC.Core
                 Enviroment = "production";
 #endif
             }
-            this.RavenClient =
-                new RavenClient(
-                    "https://99b0a95463704edc8d7af53f46f8bf8d:9ccb19cc83474ab8b1509dadb5c5fdac@sentry.io/173491")
-                {
+            this.RavenClient = new RavenClient("https://66e83d54af364f3f82dfd0872b0a723a:66c50f4676aa4496bd927d1c5a440422@sentry.io/173499")
+            {
                     Environment = Enviroment,
                     Release = Assembly.GetExecutingAssembly().GetName().Version.ToString(),
                     Timeout = TimeSpan.FromSeconds(5)
