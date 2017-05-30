@@ -32,8 +32,8 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
         internal override void Process()
         {
-            GameObject go = this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId);
-            go.SetPositionXY(Position);
+            var go = this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId) : this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId);
+            go?.SetPositionXY(Position);
         }
     }
 }

@@ -25,33 +25,40 @@ namespace BL.Servers.CoC.Core.Events
         {
             while (true)
             {
-                if (!BleeedingEdge)
-                {
                     ConsoleKeyInfo Command = Console.ReadKey(false);
 
-                    switch (Command.Key)
+                switch (Command.Key)
+                {
+                    default:
                     {
-                        // Status
-                        case ConsoleKey.S:
-                        {
-                            Console.WriteLine();
-                            Console.WriteLine("# " + DateTime.Now.ToString("d") + " ---- STATS ---- " +
-                                              DateTime.Now.ToString("T") + " #");
-                            Console.WriteLine("# ----------------------------------- #");
-                            Console.WriteLine("# Online Players    # " +
-                                              Utils.Padding(Resources.Players.Count + " - " + Constants.MaxPlayers,
-                                                  15) + " #");
-                            Console.WriteLine("# Battles           # " +
-                                              Utils.Padding(Resources.Battles.Seed.ToString(), 15) + " #");
-                            Console.WriteLine("# In-Memory SAEA    # " +
-                                              Utils.Padding(
-                                                  Resources.Gateway.ReadPool.Pool.Count + " - " +
-                                                  Resources.Gateway.WritePool.Pool.Count, 15) + " #");
-                            Console.WriteLine("# ----------------------------------- #");
-                            break;
-                        }
+                        Console.WriteLine();
+                        Console.WriteLine("Press H for help");
+                        break;
+                    }
 
-                        case ConsoleKey.M:
+                    // Status
+                    case ConsoleKey.S:
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("#" + DateTime.Now.ToString("d") + " ---- STATS ---- " +
+                                          DateTime.Now.ToString("T") + " #");
+                        Console.WriteLine("# ----------------------------------- #");
+                        Console.WriteLine("# In-Memory Players    # " +
+                                          Utils.Padding(Resources.Players.Count + " - " + Constants.MaxPlayers,
+                                              15) + " #");
+                        Console.WriteLine("# In-Memory Battles           # " +
+                                          Utils.Padding(Resources.Battles.Seed.ToString(), 15) + " #");
+                        Console.WriteLine("# In-Memory SAEA    # " +
+                                          Utils.Padding(
+                                              Resources.Gateway.ReadPool.Pool.Count + " - " +
+                                              Resources.Gateway.WritePool.Pool.Count, 15) + " #");
+                        Console.WriteLine("# ----------------------------------- #");
+                        break;
+                    }
+
+                    case ConsoleKey.M:
+                    {
+                        if (Constants.Maintenance == null)
                         {
                             Console.WriteLine("Press Y to continue and N to cancle");
                             ConsoleKeyInfo Command2 = Console.ReadKey(false);
@@ -83,10 +90,20 @@ namespace BL.Servers.CoC.Core.Events
                                     break;
                                 }
                             }
-                            break;
                         }
+                        else
+                        {
 
-                        case ConsoleKey.D:
+                            Console.WriteLine("# " + DateTime.Now.ToString("d") +
+                                              " ---- Server is already in Maintanance Mode---- " + DateTime.Now.ToString("T") +
+                                              " #");
+                            }
+                        break;
+                    }
+
+                    case ConsoleKey.D:
+                    {
+                        if (Constants.Maintenance != null)
                         {
                             Constants.Maintenance = null;
                             Resources.Classes.Timers.LTimers[4].Stop();
@@ -96,68 +113,64 @@ namespace BL.Servers.CoC.Core.Events
                             Console.WriteLine("# " + DateTime.Now.ToString("d") +
                                               " ---- Exited from Maintanance Mode---- " + DateTime.Now.ToString("T") +
                                               " #");
-                            break;
                         }
-
-                        // Emergency Close
-                        case ConsoleKey.E:
+                        else
                         {
-                            Environment.Exit(0);
-                            break;
-                        }
-
-                        case ConsoleKey.H:
-                        {
-                            Console.WriteLine();
-                            Console.WriteLine("# " + DateTime.Now.ToString("d") + " ---- HELPS ---- " +
-                                              DateTime.Now.ToString("T") + " #");
-                            Console.WriteLine("# ----------------------------------- #");
-                            Console.WriteLine("# ----------------------------------- #");
-                            break;
-                        }
-
-                        case ConsoleKey.R:
-                        {
-                            foreach (var _Device in Resources.Devices.Values.ToList())
-                            {
-                                if (_Device.Player != null)
-                                {
-                                    new Out_Of_Sync(_Device).Send();
-                                }
-                                Resources.Gateway.Disconnect(_Device.Token.Args);
+                            Console.WriteLine("# " + DateTime.Now.ToString("d") +
+                                              " ---- Not in Maintanance Mode---- " + DateTime.Now.ToString("T") +
+                                              " #");
                             }
-                            break;
-                        }
-
-                        case ConsoleKey.T:
-                        {
-                            break;
-                        }
-
-                        case ConsoleKey.C:
-                        {
-                            Console.Clear();
-                            break;
-                        }
-
-                        case ConsoleKey.F10:
-                            Console.Clear();
-                            Console.WriteLine();
-                            Console.WriteLine("# " + DateTime.Now.ToString("d") + " ---- Entered Bleeding Edge Mode ---- " + DateTime.Now.ToString("T") + " #");
-                            break;
-
-
-                        default:
-                        {
-                            Console.WriteLine();
-                            Console.WriteLine("Press H for help");
-                            break;
-                        }
+                        break;
                     }
-                }
-                else
-                {
-                    
+
+                    // Emergency Close
+                    case ConsoleKey.E:
+                    {
+                        Environment.Exit(0);
+                        break;
+                    }
+
+                    case ConsoleKey.H:
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("# " + DateTime.Now.ToString("d") + " ---- HELPS ---- " +
+                                          DateTime.Now.ToString("T") + " #");
+                        Console.WriteLine("# ----------------------------------- #");
+                        Console.WriteLine("# ----------------------------------- #");
+                        break;
+                    }
+
+                    case ConsoleKey.R:
+                    {
+                        foreach (var _Device in Resources.Devices.Values.ToList())
+                        {
+                            if (_Device.Player != null)
+                            {
+                                new Out_Of_Sync(_Device).Send();
+                            }
+                            Resources.Gateway.Disconnect(_Device.Token.Args);
+                        }
+                        break;
+                    }
+
+                    case ConsoleKey.T:
+                    {
+                        break;
+                    }
+
+                    case ConsoleKey.C:
+                    {
+                        Console.Clear();
+                        break;
+                    }
+
+                    case ConsoleKey.F10:
+                        Console.Clear();
+                        Console.WriteLine();
+                        Console.WriteLine("# " + DateTime.Now.ToString("d") + " ---- Entered Bleeding Edge Mode ---- " +
+                                          DateTime.Now.ToString("T") + " #");
+                        break;
+
                 }
             }
         }

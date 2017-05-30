@@ -40,8 +40,7 @@ namespace BL.Servers.CoC.Core.Networking
             this.Listener.Listen(200);
 
             Program.Stopwatch.Stop();
-            
-            Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + $" has been started on {Utils.LocalNetworkIP} in {Math.Round(Program.Stopwatch.Elapsed.TotalSeconds, 4)} Seconds!");
+
             Loggers.Log(Assembly.GetExecutingAssembly().GetName().Name + $" has been started on {Utils.LocalNetworkIP} in {Math.Round(Program.Stopwatch.Elapsed.TotalSeconds, 4)} Seconds!", true);
 
             SocketAsyncEventArgs AcceptEvent = new SocketAsyncEventArgs();
@@ -193,7 +192,7 @@ namespace BL.Servers.CoC.Core.Networking
                     Resources.Players.Remove(Token.Device.Player);
                 }
             }
-           else if (!Token.Device.Connected())
+            else if (!Token.Device.Connected())
             {
                 Resources.Devices.Remove(Token.Device);
             }

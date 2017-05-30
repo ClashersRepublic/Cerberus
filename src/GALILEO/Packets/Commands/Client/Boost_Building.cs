@@ -37,18 +37,37 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                 {
                     if (!c.IsSpellForge)
                     {
-                        var Object = ((Building) c.GetParent);
-                        if (Object != null)
-                        {
-                            int diamondCount =
-                                ((Buildings) Object.GetConstructionItemData()).BoostCost[Object.UpgradeLevel];
-                            if (avatar.Resources.Gems >= diamondCount)
+                        if (c.GetParent.ClassId == 0)
+                        { 
+                            var Object = ((Building) c.GetParent);
+
+                            if (Object != null)
                             {
-                                Object.BoostBuilding();
-                                avatar.Resources.Minus(Resource.Diamonds, diamondCount);
+                                int diamondCount =
+                                    ((Buildings) Object.GetConstructionItemData()).BoostCost[Object.UpgradeLevel];
+                                if (avatar.Resources.Gems >= diamondCount)
+                                {
+                                    Object.BoostBuilding();
+                                    avatar.Resources.Minus(Resource.Diamonds, diamondCount);
+                                }
                             }
                         }
+                        else if (c.GetParent.ClassId == 7)
+                        {
+                            var Object = ((Builder_Building)c.GetParent);
 
+                            if (Object != null)
+                            {
+                                int diamondCount =
+                                    ((Buildings)Object.GetConstructionItemData()).BoostCost[Object.UpgradeLevel];
+                                if (avatar.Resources.Gems >= diamondCount)
+                                {
+                                    Object.BoostBuilding();
+                                    avatar.Resources.Minus(Resource.Diamonds, diamondCount);
+                                }
+                            }
+
+                        }
                     }
                 }
 
@@ -59,15 +78,32 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                 {
                     if (c.IsSpellForge)
                     {
-                        var Object = ((Building) c.GetParent);
-                        if (Object != null)
+                        if (c.GetParent.ClassId == 0)
                         {
-                            int diamondCount =
-                                ((Buildings) Object.GetConstructionItemData()).BoostCost[Object.UpgradeLevel];
-                            if (avatar.Resources.Gems >= diamondCount)
+                            var Object = ((Building) c.GetParent);
+                            if (Object != null)
                             {
-                                Object.BoostBuilding();
-                                avatar.Resources.Minus(Resource.Diamonds, diamondCount);
+                                int diamondCount =
+                                    ((Buildings) Object.GetConstructionItemData()).BoostCost[Object.UpgradeLevel];
+                                if (avatar.Resources.Gems >= diamondCount)
+                                {
+                                    Object.BoostBuilding();
+                                    avatar.Resources.Minus(Resource.Diamonds, diamondCount);
+                                }
+                            }
+                        }
+                        else if (c.GetParent.ClassId == 7)
+                        {
+                            var Object = ((Builder_Building)c.GetParent);
+                            if (Object != null)
+                            {
+                                int diamondCount =
+                                    ((Buildings)Object.GetConstructionItemData()).BoostCost[Object.UpgradeLevel];
+                                if (avatar.Resources.Gems >= diamondCount)
+                                {
+                                    Object.BoostBuilding();
+                                    avatar.Resources.Minus(Resource.Diamonds, diamondCount);
+                                }
                             }
                         }
                     }

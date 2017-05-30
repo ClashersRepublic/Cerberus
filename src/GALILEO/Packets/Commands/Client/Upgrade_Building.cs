@@ -15,7 +15,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
     {
         internal int BuildingId;
         internal uint Unknown1;
-        internal uint Unknown2;
+        internal bool IsAltResource;
         public Upgrade_Building(Reader reader, Device client, int id) : base(reader, client, id)
         {
 
@@ -24,7 +24,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
         internal override void Decode()
         {
             this.BuildingId = this.Reader.ReadInt32();
-            this.Unknown2 = this.Reader.ReadByte();
+            this.IsAltResource = this.Reader.ReadBoolean();
             this.Unknown1 = this.Reader.ReadUInt32();
         }
 
@@ -37,11 +37,11 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                 var b = (ConstructionItem)go;
                 if (b.CanUpgrade())
                 {
-                    Console.WriteLine(b.ClassId);
                     if (b.ClassId == 0 || b.ClassId == 7)
                     {
                         var bd = (Buildings) b.GetConstructionItemData();
-                        if (ca.HasEnoughResources(bd.GetBuildResource(b.GetUpgradeLevel()).GetGlobalID(),
+                        Files.CSV_Logic.Resource rd = IsAltResource ? bd.GetAltBuildResource(b.GetUpgradeLevel() + 1)  : bd.GetBuildResource(b.GetUpgradeLevel() + 1);
+                        if (ca.HasEnoughResources(rd.GetGlobalID(),
                             bd.GetBuildCost(b.GetUpgradeLevel())))
                         {
                             if (this.Device.Player.HasFreeWorkers)
@@ -88,8 +88,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                                 }
                                 else if (bd.IsTownHall())
                                     ca.TownHall_Level++;
-
-                                var rd = bd.GetBuildResource(b.GetUpgradeLevel() + 1);
+                                
                                 ca.Resources.Minus(rd.GetGlobalID(), bd.GetBuildCost(b.GetUpgradeLevel()));
                                 b.StartUpgrading();
                             }
