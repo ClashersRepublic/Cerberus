@@ -117,18 +117,66 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                 new Authentication_Failed(this.Device, Logic.Enums.Reason.Maintenance).Send();
                 return;
             }
- 
-            //if (string.Equals(this.MasterHash, Fingerprint.Sha))
-            {
-                if (this.UserId == 0)
-                {
-                    this.Device.Player = Resources.Players.New(0, Constants.Database);
 
-                    if (this.Device.Player != null)
+            if (Fingerprint.Custom && !string.Equals(this.MasterHash, Fingerprint.Sha))
+            {
+                new Authentication_Failed(this.Device, Logic.Enums.Reason.Patch).Send();
+                return;
+            }
+
+            if (this.UserId == 0)
+            {
+                this.Device.Player = Resources.Players.New(0, Constants.Database);
+
+                if (this.Device.Player != null)
+                {
+                    if (this.Device.Player.Avatar.Locked)
+                    {
+                        new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
+                    }
+                    else
+                    {
+                        this.Login();
+                    }
+                }
+                else
+                {
+                    new Authentication_Failed(this.Device, Logic.Enums.Reason.Pause).Send();
+                }
+            }
+            else if (this.UserId > 0)
+            {
+                this.Device.Player = Resources.Players.Get(this.UserId, Constants.Database);
+                if (this.Device.Player != null)
+                {
+                    if (string.Equals(this.Token, this.Device.Player.Avatar.Token))
                     {
                         if (this.Device.Player.Avatar.Locked)
                         {
                             new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
+                        }
+                        else if (this.Device.Player.Avatar.Banned)
+                        {
+                            this.Reason = new StringBuilder();
+                            this.Reason.AppendLine(
+                                "Your account has been banned from our servers, please contact one of the server staff members with these following information:");
+                            this.Reason.AppendLine();
+                            this.Reason.AppendLine("Your Account Name: " + this.Device.Player.Avatar.Name);
+                            this.Reason.AppendLine("Your Account ID: " + this.Device.Player.Avatar.UserId);
+                            this.Reason.AppendLine("Your Account Tag: " +
+                                                   GameUtils.GetHashtag(this.Device.Player.Avatar.UserId));
+                            this.Reason.AppendLine("Your Account Ban Duration: " +
+                                                   Math.Round(
+                                                       (this.Device.Player.Avatar.BanTime.AddDays(3) -
+                                                        DateTime.UtcNow).TotalDays, 3) + " Day");
+                            this.Reason.AppendLine("Your Account Unlock Date : " +
+                                                   this.Device.Player.Avatar.BanTime.AddDays(3));
+                            this.Reason.AppendLine();
+
+                            new Authentication_Failed(this.Device, Logic.Enums.Reason.Banned)
+                            {
+                                Message = Reason.ToString()
+                            }.Send();
                         }
                         else
                         {
@@ -137,63 +185,15 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                     }
                     else
                     {
-                        new Authentication_Failed(this.Device, Logic.Enums.Reason.Pause).Send();
-                    }
-                }
-                else if (this.UserId > 0)
-                {
-                    this.Device.Player = Resources.Players.Get(this.UserId, Constants.Database);
-                    if (this.Device.Player != null)
-                    {
-                        if (string.Equals(this.Token, this.Device.Player.Avatar.Token))
-                        {
-                            if (this.Device.Player.Avatar.Locked)
-                            {
-                                new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
-                            }
-                            else if (this.Device.Player.Avatar.Banned)
-                            {
-                                this.Reason = new StringBuilder();
-                                this.Reason.AppendLine(
-                                    "Your account has been banned from our servers, please contact one of the server staff members with these following information:");
-                                this.Reason.AppendLine();
-                                this.Reason.AppendLine("Your Account Name: " + this.Device.Player.Avatar.Name);
-                                this.Reason.AppendLine("Your Account ID: " + this.Device.Player.Avatar.UserId);
-                                this.Reason.AppendLine("Your Account Tag: " +
-                                                       GameUtils.GetHashtag(this.Device.Player.Avatar.UserId));
-                                this.Reason.AppendLine("Your Account Ban Duration: " +
-                                                       Math.Round(
-                                                           (this.Device.Player.Avatar.BanTime.AddDays(3) -
-                                                            DateTime.UtcNow).TotalDays, 3) + " Day");
-                                this.Reason.AppendLine("Your Account Unlock Date : " +
-                                                       this.Device.Player.Avatar.BanTime.AddDays(3));
-                                this.Reason.AppendLine();
-
-                                new Authentication_Failed(this.Device, Logic.Enums.Reason.Banned)
-                                {
-                                    Message = Reason.ToString()
-                                }.Send();
-                            }
-                            else
-                            {
-                                this.Login();
-                            }
-                        }
-                        else
-                        {
-                            new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
-                        }
-                    }
-                    else
-                    {
                         new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
                     }
                 }
+                else
+                {
+                    new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
+                }
             }
-          //  else
-            {
-            //    new Authentication_Failed(this.Device, Logic.Enums.Reason.Patch).Send();
-            }
+
         }
 
         internal void Login()

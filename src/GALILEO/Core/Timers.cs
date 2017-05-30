@@ -140,15 +140,18 @@ namespace BL.Servers.CoC.Core
                 }
                 catch (Exception ex)
                 {
+                    Resources.Exceptions.Catch(ex, "[: Failed at " + DateTime.Now.ToString("T") + ']' + Environment.NewLine + ex.StackTrace);
                     Loggers.Log(
                         Utils.Padding(ex.GetType().Name, 15) + " : " + ex.Message + ".[: Failed at " +
                         DateTime.Now.ToString("T") + ']' + Environment.NewLine + ex.StackTrace, true, Defcon.ERROR);
                     return;
                 }
+#if DEBUG
 
                 Loggers.Log(
                     Utils.Padding(this.GetType().Name, 6) + " : Save finished at " + DateTime.Now.ToString("T") + ".",
                     true);
+#endif
             };
 
             this.LTimers.Add(1 ,Timer);
