@@ -24,7 +24,7 @@ namespace BL.Servers.CoC.Core.Networking
 
             Reader = new DatabaseReader(DbPath, FileAccessMode.Memory);
             //Reader = new DatabaseReader(DbPath, FileAccessMode.MemoryMapped); //Lower ram usage on start but idk the speed
-            Loggers.Log("Region database loaded into memory.", true);
+           Loggers.Log("Region database loaded into memory.", true);
         }
 
         internal string GetIpCountryIso(string ipAddress)

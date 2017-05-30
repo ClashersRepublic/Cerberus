@@ -36,8 +36,8 @@ namespace BL.Servers.CoC.Core.Networking
 #if DEBUG
                 if (Message.Device.Connected())
                 {
-                    Console.WriteLine(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " +
-                                      Message.GetType().Name);
+                    Loggers.Log(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " +
+                                      Message.GetType().Name, true);
                 }
 #endif
                 Message.Process();

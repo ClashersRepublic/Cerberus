@@ -23,17 +23,15 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
         {
             if (this.Device.State == State.IN_PC_BATTLE)
             {
-                if (this.Device.State == State.IN_PC_BATTLE)
+                var Battle = Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
+                Battle_Command Command = new Battle_Command
                 {
-                    var Battle = Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
-                    Battle_Command Command = new Battle_Command
-                    {
-                        Command_Type = this.Identifier,
-                        Command_Base = new Command_Base {Base = new Base {Tick = this.Tick}}
-                    };
-                    Battle.Add_Command(Command);
-                }
+                    Command_Type = this.Identifier,
+                    Command_Base = new Command_Base {Base = new Base {Tick = this.Tick}}
+                };
+                Battle.Add_Command(Command);
             }
+
         }
     }
 }

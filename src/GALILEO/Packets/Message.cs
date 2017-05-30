@@ -25,7 +25,6 @@ namespace BL.Servers.CoC.Packets
         internal List<byte> Data;
 
         internal int Offset;
-
         internal Message(Device Device)
         {
             this.Device = Device;

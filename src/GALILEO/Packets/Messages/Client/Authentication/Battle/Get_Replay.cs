@@ -1,4 +1,5 @@
-﻿using BL.Servers.CoC.Core.Networking;
+﻿using System;
+using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Packets.Messages.Server.Battle;

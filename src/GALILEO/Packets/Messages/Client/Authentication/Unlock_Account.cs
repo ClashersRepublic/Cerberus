@@ -46,28 +46,29 @@ namespace BL.Servers.CoC.Packets.Client.Authentication
 
              if (this.UnlockCode[0] == '/')
               {
-                  if (this.UnlockCode.Contains("reset"))
-                  {
-                      new Unlock_Account_OK(this.Device) {Account = Resources.Players.New().Avatar}.Send();
-                      return;
-                  }
-
                   if (int.TryParse(this.UnlockCode.Substring(1), out int n))
                   {
+                      if (n == 0)
+                      {
+                          new Unlock_Account_OK(this.Device) {Account = Resources.Players.New().Avatar}.Send();
+                          return;
+                      }
+
                       var account = Resources.Players.Get(n);
                       if (account != null)
                       {
                           account.Avatar.Locked = true;
-                          new Unlock_Account_OK(this.Device) { Account = account.Avatar }.Send();
+                          new Unlock_Account_OK(this.Device) {Account = account.Avatar}.Send();
                       }
                       else
                       {
-                          new Unlock_Account_Failed(this.Device) { Reason = UnlockReason.UnlockError }.Send();
+                          new Unlock_Account_Failed(this.Device) {Reason = UnlockReason.UnlockError}.Send();
                       }
+
                   }
                   else
                   {
-                      new Unlock_Account_Failed(this.Device) { Reason = UnlockReason.UnlockError }.Send();
+                      new Unlock_Account_Failed(this.Device) {Reason = UnlockReason.UnlockError}.Send();
                   }
               }
             if (string.Equals(this.UnlockCode, this.UserPassword))

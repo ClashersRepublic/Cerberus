@@ -1,10 +1,12 @@
 ﻿using System;
+using BL.Servers.CoC.Core.Events;
 using BL.Servers.CoC.Core.Networking;
 
 namespace BL.Servers.CoC.Core
 {
     internal class Resources
     {
+        internal static Exceptions Exceptions;
         internal static Devices Devices;
         internal static Players Players;
         internal static Clans Clans;
@@ -15,9 +17,11 @@ namespace BL.Servers.CoC.Core
         internal static Region Region;
         internal static Player_Region PRegion;
         internal static Gateway Gateway;
+        internal static Parser Parser;
 
         internal static void Initialize()
         {
+            Resources.Exceptions = new Exceptions();
             Resources.Classes = new Classes();
             Resources.Devices = new Devices();
             Resources.Players = new Players();
@@ -28,6 +32,7 @@ namespace BL.Servers.CoC.Core
             Resources.Region = new Region();
             Resources.PRegion = new Player_Region();
             Resources.Gateway = new Gateway();
+            Resources.Parser = new Parser();
         }
     }
 }

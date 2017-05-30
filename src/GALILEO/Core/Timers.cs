@@ -33,12 +33,6 @@ namespace BL.Servers.CoC.Core
                 }
             }
 
-#if DEBUG
-            Loggers.Log(
-                Utils.Padding(this.GetType().Name, 6) + " : Shutdown Info Message executed at " + DateTime.Now.ToString("T") + ".",
-                true);
-#endif
-
             Timer Timer = new Timer
             {
                 Interval = TimeSpan.FromMinutes(5).TotalMilliseconds,
@@ -151,12 +145,10 @@ namespace BL.Servers.CoC.Core
                         DateTime.Now.ToString("T") + ']' + Environment.NewLine + ex.StackTrace, true, Defcon.ERROR);
                     return;
                 }
-#if DEBUG
+
                 Loggers.Log(
                     Utils.Padding(this.GetType().Name, 6) + " : Save finished at " + DateTime.Now.ToString("T") + ".",
                     true);
-
-#endif
             };
 
             this.LTimers.Add(1 ,Timer);

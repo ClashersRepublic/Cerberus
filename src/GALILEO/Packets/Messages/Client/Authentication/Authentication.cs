@@ -118,7 +118,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                 return;
             }
  
-            if (string.Equals(this.MasterHash, Fingerprint.Sha))
+            //if (string.Equals(this.MasterHash, Fingerprint.Sha))
             {
                 if (this.UserId == 0)
                 {
@@ -190,9 +190,9 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                     }
                 }
             }
-            else
+          //  else
             {
-                new Authentication_Failed(this.Device, Logic.Enums.Reason.Patch).Send();
+            //    new Authentication_Failed(this.Device, Logic.Enums.Reason.Patch).Send();
             }
         }
 

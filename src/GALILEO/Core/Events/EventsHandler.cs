@@ -80,8 +80,6 @@ namespace BL.Servers.CoC.Core.Events
                         }
                     }
                 }
-
-                Thread.Sleep((int)TimeSpan.FromSeconds(0.5).TotalMilliseconds);
             }
             catch (Exception)
             {

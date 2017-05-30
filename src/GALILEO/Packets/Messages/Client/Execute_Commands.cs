@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BL.Servers.CoC.Core;
+using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic;
+using BL.Servers.CoC.Packets.Messages.Server.Errors;
 
 namespace BL.Servers.CoC.Packets.Messages.Client
 {
@@ -14,7 +16,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
     {
         internal int CTick;
         internal int STick;
-        internal uint Checksum;
+        internal int Checksum;
         internal int Count;
 
         internal byte[] Commands;
@@ -28,7 +30,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
         internal override void Decode()
         {
             this.CTick = this.Reader.ReadInt32();
-            this.Checksum = this.Reader.ReadUInt32();
+            this.Checksum = this.Reader.ReadInt32();
             this.Count = this.Reader.ReadInt32();
 
             this.STick += (int)Math.Floor(DateTime.UtcNow.Subtract(this.Device.Player.Avatar.LastTick).TotalSeconds * 20);
@@ -38,6 +40,32 @@ namespace BL.Servers.CoC.Packets.Messages.Client
 
         internal override void Process()
         {
+           /* //Checksum check xD...Why not?
+            if (this.Device.Last_Checksum != 0 && this.Device.Last_Tick != 0)
+            {
+                Console.WriteLine(this.Checksum - this.Device.Last_Checksum);
+                Console.WriteLine(this.CTick - this.Device.Last_Tick);
+                Console.WriteLine((this.CTick - this.Device.Last_Tick) * 2);
+
+                if (((this.CTick - this.Device.Last_Tick) * 2) != this.Checksum - this.Device.Last_Checksum)
+                {
+                    new Out_Of_Sync(this.Device).Send();
+                    return;
+                }
+            }
+            else if (this.Checksum != 0 && this.CTick != 0)
+            {
+                this.Device.Last_Checksum = this.Checksum;
+                this.Device.Last_Tick = this.CTick;
+            }
+            else
+            {
+                new Out_Of_Sync(this.Device).Send();
+                return;
+            }
+            */
+
+
             if (this.Device.State == Logic.Enums.State.IN_PC_BATTLE)
                 Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database).Battle_Tick = (int)this.CTick;
             if (this.Count > -1 && this.Count <= 400)

@@ -11,8 +11,6 @@ namespace BL.Servers.CoC.Packets
     {
         internal const int MaxEmbeddedDepth = 10;
 
-        internal int Depth;
-
         internal int Identifier;
 
         internal int SubTick1;

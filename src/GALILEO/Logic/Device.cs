@@ -25,6 +25,9 @@ namespace BL.Servers.CoC.Logic
         internal string AndroidID, OpenUDID, Model, OSVersion, MACAddress, AdvertiseID, VendorID, IPAddress;
         internal bool Android, Advertising;
         internal volatile int Dropped;
+        internal int Last_Checksum;
+        internal int Last_Tick;
+        internal int Depth;
         internal uint ClientSeed;
 
 

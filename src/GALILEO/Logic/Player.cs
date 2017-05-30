@@ -88,6 +88,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("shield")] internal int Shield;
         [JsonProperty("guard")] internal int Guard;
         [JsonProperty("score")] internal int Trophies = Core.Resources.Random.Next(4000, 4050);
+        [JsonProperty("duel_score")] internal int Builder_Trophies = Core.Resources.Random.Next(0, 200);
         [JsonProperty("legend_troph")] internal int Legendary_Trophies;
         [JsonProperty("league_type")] internal int League;
 
@@ -98,7 +99,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("rank")] internal Rank Rank = Rank.Player;
 
         [JsonProperty("town_hall_level")] internal int TownHall_Level;
-        [JsonProperty("builder_town_hall_level")] internal int Builder_TownHall_Level;
+        [JsonProperty("th_v2_lvl")] internal int Builder_TownHall_Level;
         [JsonProperty("castle_lvl")] internal int Castle_Level = -1;
         [JsonProperty("castle_total")] internal int Castle_Total;
         [JsonProperty("castle_used")] internal int Castle_Used;
@@ -117,6 +118,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("alliance_level")] internal int Alliance_Level = -1;
 
         [JsonProperty("units")] internal Units Units;
+        [JsonProperty("units2")] internal Units Units2;
         [JsonProperty("spells")] internal Units Spells;
         [JsonProperty("alliance_units")] internal Castle_Units Castle_Units;
         [JsonProperty("alliance_spells")] internal Castle_Units Castle_Spells;
@@ -168,6 +170,7 @@ namespace BL.Servers.CoC.Logic
             this.Variables = new Structure.Slots.Variables(this);
 
             this.Units = new Units(this);
+            this.Units2 = new Units(this);
             this.Spells = new Units(this);
             this.Castle_Units = new Castle_Units(this);
             this.Castle_Spells = new Castle_Units(this);
@@ -197,6 +200,7 @@ namespace BL.Servers.CoC.Logic
             this.Variables = new Structure.Slots.Variables(this, true);
 
             this.Units = new Units(this);
+            this.Units2 = new Units(this);
             this.Spells = new Units(this);
             this.Castle_Units = new Castle_Units(this);
             this.Castle_Spells = new Castle_Units(this);
@@ -308,7 +312,7 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(0); // 60
 
                 _Packet.AddInt(this.Trophies);
-                _Packet.AddInt(this.Trophies);
+                _Packet.AddInt(this.Builder_Trophies);
 
                 _Packet.AddInt(this.Wons);
                 _Packet.AddInt(this.Loses);

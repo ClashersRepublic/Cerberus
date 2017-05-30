@@ -42,10 +42,12 @@ namespace BL.Servers.CoC.Core.Database
                 }
 
                 Loggers.Log(Utils.Padding(dbEx.GetType().Name, 15) + " : " + dbEx.Message + Environment.NewLine + dbEx.StackTrace, true, Defcon.ERROR);
+                Resources.Exceptions.Catch(dbEx, dbEx.Message + Environment.NewLine + dbEx.StackTrace);
                 throw ExceptionHelper.CreateFromEntityValidation(dbEx);
             }
             catch (DbUpdateException dbUpdateException)
             {
+                Resources.Exceptions.Catch(dbUpdateException, dbUpdateException.Message + Environment.NewLine + dbUpdateException.StackTrace);
                 Loggers.Log(Utils.Padding(dbUpdateException.GetType().Name, 15) + " : " + dbUpdateException.Message + Environment.NewLine + dbUpdateException.StackTrace, true, Defcon.ERROR);
 
                 throw ExceptionHelper.CreateFromDbUpdateException(dbUpdateException);

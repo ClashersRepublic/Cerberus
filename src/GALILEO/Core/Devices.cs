@@ -35,7 +35,8 @@ namespace BL.Servers.CoC.Core
                     }
                 }
             }
-            else if (this.ContainsKey(Device.SocketHandle))
+
+            if (this.ContainsKey(Device.SocketHandle))
             {
                 this.Remove(Device.SocketHandle);
 

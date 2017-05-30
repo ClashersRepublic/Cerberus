@@ -27,8 +27,8 @@ namespace BL.Servers.CoC.Packets.Commands.Client
             this.EmbedCommands = this.Reader.ReadBoolean();
             if (EmbedCommands)
             {
-                this.Depth += 1;
-                if (this.Depth >= MaxEmbeddedDepth)
+                this.Device.Depth += 1;
+                if (this.Device.Depth >= MaxEmbeddedDepth)
                 {
                     new Out_Of_Sync(this.Device).Send();
                     Core.Resources.Gateway.Disconnect(this.Device.Token.Args);

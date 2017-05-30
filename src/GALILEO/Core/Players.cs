@@ -49,21 +49,14 @@ namespace BL.Servers.CoC.Core
                 if (this.Remove(Player.Avatar.UserId))
                 {
                     this.Save(Player, Constants.Database);
-                    if (Player.Client?.Player != null)
-                        Player.Client.Player = null;
-                    
-
                 }
-
 
                 if (Player.Client != null)
                 {
                     if (Resources.Devices.ContainsKey(Player.Client.SocketHandle))
                     {
-
                         Resources.GChat.Remove(Player.Client);
                         Resources.Devices.Remove(Player.Client);
-                        Player.Client = null;
                     }
                 }
             }

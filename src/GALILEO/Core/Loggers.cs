@@ -84,7 +84,7 @@ namespace BL.Servers.CoC.Core
                 }
             }
             if (show)
-                Console.WriteLine(message);
+                System.Diagnostics.Debug.WriteLine(message);
         }
 
         internal static void Log(Message Message, string prefix = null)

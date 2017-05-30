@@ -60,9 +60,11 @@ namespace BL.Servers.CoC.Logic
 
         [JsonProperty("cmd")] internal Battle_Commands Commands = new Battle_Commands();
 
-        [JsonProperty("prep_skip")] internal int Preparation_Skip;
-
         [JsonProperty("calendar")] internal Calendar Calendar = new Calendar();
+
+        [JsonProperty("globals")] internal Globals_Replay Globals = new Globals_Replay();
+
+        [JsonProperty("prep_skip")] internal int Preparation_Skip;
 
         [JsonProperty("battle_id")] internal long Battle_ID;
         internal Battle()
@@ -112,8 +114,9 @@ namespace BL.Servers.CoC.Logic
             end_tick = this.End_Tick,
             timestamp = this.TimeStamp,
             cmd = this.Commands,
-            prep_skip = this.Preparation_Skip,
             calendar = this.Calendar,
+            globals = this.Globals,
+            prep_skip = this.Preparation_Skip,
             battle_id = this.Battle_ID
         }, this.Client_JsonSettings);
     }

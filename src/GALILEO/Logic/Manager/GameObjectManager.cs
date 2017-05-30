@@ -8,6 +8,7 @@ using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Logic.Manager;
 using BL.Servers.CoC.Logic.Structure;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace BL.Servers.CoC.Logic.Manager
@@ -209,65 +210,44 @@ namespace BL.Servers.CoC.Logic.Manager
                     {"exp_ver", 1},
                     {"android_client", true},
                     {"active_layout", 0 },
+                    {"act_l2", 0},
                     {"war_layout", 0 },
-                    {"layout_state", new JArray {0, 0, 0, 0, 0, 0}},
+                    {"layout_state", new JArray {0, 0, 0, 0, 0, 0, 0, 0}},
+                    {"layout_state2", new JArray {0, 0, 0, 0, 0, 0, 0, 0}},
+                    {"layout_cooldown", new JArray {0, 0, 0, 0, 0, 0, 0, 0}},
                     {"buildings", JBuildings},
                     {"obstacles", JObstacles},
                     {"traps", JTraps},
                     {"decos", JDecos},
                     {"vobjs", JObject},
+                    {"units", new JArray { "unit_prod" } },
+                    {"spells",new JArray { "unit_prod" } },
                     {"buildings2", JBuildings2},
                     {"obstacles2", JObstacles2},
                     {"traps2", JTraps2},
                     {"decos2", JDecos2},
                     {"vobjs2", JObject2},
-                };
+                    {"v2rs", 185169},
+                    {"tgsec", 175179},
+                    {"tgseed", 371546917},
+                    {"cooldowns", new JArray() },
+                    {"newShopBuildings", new JArray()},
+                    {"newShopTraps", new JArray()},
+                    {"newShopDecos", new JArray()},
+                    {"offer", new JObject() },
+                    {"troop_req_msg", "Sup" },
+                    {"last_league_rank", 0 },
+                    {"last_alliance_level", 1 },
+                    {"last_league_shuffle", 0 },
+                    {"last_season_seen", 0 },
+                    {"last_news_seen", 0 },
+                    {"war_tutorials_seen", 0 },
+                    {"war_base", true },
+                    {"arr_war_base", false},
+                    {"account_flags", 15},
+                    {"bool_layout_edit_shown_erase", true},
 
-                /*
-
-                m_vObstacleManager.Save(jsonData); */
-
-                var cooldowns = new JArray();
-                jsonData.Add("cooldowns", cooldowns);
-                var newShopBuildings = new JArray
-                {
-                    4, 0, 7, 4,
-                    7, 4, 4, 1,
-                    7, 8, 325, 5,
-                    4, 4, 1, 5,
-                    0, 0, 0, 4,
-                    1, 4, 1, 3,
-                    1, 1, 2, 2,
-                    2, 1, 1, 1,
-                    2
                 };
-                jsonData.Add("newShopBuildings", newShopBuildings);
-                var newShopTraps = new JArray { 6, 6, 5, 0, 0, 5, 5, 0, 3 };
-                jsonData.Add("newShopTraps", newShopTraps);
-                var newShopDecos = new JArray
-                {
-                    100, 100, 100, 100,
-                    100, 100, 100, 100,
-                    100, 100, 100, 100,
-                    100, 100, 100, 100,
-                    100, 100, 100, 100,
-                    100, 100, 100, 100,
-                    100, 100, 100, 100,
-                    100, 100, 100, 100,
-                    100, 100, 100, 100,
-                    100, 100
-                };
-                jsonData.Add("newShopDecos", newShopDecos);
-                jsonData.Add("troop_req_msg", "Sup");
-                jsonData.Add("last_league_rank", 11);
-                jsonData.Add("last_league_shuffle", 1);
-                jsonData.Add("last_season_seen", 1);
-                jsonData.Add("last_news_seen", 999);
-                jsonData.Add("edit_mode_shown", true);
-                jsonData.Add("war_tutorials_seen", 1);
-                jsonData.Add("war_base", true);
-                jsonData.Add("help_opened", true);
-                jsonData.Add("bool_layout_edit_shown_erase", false);
 
                 return jsonData;
 #endregion

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BL.Servers.CoC.Extensions.List;
 using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Files.CSV_Logic;
