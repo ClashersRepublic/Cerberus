@@ -229,32 +229,40 @@ namespace BL.Servers.CoC.Logic
                 if (this.ClanId > 0)
                 {
                     Clan clan = Core.Resources.Clans.Get(ClanId, Constants.Database);
-                    if (!string.IsNullOrEmpty(clan.Name))
-                    {
-                        _Packet.AddLong(this.ClanId);
-                        _Packet.AddString(clan.Name);
-                        _Packet.AddInt(clan.Badge); // Badge
-                        _Packet.AddInt((int) clan.Members[UserId].Role); // Role
-                        _Packet.AddInt(clan.Level); // Level
 
-                        _Packet.AddBool(false); // Alliance War
+                    if (clan != null)
+                    {
+                        if (!string.IsNullOrEmpty(clan.Name))
                         {
-                            // _Packet.AddLong(1); // War ID
+                            _Packet.AddLong(this.ClanId);
+                            _Packet.AddString(clan.Name);
+                            _Packet.AddInt(clan.Badge); // Badge
+                            _Packet.AddInt((int) clan.Members[UserId].Role); // Role
+                            _Packet.AddInt(clan.Level); // Level
+
+                            _Packet.AddBool(false); // Alliance War
+                            {
+                                // _Packet.AddLong(1); // War ID
+                            }
+                        }
+                        else
+                        {
+                            foreach (int userid in clan?.Members.Keys)
+                            {
+                                var player = Core.Resources.Players.Get(userid, Constants.Database, false);
+                                player.Avatar.ClanId = 0;
+                                player.Avatar.Alliance_Role = -1;
+                                player.Avatar.Alliance_Level = -1;
+                                player.Avatar.Alliance_Name = string.Empty;
+                                player.Avatar.Badge_ID = -1;
+
+                            }
+                            Core.Resources.Clans.Delete(clan);
                         }
                     }
                     else
                     {
-                        foreach (int userid in clan.Members.Keys)
-                        {
-                            var player = Core.Resources.Players.Get(userid, Constants.Database, false);
-                            player.Avatar.ClanId = 0;
-                            player.Avatar.Alliance_Role = -1;
-                            player.Avatar.Alliance_Level = -1;
-                            player.Avatar.Alliance_Name = string.Empty;
-                            player.Avatar.Badge_ID = -1;
-
-                        }
-                        Core.Resources.Clans.Delete(clan);
+                        Console.WriteLine("Clan is null");
                     }
                 }
 

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using BL.Servers.CoC.Logic;
 
 namespace BL.Servers.CoC.Core
 {
     internal class Devices : Dictionary<IntPtr, Device>
     {
+        internal object Gate = new object();
         internal Devices()
         {
             // Devices.
@@ -13,13 +15,16 @@ namespace BL.Servers.CoC.Core
 
         internal void Add(Device Device)
         {
-            if (this.ContainsKey(Device.SocketHandle))
+            lock (Gate)
             {
-                this[Device.SocketHandle] = Device;
-            }
-            else
-            {
-                this.Add(Device.SocketHandle, Device);
+                if (this.ContainsKey(Device.SocketHandle))
+                {
+                    this[Device.SocketHandle] = Device;
+                }
+                else
+                {
+                    this.Add(Device.SocketHandle, Device);
+                }
             }
         }
 
@@ -67,6 +72,8 @@ namespace BL.Servers.CoC.Core
                     // Already Closed.
                 }
             }
+
+            Interlocked.CompareExchange(ref Device.Dropped, 1, 0);
         }
     }
 }

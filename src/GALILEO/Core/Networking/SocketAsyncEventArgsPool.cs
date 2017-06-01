@@ -1,28 +1,35 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using BL.Servers.CoC.Extensions;
+using SharpRaven.Data;
 
 namespace BL.Servers.CoC.Core.Networking
 {
     internal class SocketAsyncEventArgsPool
     {
-        internal readonly Stack<SocketAsyncEventArgs> Pool;
+        internal readonly ConcurrentQueue<SocketAsyncEventArgs> Pool;
 
         internal readonly object Gate = new object();
 
         internal SocketAsyncEventArgsPool()
         {
-            this.Pool = new Stack<SocketAsyncEventArgs>();
+            this.Pool = new ConcurrentQueue<SocketAsyncEventArgs>();
         }
 
         internal SocketAsyncEventArgs Dequeue()
         {
             lock (this.Gate)
             {
-                if (this.Pool.Count > 0)
+                if (this.Pool.TryDequeue(out SocketAsyncEventArgs args))
+                {
+                    return args;
+                }
+                /*(if (this.Pool.Count > 0)
                 {
                     return this.Pool.Pop();
-                }
+                }*/
 
                 return null;
             }
@@ -32,10 +39,16 @@ namespace BL.Servers.CoC.Core.Networking
         {
             lock (this.Gate)
             {
-                if (this.Pool.Count < Constants.MaxPlayers)
+                if (Args == null)
+                {
+                    Resources.Exceptions.RavenClient.Capture(  new SentryEvent("Items added to a SocketAsyncEventArgsPool is null"));
+                    throw new ArgumentNullException("Items added to a SocketAsyncEventArgsPool cannot be null");
+                }
+                this.Pool.Enqueue(Args);
+                /*if (this.Pool.Count < Constants.MaxPlayers)
                 {
                     this.Pool.Push(Args);
-                }
+                }*/
             }
         }
 
@@ -43,7 +56,11 @@ namespace BL.Servers.CoC.Core.Networking
         {
             lock (this.Gate)
             {
-                this.Pool.Clear();
+                while (this.Pool.TryDequeue(out SocketAsyncEventArgs Args))
+                {
+                    // do nothing
+                }
+                //this.Pool.Clear();
             }
         }
     }

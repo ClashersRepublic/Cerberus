@@ -44,21 +44,18 @@ namespace BL.Servers.CoC.Core.Events
                                           DateTime.Now.ToString("T") + " #");
                         Console.WriteLine("# ----------------------------------- #");
                         Console.WriteLine("# In-Memory Players    # " +
-                                          Utils.Padding(Resources.Players.Count + " - " + Constants.MaxPlayers,
-                                              15) + " #");
+                                          Utils.Padding(Resources.Players.Count.ToString(), 15) + " #");
                         Console.WriteLine("# In-Memory Battles           # " +
                                           Utils.Padding(Resources.Battles.Seed.ToString(), 15) + " #");
                         Console.WriteLine("# In-Memory SAEA    # " +
-                                          Utils.Padding(
-                                              Resources.Gateway.ReadPool.Pool.Count + " - " +
-                                              Resources.Gateway.WritePool.Pool.Count, 15) + " #");
+                                          Utils.Padding(Resources.Gateway.ReadPool.Pool.Count + " - " +  Resources.Gateway.WritePool.Pool.Count + " - " + Resources.Gateway.AcceptPool.Pool.Count, 25) + " #");
                         Console.WriteLine("# ----------------------------------- #");
                         break;
                     }
 
                     case ConsoleKey.M:
                     {
-                        if (Constants.Maintenance == null)
+                        if (Resources.Classes.Timers.LTimers.Count < 4)
                         {
                             Console.WriteLine("Press Y to continue and N to cancle");
                             ConsoleKeyInfo Command2 = Console.ReadKey(false);
@@ -148,7 +145,7 @@ namespace BL.Servers.CoC.Core.Events
                             {
                                 new Out_Of_Sync(_Device).Send();
                             }
-                            Resources.Gateway.Disconnect(_Device.Token.Args);
+                            //Resources.Gateway.Disconnect(_Device.Token.Args);
                         }
                         break;
                     }

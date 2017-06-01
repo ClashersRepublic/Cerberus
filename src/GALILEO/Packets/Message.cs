@@ -28,7 +28,7 @@ namespace BL.Servers.CoC.Packets
         internal Message(Device Device)
         {
             this.Device = Device;
-            this.Data = new List<byte>(Constants.SendBuffer);
+            this.Data = new List<byte>();
         }
 
         internal Message(Device Device, Reader Reader)
