@@ -30,7 +30,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Clans.War
             this.Data.AddLong(this.Device.Player.Avatar.ClanId);
             this.Data.AddLong(this.Device.Player.Avatar.UserId);
             this.Data.AddLong(this.Device.Player.Avatar.UserId);
-            this.Data.AddString(this.Device.Player.Avatar.Name);
+            this.Data.AddString("Aidid ❤ Vicky");
 
             this.Data.AddInt(0);
             this.Data.AddInt(0);
@@ -108,11 +108,11 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Clans.War
             this.Data.AddInt(clan.Badge + 100);
             this.Data.AddInt(clan.Level);
             this.Data.AddInt(0);
-            this.Data.AddInt(2);
+            this.Data.AddInt(3);
             this.Data.AddLong(20);
             this.Data.AddLong(10);
             this.Data.AddLong(10);
-            this.Data.AddString($"Eiffel");
+            this.Data.AddString($"Eiffel The DMCA Master");
 
             this.Data.AddInt(0);
             this.Data.AddInt(0);
@@ -148,7 +148,43 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Clans.War
             this.Data.AddLong(20);
             this.Data.AddLong(11);
             this.Data.AddLong(11);
-            this.Data.AddString($"COL");
+            this.Data.AddString($"Clash Of Light The One That Have Everything");
+
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+            this.Data.AddInt(0);
+
+            this.Data.AddInt(0);
+            this.Data.AddInt(1);
+            this.Data.AddInt(1);
+            this.Data.AddInt(1);
+            this.Data.AddByte(2);
+
+            this.Data.AddInt(68);
+            this.Data.AddInt(5160299);
+            this.Data.AddInt(0);
+            this.Data.AddByte(0);
+
+            this.Data.AddInt(4); //Castle level
+            this.Data.AddInt(30); //Castle space
+            this.Data.AddString("Hi"); //Request message
+            this.Data.AddInt(0); //Used space
+            this.Data.AddInt(0); //Total donator
+
+            this.Data.AddLong(20);
+            this.Data.AddLong(11);
+            this.Data.AddLong(11);
+            this.Data.AddString($"Metrogaming The One That Have Nothing");
 
             this.Data.AddInt(0);
             this.Data.AddInt(0);

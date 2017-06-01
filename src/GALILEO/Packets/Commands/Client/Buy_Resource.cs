@@ -27,13 +27,16 @@ namespace BL.Servers.CoC.Packets.Commands.Client
             this.EmbedCommands = this.Reader.ReadBoolean();
             if (EmbedCommands)
             {
-                this.Device.Depth += 1;
+                this.Device.Depth++;
                 if (this.Device.Depth >= MaxEmbeddedDepth)
                 {
                     new Out_Of_Sync(this.Device).Send();
-                    Core.Resources.Gateway.Disconnect(this.Device.Token.Args);
                     return;
                 }
+            }
+            else
+            {
+                this.Device.Depth--;
             }
             this.Reader.ReadInt32(); 
         }

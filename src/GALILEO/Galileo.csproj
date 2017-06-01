@@ -211,6 +211,7 @@
     <Compile Include="Core\Exceptions.cs" />
     <Compile Include="Core\Loggers.cs" />
     <Compile Include="Core\Networking\Gateway.cs" />
+    <Compile Include="Core\Networking\Pool.cs" />
     <Compile Include="Core\Networking\Processor.cs" />
     <Compile Include="Core\Networking\SocketAsyncEventArgsPool.cs" />
     <Compile Include="Core\Networking\Token.cs" />
@@ -392,6 +393,7 @@
     <Compile Include="Packets\Commands\Client\Battle\Place_Alliance_Attacker.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Place_Attacker.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Search_Opponent.cs" />
+    <Compile Include="Packets\Commands\Client\Battle\Search_Opponent_2.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Surrender_Attack.cs" />
     <Compile Include="Packets\Commands\Client\Boost_Building.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Building.cs" />
@@ -407,6 +409,8 @@
     <Compile Include="Packets\Commands\Client\My_League.cs" />
     <Compile Include="Packets\Commands\Client\Clan\Request_Alliance_Troops.cs" />
     <Compile Include="Packets\Commands\Client\Clan\Request_Amical_Challenge.cs" />
+    <Compile Include="Packets\Commands\Client\News_Seen.cs" />
+    <Compile Include="Packets\Commands\Client\New_Shop_Items_Seen.cs" />
     <Compile Include="Packets\Commands\Client\Remove_Obstacle.cs" />
     <Compile Include="Packets\Commands\Client\SpeedUp_Construction.cs" />
     <Compile Include="Packets\Commands\Client\SpeedUp_Upgrade_Unit.cs" />
@@ -480,6 +484,7 @@
     <Compile Include="Packets\Messages\Server\Avatar_Stream.cs" />
     <Compile Include="Packets\Messages\Server\Avatar_Stream_Entry.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Battle_Failed.cs" />
+    <Compile Include="Packets\Messages\Server\Battle\Builder_Pc_Battle_Data.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Npc_Data.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Pc_Battle_Data.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Replay_Data.cs" />

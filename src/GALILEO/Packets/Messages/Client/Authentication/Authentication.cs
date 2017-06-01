@@ -111,7 +111,6 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
         {
             if (Constants.RC4)
                 new Session_Key(this.Device).Send();
-
             if (Constants.Maintenance != null)
             {
                 new Authentication_Failed(this.Device, Logic.Enums.Reason.Maintenance).Send();
