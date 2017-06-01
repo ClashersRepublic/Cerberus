@@ -16,22 +16,22 @@
   <!-- If the server should use custom patchs -->
 
   <!-- ____________________________________ DATABASE SETTINGS ____________________________________ -->
-  <add key="RedisIPAddress" value="127.0.0.1" />
+  <add key="RedisIPAddress" value="database.barbarianland.xyz" />
   <!-- Redis server IP address-->
   <add key="RedisPort" value="6379" />
   <!--  Redis server port-->
-  <add key="RedisPassword" value="aididlwq0115" />
+  <add key="RedisPassword" value="" />
   <!--  Redis server password-->
 
-  <add key="MysqlIPAddress" value="127.0.0.1" />
+  <add key="MysqlIPAddress" value="localhost" />
   <!-- MySql IP Address -->
   <add key="MysqlPort" value="3306" />
   <!-- MySql Username -->
-  <add key="MysqlUsername" value="root" />
+  <add key="MysqlUsername" value="CrayCray" />
   <!-- MySql Username -->
-  <add key="MysqlPassword" value="" />
+  <add key="MysqlPassword" value="WR29rusb" />
   <!--  MySql server password-->
-  <add key="MysqlDatabase" value="bl.servers.cr" />
+  <add key="MysqlDatabase" value="BL_Royale" />
   <!--  Redis server password-->
   <!-- _______________________________________________________________________________________ -->
 </appSettings>

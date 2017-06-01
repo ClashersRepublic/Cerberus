@@ -50,8 +50,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Battle
             {
                 Resources.Battles[this.Device.Player.BattleID].Commands.Enqueue(new Place_Troop(_Enemy.Device)
                 {
-                    SenderHigh = this.Device.Player.UserHighId,
-                    SenderLow =  this.Device.Player.UserLowId
+                    SenderID = this.Device.Player.UserId
                 });
 
                 new Battle_Command_Data(this.Device)

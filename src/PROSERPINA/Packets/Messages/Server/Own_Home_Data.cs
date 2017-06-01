@@ -17,5 +17,9 @@ namespace BL.Servers.CR.Packets.Messages.Server
             this.Data.AddRange(this.Device.Player.Component.ToBytes);
             this.Data.AddRange(this.Device.Player.Profile.ToBytes);
         }
+
+        internal override void Process()
+        {
+        }
     }
 }

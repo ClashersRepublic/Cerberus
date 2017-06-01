@@ -10,21 +10,85 @@ namespace BL.Servers.CR.Core
     using System.Timers;
     using BL.Servers.CR.Logic;
     using BL.Servers.CR.Extensions;
-
+    using BL.Servers.CR.Logic.Manager;
+    using BL.Servers.CR.Packets.Messages.Server;
+    using BL.Servers.CR.Core.Network;
 
     internal class Timers
     {
-        internal readonly List<Timer> LTimers = new List<Timer>();
+        internal readonly Dictionary<int, Timer> LTimers = new Dictionary<int, Timer>();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Timers"/> class.
-        /// </summary>
         internal Timers()
         {
             this.Save();
             this.DeadSockets();
-            this.Collect();
+            this.Random();
             this.Run();
+        }
+        internal void Maintenance(int durations)
+        {
+            foreach (var _Device in Resources.Players.Values.ToList())
+            {
+                if (_Device.Device != null)
+                {
+                    new Shutdown_Started(_Device.Device).Send();
+                }
+            }
+
+            Timer Timer = new Timer
+            {
+                Interval = TimeSpan.FromMinutes(5).TotalMilliseconds,
+                AutoReset = false,
+            };
+
+            Timer.Elapsed += (_Sender, _Args) =>
+            {
+                foreach (var _Device in Resources.Devices.Values.ToList())
+                {
+                    Resources.Gateway.Disconnect(_Device.Token.Args);
+                }
+
+                Constants.Maintenance_Timer = new Maintenance_Timer();
+                Constants.Maintenance_Timer.StartTimer(DateTime.Now, (int)TimeSpan.FromMinutes(durations).TotalSeconds);
+
+                Console.WriteLine("# " + DateTime.Now.ToString("d") + " ---- Entered Maintanance Mode---- " + DateTime.Now.ToString("T") + " #");
+                Console.WriteLine("# ----------------------------------- #");
+                Console.WriteLine("# Maintanance Duration    # " + Utils.Padding(durations.ToString()) + " #");
+                Console.WriteLine("# Maintanance End Time    # " + Utils.Padding(Constants.Maintenance_Timer.GetEndTime.ToString("T")) + " #");
+                Console.WriteLine("# ----------------------------------- #");
+                Timer Timer2 = new Timer
+                {
+                    Interval = TimeSpan.FromSeconds(Constants.Maintenance_Timer.GetRemainingSeconds(DateTime.Now)).TotalMilliseconds,
+                    AutoReset = false
+                };
+                Timer2.Start();
+                this.LTimers.Add(5, Timer2);
+
+                Timer2.Elapsed += (_Sender2, _Args2) =>
+                {
+                    Console.WriteLine("# " + DateTime.Now.ToString("d") + " ---- Exited from Maintanance Mode---- " + DateTime.Now.ToString("T") + " #");
+                    Constants.Maintenance_Timer = null;
+                    Timer2.Stop();
+                    this.LTimers.Remove(4);
+                    this.LTimers.Remove(5);
+                };
+            };
+
+            this.LTimers.Add(4, Timer);
+        }
+
+        internal void Random()
+        {
+            Timer Timer = new Timer
+            {
+                Interval = TimeSpan.FromHours(1).TotalMilliseconds,
+                AutoReset = true
+            };
+            Timer.Elapsed += (_Sender, _Args) =>
+            {
+                Resources.Random = new Random(DateTime.Now.ToString().GetHashCode());
+            };
+            this.LTimers.Add(3, Timer);
         }
 
         internal void Save()
@@ -37,87 +101,51 @@ namespace BL.Servers.CR.Core
 
             Timer.Elapsed += (_Sender, _Args) =>
             {
-#if DEBUG
-                Loggers.Log(
-                    Utils.Padding(this.GetType().Name, 6) + " : Save executed at " + DateTime.Now.ToString("T") + ".",
-                    true);
-#endif
+                Debug.WriteLine("[DATABASE] Executed at " + DateTime.Now.ToString("T") + ".");
+
                 try
                 {
                     lock (Resources.Players.Gate)
                     {
                         if (Resources.Players.Count > 0)
                         {
-                            List<Logic.Player> Players = Resources.Players.Values.ToList();
+                            List<Player> Players = Resources.Players.Values.ToList();
 
                             Parallel.ForEach(Players, (_Player) =>
                             {
                                 if (_Player != null)
                                 {
-                                    //_Player.Tick();
-                                    Resources.Players.Save(_Player);
+                                    Resources.Players.Save(_Player, Constants.Database);
                                 }
                             });
                         }
                     }
-                    /* lock (Resources.Clans.Gate)
-                     {
-                         if (Resources.Clans.Count > 0)
-                         {
-                             List<Clan> Clans = Resources.Clans.Values.ToList();
+                    lock (Resources.Clans.Gate)
+                    {
+                        if (Resources.Clans.Count > 0)
+                        {
+                            List<Clan> Clans = Resources.Clans.Values.ToList();
 
-                             foreach (Clan _Clan in Clans)
-                             {
-                                 if (_Clan != null)
-                                 {
-                                     Resources.Clans.Save(_Clan, Constants.Database);
-                                 }
-                             }
-                         }
-                     }*/
+                            foreach (Clan _Clan in Clans)
+                            {
+                                if (_Clan != null)
+                                {
+                                    Resources.Clans.Save(_Clan, Constants.Database);
+                                }
+                            }
+                        }
+                    }
                 }
-                catch (Exception ex)
+                catch
                 {
-                    Loggers.Log(
-                        Utils.Padding(ex.GetType().Name, 15) + " : " + ex.Message + ".[: Failed at " +
-                        DateTime.Now.ToString("T") + ']' + Environment.NewLine + ex.StackTrace, true, Defcon.ERROR);
                     return;
                 }
-#if DEBUG
-                Loggers.Log(
-                    Utils.Padding(this.GetType().Name, 6) + " : Save finished at " + DateTime.Now.ToString("T") + ".",
-                    true);
 
-#endif
+                Debug.WriteLine("[DATABASE] Finished at " + DateTime.Now.ToString("T") + ".");
             };
 
-            this.LTimers.Add(Timer);
+            this.LTimers.Add(1, Timer);
         }
-
-        internal void Collect()
-        {
-            Timer Timer = new Timer
-            {
-                Interval = 10000,
-                AutoReset = true
-            };
-
-            Timer.Elapsed += (_Sender, _Args) =>
-            {
-                try
-                {
-                    GC.Collect(GC.MaxGeneration);
-                    GC.WaitForPendingFinalizers();
-                }
-                catch 
-                {
-                //
-                }
-            };
-
-            this.LTimers.Add(Timer);
-        }
-
         internal void DeadSockets()
         {
             Timer Timer = new Timer
@@ -129,11 +157,9 @@ namespace BL.Servers.CR.Core
             Timer.Elapsed += (_Sender, _Args) =>
             {
                 List<Device> DeadSockets = new List<Device>();
-#if DEBUG
-                Loggers.Log(
-                    Utils.Padding(this.GetType().Name, 6) + " : DeadSocket executed at " + DateTime.Now.ToString("T") +
-                    ".", true);
-#endif
+
+                Debug.WriteLine("[SOCKET] Executed at " + DateTime.Now.ToString("T") + ".");
+
                 foreach (Device Device in Resources.Devices.Values.ToList())
                 {
                     if (!Device.Connected())
@@ -142,35 +168,22 @@ namespace BL.Servers.CR.Core
                     }
                 }
 
-#if DEBUG
-                Loggers.Log(
-                    Utils.Padding(this.GetType().Name, 6) + " : Added " + DeadSockets.Count +
-                    " devices to DeadSockets list.", true);
+                Debug.WriteLine("[SOCKET] Added " + DeadSockets.Count + " devices to the list!");
 
-#endif
                 foreach (Device Device in DeadSockets)
                 {
                     Resources.Gateway.Disconnect(Device.Token.Args);
                 }
 
-
-#if DEBUG
-                Loggers.Log(
-                    Utils.Padding(this.GetType().Name, 6) + " : DeadSocket finished at " + DateTime.Now.ToString("T") +
-                    ".", true);
-
-#endif
+                Debug.WriteLine("[SOCKET] Finished at " + DateTime.Now.ToString("T") + ".");
             };
 
-            this.LTimers.Add(Timer);
+            this.LTimers.Add(2, Timer);
         }
 
-        /// <summary>
-        /// Runs this instance.
-        /// </summary>
         internal void Run()
         {
-            foreach (Timer Timer in this.LTimers)
+            foreach (Timer Timer in this.LTimers.Values)
             {
                 Timer.Start();
             }

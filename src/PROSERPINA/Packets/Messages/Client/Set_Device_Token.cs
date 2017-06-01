@@ -21,7 +21,7 @@ namespace BL.Servers.CR.Packets.Messages.Client
 
         internal override void Decode()
         {
-            this.Password = this.Reader.ReadString();
+            Console.WriteLine(this.Password = this.Reader.ReadString());
         }
 
         internal override void Process()

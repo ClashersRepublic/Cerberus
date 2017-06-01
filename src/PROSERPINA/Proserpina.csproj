@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BL.Servers.CR</RootNamespace>
     <AssemblyName>BarbarianLand Royale Server</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -261,10 +261,12 @@
     <Compile Include="Core\Classes.cs" />
     <Compile Include="Core\Consoles\Prefixed.cs" />
     <Compile Include="Core\Devices.cs" />
+    <Compile Include="Core\Events\Parser.cs" />
     <Compile Include="Core\Events\Region.cs" />
     <Compile Include="Core\Exceptions.cs" />
     <Compile Include="Core\Loggers.cs" />
     <Compile Include="Core\Network\Processor.cs" />
+    <Compile Include="Core\Network\TCP\Pool.cs" />
     <Compile Include="Core\Players.cs" />
     <Compile Include="Core\Timers.cs" />
     <Compile Include="Core\Network\TCP\Gateway.cs" />
@@ -352,6 +354,7 @@
     <Compile Include="Logic\Enums\Crypto.cs" />
     <Compile Include="Logic\Enums\Rank.cs" />
     <Compile Include="Logic\Enums\Server_Mode.cs" />
+    <Compile Include="Logic\Manager\Maintenance_Timer.cs" />
     <Compile Include="Logic\Slots\Achivements.cs" />
     <Compile Include="Logic\Components\Battle.cs" />
     <Compile Include="Logic\Components\Component.cs" />
@@ -486,6 +489,7 @@
     <Compile Include="Packets\Messages\Server\Battle\UDP_Connection_Info.cs" />
     <Compile Include="Packets\Messages\Server\Cancel_Battle_Ok.cs" />
     <Compile Include="Packets\Messages\Server\Disconnected.cs" />
+    <Compile Include="Packets\Messages\Server\Error\Out_Of_Sync.cs" />
     <Compile Include="Packets\Messages\Server\Inbox_Data.cs" />
     <Compile Include="Packets\Messages\Server\Keep_Alive_Response.cs" />
     <Compile Include="Packets\Messages\Server\Matchmake_Failed.cs" />

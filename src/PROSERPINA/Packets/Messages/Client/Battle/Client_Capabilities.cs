@@ -13,11 +13,6 @@
         {
             this.Device.Ping = this.Reader.ReadVInt();
             this.Device.Interface = this.Reader.ReadString();
-
-#if DEBUG
-            Console.WriteLine($"Ping {this.Device.Ping}");
-            Console.WriteLine($"Interface {this.Device.Interface}");
-#endif
         }
         
     }

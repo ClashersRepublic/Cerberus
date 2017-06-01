@@ -36,12 +36,19 @@ namespace BL.Servers.CR.Logic
             this.SocketHandle = so.Handle;
         }
 
-
         internal State PlayerState = Logic.Enums.State.DISCONNECTED;
 
         internal IntPtr SocketHandle;
 
+        internal bool Android;
+
         internal int Ping;
+        internal int Tick;
+        internal int Major;
+        internal int Revision;
+        internal int Minor;
+
+        internal volatile int Dropped;
 
         internal string Interface;
         internal string AndroidID;
@@ -52,8 +59,6 @@ namespace BL.Servers.CR.Logic
         internal string AdvertiseID;
         internal string VendorID;
         internal string IPAddress;
-
-        internal uint ClientSeed;
 
         public bool Connected()
         {

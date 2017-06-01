@@ -8,9 +8,11 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
     internal class Place_Troop : Command
     {
 
-        internal int SenderHigh;
-        internal int SenderLow;
+        internal long SenderID;
+
         internal int TroopID;
+        internal int TroopType;
+
         internal int X;
         internal int Y;
 
@@ -24,19 +26,19 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
 
         internal override void Decode()
         {
-            //Console.WriteLine(BitConverter.ToString(Reader.ReadFully()));
+            this.Reader.ReadVInt(); // 429
+            this.Reader.ReadVInt(); // 449
+            
+            this.Reader.ReadVInt(); // 0
 
-            this.Reader.ReadVInt();
-            this.Reader.ReadVInt();
+            this.SenderID = this.Reader.ReadVInt(); // 5 - UserID
+            this.SenderID = this.Reader.ReadVInt(); // 5 - UserID
 
-            this.Reader.ReadVInt();
+            this.TroopType = this.Reader.ReadVInt(); // 26
+            this.TroopID = this.Reader.ReadVInt(); // 3
 
-            this.TroopID = this.Reader.ReadVInt();
-
-            this.Reader.ReadInt16();
-
-            this.Reader.ReadVInt();
-            this.Reader.ReadInt16();
+            this.Reader.ReadVInt(); // 63
+            this.Reader.ReadVInt(); // 0
 
             this.X = this.Reader.ReadVInt();
             this.Y = this.Reader.ReadVInt();
@@ -44,19 +46,33 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
 
         internal override void Encode()
         {
+            this.Data.AddVInt(0); // Checksum
 
-            this.Data.AddRange("01-A8-01-7F".HexaToBytes()); // Pretty sure this is check sum actually xD
-            this.Data.AddVInt(this.SenderHigh); // 11-BB-AE-F2-
-            this.Data.AddVInt(this.SenderLow); // 11-BB-AE-F2-06
-            this.Data.AddRange("05-83-EA-E5-18-01".HexaToBytes());
-            this.Data.AddRange("1A-03".HexaToBytes());
-            this.Data.AddRange("00-00-01-00-09-00-94-46-8C-EF-02".HexaToBytes());
+            this.Data.AddVInt(this.SenderID); // Sender ID (High)
+            this.Data.AddVInt(this.SenderID); // Sender ID (Low)
 
+            this.Data.AddVInt(5); // Unknown
+
+            this.Data.AddVInt(this.TroopType * 1000000 + this.TroopID); // Troop ID (GlobalID)
+
+            this.Data.AddVInt(1); // Unknown
+
+            this.Data.AddVInt(this.TroopType); // Troop Type
+            this.Data.AddVInt(this.TroopID); // Troop ID?
+
+            this.Data.AddVInt(0);
+            this.Data.AddVInt(0);
+            this.Data.AddVInt(1);
+            this.Data.AddVInt(0);
+            this.Data.AddVInt(9);
+            this.Data.AddVInt(0);
+
+            this.Data.AddVInt(this.X); // X Placement
+            this.Data.AddVInt(this.Y); // Y Placement
         }
 
         internal override void Process()
         {
-            //ShowValues(); //Nothing will show because there is no constructor
         }
     }
 }

@@ -32,6 +32,8 @@
 
         internal override void Process()
         {
+            this.Device.Tick = (int) this.CTick;
+
             if (this.Count > -1 && this.Count <= 50)
             {
                 using (Reader Reader = new Reader(this.Commands))

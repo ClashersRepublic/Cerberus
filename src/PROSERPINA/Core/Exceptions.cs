@@ -23,5 +23,10 @@ namespace BL.Servers.CR.Core
         {
             Rollbar.Report(Exception, ErrorLevel);
         }
+
+        internal void Catch(System.Exception ex, string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

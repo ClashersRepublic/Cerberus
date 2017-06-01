@@ -20,6 +20,7 @@ namespace BL.Servers.CR.Core
         internal static Battles Battles;
         internal static Region Region;
         internal static Random Random;
+        internal static Parser Parser;
 
         internal static void Initialize()
         {
@@ -32,7 +33,7 @@ namespace BL.Servers.CR.Core
             Resources.Random = new Random();
             Resources.Region = new Region();
             Resources.Gateway = new Gateway();
+            Resources.Parser = new Parser();
         }
-
     }
 }
