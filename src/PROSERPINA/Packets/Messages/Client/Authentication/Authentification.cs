@@ -32,10 +32,6 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
         internal string Language;
         internal string UDID;
 
-        internal int Major;
-        internal int Minor;
-        internal int Revision;
-
         internal override void DecryptSodium()
         {
             byte[] Buffer = this.Reader.ReadBytes(this.Length);
@@ -62,9 +58,9 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
 
             this.Token = this.Reader.ReadString();
 
-            this.Major = this.Reader.ReadVInt();
-            this.Minor = this.Reader.ReadVInt();
-            this.Revision = this.Reader.ReadVInt();
+            this.Device.Major = this.Reader.ReadVInt();
+            this.Device.Minor = this.Reader.ReadVInt();
+            this.Device.Revision = this.Reader.ReadVInt();
 
             this.MasterHash = this.Reader.ReadString();
 
@@ -183,7 +179,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
 
             new Authentification_OK(this.Device).Send();
             new Own_Home_Data(this.Device).Send();
-            new Inbox_Data(this.Device).Send();
+            //new Inbox_Data(this.Device).Send();
         }
     }
 }

@@ -12,6 +12,7 @@ using BL.Servers.CR.Logic;
 using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Packets.Cryptography;
 using BL.Servers.CR.Files;
+using BL.Servers.CR.Core;
 
 namespace BL.Servers.CR.Packets.Messages.Server.Authentication
 {
@@ -36,17 +37,17 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
             this.Version = 2;
         }
             
-        internal string ContentURL => Fingerprint.Custom ? "http://patch.barbarianland.xyz/clashroyale/3f8f926ab56dae5eeec7ec5d9a151e4bc9955876/" : "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
+        internal string ContentURL => Fingerprint.Custom ? "http://barbarianland.xyz/blpatch/clashroyale" : "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
 
         internal override void Encode()
         {
             this.Data.AddVInt((int)this.Reason);
-            this.Data.AddString(this.Reason != Reason.Patch ? null : Fingerprint.Json);
+            this.Data.AddString(Fingerprint.Json);
             this.Data.AddString(null);
             this.Data.AddString(this.Reason != Reason.Patch ? null : ContentURL);
             this.Data.AddString(this.Reason != Reason.Update ? null : UpdateURL);
             this.Data.AddString(this.Message);
-            this.Data.AddVInt(0);
+            this.Data.AddVInt(this.Reason == Reason.Maintenance ? Constants.Maintenance_Timer.GetRemainingSeconds(DateTime.Now) : 0);
             this.Data.AddByte(0);
             this.Data.AddString(null);
         }

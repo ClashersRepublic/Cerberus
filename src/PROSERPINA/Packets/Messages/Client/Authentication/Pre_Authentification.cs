@@ -44,7 +44,7 @@
             {
                 if (this.Major == (int)CVersion.Major && this.Minor == (int)CVersion.Minor)
                 {
-                    if (!Constants.Maintenance)
+                    if (!Constants.Maintenance_Enabled)
                     {
                         new Pre_Authentification_OK(Device).Send();
                     }

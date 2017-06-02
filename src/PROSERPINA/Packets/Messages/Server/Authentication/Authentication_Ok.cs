@@ -38,9 +38,9 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
 
             this.Data.AddString(null); // Gamecenter
 
-            this.Data.AddVInt(3); // Major
-            this.Data.AddVInt(193); // Minor
-            this.Data.AddVInt(6); // Revision
+            this.Data.AddVInt(this.Device.Major); // Major
+            this.Data.AddVInt(this.Device.Minor); // Minor
+            this.Data.AddVInt(this.Device.Revision); // Revision
 
             if (Constants.Mode == Server_Mode.PRODUCTION)
                 this.Data.AddString("prod");

@@ -122,7 +122,7 @@ namespace BL.Servers.CR.Logic.Components
                 // 9 = Name already set + clan
                 // < 7 =  Set name popup
 
-                if (this.Player.ClanId != 0)
+                if (this.Player.ClanLowID != 0)
                 {
                     Clan Clan = Core.Resources.Clans.Get(this.Player.ClanId, Constants.Database, false);
 
@@ -132,18 +132,12 @@ namespace BL.Servers.CR.Logic.Components
 
                     _Packet.AddString(Clan.Name);
 
-                    _Packet.AddVInt(Clan.Badge);
+                    _Packet.Add((byte)Clan.Badge);
 
                     _Packet.AddVInt((int)Clan.Members[this.Player.UserId].Role);
                 }
-                else if (!string.IsNullOrEmpty(this.Player.Username) && this.Player.ClanId == 0)
-                {
-                    _Packet.Add(7);
-                }
                 else
-                {
-                    _Packet.Add(0);
-                }
+                    _Packet.Add(string.IsNullOrEmpty(this.Player.Username) ? (byte)0 : (byte)7);
 
                 _Packet.AddVInt(this.Player.Games_Played); // Games Played
 

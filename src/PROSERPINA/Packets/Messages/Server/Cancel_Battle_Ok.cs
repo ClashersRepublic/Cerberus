@@ -18,5 +18,10 @@ namespace BL.Servers.CR.Packets.Messages.Server
         {
             this.Data.Add(1);
         }
+
+        internal override void Process()
+        {
+            this.Device.PlayerState = Logic.Enums.State.LOGGED;
+        }
     }
 }

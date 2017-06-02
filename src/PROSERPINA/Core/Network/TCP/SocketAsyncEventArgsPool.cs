@@ -1,27 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Net.Sockets;
 using BL.Servers.CR.Core;
+using System.Collections.Concurrent;
 
 namespace BL.Servers.CR.Core.Network
 {
   internal class SocketAsyncEventArgsPool
     {
-        internal readonly Stack<SocketAsyncEventArgs> Pool;
+        internal readonly ConcurrentQueue<SocketAsyncEventArgs> Pool;
 
         internal readonly object Gate = new object();
 
         internal SocketAsyncEventArgsPool()
         {
-            this.Pool = new Stack<SocketAsyncEventArgs>();
+            this.Pool = new ConcurrentQueue<SocketAsyncEventArgs>();
         }
 
         internal SocketAsyncEventArgs Dequeue()
         {
             lock (this.Gate)
             {
-                if (this.Pool.Count > 0)
+                if (this.Pool.TryDequeue(out SocketAsyncEventArgs args))
                 {
-                    return this.Pool.Pop();
+                    return args;
                 }
 
                 return null;
@@ -32,10 +33,12 @@ namespace BL.Servers.CR.Core.Network
         {
              lock (this.Gate)
             {
-                // if (this.Pool.Count < Constants.MaxPlayers)
+                if (Args == null)
                 {
-                    this.Pool.Push(Args);
+
                 }
+
+                this.Pool.Enqueue(Args);
             }
         }
 
@@ -43,7 +46,7 @@ namespace BL.Servers.CR.Core.Network
         {
             lock (this.Gate)
             {
-                this.Pool.Clear();
+                while (this.Pool.TryDequeue(out SocketAsyncEventArgs Args));
             }
         }
     }

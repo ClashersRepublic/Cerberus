@@ -59,9 +59,9 @@ namespace BL.Servers.BB.Packets.Messages.Client.Authentication
 
             this.Token = this.Reader.ReadString();
 
-            this.Major = this.Reader.ReadInt32();
-            this.Minor = this.Reader.ReadInt32();
-            this.Revision = this.Reader.ReadInt32();
+            this.Device.Major = this.Reader.ReadInt32();
+            this.Device.Minor = this.Reader.ReadInt32();
+            this.Device.Revision = this.Reader.ReadInt32();
 
             this.MasterHash = this.Reader.ReadString();
 
@@ -76,8 +76,9 @@ namespace BL.Servers.BB.Packets.Messages.Client.Authentication
             this.Device.OpenUDID = this.Reader.ReadString();
             this.Device.OSVersion = this.Reader.ReadString();
 
-            this.Reader.Seek(5);
-            //this.Device.Android = this.Reader.ReadBoolean();
+            this.Reader.Seek(4);
+
+            this.Device.Android = this.Reader.ReadBoolean();
 
             this.Device.AndroidID = this.Reader.ReadString();
         }
@@ -112,18 +113,11 @@ namespace BL.Servers.BB.Packets.Messages.Client.Authentication
                         else if (this.Device.Player.Avatar.Banned)
                         {
                             this.Reason = new StringBuilder();
-                            this.Reason.AppendLine(
-                                "Your Player have been banned on our servers, please contact one of the TeamCrayCray staff with these following informations if you are not satisfied with the ban :");
-                            //this.Reason.AppendLine();
-                            this.Reason.AppendLine("Your Player Name         : " + this.Device.Player.Avatar.Username +
-                                                   ".");
-                            this.Reason.AppendLine("Your Player ID           : " +
-                                                   this.Device.Player.Avatar.UserHighId + "-" +
-                                                   this.Device.Player.Avatar.UserLowId + ".");
-                            this.Reason.AppendLine("Your Player Ban Duration : " +
-                                                   Math.Round(
-                                                       (this.Device.Player.Avatar.BanTime - DateTime.UtcNow).TotalDays,
-                                                       3) + " Day.");
+                            this.Reason.AppendLine("Your Player have been banned on our servers, please contact one of the TeamCrayCray staff with these following informations if you are not satisfied with the ban :");
+                            this.Reason.AppendLine();
+                            this.Reason.AppendLine("Your Player Name         : " + this.Device.Player.Avatar.Username + ".");
+                            this.Reason.AppendLine("Your Player ID           : " + this.Device.Player.Avatar.UserHighId + "-" + this.Device.Player.Avatar.UserLowId + ".");
+                            this.Reason.AppendLine("Your Player Ban Duration : " + Math.Round((this.Device.Player.Avatar.BanTime - DateTime.UtcNow).TotalDays, 3) + " Day.");
                             this.Reason.AppendLine("Your Player Unlock Date  : " + this.Device.Player.Avatar.BanTime);
                             this.Reason.AppendLine();
 
@@ -146,7 +140,8 @@ namespace BL.Servers.BB.Packets.Messages.Client.Authentication
                 {
                     this.Reason = new StringBuilder();
                     this.Reason.AppendLine("Your Device have been block from accessing our servers due to invalid Id, please  clear your game data or contact one of the BarbarianLand staff with these following informations if you are not able to clear you game data :");
-                    this.Reason.AppendLine("Your Devvice IP         : " + this.Device.IPAddress +  ".");
+                    this.Reason.AppendLine();
+                    this.Reason.AppendLine("Your Device IP         : " + this.Device.IPAddress +  ".");
                     this.Reason.AppendLine("Your Requested ID       : " + this.UserId  + ".");
                     this.Reason.AppendLine();
 

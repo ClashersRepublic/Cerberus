@@ -50,21 +50,22 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
                     Battle.Player1.BattleID = Battle.BattleID;
                     Battle.Player2.BattleID = Battle.BattleID;
 
-                    this.Device.PlayerState = Logic.Enums.State.IN_BATTLE;
+                    Battle.Player1.Device.PlayerState = Logic.Enums.State.IN_BATTLE;
+                    Battle.Player2.Device.PlayerState = Logic.Enums.State.IN_BATTLE;
 
                     // Player 1
                     new Sector_PC(Battle.Player1.Device)
                     { 
                       Battle  = Battle,
                     }.Send();
-                    //new UDP_Connection_Info(Battle.Player1.Device).Send();
+                    new UDP_Connection_Info(Battle.Player1.Device).Send();
 
                     // Player 2
                     new Sector_PC(Battle.Player2.Device)
                     {
                         Battle = Battle,
                     }.Send();
-                    //new UDP_Connection_Info(Battle.Player2.Device).Send();
+                    new UDP_Connection_Info(Battle.Player2.Device).Send();
                 }
             }
             else

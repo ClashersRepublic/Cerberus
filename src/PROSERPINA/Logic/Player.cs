@@ -63,11 +63,11 @@ namespace BL.Servers.CR.Logic
 
         #endregion
 
-        [JsonProperty("acc_hi")] internal int UserHighId;
-        [JsonProperty("acc_lo")] internal int UserLowId;
+        [JsonProperty("acc_hi")] internal int UserHighId = 1;
+        [JsonProperty("acc_lo")] internal int UserLowId = 0;
 
-        [JsonProperty("clan_hi")] internal int ClanHighID;
-        [JsonProperty("clan_lo")] internal int ClanLowID;
+        [JsonProperty("clan_hi")] internal int ClanHighID = 1;
+        [JsonProperty("clan_lo")] internal int ClanLowID = 0;
 
         [JsonProperty("rank")] internal Rank Rank = Rank.User;
 
@@ -81,6 +81,7 @@ namespace BL.Servers.CR.Logic
         [JsonProperty("lvl")] internal int Level = 13;
         [JsonProperty("xp")] internal int Experience = 0;
         [JsonProperty("arena")] internal int Arena = 21;
+
         [JsonProperty("tutorials")] internal byte Tutorial = 8;
         [JsonProperty("changes")] internal byte Changes = 0;
         [JsonProperty("nameset")] internal byte NameSet = 0;
@@ -118,8 +119,6 @@ namespace BL.Servers.CR.Logic
             this.Component = new Component(this);
             this.Battle = new Components.Battle(this);
 
-            this.MemberEntry = new Clan_Member_Entry(this);
-
             this.Resources = new Resources(this);
             this.Resources_Cap = new Resources(this);
             this.Decks = new Decks(this);
@@ -139,8 +138,6 @@ namespace BL.Servers.CR.Logic
             this.Profile = new Profile(this);
             this.Component = new Component(this);
             this.Battle = new Components.Battle(this);
-
-            this.MemberEntry = new Clan_Member_Entry(this);
 
             this.Resources = new Resources(this, true);
             this.Resources_Cap = new Resources(this, false);

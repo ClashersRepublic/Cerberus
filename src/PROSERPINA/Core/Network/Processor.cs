@@ -51,6 +51,8 @@ namespace BL.Servers.CR.Core.Network
             }
             catch (System.Exception Exception)
             {
+                Console.WriteLine("Something when wrong! " + Exception);
+
                 Resources.Exceptions.Catch(Exception, ErrorLevel.Critical);
             }
         }

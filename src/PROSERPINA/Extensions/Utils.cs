@@ -11,6 +11,8 @@ namespace BL.Servers.CR.Extensions
     using BL.Servers.CR.Core;
     using System.Runtime.InteropServices;
     using System.Diagnostics;
+    using System.Net;
+    using System.Net.Sockets;
 
     internal static class Utils
     {
@@ -45,6 +47,18 @@ namespace BL.Servers.CR.Extensions
             byte[] buffer = new byte[lenght];
             Resources.Random.NextBytes(buffer);
             return buffer;
+        }
+
+        internal static IPAddress LocalNetworkIP
+        {
+            get
+            {
+                using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.IP))
+                {
+                    socket.Connect("10.0.2.4", 65530);
+                    return ((IPEndPoint)socket.LocalEndPoint).Address;
+                }
+            }
         }
 
         public static string Padding(string _String, int _Limit = 23)

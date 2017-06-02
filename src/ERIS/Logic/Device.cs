@@ -47,6 +47,11 @@ namespace BL.Servers.BB.Logic
 
         internal uint ClientSeed;
 
+        public int Major { get; internal set; }
+        public int Minor { get; internal set; }
+        public int Revision { get; internal set; }
+        public bool Android { get; internal set; }
+
         public bool Connected()
         {
             try
