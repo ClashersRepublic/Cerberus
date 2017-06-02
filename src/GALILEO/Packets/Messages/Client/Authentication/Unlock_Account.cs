@@ -36,8 +36,6 @@ namespace BL.Servers.CoC.Packets.Client.Authentication
 
         internal override void Process()
         {
-            this.ShowValues();
-
             if (this.UnlockCode.Length != 12 || string.IsNullOrEmpty(this.UnlockCode))
             {
                 Resources.Devices.Remove(this.Device);

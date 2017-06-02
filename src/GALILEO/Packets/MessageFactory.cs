@@ -51,6 +51,7 @@ namespace BL.Servers.CoC.Packets
                 {14403, typeof(Request_Global_Players)},
                 {14404, typeof(Request_Local_Players)},
                 {14406, typeof(Request_League_Players)},
+                {14510, typeof(Execute_Battle_Commands)},
                 {14600, typeof(Request_Name_Change)},
                 {14715, typeof(Add_Global_Chat)},
                 {15000, typeof(Request_War_Home_Data)},

@@ -16,6 +16,7 @@ namespace BL.Servers.CoC.Logic.Structure.Slots
         {
             this.Player = _Player;
         }
+
         internal Castle_Units Clone()
         {
             return this.MemberwiseClone() as Castle_Units;
