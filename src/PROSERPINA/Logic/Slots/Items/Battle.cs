@@ -66,10 +66,16 @@ namespace BL.Servers.CR.Logic.Slots.Items
             };
 
             this.Timer.Start();
-
         }
+
         internal void Stop()
         {
+            new Battle_End(this.Player1.Device).Send();
+            new Battle_End(this.Player2.Device).Send();
+
+            this.Player1.Device.PlayerState = Enums.State.LOGGED;
+            this.Player2.Device.PlayerState = Enums.State.LOGGED;
+
             Core.Resources.Battles.Remove(this.BattleID);
 
             this.Timer.Stop();

@@ -12,7 +12,6 @@ using BL.Servers.CR.Extensions.List;
 using BL.Servers.CR.Logic;
 using BL.Servers.CR.Packets.Messages.Server.Authentication;
 using BL.Servers.CR.Core.Network;
-using RollbarDotNet;
 
 namespace BL.Servers.CR.Packets
 {
@@ -83,7 +82,7 @@ namespace BL.Servers.CR.Packets
 
                 if (Decrypted == null)
                 {
-                    Resources.Exceptions.Catch(new CryptographicException(), ErrorLevel.Error);
+                    //Resources.Exceptions.Catch(new CryptographicException(), ErrorLevel.Error);
                 }
 
                 this.Reader = new Reader(Decrypted);

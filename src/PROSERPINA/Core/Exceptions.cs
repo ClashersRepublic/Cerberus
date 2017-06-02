@@ -1,32 +1,61 @@
-﻿using System;
+﻿using SharpRaven;
+using SharpRaven.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using RollbarDotNet;
 
 namespace BL.Servers.CR.Core
 {
     internal class Exceptions
     {
+        internal RavenClient RavenClient;
+
         internal Exceptions()
         {
-            Rollbar.Init(new RollbarConfig
+            string Enviroment;
+            if (Constants.Local)
+                Enviroment = "local";
+            else
             {
-                AccessToken = "5fe9e1702a124202b8af85a8c2382e41",
-                Environment = "production"             
-            });
+#if DEBUG
+                Enviroment = "debug";
+#else
+                Enviroment = "production";
+#endif
+            }
+            this.RavenClient = new RavenClient("https://4e333c94a81f4f7eb851c2525959a97c:8315a2aad73246b8b1d4f4ff8e53d732@sentry.io/173535")
+            {
+                Environment = Enviroment,
+                Release = Assembly.GetExecutingAssembly().GetName().Version.ToString(),
+                Timeout = TimeSpan.FromSeconds(5)
+            };
         }
 
-        public void Catch(System.Exception Exception, ErrorLevel ErrorLevel = ErrorLevel.Info)
+        internal async void Catch(Exception Exception)
         {
-            Rollbar.Report(Exception, ErrorLevel);
+            SentryEvent Event = new SentryEvent(Exception);
+
+            await this.RavenClient.CaptureAsync(Event);
         }
 
-        internal void Catch(System.Exception ex, string v)
+        internal async void Catch(Exception Exception, string Message, string Model = "", string OS = "", string Token = "", long ID = 0)
         {
-            throw new NotImplementedException();
+            SentryEvent Event = new SentryEvent(Exception)
+            {
+                Message = Message,
+            };
+
+
+            Event.Tags.Add("token", Token);
+            Event.Tags.Add("userid", ID.ToString());
+            Event.Tags.Add("model", Model);
+            Event.Tags.Add("os", OS);
+
+            await this.RavenClient.CaptureAsync(Event);
         }
+
     }
 }

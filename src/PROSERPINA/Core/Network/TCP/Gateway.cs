@@ -11,6 +11,7 @@ using BL.Servers.CR.Logic;
 using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Packets.Messages.Server;
 using BL.Servers.CR.Extensions;
+using SharpRaven.Data;
 
 namespace BL.Servers.CR.Core.Network.TCP
 {
@@ -67,7 +68,7 @@ namespace BL.Servers.CR.Core.Network.TCP
                 WriterEvent.Completed += this.OnIOCompleted;
                 this.WritePool.Enqueue(WriterEvent);
             }
-            for (int Index = 0; Index < 128; Index++)
+            for (int Index = 0; Index < 5; Index++)
             {
                 SocketAsyncEventArgs AcceptEvent = new SocketAsyncEventArgs();
                 AcceptEvent.Completed += this.OnIOCompleted;
@@ -159,7 +160,6 @@ namespace BL.Servers.CR.Core.Network.TCP
 
                     Token Token = new Token(ReadEvent, device);
                     device.Token = Token;
-                    ReadEvent.UserToken = Token;
                     Interlocked.Increment(ref this.ConnectedSockets);
                     Resources.Devices.Add(device);
 
@@ -183,7 +183,6 @@ namespace BL.Servers.CR.Core.Network.TCP
 
                         Token Token = new Token(ReadEvent, device);
                         device.Token = Token;
-                        ReadEvent.UserToken = Token;
                         Interlocked.Increment(ref this.ConnectedSockets);
                         Resources.Devices.Add(device);
 
@@ -191,8 +190,8 @@ namespace BL.Servers.CR.Core.Network.TCP
                     }
                     catch (Exception ex)
                     {
-                        //Resources.Exceptions.RavenClient.Capture(
-                        //    new SentryEvent("There are no more available sockets to allocate."));
+                        Resources.Exceptions.RavenClient.Capture(
+                            new SentryEvent("There are no more available sockets to allocate."));
                     }
                 }
             }
@@ -210,7 +209,13 @@ namespace BL.Servers.CR.Core.Network.TCP
 
         internal void ProcessReceive(SocketAsyncEventArgs AsyncEvent, bool startNew)
         {
-            if (AsyncEvent.BytesTransferred > 0 && AsyncEvent.SocketError == SocketError.Success)
+            var transferred = AsyncEvent.BytesTransferred;
+            if (transferred == 0 || AsyncEvent.SocketError != SocketError.Success)
+            {
+                this.Disconnect(AsyncEvent);
+                this.Recycle(AsyncEvent);
+            }
+            else
             {
                 Token Token = AsyncEvent.UserToken as Token;
 
@@ -223,22 +228,21 @@ namespace BL.Servers.CR.Core.Network.TCP
                         Token.Process();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    this.Disconnect(AsyncEvent);
+                    Resources.Exceptions.Catch(ex, "Exception while processing receive");
                 }
-            }
-            else
-            {
-                this.Disconnect(AsyncEvent);
-            }
 
-            if (startNew)
-                this.StartReceive(AsyncEvent);
+
+                if (startNew)
+                    this.StartReceive(AsyncEvent);
+            }
         }
 
         internal void Disconnect(SocketAsyncEventArgs AsyncEvent)
         {
+            Console.WriteLine("Disconnected.");
+
             Token Token = AsyncEvent.UserToken as Token;
 
             Token.Aborting = true;
@@ -260,6 +264,9 @@ namespace BL.Servers.CR.Core.Network.TCP
 
         internal void Send(Message Message)
         {
+            Message.ShowValues(); 
+
+
             SocketAsyncEventArgs WriteEvent = this.WritePool.Dequeue();
 
             if (WriteEvent != null)
@@ -299,6 +306,8 @@ namespace BL.Servers.CR.Core.Network.TCP
             }
             else
             {
+                Console.WriteLine("Starting this nigger");
+
                 try
                 {
                     while (true)
@@ -330,6 +339,8 @@ namespace BL.Servers.CR.Core.Network.TCP
             }
             else
             {
+                Console.WriteLine("Processing this nigger");
+
                 try
                 {
                     var count = Args.Count;
@@ -398,8 +409,8 @@ namespace BL.Servers.CR.Core.Network.TCP
             if (read)
                 this.ReadPool.Enqueue(AsyncEvent);
             else
-                this.WritePool.Enqueue(AsyncEvent);
 
+                this.WritePool.Enqueue(AsyncEvent);
             this.Recycle(buffer);
         }
 

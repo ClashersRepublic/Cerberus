@@ -1,187 +1,72 @@
-﻿namespace BL.Servers.CR.Extensions
+﻿using BL.Servers.CR.Logic.Slots.Items;
+using System;
+using System.Linq;
+using System.Text;
+
+namespace BL.Servers.CR.Extensions
 {
-    internal static class GameTools
+    internal static class GameUtils
     {
-       /* internal static void AddExperience(this Avatar User, int Value)
+        internal const int SEARCH_TAG_LENGTH = 14;
+
+        internal static readonly char[] SEARCH_TAG_CHARS = "0289PYLQGRJCUV".ToCharArray();
+
+        internal static string GetHashtag(long Identifier)
         {
-            if (Value > 0)
+            if (GameUtils.GetHighID(Identifier) <= 255)
             {
-                User.Experience += Value;
+                StringBuilder Stringer = new StringBuilder();
+                int Count = 11;
+                Identifier = ((long)GameUtils.GetLowID(Identifier) << 8) + GameUtils.GetHighID(Identifier);
 
-                if (User.Level < 80)
+                while (++Count > 0)
                 {
-                    Experience_Levels _ExperienceLevels =
-                        CSV.Tables.Get(Gamefile.Experience_Levels).GetDataWithID(User.Level - 1) as Experience_Levels;
-
-                    if (_ExperienceLevels.ExpPoints <= User.Experience)
+                    Stringer.Append(GameUtils.SEARCH_TAG_CHARS[(int)(Identifier % GameUtils.SEARCH_TAG_LENGTH)]);
+                    Identifier /= GameUtils.SEARCH_TAG_LENGTH;
+                    if (Identifier <= 0)
                     {
-                        User.Experience -= _ExperienceLevels.ExpPoints;
-                        User.Level++;
+                        break;
                     }
                 }
-            }
-        }
-        public static bool Mission_Finish(this Avatar Player, int Global_ID)
-        {
-            Console.WriteLine(Player.Tutorials.FindIndex(M => M == Global_ID));
-            if (Player.Tutorials.FindIndex(M => M == Global_ID) < 0)
-            {
-                Missions Mission = CSV.Tables.Get(Gamefile.Missions).GetDataWithID(Global_ID) as Missions;
 
-                Player.Tutorials.Add(Mission.GetGlobalID());
-                return true;
+                return new string(Stringer.Append("#").ToString().Reverse().ToArray());
             }
-            else
-                return false;
+
+            return string.Empty;
         }
 
-        internal static int GetResourceDiamondCost(int Count, int _Index)
+        internal static int GetLowID(long Identifier)
         {
-            int Total_Gems = 0;
-            if (Count >= 100)
-            {
-                if (Count >= 1000)
-                {
-                    if (Count >= 10000)
-                    {
-                        if (Count >= 100000)
-                        {
-                            if (Count >= 1000000)
-                            {
-                                int SupCost =
-                                (CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_DIAMOND_COST_10000000") as
-                                    Globals).NumberValue;
-                                int Inf_Cost =
-                                (CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_DIAMOND_COST_1000000") as
-                                    Globals).NumberValue;
-
-                                Total_Gems =
-                                    (int)
-                                    Math.Round((SupCost - Inf_Cost) * (long) (Count - 1000000) /
-                                               (10000000 - 1000000 * 1.0)) + Inf_Cost;
-                            }
-                            else
-                            {
-                                int SupCost =
-                                (CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_DIAMOND_COST_1000000") as
-                                    Globals).NumberValue;
-                                int Inf_Cost =
-                                (CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_DIAMOND_COST_100000") as
-                                    Globals).NumberValue;
-
-                                Total_Gems =
-                                    (int)
-                                    Math.Round((SupCost - Inf_Cost) * (long) (Count - 100000) /
-                                               (1000000 - 100000 * 1.0)) + Inf_Cost;
-                            }
-                        }
-                        else
-                        {
-                            int SupCost =
-                                (CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_DIAMOND_COST_100000") as Globals)
-                                .NumberValue;
-                            int Inf_Cost =
-                                (CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_DIAMOND_COST_10000") as Globals)
-                                .NumberValue;
-
-                            Total_Gems =
-                                (int)
-                                Math.Round((SupCost - Inf_Cost) * (long) (Count - 10000) / (100000 - 10000 * 1.0)) +
-                                Inf_Cost;
-                        }
-                    }
-                    else
-                    {
-                        int SupCost =
-                            (CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_DIAMOND_COST_10000") as Globals)
-                            .NumberValue;
-                        int Inf_Cost =
-                            (CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_DIAMOND_COST_1000") as Globals)
-                            .NumberValue;
-
-                        Total_Gems =
-                            (int) Math.Round((SupCost - Inf_Cost) * (long) (Count - 1000) / (10000 - 1000 * 1.0)) +
-                            Inf_Cost;
-                    }
-                }
-                else
-                {
-                    int SupCost =
-                        (CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_DIAMOND_COST_1000") as Globals)
-                        .NumberValue;
-                    int Inf_Cost =
-                        (CSV.Tables.Get(Gamefile.Globals).GetData("RESOURCE_DIAMOND_COST_100") as Globals)
-                        .NumberValue;
-
-                    Total_Gems =
-                        (int) Math.Round((SupCost - Inf_Cost) * (long) (Count - 100) / (1000 - 100 * 1.0)) +
-                        Inf_Cost;
-                }
-            }
-            else
-            {
-                Total_Gems = 1;
-            }
-            return Total_Gems;
+            return (int)(Identifier & 0xFFFFFFFF);
         }
 
-
-        internal static int GetSpeedUpCost(int Total_Seconds)
+        internal static int GetHighID(long Identifier)
         {
-            int Total_Gems = 0;
-            if (Total_Seconds >= 1)
+            return (int)(Identifier >> 32);
+        }
+
+        internal static double WinTrophies(this Battle _Battle)
+        {
+            double Difference = (_Battle.Player1.Trophies - _Battle.Player2.Trophies) < 0
+                ? +(_Battle.Player1.Trophies - _Battle.Player2.Trophies)
+                : (_Battle.Player1.Trophies - _Battle.Player2.Trophies);
+            //double Difference = (AttackerTrophies - DefenderTrophies) < 0 ? +(DefenderTrophies - AttackerTrophies) : (AttackerTrophies - DefenderTrophies);
+            if (Difference >= 13 && Difference <= 34)
             {
-                if (Total_Seconds >= 60)
-                {
-                    if (Total_Seconds >= 3600)
-                    {
-                        if (Total_Seconds >= 86400)
-                        {
-                            int SupCost =
-                                (CSV.Tables.Get(Gamefile.Globals).GetData("SPEED_UP_DIAMOND_COST_1_WEEK") as Globals)
-                                .NumberValue;
-                            int Inf_Cost =
-                                (CSV.Tables.Get(Gamefile.Globals).GetData("SPEED_UP_DIAMOND_COST_24_HOURS") as Globals)
-                                .NumberValue;
-
-                            Total_Gems =
-                                (int)((SupCost - Inf_Cost) * (long)(Total_Seconds - 86400) / (604800 - 86400 * 1.0)) +
-                                Inf_Cost;
-                        }
-                        else
-                        {
-                            int SupCost =
-                                (CSV.Tables.Get(Gamefile.Globals).GetData("SPEED_UP_DIAMOND_COST_24_HOURS") as Globals)
-                                .NumberValue;
-                            int Inf_Cost =
-                                (CSV.Tables.Get(Gamefile.Globals).GetData("SPEED_UP_DIAMOND_COST_1_HOUR") as Globals)
-                                .NumberValue;
-
-                            Total_Gems =
-                                (int)((SupCost - Inf_Cost) * (long)(Total_Seconds - 3600) / (86400 - 3600 * 1.0)) +
-                                Inf_Cost;
-                        }
-                    }
-                    else
-                    {
-                        int SupCost =
-                            (CSV.Tables.Get(Gamefile.Globals).GetData("SPEED_UP_DIAMOND_COST_1_HOUR") as Globals)
-                            .NumberValue;
-                        int Inf_Cost =
-                            (CSV.Tables.Get(Gamefile.Globals).GetData("SPEED_UP_DIAMOND_COST_1_MIN") as Globals)
-                            .NumberValue;
-
-                        Total_Gems = (int)((SupCost - Inf_Cost) * (long)(Total_Seconds - 60) / (3600 - 60 * 1.0)) +
-                                     Inf_Cost;
-                    }
-                }
-                else
-                {
-                    Total_Gems =
-                        (CSV.Tables.Get(Gamefile.Globals).GetData("SPEED_UP_DIAMOND_COST_1_MIN") as Globals).NumberValue;
-                }
+                return Math.Round(-0.0794 * (_Battle.Player1.Trophies - _Battle.Player2.Trophies) + 29.35838);
             }
-            return Total_Gems;
-        }*/
+            return Core.Resources.Random.Next(10, 15);
+
+        }
+
+        internal static double LoseTrophies(this Battle _Battle)
+        {
+            if (_Battle.Player2.Trophies >= 1000 && _Battle.Player2.Trophies >= 1000)
+            {
+                return Math.Round(0.0531 * (_Battle.Player1.Trophies - _Battle.Player2.Trophies) + 19.60453);
+            }
+            return Core.Resources.Random.Next(10, 15);
+
+        }    
     }
 }

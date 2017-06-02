@@ -8,7 +8,6 @@ using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Packets;
 using BL.Servers.CR.Packets.Cryptography.RC4;
 using System.Diagnostics;
-using RollbarDotNet;
 
 namespace BL.Servers.CR.Logic
 {
@@ -47,6 +46,7 @@ namespace BL.Servers.CR.Logic
         internal int Major;
         internal int Revision;
         internal int Minor;
+        internal int LastChecksum;
 
         internal volatile int Dropped;
 
@@ -74,69 +74,115 @@ namespace BL.Servers.CR.Logic
 
         internal void Process(byte[] Buffer)
         {
-            if (Buffer.Length >= 7)
+            while (true)
             {
-                using (Reader Reader = new Reader(Buffer))
+                const int HEADER_LEN = 7;
+                if (Buffer.Length >= 5)
                 {
-                    ushort Identifier = Reader.ReadUInt16();
-                    Reader.Seek(1);
-                    ushort Length = Reader.ReadUInt16();
-                    ushort Version = Reader.ReadUInt16();
+                    int length = (Buffer[2] << 16) | (Buffer[3] << 8) | Buffer[4];
+                    ushort type = (ushort)((Buffer[0] << 8) | Buffer[1]);
 
-                    if (Buffer.Length - 7 >= Length)
+                    if (Buffer.Length - HEADER_LEN >= length)
                     {
-                        if (MessageFactory.Messages.ContainsKey(Identifier))
+                        var packet = new byte[length];
+                        for (int i = 0; i < packet.Length; i++)
+                            packet[i] = Buffer[i + HEADER_LEN];
+
+                        if (MessageFactory.Messages.ContainsKey(type))
                         {
-                            Packets.Message _Message = Activator.CreateInstance(MessageFactory.Messages[Identifier], this, Reader) as Packets.Message;
+                            Message _Message = Activator.CreateInstance(MessageFactory.Messages[type], this, new Reader(packet)) as Message;
 
-                            _Message.Identifier = Identifier;
-                            _Message.Length = Length;
-                            _Message.Version = Version;
+                            _Message.Identifier = type;
+                            _Message.Length = (ushort)length;
 
-                            _Message.Reader = Reader;
+
+                            Console.WriteLine("Handling packet " + type);
 
                             try
                             {
+                                try
+                                {
+                                    if (Constants.Encryption == Enums.Crypto.RC4)
+                                        _Message.DecryptRC4();
+                                    else
+                                        _Message.DecryptSodium();
+                                }
+                                catch (Exception ex)
+                                {
+                                    //Resources.Exceptions.Catch(ex,
+                                    //    $"Unable to decrypt message with ID: {type}" + Environment.NewLine +
+                                    //    ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine +
+                                    //    ex.Data, this.Model, this.OSVersion, this.Player.Token,
+                                    //    Player?.UserId ?? 0);
+                                }
 
-                                Debug.WriteLine("[MESSAGE] " + _Message.Device.Socket.RemoteEndPoint.ToString() + " --> " + _Message.GetType().Name + " [" + _Message.Identifier + "]");
+#if DEBUG
+                                //Loggers.Log(
+                                //    Utils.Padding(_Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " --> " +
+                                //    _Message.GetType().Name, true);
+                                //Loggers.Log(_Message,
+                                //    Utils.Padding(_Message.Device.Socket.RemoteEndPoint.ToString(), 15));
+#endif
 
-                                if (Constants.Encryption == Enums.Crypto.RC4)
-                                    _Message.DecryptRC4();
-                                else
-                                    _Message.DecryptSodium();
-
-
-                                _Message.Decode();
-                                _Message.Process();
+                                try
+                                {
+                                    _Message.Decode();
+                                }
+                                catch (System.Exception ex)
+                                {
+                                    //Resources.Exceptions.Catch(ex,
+                                    //    $"Unable to decode message with ID: {type}" + Environment.NewLine + ex.Message +
+                                    //    Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Data, this.Model,
+                                    //    this.OSVersion, this.Player.Avatar.Token, Player?.Avatar.UserId ?? 0);
+                                }
+                                try
+                                {
+                                    _Message.Process();
+                                }
+                                catch (Exception ex)
+                                {
+                                    //Resources.Exceptions.Catch(ex,
+                                    //    $"Unable to process message with ID: {type}" + Environment.NewLine +
+                                    //    ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine +
+                                    //    ex.Data, this.Model, this.OSVersion, this.Player.Token,
+                                    //    Player?.UserId ?? 0);
+                                }
                             }
-                            catch (System.Exception Exception)
+                            catch (Exception Exception)
                             {
-                                Resources.Exceptions.Catch(Exception, ErrorLevel.Error);
+                                //Resources.Exceptions.Catch(Exception,
+                                //    Exception.Message + Environment.NewLine + Exception.StackTrace +
+                                //    Environment.NewLine + Exception.Data, this.Model, this.OSVersion,
+                                //    this.Player.Avatar.Token, Player?.Avatar.UserId ?? 0);
+                                //Loggers.Log(Utils.Padding(Exception.GetType().Name, 15) + " : " + Exception.Message +
+                                //            ". [" + (this.Player != null
+                                //                ? this.Player.Avatar.UserId + ":" +
+                                //                  GameUtils.GetHashtag(this.Player.Avatar.UserId)
+                                //                : "---") + ']' + Environment.NewLine + Exception.StackTrace, true,
+                                //    Defcon.ERROR);
                             }
                         }
                         else
                         {
-                            var Data = Reader.ReadFully();
-
-                            Debug.WriteLine("[MESSAGE] Message not found, ignoring the following message : ID " + Identifier + ", Length " + Length + ", Version " + Version + ".");
-
+#if DEBUG
+                            Loggers.Log(Utils.Padding(this.GetType().Name, 15) + " : Aborting, we can't handle the following message : ID " + type + ", Length " + length + ".", true, Defcon.WARN);
+#endif
                             if (Constants.Encryption == Enums.Crypto.RC4)
                             {
-                                this.RC4.Decrypt(ref Data);
-                                Debug.WriteLine(Identifier + " Data: " + BitConverter.ToString(Data));
+                                this.RC4.Decrypt(ref packet);
                             }
                             else
                                 this.Crypto.SNonce.Increment();
                         }
+                        this.Token.Packet.RemoveRange(0, length + 7);
 
-                        this.Token.Packet.RemoveRange(0, Length + 7);
-
-                        if ((Buffer.Length - 7) - Length >= 7)
+                        if ((Buffer.Length - 7) - length >= 7)
                         {
-                            this.Process(Reader.ReadBytes((Buffer.Length - 7) - Length));
+                            continue;
                         }
                     }
                 }
+                break;
             }
         }
     }
