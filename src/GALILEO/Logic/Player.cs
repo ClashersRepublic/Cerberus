@@ -405,9 +405,9 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(0);
                 _Packet.AddInt(2); //Builder base troop should be in attack
                 _Packet.AddInt(4000037);
-                _Packet.AddInt(12);
+                _Packet.AddInt(120);
                 _Packet.AddInt(4000038);
-                _Packet.AddInt(12);
+                _Packet.AddInt(120);
                 _Packet.AddInt(0); //Troop in camp for training
 
                 return _Packet.ToArray();

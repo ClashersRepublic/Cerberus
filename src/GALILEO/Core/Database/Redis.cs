@@ -1,4 +1,5 @@
-﻿using BL.Servers.CoC.Extensions;
+﻿using System;
+using BL.Servers.CoC.Extensions;
 using StackExchange.Redis;
 
 namespace BL.Servers.CoC.Core.Database
@@ -17,6 +18,8 @@ namespace BL.Servers.CoC.Core.Database
 
             Configuration.Password = Utils.ParseConfigString("RedisPassword");
             Configuration.ClientName = this.GetType().Assembly.FullName;
+            Configuration.HighPrioritySocketThreads = true;
+            Configuration.SyncTimeout = (int)TimeSpan.FromSeconds(5).TotalMilliseconds;
 
             ConnectionMultiplexer Connection = ConnectionMultiplexer.Connect(Configuration);
 

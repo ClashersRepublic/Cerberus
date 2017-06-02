@@ -67,9 +67,9 @@ namespace BL.Servers.CoC.Logic
 
         internal void Process(byte[] Buffer)
         {
+            const int HEADER_LEN = 7;
             while (true)
             {
-                const int HEADER_LEN = 7;
                 if (Buffer.Length >= 5)
                 {
                     int length = (Buffer[2] << 16) | (Buffer[3] << 8) | Buffer[4];
