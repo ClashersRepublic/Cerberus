@@ -13,5 +13,13 @@ namespace BL.Servers.CoC.Logic.Structure.Slots
 
             this.Add(Command);
         }
+
+        public void Add(Battle_V2 Battle, Battle_Command Command)
+        {
+            if (Battle.Preparation_Time > 0)
+                Battle.Preparation_Skip = (int)Math.Round(Battle.Preparation_Time);
+
+            this.Add(Command);
+        }
     }
 }

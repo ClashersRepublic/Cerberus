@@ -43,7 +43,6 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
         internal override void Process()
         {
-            ShowValues();
             var ca = this.Device.Player.Avatar;
             var go = this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(this.BuidlingID) : this.Device.Player.GameObjectManager.GetGameObjectByID(this.BuidlingID);
 

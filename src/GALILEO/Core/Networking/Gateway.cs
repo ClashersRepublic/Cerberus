@@ -66,7 +66,7 @@ namespace BL.Servers.CoC.Core.Networking
                 WriterEvent.Completed += this.OnIOCompleted;
                 this.WritePool.Enqueue(WriterEvent);
             }
-            for (int Index = 0; Index < 128; Index++)
+            for (int Index = 0; Index < 5; Index++)
             {
                 SocketAsyncEventArgs AcceptEvent = new SocketAsyncEventArgs();
                 AcceptEvent.Completed += this.OnIOCompleted;
@@ -158,7 +158,6 @@ namespace BL.Servers.CoC.Core.Networking
 
                     Token Token = new Token(ReadEvent, device);
                     device.Token = Token;
-                    ReadEvent.UserToken = Token;
                     Interlocked.Increment(ref this.ConnectedSockets);
                     Resources.Devices.Add(device);
 
@@ -182,7 +181,6 @@ namespace BL.Servers.CoC.Core.Networking
 
                         Token Token = new Token(ReadEvent, device);
                         device.Token = Token;
-                        ReadEvent.UserToken = Token;
                         Interlocked.Increment(ref this.ConnectedSockets);
                         Resources.Devices.Add(device);
 
@@ -209,7 +207,13 @@ namespace BL.Servers.CoC.Core.Networking
 
         internal void ProcessReceive(SocketAsyncEventArgs AsyncEvent, bool startNew)
         {
-            if (AsyncEvent.BytesTransferred > 0 && AsyncEvent.SocketError == SocketError.Success)
+            var transferred = AsyncEvent.BytesTransferred;
+            if (transferred == 0 || AsyncEvent.SocketError != SocketError.Success)
+            {
+                this.Disconnect(AsyncEvent);
+                this.Recycle(AsyncEvent);
+            }
+            else
             {
                 Token Token = AsyncEvent.UserToken as Token;
 
@@ -222,18 +226,15 @@ namespace BL.Servers.CoC.Core.Networking
                         Token.Process();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    this.Disconnect(AsyncEvent);
+                    Resources.Exceptions.Catch(ex, "Exception while processing receive");
                 }
-            }
-            else
-            {
-                this.Disconnect(AsyncEvent);
-            }
 
-            if (startNew)
-                this.StartReceive(AsyncEvent);
+
+                if (startNew)
+                    this.StartReceive(AsyncEvent);
+            }
         }
 
         internal void Disconnect(SocketAsyncEventArgs AsyncEvent)
@@ -399,8 +400,8 @@ namespace BL.Servers.CoC.Core.Networking
             if (read)
                 this.ReadPool.Enqueue(AsyncEvent);
             else
-                this.WritePool.Enqueue(AsyncEvent);
 
+                this.WritePool.Enqueue(AsyncEvent);
             this.Recycle(buffer);
         }
 

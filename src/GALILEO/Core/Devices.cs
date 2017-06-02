@@ -45,6 +45,7 @@ namespace BL.Servers.CoC.Core
             {
                 this.Remove(Device.SocketHandle);
 
+
                 try
                 {
                     Device.Socket.Disconnect(false);
@@ -72,8 +73,6 @@ namespace BL.Servers.CoC.Core
                     // Already Closed.
                 }
             }
-
-            Interlocked.CompareExchange(ref Device.Dropped, 1, 0);
         }
     }
 }

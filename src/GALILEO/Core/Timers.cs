@@ -116,8 +116,11 @@ namespace BL.Servers.CoC.Core
                             {
                                 if (_Player != null)
                                 {
-                                    _Player.Tick();
-                                    Resources.Players.Save(_Player, Constants.Database);
+                                    lock (_Player)
+                                    {
+                                        _Player.Tick();
+                                        Resources.Players.Save(_Player, Constants.Database);
+                                    }
                                 }
                             });
                         }
@@ -128,13 +131,16 @@ namespace BL.Servers.CoC.Core
                         {
                             List<Clan> Clans = Resources.Clans.Values.ToList();
 
-                            foreach (Clan _Clan in Clans)
+                            Parallel.ForEach(Clans, (_Clan) =>
                             {
                                 if (_Clan != null)
                                 {
-                                    Resources.Clans.Save(_Clan, Constants.Database);
+                                    lock (_Clan)
+                                    {
+                                        Resources.Clans.Save(_Clan, Constants.Database);
+                                    }
                                 }
-                            }
+                            });
                         }
                     }
                     lock (Resources.Battles.Gate)
@@ -143,13 +149,16 @@ namespace BL.Servers.CoC.Core
                         {
                             List<Battle> Battles = Resources.Battles.Values.ToList();
 
-                            foreach (Battle _Battle in Battles)
+                            Parallel.ForEach(Battles, (_Battle) =>
                             {
                                 if (_Battle != null)
                                 {
-                                    Resources.Battles.Save(_Battle, Constants.Database);
+                                    lock (_Battle)
+                                    {
+                                        Resources.Battles.Save(_Battle, Constants.Database);
+                                    }
                                 }
-                            }
+                            });
                         }
                     }
                 }

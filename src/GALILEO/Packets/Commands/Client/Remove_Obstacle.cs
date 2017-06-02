@@ -20,7 +20,6 @@ namespace BL.Servers.CoC.Packets.Commands.Client
         }
         internal override void Process()
         {
-            ShowValues();
             if (!this.Device.Player.Avatar.Variables.IsBuilderVillage)
             {
                 var Object = (Obstacle) this.Device.Player.GameObjectManager.GetGameObjectByID(this.ObstacleID);

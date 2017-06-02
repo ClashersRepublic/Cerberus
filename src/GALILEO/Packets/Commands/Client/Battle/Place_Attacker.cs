@@ -48,29 +48,62 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
         {
             if (this.Device.State == State.IN_PC_BATTLE)
             {
-                var Battle = Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
-                Battle_Command Command = new Battle_Command { Command_Type = this.Identifier, Command_Base = new Command_Base { Base = new Base { Tick = this.Tick }, Data = this.GlobalId, X = this.X, Y = this.Y } };
-                Battle.Add_Command(Command);
-
-                if (IsSpell)
+                if (!this.Device.Player.Avatar.Variables.IsBuilderVillage)
                 {
-                    int Index = Battle.Replay_Info.Spells.FindIndex(T => T[0] == this.GlobalId);
-                    if (Index > -1)
-                        Battle.Replay_Info.Spells[Index][1]++;
-                    else
-                        Battle.Replay_Info.Spells.Add(new[] { this.GlobalId, 1 });
+                    var Battle = Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
+                    Battle_Command Command =
+                        new Battle_Command
+                        {
+                            Command_Type = this.Identifier,
+                            Command_Base =
+                                new Command_Base
+                                {
+                                    Base = new Base {Tick = this.Tick},
+                                    Data = this.GlobalId,
+                                    X = this.X,
+                                    Y = this.Y
+                                }
+                        };
+                    Battle.Add_Command(Command);
 
-                    Battle.Attacker.Add_Spells(GlobalId, 1);
+                    if (IsSpell)
+                    {
+                        int Index = Battle.Replay_Info.Spells.FindIndex(T => T[0] == this.GlobalId);
+                        if (Index > -1)
+                            Battle.Replay_Info.Spells[Index][1]++;
+                        else
+                            Battle.Replay_Info.Spells.Add(new[] {this.GlobalId, 1});
+
+                        Battle.Attacker.Add_Spells(GlobalId, 1);
+                    }
+                    else
+                    {
+                        int Index = Battle.Replay_Info.Units.FindIndex(T => T[0] == this.GlobalId);
+                        if (Index > -1)
+                            Battle.Replay_Info.Units[Index][1]++;
+                        else
+                            Battle.Replay_Info.Units.Add(new[] {this.GlobalId, 1});
+
+                        Battle.Attacker.Add_Unit(GlobalId, 1);
+                    }
                 }
                 else
                 {
-                    int Index = Battle.Replay_Info.Units.FindIndex(T => T[0] == this.GlobalId);
-                    if (Index > -1)
-                        Battle.Replay_Info.Units[Index][1]++;
-                    else
-                        Battle.Replay_Info.Units.Add(new[] { this.GlobalId, 1 });
 
-                    Battle.Attacker.Add_Unit(GlobalId, 1);
+                    Battle_Command Command =
+                        new Battle_Command
+                        {
+                            Command_Type = this.Identifier,
+                            Command_Base =
+                                new Command_Base
+                                {
+                                    Base = new Base {Tick = this.Tick},
+                                    Data = this.GlobalId,
+                                    X = this.X,
+                                    Y = this.Y
+                                }
+                        };
+                    this.Device.Player.Avatar.Battle_V2.Add_Command(Command);
                 }
             }
 

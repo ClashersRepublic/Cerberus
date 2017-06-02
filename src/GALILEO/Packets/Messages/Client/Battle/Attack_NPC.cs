@@ -2,6 +2,7 @@
 using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.Binary;
+using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Structure.Slots.Items;
 using BL.Servers.CoC.Packets.Messages.Server.Battle;
@@ -29,9 +30,11 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Battle
             if (Index < 0)
             {
                 if (this.Npc_ID == 17000000)
-                    this.Device.Player.Avatar.Mission_Finish(21000002);
-                else if (this.Npc_ID == 17000001)
-                    this.Device.Player.Avatar.Mission_Finish(21000009);
+                    if (CSV.Tables.GetWithGlobalID(21000002) != null)
+                        this.Device.Player.Avatar.Mission_Finish(21000002);
+                    else if (this.Npc_ID == 17000001)
+                        if (CSV.Tables.GetWithGlobalID(21000009) != null)
+                            this.Device.Player.Avatar.Mission_Finish(21000009);
 
                 this.Device.Player.Avatar.Npcs.Add(new Npc(this.Npc_ID));
             }

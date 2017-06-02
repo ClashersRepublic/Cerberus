@@ -18,7 +18,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
 
         internal override void Process()
         {
-            new Builder_Pc_Battle_Data(this.Device).Send();
+            new Pc_Battle_Data_V2(this.Device).Send();
         }
     }
 }

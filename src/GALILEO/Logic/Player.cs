@@ -16,6 +16,7 @@ namespace BL.Servers.CoC.Logic
 {
     internal class Player : ICloneable
     {
+        [JsonIgnore] internal Battle_V2 Battle_V2;
         [JsonIgnore] internal long Battle_ID;
         [JsonIgnore] internal int Amical_ID;
         [JsonIgnore] internal int ObstacleClearCount;
@@ -337,17 +338,18 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(220);
                 _Packet.AddInt(1828055880);
 
-                _Packet.AddBool(this.NameState > 0);
+                _Packet.AddBool(this.NameState > 0); //Not a bool
 
-                _Packet.AddInt(0);
+                _Packet.AddInt(0); //1
 
-                _Packet.AddInt(0);
+                _Packet.AddInt(0); //6900
                 _Packet.AddInt(0);
                 _Packet.AddInt(this.WarState ? 1 : 0);
+
                 _Packet.AddInt(0);
                 _Packet.AddInt(0); // Total Attack with shield
 
-                _Packet.AddBool(this.NameState > 1);
+                _Packet.AddBool(this.NameState > 1); //0
 
                 _Packet.AddDataSlots(this.Resources_Cap);
 
@@ -401,8 +403,12 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
-                _Packet.AddInt(0);
-                _Packet.AddInt(0);
+                _Packet.AddInt(2); //Builder base troop should be in attack
+                _Packet.AddInt(4000037);
+                _Packet.AddInt(120);
+                _Packet.AddInt(4000038);
+                _Packet.AddInt(120);
+                _Packet.AddInt(0); //Troop in camp for training
 
                 return _Packet.ToArray();
             }
