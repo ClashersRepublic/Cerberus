@@ -1,5 +1,6 @@
 ﻿using BL.Servers.CR.Core.Network;
 using BL.Servers.CR.Extensions;
+using BL.Servers.CR.Packets.Messages.Server.Battle;
 using BL.Servers.CR.Packets.Messages.Server.Error;
 using System;
 using System.Collections.Generic;
@@ -141,8 +142,20 @@ namespace BL.Servers.CR.Core.Events
                             break;
                         }
 
-                    case ConsoleKey.T:
+                    case ConsoleKey.B:
                         {
+                            foreach (var _Device in Resources.Devices.Values.ToList())
+                            {
+                                if (_Device.Player != null && _Device.PlayerState == Logic.Enums.State.IN_BATTLE)
+                                {
+                                    new Battle_End(_Device.Player.Device).Send();
+
+                                    Resources.Battles.Remove(_Device.Player.BattleID);
+
+                                    break;
+                                }
+                                break;
+                            }
                             break;
                         }
 

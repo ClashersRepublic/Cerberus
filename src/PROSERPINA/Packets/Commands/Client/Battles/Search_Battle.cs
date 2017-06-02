@@ -62,6 +62,8 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
 
                     new UDP_Connection_Info(Battle.Player1.Device).Send();
 
+                    new Battle_End(Battle.Player1.Device).Send();
+
                     // Player 2
                     new Sector_PC(Battle.Player2.Device)
                     {
@@ -69,6 +71,8 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
                     }.Send();
 
                     new UDP_Connection_Info(Battle.Player2.Device).Send();
+
+                    new Battle_End(Battle.Player2.Device).Send();
                 }
             }
             else
