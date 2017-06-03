@@ -43,6 +43,7 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
                 else
                 {
                     Player Enemy = Resources.Battles.Dequeue();
+
                     Battle Battle = new Battle(Enemy, this.Device.Player);
 
                     Resources.Battles.Add(Battle);
@@ -58,14 +59,20 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
                     { 
                       Battle  = Battle,
                     }.Send();
+
                     new UDP_Connection_Info(Battle.Player1.Device).Send();
+
+                    new Battle_End(Battle.Player1.Device).Send();
 
                     // Player 2
                     new Sector_PC(Battle.Player2.Device)
                     {
                         Battle = Battle,
                     }.Send();
+
                     new UDP_Connection_Info(Battle.Player2.Device).Send();
+
+                    new Battle_End(Battle.Player2.Device).Send();
                 }
             }
             else

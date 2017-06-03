@@ -16,7 +16,6 @@ namespace BL.Servers.CR.Packets
         {
             Messages = new Dictionary<int, Type>
             {
-                {10099, typeof(Battle_End)},
                 {10100, typeof(Pre_Authentification)},
                 {10101, typeof(Authentification)},
                 {10107, typeof(Client_Capabilities)},

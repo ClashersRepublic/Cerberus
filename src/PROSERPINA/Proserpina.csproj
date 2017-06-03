@@ -213,9 +213,6 @@
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.5.0.0-beta07\lib\net45\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="Rollbar, Version=0.3.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Rollbar.0.3.2\lib\net45\Rollbar.dll</HintPath>
-    </Reference>
     <Reference Include="SharpRaven, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SharpRaven.2.2.0\lib\net45\SharpRaven.dll</HintPath>
     </Reference>
@@ -456,7 +453,6 @@
     <Compile Include="Packets\Messages\Client\Authentication\Pre_Authentification.cs" />
     <Compile Include="Packets\Messages\Client\Avatar_Stream.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Battle_Commands.cs" />
-    <Compile Include="Packets\Messages\Client\Battle\Battle_End.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Battle_NPC.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Cancel_Tournament_Battle.cs" />
     <Compile Include="Packets\Messages\Client\Battle\Client_Capabilities.cs" />
@@ -482,6 +478,7 @@
     <Compile Include="Packets\Messages\Server\Authentication\Unlock_Account_Failed.cs" />
     <Compile Include="Packets\Messages\Server\Authentication\Unlock_Account_OK.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Battle_Command_Data.cs" />
+    <Compile Include="Packets\Messages\Server\Battle\Battle_End.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Battle_Event_Data.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Matchmaking_Info.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Sector_NPC.cs" />

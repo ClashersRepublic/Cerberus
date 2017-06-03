@@ -3,7 +3,6 @@ using BL.Servers.CR.Extensions;
 using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Packets;
 using System.Diagnostics;
-using RollbarDotNet;
 
 namespace BL.Servers.CR.Core.Network
 {
@@ -53,7 +52,7 @@ namespace BL.Servers.CR.Core.Network
             {
                 Console.WriteLine("Something when wrong! " + Exception);
 
-                Resources.Exceptions.Catch(Exception, ErrorLevel.Critical);
+                //Resources.Exceptions.Catch(Exception, ErrorLevel.Critical);
             }
         }
 

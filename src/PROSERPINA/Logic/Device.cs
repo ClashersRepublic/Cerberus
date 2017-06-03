@@ -8,7 +8,6 @@ using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Packets;
 using BL.Servers.CR.Packets.Cryptography.RC4;
 using System.Diagnostics;
-using RollbarDotNet;
 
 namespace BL.Servers.CR.Logic
 {
@@ -47,6 +46,7 @@ namespace BL.Servers.CR.Logic
         internal int Major;
         internal int Revision;
         internal int Minor;
+        internal int LastChecksum;
 
         internal volatile int Dropped;
 
@@ -111,7 +111,7 @@ namespace BL.Servers.CR.Logic
                             }
                             catch (System.Exception Exception)
                             {
-                                Resources.Exceptions.Catch(Exception, ErrorLevel.Error);
+                                //Resources.Exceptions.Catch(Exception, ErrorLevel.Error);
                             }
                         }
                         else

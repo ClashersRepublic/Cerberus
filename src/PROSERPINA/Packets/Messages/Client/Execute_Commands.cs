@@ -33,6 +33,7 @@
         internal override void Process()
         {
             this.Device.Tick = (int) this.CTick;
+            this.Device.LastChecksum = (int) this.Checksum;
 
             if (this.Count > -1 && this.Count <= 50)
             {
