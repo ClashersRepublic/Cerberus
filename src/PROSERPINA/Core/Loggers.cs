@@ -4,10 +4,13 @@
     using System.IO;
     using Logic.Enums;
     using NLog;
+    using BL.Servers.CR.Packets;
+    using System.Text;
+    using System.Text.RegularExpressions;
 
     internal class Loggers : IDisposable
     {
-        private static Logger _logger;
+        internal static Logger _logger;
 
         public Loggers()
         {
@@ -38,41 +41,67 @@
             _logger.Info("Logger has been started.");
             _logger.Warn("Logger has been started.");
             _logger.Error("Logger has been started.");
+            _logger.Trace("Logger has been started.");
+            _logger.Debug("Logger has been started.");
 
         }
-        public static void Log(string message = "OK.", bool show = false, Defcon defcon = Defcon.DEFAULT)
+        internal static void Log(string message = "OK.", bool show = false, Defcon defcon = Defcon.DEFAULT)
         {
             switch (defcon)
             {
 
                 case Defcon.INFO:
-                {
-                    _logger.Info(message);
-                    break;
-                }
+                    {
+                        _logger.Info(message);
+                        break;
+                    }
 
                 case Defcon.WARN:
-                {
-                    _logger.Warn(message);
-                    break;
-                }
-
+                    {
+                        _logger.Warn(message);
+                        break;
+                    }
 
                 case Defcon.ERROR:
-                {
-                    _logger.Error(message);
-                    break;
-                }
+                    {
+                        _logger.Error(message);
+                        break;
+                    }
+
+                case Defcon.TRACE:
+                    {
+                        _logger.Trace(message);
+                        break;
+                    }
 
                 default:
-                {
-                    _logger.Info(message);
-                    break;
-                }
+                    {
+                        _logger.Info(message);
+                        break;
+                    }
             }
             if (show)
                 Console.WriteLine(message);
         }
+
+        internal static void Log(Message Message, string prefix = null)
+        {
+            StringBuilder packet = new StringBuilder();
+            packet.Append($"{DateTime.Now:yyyy/MM/dd/HH/mm/ss};");
+            if (!string.IsNullOrEmpty(prefix))
+            {
+                packet.Append($"{prefix};");
+            }
+            packet.Append($"{Message.Identifier}({Message.Version});{Message.Length};");
+            if (Message.Data != null)
+            {
+                packet.AppendLine(BitConverter.ToString(Message.Data.ToArray()).Replace("-", String.Empty));
+                packet.AppendLine(Regex.Replace(Encoding.UTF8.GetString(Message.Data.ToArray()),
+                    @"[^\u0020-\u007F]", "."));
+            }
+            _logger.Debug(packet.ToString);
+        }
+
         public void Dispose()
         {
             _logger = null;
