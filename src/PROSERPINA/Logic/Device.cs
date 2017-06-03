@@ -8,6 +8,7 @@ using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Packets;
 using BL.Servers.CR.Packets.Cryptography.RC4;
 using System.Diagnostics;
+using BL.Servers.CR.Packets.Cryptography;
 
 namespace BL.Servers.CR.Logic
 {
@@ -16,26 +17,26 @@ namespace BL.Servers.CR.Logic
         internal Socket Socket;
         internal Player Player;
         internal Token Token;
-        internal Packets.Crypto Crypto;
+        internal Crypto Crypto;
         internal RC4_Core RC4;
 
-        public Device(Socket so)
+        public Device(Socket Socket)
         {
-            this.Socket = so;
-            this.Crypto = new Packets.Crypto();
+            this.Socket = Socket;
+            this.Crypto = new Crypto();
             this.RC4 = new RC4_Core();
-            this.SocketHandle = so.Handle;
+            this.SocketHandle = Socket.Handle;
         }
-        public Device(Socket so, Token token)
+        public Device(Socket Socket, Token token)
         {
-            this.Socket = so;
-            this.Crypto = new Packets.Crypto();
+            this.Socket = Socket;
+            this.Crypto = new Crypto();
             this.RC4 = new RC4_Core();
             this.Token = token;
-            this.SocketHandle = so.Handle;
+            this.SocketHandle = Socket.Handle;
         }
 
-        internal State PlayerState = Logic.Enums.State.DISCONNECTED;
+        internal Client_State PlayerState = Client_State.DISCONNECTED;
 
         internal IntPtr SocketHandle;
 
@@ -98,14 +99,14 @@ namespace BL.Servers.CR.Logic
                         {
                             try
                             {
-                                if (Constants.Encryption == Enums.Crypto.RC4)
+                                if (Constants.Encryption == Enums.Server_Crypto.RC4)
                                     _Message.DecryptRC4();
                                 else
                                     _Message.DecryptSodium();
                             }
                             catch (Exception ex)
                             {
-                                Resources.Exceptions.Catch(ex,
+                                Server_Resources.Exceptions.Catch(ex,
                                     $"Unable to decrypt message with ID: {type}" + Environment.NewLine +
                                     ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine +
                                     ex.Data, this.Model, this.OSVersion, this.Player.Token,
@@ -126,7 +127,7 @@ namespace BL.Servers.CR.Logic
                             }
                             catch (Exception ex)
                             {
-                                Resources.Exceptions.Catch(ex,
+                                Server_Resources.Exceptions.Catch(ex,
                                     $"Unable to decode message with ID: {type}" + Environment.NewLine + ex.Message +
                                     Environment.NewLine + ex.StackTrace + Environment.NewLine + ex.Data, this.Model,
                                     this.OSVersion, this.Player.Token, Player?.UserId ?? 0);
@@ -137,7 +138,7 @@ namespace BL.Servers.CR.Logic
                             }
                             catch (Exception ex)
                             {
-                                Resources.Exceptions.Catch(ex,
+                                Server_Resources.Exceptions.Catch(ex,
                                     $"Unable to process message with ID: {type}" + Environment.NewLine +
                                     ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine +
                                     ex.Data, this.Model, this.OSVersion, this.Player.Token,
@@ -146,7 +147,7 @@ namespace BL.Servers.CR.Logic
                         }
                         catch (Exception Exception)
                         {
-                            Resources.Exceptions.Catch(Exception,
+                            Server_Resources.Exceptions.Catch(Exception,
                                 Exception.Message + Environment.NewLine + Exception.StackTrace +
                                 Environment.NewLine + Exception.Data, this.Model, this.OSVersion,
                                 this.Player.Token, Player?.UserId ?? 0);
@@ -163,7 +164,7 @@ namespace BL.Servers.CR.Logic
 #if DEBUG
                         Loggers.Log(Utils.Padding(this.GetType().Name, 15) + " : Aborting, we can't handle the following message : ID " + type + ", Length " + length + ".", true, Defcon.WARN);
 #endif
-                        if (Constants.Encryption == Enums.Crypto.RC4)
+                        if (Constants.Encryption == Enums.Server_Crypto.RC4)
                         {
                             this.RC4.Decrypt(ref packet);
                         }

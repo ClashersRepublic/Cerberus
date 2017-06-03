@@ -39,7 +39,7 @@
 "com.supercell.scroll.specialoffertier50","TID_SPECIAL_OFFER_50",,"TRUE","TRUE","TRUE","TRUE",,4999,32800,,"shop_gems01","GD2017030111425403545830",,,,"ChronosOffer_50",,
 "com.supercell.scroll.specialoffertier60","TID_SPECIAL_OFFER_60",,"TRUE","TRUE","TRUE","TRUE",,9999,64800,,"shop_gems01","GD2017030111441503152823",,,,"ChronosOffer_60",,
 "com.supercell.scroll.consumablestarterpack8","TID_STARTER_PACK_8",,"TRUE","TRUE","TRUE","TRUE",,2499,16300,,"shop_gems01","GD2017030111452503254030","StarterPackArenaT",,,,,
-"com.supercell.scroll.cardcampaignpack1","TID_REDEEM_PACK_1",,,"TRUE",,,100,99,,,,,,,,,2,1
-"com.supercell.scroll.cardcampaignpack2","TID_REDEEM_PACK_2",,,"TRUE",,,200,199,,,,,,,,,2,1
-"com.supercell.scroll.cardcampaignpack3","TID_REDEEM_PACK_3",,,"TRUE",,,500,499,,,,,,,,,2,1
-"com.supercell.scroll.cardcampaignpack4","TID_REDEEM_PACK_4",,,"TRUE",,,1500,1199,,,,,,,,,2,1
+"com.supercell.scroll.cardcampaignpack1","TID_REDEEM_PACK_1",,,"TRUE",,,100,99,,,,,,,,,5,1
+"com.supercell.scroll.cardcampaignpack2","TID_REDEEM_PACK_2",,,"TRUE",,,200,199,,,,,,,,,5,1
+"com.supercell.scroll.cardcampaignpack3","TID_REDEEM_PACK_3",,,"TRUE",,,500,499,,,,,,,,,5,1
+"com.supercell.scroll.cardcampaignpack4","TID_REDEEM_PACK_4",,,"TRUE",,,1500,1199,,,,,,,,,5,1

@@ -31,7 +31,7 @@ namespace BL.Servers.CR.Logic.Slots
                 {
                     if (this.Count < 1)
                     {
-                        Member.Role = Role.Leader;
+                        Member.Role = Alliance_Role.Leader;
                     }
 
                     this.Add(Member.UserID, Member);

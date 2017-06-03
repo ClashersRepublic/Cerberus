@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace BL.Servers.CR.Logic.Slots.Items
 {
-    internal class Facebook
+    internal class Facebook_API
     {
         internal const string ApplicationID = "1609113955765603";
         internal const string ApplicationSecret = "708a87ee580fe571de7c9878bfb2dc96";
@@ -20,11 +20,11 @@ namespace BL.Servers.CR.Logic.Slots.Items
         internal FacebookClient FBClient;
         internal Player Player;
 
-        public Facebook()
+        public Facebook_API()
         {
         }
 
-        public Facebook(Player Player)
+        public Facebook_API(Player Player)
         {
             this.Player = Player;
 
@@ -54,9 +54,9 @@ namespace BL.Servers.CR.Logic.Slots.Items
         {
             this.FBClient = new FacebookClient(this.Token)
             {
-                AppId = Facebook.ApplicationID,
-                AppSecret = Facebook.ApplicationSecret,
-                Version = Facebook.ApplicationVersion
+                AppId = Facebook_API.ApplicationID,
+                AppSecret = Facebook_API.ApplicationSecret,
+                Version = Facebook_API.ApplicationVersion
             };
         }
 
@@ -64,7 +64,7 @@ namespace BL.Servers.CR.Logic.Slots.Items
         {
             if (this.Connected)
             {
-                return this.FBClient.Get("https://graph.facebook.com/v" + Facebook.ApplicationVersion + "/" + (IncludeIdentifier ? this.Identifier + '/' + Path : Path));
+                return this.FBClient.Get("https://graph.facebook.com/v" + Facebook_API.ApplicationVersion + "/" + (IncludeIdentifier ? this.Identifier + '/' + Path : Path));
             }
             else
             {

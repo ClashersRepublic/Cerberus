@@ -10,7 +10,7 @@ namespace BL.Servers.CR.Core.Network
     {
         internal static void Recept(this Packets.Message Message)
         {
-            if (Constants.Encryption == Logic.Enums.Crypto.RC4)
+            if (Constants.Encryption == Logic.Enums.Server_Crypto.RC4)
             {
                 Message.DecryptRC4();
             }
@@ -30,7 +30,7 @@ namespace BL.Servers.CR.Core.Network
             {
                 Message.Encode();
 
-                if (Constants.Encryption == Logic.Enums.Crypto.RC4)
+                if (Constants.Encryption == Logic.Enums.Server_Crypto.RC4)
                 {
                     Message.EncryptRC4();
                 }
@@ -39,7 +39,7 @@ namespace BL.Servers.CR.Core.Network
                     Message.EncryptSodium();
                 }
                 
-                Resources.Gateway.Send(Message);
+                Server_Resources.Gateway.Send(Message);
 
                 if (Message.Device.Connected())
                 {

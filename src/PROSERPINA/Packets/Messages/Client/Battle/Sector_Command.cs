@@ -49,7 +49,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Battle
 
         internal override void Process()
         {
-            Resources.Battles[this.Device.Player.BattleID].Begin();
+            Server_Resources.Battles[this.Device.Player.BattleID].Begin();
         }
 
     }

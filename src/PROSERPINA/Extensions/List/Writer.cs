@@ -284,7 +284,7 @@ namespace BL.Servers.CR.Extensions.List
             {
                 c--;
 
-                int r = Resources.Random.Next(c + 1);
+                int r = Server_Resources.Random.Next(c + 1);
 
                 T Value = List[r];
                 List[r] = List[c];

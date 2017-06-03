@@ -41,26 +41,26 @@ namespace BL.Servers.CR.Packets.Messages.Client.Battle
         {
             Thread.Sleep((int)TimeSpan.FromSeconds(5).TotalSeconds);
 
-            Logic.Player _Enemy = Resources.Battles.GetEnemy(this.Device.Player.BattleID, this.Device.Player.UserId);
+            Logic.Player _Enemy = Server_Resources.Battles.GetEnemy(this.Device.Player.BattleID, this.Device.Player.UserId);
 
-            Resources.Battles[this.Device.Player.BattleID].Tick = this.CommandTick;
-            Resources.Battles[this.Device.Player.BattleID].Checksum = this.CommandSum;
+            Server_Resources.Battles[this.Device.Player.BattleID].Tick = this.CommandTick;
+            Server_Resources.Battles[this.Device.Player.BattleID].Checksum = this.CommandSum;
 
             if (this.CommandID == 1)
             {
-                Resources.Battles[this.Device.Player.BattleID].Commands.Enqueue(new Place_Troop(_Enemy.Device)
+                Server_Resources.Battles[this.Device.Player.BattleID].Commands.Enqueue(new Place_Troop(_Enemy.Device)
                 {
                     SenderID = this.Device.Player.UserId
                 });
 
                 new Battle_Command_Data(this.Device)
                 {
-                    Battle = Resources.Battles[this.Device.Player.BattleID]
+                    Battle = Server_Resources.Battles[this.Device.Player.BattleID]
                 }.Send();
 
                 new Battle_Command_Data(_Enemy.Device)
                 {
-                    Battle = Resources.Battles[_Enemy.Decks.Player.BattleID]
+                    Battle = Server_Resources.Battles[_Enemy.Decks.Player.BattleID]
                 }.Send();
             }
             else if (this.CommandID == 3)

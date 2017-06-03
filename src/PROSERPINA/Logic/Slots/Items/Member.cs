@@ -13,12 +13,12 @@ namespace BL.Servers.CR.Logic.Slots.Items
 
         [JsonProperty("donations")] internal int Donations;
         [JsonProperty("received")] internal int Received;
-        [JsonProperty("role")] internal Role Role = Role.Member;
+        [JsonProperty("role")] internal Alliance_Role Role = Alliance_Role.Member;
 
         [JsonProperty("joined")] internal DateTime Joined = DateTime.UtcNow;
 
-        internal bool Connected => Core.Resources.Players.ContainsKey(this.UserID);
-        internal Player Player => Core.Resources.Players.Get(this.UserID, Constants.Database, false);
+        internal bool Connected => Core.Server_Resources.Players.ContainsKey(this.UserID);
+        internal Player Player => Core.Server_Resources.Players.Get(this.UserID, Constants.Database, false);
         internal bool New => this.Joined >= DateTime.UtcNow.AddDays(-1);
 
         internal Clan Clan;
@@ -33,9 +33,9 @@ namespace BL.Servers.CR.Logic.Slots.Items
             this.UserID = Player.UserId;
 
             this.Joined = DateTime.UtcNow;
-            this.Role = Role.Member;
+            this.Role = Alliance_Role.Member;
 
-            this.Clan = Core.Resources.Clans.Get(Player.ClanId);
+            this.Clan = Core.Server_Resources.Clans.Get(Player.ClanId);
         }
 
 

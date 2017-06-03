@@ -73,10 +73,10 @@ namespace BL.Servers.CR.Logic.Slots.Items
             new Battle_End(this.Player1.Device).Send();
             new Battle_End(this.Player2.Device).Send();
 
-            this.Player1.Device.PlayerState = Enums.State.LOGGED;
-            this.Player2.Device.PlayerState = Enums.State.LOGGED;
+            this.Player1.Device.PlayerState = Enums.Client_State.LOGGED;
+            this.Player2.Device.PlayerState = Enums.Client_State.LOGGED;
 
-            Core.Resources.Battles.Remove(this.BattleID);
+            Core.Server_Resources.Battles.Remove(this.BattleID);
 
             this.Timer.Stop();
             this.Timer.Close();

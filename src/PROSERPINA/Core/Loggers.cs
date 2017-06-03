@@ -99,6 +99,7 @@
                 packet.AppendLine(Regex.Replace(Encoding.UTF8.GetString(Message.Data.ToArray()),
                     @"[^\u0020-\u007F]", "."));
             }
+
             _logger.Debug(packet.ToString);
         }
 

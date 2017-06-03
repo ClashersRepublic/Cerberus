@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BL.Servers.CR.Core;
-using BL.Servers.CR.Extensions.List;
-using BL.Servers.CR.Files;
+﻿using BL.Servers.CR.Logic.Components;
 using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Logic.Slots;
 using BL.Servers.CR.Logic.Slots.Items;
-using BL.Servers.CR.Packets;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Google = BL.Servers.CR.Logic.Slots.Items.Google;
-using Resources = BL.Servers.CR.Logic.Slots.Resources;
-using BL.Servers.CR.Logic.Components;
-using BL.Servers.CR.Logic.Entry;
+using System;
 
 namespace BL.Servers.CR.Logic
 {
@@ -31,10 +19,7 @@ namespace BL.Servers.CR.Logic
         internal Component Component;
 
         [JsonIgnore]
-        internal Clan_Member_Entry MemberEntry;
-
-        [JsonIgnore]
-        internal Components.Battle Battle;
+        internal Battle_Profile Battle;
 
         [JsonIgnore]
         internal long BattleID;
@@ -63,10 +48,10 @@ namespace BL.Servers.CR.Logic
 
         #endregion
 
-        [JsonProperty("acc_hi")] internal int UserHighId = 1;
+        [JsonProperty("acc_hi")] internal int UserHighId = 0;
         [JsonProperty("acc_lo")] internal int UserLowId = 0;
 
-        [JsonProperty("clan_hi")] internal int ClanHighID = 1;
+        [JsonProperty("clan_hi")] internal int ClanHighID = 0;
         [JsonProperty("clan_lo")] internal int ClanLowID = 0;
 
         [JsonProperty("rank")] internal Rank Rank = Rank.User;
@@ -106,9 +91,9 @@ namespace BL.Servers.CR.Logic
         [JsonProperty("creation_date")] internal DateTime Created = DateTime.UtcNow;
         [JsonProperty("ban_date")] internal DateTime BanTime = DateTime.UtcNow;
 
-        [JsonProperty("google")] internal Slots.Items.Google Google;
+        [JsonProperty("google")] internal Google_API Google;
 
-        [JsonProperty("facebook")] internal Slots.Items.Facebook Facebook;
+        [JsonProperty("facebook")] internal Facebook_API Facebook;
 
 
         internal bool Banned => this.BanTime > DateTime.UtcNow;
@@ -117,13 +102,13 @@ namespace BL.Servers.CR.Logic
         {
             this.Profile = new Profile(this);
             this.Component = new Component(this);
-            this.Battle = new Components.Battle(this);
+            this.Battle = new Components.Battle_Profile(this);
 
             this.Resources = new Resources(this);
             this.Resources_Cap = new Resources(this);
             this.Decks = new Decks(this);
-            this.Google = new Slots.Items.Google(this);
-            this.Facebook = new Slots.Items.Facebook(this);
+            this.Google = new Slots.Items.Google_API(this);
+            this.Facebook = new Slots.Items.Facebook_API(this);
 
             this.Achievements = new Achievements();
             this.Chests = new Chests();
@@ -137,19 +122,19 @@ namespace BL.Servers.CR.Logic
 
             this.Profile = new Profile(this);
             this.Component = new Component(this);
-            this.Battle = new Components.Battle(this);
+            this.Battle = new Battle_Profile(this);
 
             this.Resources = new Resources(this, true);
             this.Resources_Cap = new Resources(this, false);
             this.Decks = new Decks(this);
-            this.Google = new Slots.Items.Google(this);
-            this.Facebook = new Slots.Items.Facebook(this);
+            this.Google = new Slots.Items.Google_API(this);
+            this.Facebook = new Slots.Items.Facebook_API(this);
 
             this.Achievements = new Achievements();
             this.Chests = new Chests();
         }
 
-        public bool HasEnoughResources(Enums.Resource resource, int buildCost) => this.Resources.Get(resource) >= buildCost;
+        public bool HasEnoughResources(Enums.Game_Resource resource, int buildCost) => this.Resources.Get(resource) >= buildCost;
 
         public bool HasEnoughResources(int globalId, int buildCost) => this.Resources.Get(globalId) >= buildCost;
     }

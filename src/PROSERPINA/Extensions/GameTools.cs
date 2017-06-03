@@ -55,7 +55,7 @@ namespace BL.Servers.CR.Extensions
             {
                 return Math.Round(-0.0794 * (_Battle.Player1.Trophies - _Battle.Player2.Trophies) + 29.35838);
             }
-            return Core.Resources.Random.Next(10, 15);
+            return Core.Server_Resources.Random.Next(10, 15);
 
         }
 
@@ -65,7 +65,7 @@ namespace BL.Servers.CR.Extensions
             {
                 return Math.Round(0.0531 * (_Battle.Player1.Trophies - _Battle.Player2.Trophies) + 19.60453);
             }
-            return Core.Resources.Random.Next(10, 15);
+            return Core.Server_Resources.Random.Next(10, 15);
 
         }    
     }

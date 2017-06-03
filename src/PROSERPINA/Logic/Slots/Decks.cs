@@ -105,7 +105,7 @@ namespace BL.Servers.CR.Logic.Slots
 
         public void Die()
         {
-            Console.WriteLine(JsonConvert.SerializeObject(this, Core.Resources.Players.Settings));
+            Console.WriteLine(JsonConvert.SerializeObject(this, Core.Server_Resources.Players.Settings));
         }
     }
 }

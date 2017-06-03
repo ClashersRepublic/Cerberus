@@ -21,9 +21,11 @@ namespace BL.Servers.CR.Core.Network.TCP
         internal SocketAsyncEventArgsPool AcceptPool;
         internal SocketAsyncEventArgsPool ReadPool;
         internal SocketAsyncEventArgsPool WritePool;
+
         internal Pool<byte[]> BufferPool;
+
         internal Socket Listener;
-        //internal Mutex Mutex;
+
         internal int ConnectedSockets;
 
         internal Gateway()
@@ -58,7 +60,7 @@ namespace BL.Servers.CR.Core.Network.TCP
 
         internal void Initialize()
         {
-            for (int Index = 0; Index < Constants.PRE_ALLOC_SEA; Index++)
+            Parallel.For(0, Constants.PRE_ALLOC_SEA, Index =>
             {
                 SocketAsyncEventArgs ReadEvent = new SocketAsyncEventArgs();
                 ReadEvent.Completed += this.OnIOCompleted;
@@ -67,13 +69,14 @@ namespace BL.Servers.CR.Core.Network.TCP
                 SocketAsyncEventArgs WriterEvent = new SocketAsyncEventArgs();
                 WriterEvent.Completed += this.OnIOCompleted;
                 this.WritePool.Enqueue(WriterEvent);
-            }
-            for (int Index = 0; Index < 5; Index++)
+            });
+
+            Parallel.For(0, 5, Index =>
             {
                 SocketAsyncEventArgs AcceptEvent = new SocketAsyncEventArgs();
                 AcceptEvent.Completed += this.OnIOCompleted;
                 this.AcceptPool.Enqueue(AcceptEvent);
-            }
+            });
         }
 
         internal void StartAccept()
@@ -161,7 +164,7 @@ namespace BL.Servers.CR.Core.Network.TCP
                     Token Token = new Token(ReadEvent, device);
                     device.Token = Token;
                     Interlocked.Increment(ref this.ConnectedSockets);
-                    Resources.Devices.Add(device);
+                    Server_Resources.Devices.Add(device);
 
                     this.StartReceive(ReadEvent);
 
@@ -184,13 +187,13 @@ namespace BL.Servers.CR.Core.Network.TCP
                         Token Token = new Token(ReadEvent, device);
                         device.Token = Token;
                         Interlocked.Increment(ref this.ConnectedSockets);
-                        Resources.Devices.Add(device);
+                        Server_Resources.Devices.Add(device);
 
                         this.StartReceive(ReadEvent);
                     }
                     catch (Exception ex)
                     {
-                        Resources.Exceptions.RavenClient.Capture(
+                        Server_Resources.Exceptions.RavenClient.Capture(
                             new SentryEvent("There are no more available sockets to allocate."));
                     }
                 }
@@ -230,7 +233,7 @@ namespace BL.Servers.CR.Core.Network.TCP
                 }
                 catch (Exception ex)
                 {
-                    Resources.Exceptions.Catch(ex, "Exception while processing receive");
+                    Server_Resources.Exceptions.Catch(ex, "Exception while processing receive");
                 }
 
 
@@ -247,14 +250,14 @@ namespace BL.Servers.CR.Core.Network.TCP
 
             if (Token.Device.Player != null)
             {
-                if (Resources.Players.ContainsValue(Token.Device.Player))
+                if (Server_Resources.Players.ContainsValue(Token.Device.Player))
                 {
-                    Resources.Players.Remove(Token.Device.Player);
+                    Server_Resources.Players.Remove(Token.Device.Player);
                 }
             }
             else if (!Token.Device.Connected())
             {
-                Resources.Devices.Remove(Token.Device);
+                Server_Resources.Devices.Remove(Token.Device);
             }
 
             Interlocked.Decrement(ref ConnectedSockets);
@@ -316,7 +319,7 @@ namespace BL.Servers.CR.Core.Network.TCP
                 }
                 catch (Exception ex)
                 {
-                    Resources.Exceptions.Catch(ex, "Exception while starting receive");
+                    Server_Resources.Exceptions.Catch(ex, "Exception while starting receive");
                 }
             }
         }
@@ -348,7 +351,7 @@ namespace BL.Servers.CR.Core.Network.TCP
                 }
                 catch (Exception ex)
                 {
-                    Resources.Exceptions.Catch(ex, "Exception while processing send");
+                    Server_Resources.Exceptions.Catch(ex, "Exception while processing send");
                 }
             }
         }

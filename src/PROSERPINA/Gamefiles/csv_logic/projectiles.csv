@@ -35,6 +35,6 @@
 "LogProjectileRolling","Legendary",200,"sc/effects.sc","log_roll_projectile","log_roll_projectile_red","log_projectile_shadow",,,,,"log_hit","log_die",240,-60,1000,"true",,,,"true","true",,,,,,,,,,,,,"log_emitter",1950,600,11600,,,,2500,,,,,,,,,,,,,,
 "MegaMinionSpit","Rare",1000,"sc/effects.sc","projectile_cannonball_small",,"projectile_arrow_shadow",,,,"true","mega_minion_hit",,147,,,,,,,,"true",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 "BlowdartGoblinProjectile","Rare",800,"sc/effects.sc","projectile_arrow_basic",,"projectile_arrow_shadow",,,,"true","BlowdartArrowHit",,53,,,,,,,,"true",,,120,,,,,,,,,,"BlowdartProjectileEmitter",,,,,,,,,,,,,,,,,,,,,
-"AxeManProjectile","Epic",550,"sc/effects.sc","executioner_projectile",,"bowler_projectile_shadow",,,,,"axe_man_projectile_hit",,100,,,,1000,,"true","true","true",,,,,,,,,,,,,"AxeProjectileEmitter",900,,6500,,,,4500,,3000,,,,,,,"axe_man_projectile_die","true",1500,,,
+"AxeManProjectile","Epic",550,"sc/effects.sc","executioner_projectile",,"bowler_projectile_shadow",,,,,"axe_man_projectile_hit",,106,,,,1000,,"true","true","true",,,,,,,,,,,,,"AxeProjectileEmitter",900,,6500,,,,4500,,3000,,,,,,,"axe_man_projectile_die","true",1500,,,
 "NotInUseP1","Common",1000,"sc/effects.sc","projectile_cannonball_large",,"projectile_arrow_shadow",,,,"true","cannon_hit",,60,,,,,,,,"true",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 "BatProjectile","Common",2000,"sc/effects.sc","projectile_cannonball_small",,,,,,"true","ArrowHit",,32,,,,,,,,"true",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

@@ -23,31 +23,31 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
 
         internal string Message = string.Empty;
 
-        internal Reason Reason;
+        internal LoginFailed_Reason Reason;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Authentification_Failed"/> class.
         /// </summary>
         /// <param name="Device">The device.</param>
         /// <param name="Reason">The reason.</param>
-        internal Authentification_Failed(Device Device, Reason Reason = Reason.Default) : base(Device)
+        internal Authentification_Failed(Device Device, LoginFailed_Reason Reason = LoginFailed_Reason.Default) : base(Device)
         {
             this.Identifier = 20103;
             this.Reason = Reason;
             this.Version = 2;
         }
             
-        internal string ContentURL => Fingerprint.Custom ? "http://barbarianland.xyz/blpatch/clashroyale" : "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
+        internal string ContentURL => Fingerprint.Custom ? "https://github.com/OMGItssCrayCray/BarbarianLand_Patching/tree/master/clashroyale" : "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
 
         internal override void Encode()
         {
             this.Data.AddVInt((int)this.Reason);
             this.Data.AddString(Fingerprint.Json);
             this.Data.AddString(null);
-            this.Data.AddString(this.Reason != Reason.Patch ? null : ContentURL);
-            this.Data.AddString(this.Reason != Reason.Update ? null : UpdateURL);
+            this.Data.AddString(ContentURL);
+            this.Data.AddString(null);
             this.Data.AddString(this.Message);
-            this.Data.AddVInt(this.Reason == Reason.Maintenance ? Constants.Maintenance_Timer.GetRemainingSeconds(DateTime.Now) : 0);
+            this.Data.AddVInt(this.Reason == LoginFailed_Reason.Maintenance ? Constants.Maintenance_Timer.GetRemainingSeconds(DateTime.Now) : 0);
             this.Data.AddByte(0);
             this.Data.AddString(null);
         }
@@ -57,7 +57,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
         /// </summary>
         internal override void EncryptSodium()
         {
-            if (this.Device.PlayerState >= State.LOGIN)
+            if (this.Device.PlayerState >= Client_State.LOGIN)
             {
                 Blake2BHasher Blake = new Blake2BHasher();
 

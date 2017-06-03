@@ -124,7 +124,7 @@ namespace BL.Servers.CR.Logic.Components
 
                 if (this.Player.ClanLowID != 0)
                 {
-                    Clan Clan = Core.Resources.Clans.Get(this.Player.ClanId, Constants.Database, false);
+                    Clan Clan = Core.Server_Resources.Clans.Get(this.Player.ClanId, Constants.Database, false);
 
                     _Packet.Add(string.IsNullOrEmpty(this.Player.Username) ? (byte)8 : (byte)9);
 

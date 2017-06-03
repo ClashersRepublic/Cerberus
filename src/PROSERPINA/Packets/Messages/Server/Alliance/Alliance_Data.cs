@@ -23,7 +23,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Alliance
 
         internal override void Encode()
         {
-            Clan Clan = Core.Resources.Clans.Get(this.ClanID, Constants.Database, false);
+            Clan Clan = Core.Server_Resources.Clans.Get(this.ClanID, Constants.Database, false);
 
             this.Data.AddRange(Clan.FullHeader);
             this.Data.AddString(Clan.Description);

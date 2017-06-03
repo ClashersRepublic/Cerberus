@@ -18,9 +18,9 @@ namespace BL.Servers.CR.Packets.Messages.Server.Alliance
 
         internal override void Encode()
         {
-            this.Data.AddVInt((int)Resources.Clans.Count);
+            this.Data.AddVInt((int)Server_Resources.Clans.Count);
 
-            foreach (var _Clan in Resources.Clans.Values)
+            foreach (var _Clan in Server_Resources.Clans.Values)
             {
                 this.Data.AddRange(_Clan.FullHeader);
             }

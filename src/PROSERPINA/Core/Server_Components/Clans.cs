@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BL.Servers.CR.Logic.Enums;
 
-namespace BL.Servers.CR.Core
+namespace BL.Servers.CR.Core.Server_Components
 {
     internal class Clans : Dictionary<long, Logic.Clan>
     {
@@ -60,18 +60,18 @@ namespace BL.Servers.CR.Core
             }
         }
 
-        internal Logic.Clan Get(long ClanID, Logic.Enums.DBMS DBMS = Constants.Database, bool Store = true)
+        internal Clan Get(long ClanID, Logic.Enums.DBMS DBMS = Constants.Database, bool Store = true)
         {
             if (!this.ContainsKey(ClanID))
             {
-                Logic.Clan Clan = null;
+                Clan Clan = null;
 
                 switch (DBMS)
                 {
                     case Logic.Enums.DBMS.MySQL:
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.Clan Data = Database.Clan.Find(ClanID);
+                            Database.ClanDB Data = Database.ClanDB.Find(ClanID);
 
                             if (!string.IsNullOrEmpty(Data?.Data))
                             {
@@ -93,7 +93,7 @@ namespace BL.Servers.CR.Core
 
                         if (!string.IsNullOrEmpty(Property))
                         {
-                            Clan = new Logic.Clan(ClanID);
+                            Clan = new Clan(ClanID);
 
                             JsonConvert.PopulateObject(Property, Clan, this.Settings);
 
@@ -146,7 +146,7 @@ namespace BL.Servers.CR.Core
                         {
                             using (MysqlEntities Database = new MysqlEntities())
                             {
-                                Database.Clan.Add(new Database.Clan
+                                Database.ClanDB.Add(new Database.ClanDB
                                 {
                                     ID = Clan.ClanID,
                                     Data = JsonConvert.SerializeObject(Clan, this.Settings)
@@ -202,7 +202,7 @@ namespace BL.Servers.CR.Core
                     {
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            var Data = Database.Clan.Find(Clan.ClanID);
+                            var Data = Database.ClanDB.Find(Clan.ClanID);
 
                             if (Data != null)
                             {

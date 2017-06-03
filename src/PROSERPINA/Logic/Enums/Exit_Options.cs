@@ -1,7 +1,7 @@
 ﻿namespace BL.Servers.CR.Logic.Enums
 {
 
-    public enum Exits
+    public enum Exit_Options
     {
         CTRL_C_EVENT = 0,
         CTRL_BREAK_EVENT = 1,

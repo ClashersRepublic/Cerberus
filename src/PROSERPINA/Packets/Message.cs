@@ -74,7 +74,7 @@ namespace BL.Servers.CR.Packets
 
         internal virtual void DecryptSodium()
         {
-            if (this.Device.PlayerState >= State.LOGGED)
+            if (this.Device.PlayerState >= Client_State.LOGGED)
             {
                 this.Device.Crypto.SNonce.Increment();
 
@@ -82,7 +82,7 @@ namespace BL.Servers.CR.Packets
 
                 if (Decrypted == null)
                 {
-                    //Resources.Exceptions.Catch(new CryptographicException(), ErrorLevel.Error);
+                    Server_Resources.Exceptions.Catch(new CryptographicException());
                 }
 
                 this.Reader = new Reader(Decrypted);
@@ -92,7 +92,7 @@ namespace BL.Servers.CR.Packets
 
         internal virtual void EncryptSodium()
         {
-            if (this.Device.PlayerState >= State.LOGGED)
+            if (this.Device.PlayerState >= Client_State.LOGGED)
             {
                 this.Device.Crypto.RNonce.Increment();
 
@@ -118,7 +118,7 @@ namespace BL.Servers.CR.Packets
         internal virtual void EncryptRC4()
         {
             byte[] Encrypted = this.Data.ToArray();
-            if (this.Device.PlayerState > State.SESSION_OK)
+            if (this.Device.PlayerState > Client_State.SESSION_OK)
                 this.Device.RC4.Encrypt(ref Encrypted);
 
             this.Data = new List<byte>(Encrypted);

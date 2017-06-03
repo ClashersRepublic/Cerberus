@@ -33,8 +33,6 @@ namespace BL.Servers.CR.Core
 
             switch (Constants.Database)
             {
-                case DBMS.Redis:
-                    throw new UnintentionalCodeFirstException();
                 case DBMS.Both:
                     this.Redis = new Redis();
                     break;

@@ -20,7 +20,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
     {
         public Authentification(Device device, Reader reader) : base(device, reader)
         {
-            this.Device.PlayerState = State.LOGIN;
+            this.Device.PlayerState = Client_State.LOGIN;
         }
 
 
@@ -100,7 +100,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
             {
                 if (this.UserId == 0)
                 {
-                    this.Device.Player = Resources.Players.New();
+                    this.Device.Player = Server_Resources.Players.New();
 
                     if (this.Device.Player != null)
                     {
@@ -108,12 +108,12 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
                     }
                     else
                     {
-                        new Authentification_Failed(this.Device, Logic.Enums.Reason.Pause).Send();
+                        new Authentification_Failed(this.Device, Logic.Enums.LoginFailed_Reason.Pause).Send();
                     }
                 }
                 else if (this.UserId > 0)
                 {
-                    this.Device.Player = Resources.Players.Get(this.UserId);
+                    this.Device.Player = Server_Resources.Players.Get(this.UserId);
 
                     if (this.Device.Player != null)
                     {
@@ -121,7 +121,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
                         {
                             if (this.Device.Player.Locked)
                             {
-                                new Authentification_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
+                                new Authentification_Failed(this.Device, Logic.Enums.LoginFailed_Reason.Locked).Send();
                             }
                             else if (this.Device.Player.Banned)
                             {
@@ -134,7 +134,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
                                 this.Reason.AppendLine("Your Unlock Date: " + this.Device.Player.BanTime);
                                 this.Reason.AppendLine();
 
-                                new Authentification_Failed(this.Device, Logic.Enums.Reason.Banned)
+                                new Authentification_Failed(this.Device, Logic.Enums.LoginFailed_Reason.Banned)
                                 {
                                     Message = this.Reason.ToString()
                                 }.Send();
@@ -146,7 +146,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
                         }
                         else
                         {
-                            new Authentification_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
+                            new Authentification_Failed(this.Device, Logic.Enums.LoginFailed_Reason.Locked).Send();
                         }
                     }
                     else
@@ -157,7 +157,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
                         this.Reason.AppendLine("Your ID: " + this.UserId + ".");
                         this.Reason.AppendLine();
 
-                        new Authentification_Failed(this.Device, Logic.Enums.Reason.Banned)
+                        new Authentification_Failed(this.Device, Logic.Enums.LoginFailed_Reason.Banned)
                         {
                             Message = Reason.ToString()
                         }.Send();
@@ -166,7 +166,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
             }
             else
             {
-                new Authentification_Failed(this.Device, Logic.Enums.Reason.Patch).Send();
+                new Authentification_Failed(this.Device, Logic.Enums.LoginFailed_Reason.Patch).Send();
             }
         }
 

@@ -47,23 +47,23 @@ namespace BL.Servers.BB.Packets.Messages.Client.Authentication
 
             if (this.UnlockCode[0] == '/')
             {
-                if (int.TryParse(this.UnlockCode.Substring(1), out int n))
-                {
-                    var account = Resources.Players.Get(n);
-                    if (account != null)
-                    {
-                        account.Avatar.Locked = true;
-                        new Unlock_Account_OK(this.Device) {Account = account.Avatar}.Send();
-                    }
-                    else
-                    {
-                        new Unlock_Account_Failed(this.Device) {Reason = UnlockReason.UnlockError}.Send();
-                    }
-                }
-                else
-                {
-                    new Unlock_Account_Failed(this.Device) {Reason = UnlockReason.UnlockError}.Send();
-                }
+                //if (int.TryParse(this.UnlockCode.Substring(1), out int n))
+                //{
+                //    var account = Resources.Players.Get(n);
+                //    if (account != null)
+                //    {
+                //        account.Avatar.Locked = true;
+                //        new Unlock_Account_OK(this.Device) {Account = account.Avatar}.Send();
+                //    }
+                //    else
+                //    {
+                //        new Unlock_Account_Failed(this.Device) {Reason = UnlockReason.UnlockError}.Send();
+                //    }
+                //}
+                //else
+                //{
+                //    new Unlock_Account_Failed(this.Device) {Reason = UnlockReason.UnlockError}.Send();
+                //}
             }
             if (string.Equals(this.UnlockCode, this.UserPassword))
             {

@@ -28,7 +28,7 @@ namespace BL.Servers.CR.Logic.Slots.Items
 
         [JsonProperty("sender_facebook")] internal string Sender_Facebook;
 
-        [JsonProperty("sender_role")] internal Role Sender_Role;
+        [JsonProperty("sender_role")] internal Alliance_Role Sender_Role;
 
 
         internal byte[] ToBytes()

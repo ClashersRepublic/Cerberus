@@ -46,18 +46,18 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
             {
                 case 225:
                 {
-                    int Count = Core.Resources.Random.Next(10, 17);
+                    int Count = Core.Server_Resources.Random.Next(10, 17);
                     this.Data.AddVInt(Count);
 
                     for (int i = 0; i < Count; i++)
                     {
-                        int ID = _Cards[Core.Resources.Random.Next(0, this._Cards.Count)];
+                        int ID = _Cards[Core.Server_Resources.Random.Next(0, this._Cards.Count)];
                         int count;
                         byte Type;
                         this.Data.AddVInt(ID); // Card ID
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Tick
-                        this.Data.AddVInt(count = Core.Resources.Random.Next(1, 100)); // Card Count
+                        this.Data.AddVInt(count = Core.Server_Resources.Random.Next(1, 100)); // Card Count
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Is New  
@@ -80,18 +80,18 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
 
                 case 228:
                 {
-                    int Count = Core.Resources.Random.Next(10, 12);
+                    int Count = Core.Server_Resources.Random.Next(10, 12);
                     this.Data.AddVInt(Count);
 
                     for (int i = 0; i < Count; i++)
                     {
-                        int ID = _Cards[Core.Resources.Random.Next(0, this._Cards.Count)];
+                        int ID = _Cards[Core.Server_Resources.Random.Next(0, this._Cards.Count)];
                         int count;
                         byte Type;
                             this.Data.AddVInt(ID); // Card ID
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Tick
-                        this.Data.AddVInt(count = Core.Resources.Random.Next(1, 50)); // Card Count
+                        this.Data.AddVInt(count = Core.Server_Resources.Random.Next(1, 50)); // Card Count
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Is New   
@@ -114,19 +114,19 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
 
                 case 224:
                 {
-                    int Count = Core.Resources.Random.Next(6, 9);
+                    int Count = Core.Server_Resources.Random.Next(6, 9);
                     this.Data.AddVInt(Count);
 
                     for (int i = 0; i < Count; i++)
                     {
-                        int ID = _Cards[Core.Resources.Random.Next(0, this._Cards.Count)];
+                        int ID = _Cards[Core.Server_Resources.Random.Next(0, this._Cards.Count)];
                         int count;
                         byte Type;
 
                             this.Data.AddVInt(ID); // Card ID
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Tick
-                        this.Data.AddVInt(count = Core.Resources.Random.Next(1, 20)); // Card Count
+                        this.Data.AddVInt(count = Core.Server_Resources.Random.Next(1, 20)); // Card Count
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Is New    
@@ -149,19 +149,19 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
 
                 case 7:
                 {
-                    int Count = Core.Resources.Random.Next(2, 5);
+                    int Count = Core.Server_Resources.Random.Next(2, 5);
                     this.Data.AddVInt(Count);
 
                     for (int i = 0; i < Count; i++)
                     {
-                        int ID = _Cards[Core.Resources.Random.Next(0, this._Cards.Count)];
+                        int ID = _Cards[Core.Server_Resources.Random.Next(0, this._Cards.Count)];
                         int count;
                         byte Type;
 
                             this.Data.AddVInt(ID); // Card ID
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Tick
-                        this.Data.AddVInt(count = Core.Resources.Random.Next(1, 10)); // Card Count
+                        this.Data.AddVInt(count = Core.Server_Resources.Random.Next(1, 10)); // Card Count
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Is New    
@@ -187,14 +187,14 @@ namespace BL.Servers.CR.Packets.Commands.Server.Chest
 
                     for (int i = 0; i < _Cards.Count; i++)
                     {
-                        int ID = _Cards[Core.Resources.Random.Next(0, this._Cards.Count)];
+                        int ID = _Cards[Core.Server_Resources.Random.Next(0, this._Cards.Count)];
                         int count;
                         byte Type;
 
                             this.Data.AddVInt(ID); // Card ID
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Tick
-                        this.Data.AddVInt(count = Core.Resources.Random.Next(1, 1000)); // Card Count
+                        this.Data.AddVInt(count = Core.Server_Resources.Random.Next(1, 1000)); // Card Count
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0);
                         this.Data.AddVInt(0); // Is New  

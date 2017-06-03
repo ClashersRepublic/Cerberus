@@ -2,7 +2,7 @@
 using BL.Servers.CR.Logic;
 using BL.Servers.CR.Logic.Slots.Items;
 
-namespace BL.Servers.CR.Core
+namespace BL.Servers.CR.Core.Server_Components
 { 
     internal class Battles : Dictionary<long, Battle>
     {

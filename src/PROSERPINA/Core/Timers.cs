@@ -27,7 +27,7 @@ namespace BL.Servers.CR.Core
         }
         internal void Maintenance(int durations)
         {
-            foreach (var _Device in Resources.Players.Values.ToList())
+            foreach (var _Device in Server_Resources.Players.Values.ToList())
             {
                 if (_Device.Device != null)
                 {
@@ -43,9 +43,9 @@ namespace BL.Servers.CR.Core
 
             Timer.Elapsed += (_Sender, _Args) =>
             {
-                foreach (var _Device in Resources.Devices.Values.ToList())
+                foreach (var _Device in Server_Resources.Devices.Values.ToList())
                 {
-                    Resources.Gateway.Disconnect(_Device.Token.Args);
+                    Server_Resources.Gateway.Disconnect(_Device.Token.Args);
                 }
 
                 Constants.Maintenance_Timer = new Maintenance_Timer();
@@ -86,7 +86,7 @@ namespace BL.Servers.CR.Core
             };
             Timer.Elapsed += (_Sender, _Args) =>
             {
-                Resources.Random = new Random(DateTime.Now.ToString().GetHashCode());
+                Server_Resources.Random = new Random(DateTime.Now.ToString().GetHashCode());
             };
             this.LTimers.Add(3, Timer);
         }
@@ -105,32 +105,32 @@ namespace BL.Servers.CR.Core
 
                 try
                 {
-                    lock (Resources.Players.Gate)
+                    lock (Server_Resources.Players.Gate)
                     {
-                        if (Resources.Players.Count > 0)
+                        if (Server_Resources.Players.Count > 0)
                         {
-                            List<Player> Players = Resources.Players.Values.ToList();
+                            List<Player> Players = Server_Resources.Players.Values.ToList();
 
                             Parallel.ForEach(Players, (_Player) =>
                             {
                                 if (_Player != null)
                                 {
-                                    Resources.Players.Save(_Player, Constants.Database);
+                                    Server_Resources.Players.Save(_Player, Constants.Database);
                                 }
                             });
                         }
                     }
-                    lock (Resources.Clans.Gate)
+                    lock (Server_Resources.Clans.Gate)
                     {
-                        if (Resources.Clans.Count > 0)
+                        if (Server_Resources.Clans.Count > 0)
                         {
-                            List<Clan> Clans = Resources.Clans.Values.ToList();
+                            List<Clan> Clans = Server_Resources.Clans.Values.ToList();
 
                             foreach (Clan _Clan in Clans)
                             {
                                 if (_Clan != null)
                                 {
-                                    Resources.Clans.Save(_Clan, Constants.Database);
+                                    Server_Resources.Clans.Save(_Clan, Constants.Database);
                                 }
                             }
                         }
@@ -160,7 +160,7 @@ namespace BL.Servers.CR.Core
 
                 Debug.WriteLine("[SOCKET] Executed at " + DateTime.Now.ToString("T") + ".");
 
-                foreach (Device Device in Resources.Devices.Values.ToList())
+                foreach (Device Device in Server_Resources.Devices.Values.ToList())
                 {
                     if (!Device.Connected())
                     {
@@ -172,7 +172,7 @@ namespace BL.Servers.CR.Core
 
                 foreach (Device Device in DeadSockets)
                 {
-                    Resources.Gateway.Disconnect(Device.Token.Args);
+                    Server_Resources.Gateway.Disconnect(Device.Token.Args);
                 }
 
                 Debug.WriteLine("[SOCKET] Finished at " + DateTime.Now.ToString("T") + ".");

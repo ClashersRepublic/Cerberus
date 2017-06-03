@@ -17,9 +17,9 @@ namespace BL.Servers.CR.Packets.Messages.Server
 
         internal override void Process()
         {
-            this.Device.PlayerState = Logic.Enums.State.DISCONNECTED;
+            this.Device.PlayerState = Logic.Enums.Client_State.DISCONNECTED;
 
-            Resources.Gateway.Disconnect(this.Device.Token.Args);
+            Server_Resources.Gateway.Disconnect(this.Device.Token.Args);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace BL.Servers.CR.Logic.Enums
 {
-    public enum State
+    public enum Client_State
     {
         DISCONNECTED = 0,
         SESSION = 1,

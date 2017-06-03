@@ -4,10 +4,13 @@ using BL.Servers.CR.Extensions;
 namespace BL.Servers.CR.Database
 {
     using StackExchange.Redis;
+    using System;
     using Database = Logic.Enums.Database;
 
-    internal class Redis
+    internal class Redis : IDisposable
     {
+        internal bool _Disposed = false;
+
         internal static IDatabase Players;
         internal static IDatabase Clans;
         internal static IDatabase ClanWars;
@@ -28,6 +31,30 @@ namespace BL.Servers.CR.Database
             Redis.Clans    = Connection.GetDatabase((int) Database.Clans);
 
             Loggers.Log("Redis Database has been succesfully loaded.", true);
+        }
+
+        ~Redis()
+        {
+            this.Dispose(false);
+        }
+
+        protected virtual void Dispose(bool Disposing)
+        {
+            if (!_Disposed)
+            {
+                if (_Disposed)
+                {
+
+                }
+            }
+
+            _Disposed = true;
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

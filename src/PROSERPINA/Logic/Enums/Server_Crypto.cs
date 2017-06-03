@@ -1,6 +1,6 @@
 ﻿namespace BL.Servers.CR.Logic.Enums
 {
-    internal enum Crypto
+    internal enum Server_Crypto
     {
         NONE = 0,
         SODIUM = 1,

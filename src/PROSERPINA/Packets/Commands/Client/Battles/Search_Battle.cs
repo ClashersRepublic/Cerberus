@@ -32,27 +32,27 @@ namespace BL.Servers.CR.Packets.Commands.Client.Battles
         {
             if (!Constants.BattlesDisabled)
             {
-                if (Resources.Battles.Waiting.Count == 0)
+                if (Server_Resources.Battles.Waiting.Count == 0)
                 {
-                    Resources.Battles.Enqueue(this.Device.Player);
+                    Server_Resources.Battles.Enqueue(this.Device.Player);
 
-                    this.Device.PlayerState = Logic.Enums.State.SEARCH_BATTLE;
+                    this.Device.PlayerState = Logic.Enums.Client_State.SEARCH_BATTLE;
 
                     new Matchmaking_Info(this.Device).Send();
                 }
                 else
                 {
-                    Player Enemy = Resources.Battles.Dequeue();
+                    Player Enemy = Server_Resources.Battles.Dequeue();
 
                     Battle Battle = new Battle(Enemy, this.Device.Player);
 
-                    Resources.Battles.Add(Battle);
+                    Server_Resources.Battles.Add(Battle);
 
                     Battle.Player1.BattleID = Battle.BattleID;
                     Battle.Player2.BattleID = Battle.BattleID;
 
-                    Battle.Player1.Device.PlayerState = Logic.Enums.State.IN_BATTLE;
-                    Battle.Player2.Device.PlayerState = Logic.Enums.State.IN_BATTLE;
+                    Battle.Player1.Device.PlayerState = Logic.Enums.Client_State.IN_BATTLE;
+                    Battle.Player2.Device.PlayerState = Logic.Enums.Client_State.IN_BATTLE;
 
                     // Player 1
                     new Sector_PC(Battle.Player1.Device)

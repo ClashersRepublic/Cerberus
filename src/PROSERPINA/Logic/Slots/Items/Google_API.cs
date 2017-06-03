@@ -14,7 +14,7 @@ using Google.Apis.Util.Store;
 
 namespace BL.Servers.CR.Logic.Slots.Items
 {
-    internal class Google
+    internal class Google_API
     {
         [JsonProperty("gg_id")] internal string Identifier;
         [JsonProperty("gg_token")] internal string Token;
@@ -23,12 +23,12 @@ namespace BL.Servers.CR.Logic.Slots.Items
         internal GamesService OClient;
         internal Player Player;
 
-        public Google()
+        public Google_API()
         {
             
         }
 
-        public Google(Player Avatar)
+        public Google_API(Player Avatar)
         {
             this.Player = Player;
 

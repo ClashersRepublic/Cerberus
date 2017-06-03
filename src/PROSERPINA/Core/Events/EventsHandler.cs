@@ -20,7 +20,7 @@ namespace BL.Servers.CR.Core.Events
     {
         internal static EventHandler EHandler;
 
-        internal delegate void EventHandler(Logic.Enums.Exits Type = Logic.Enums.Exits.CTRL_CLOSE_EVENT);
+        internal delegate void EventHandler(Logic.Enums.Exit_Options Type = Logic.Enums.Exit_Options.CTRL_CLOSE_EVENT);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventsHandler"/> class.
@@ -40,35 +40,35 @@ namespace BL.Servers.CR.Core.Events
 
             try
             {
-                List<Logic.Player> Players = Resources.Players.Values.ToList();
+                List<Logic.Player> Players = Server_Resources.Players.Values.ToList();
 
-                lock (Resources.Players.Gate)
+                lock (Server_Resources.Players.Gate)
                 {
-                    if (Resources.Players.Count > 0)
+                    if (Server_Resources.Players.Count > 0)
                     {
                         Parallel.ForEach(Players, (_Player) =>
                         {
                             if (_Player != null)
                             {
-                                Resources.Players.Remove(_Player);
-                                Redis.Players.KeyDelete(_Player.UserId.ToString());
+                                Server_Resources.Players.Remove(_Player);
+                                Redis.Players.KeyDeleteAsync(_Player.UserId.ToString());
                             }
                         });
                     }
                 }
 
-                List<Logic.Clan> Clans = Resources.Clans.Values.ToList();
+                List<Logic.Clan> Clans = Server_Resources.Clans.Values.ToList();
 
-                lock (Resources.Clans.Gate)
+                lock (Server_Resources.Clans.Gate)
                 {
-                    if (Resources.Clans.Count > 0)
+                    if (Server_Resources.Clans.Count > 0)
                     {
                         Parallel.ForEach(Clans, (_Clan) =>
                         {
                             if (_Clan != null)
                             {
-                                Resources.Clans.Remove(_Clan);
-                                Redis.Players.KeyDelete(_Clan.ClanID.ToString());
+                                Server_Resources.Clans.Remove(_Clan);
+                                Redis.Players.KeyDeleteAsync(_Clan.ClanID.ToString());
                             }
                         });
                     }
@@ -78,11 +78,11 @@ namespace BL.Servers.CR.Core.Events
             }
             catch (Exception Exception)
             {
-                Resources.Exceptions.Catch(Exception);
+                Server_Resources.Exceptions.Catch(Exception);
             }
         }
 
-        internal void Handler(Logic.Enums.Exits Type = Logic.Enums.Exits.CTRL_CLOSE_EVENT)
+        internal void Handler(Logic.Enums.Exit_Options Type = Logic.Enums.Exit_Options.CTRL_CLOSE_EVENT)
         {
             Console.WriteLine("The program is closing");
             this.ExitHandler();

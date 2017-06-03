@@ -7,9 +7,11 @@ namespace BL.Servers.CR.Files
     using System.Collections.Generic;
     using BL.Servers.CR.Files.CSV_Reader;
 
-    internal class CSV
+    internal class CSV : IDisposable
     {
         internal static readonly Dictionary<int, string> Gamefiles = new Dictionary<int, string>();
+
+        internal bool _Disposed = false;
 
         internal static Gamefiles Tables;
         internal CSV()
@@ -60,8 +62,7 @@ namespace BL.Servers.CR.Files
             CSV.Gamefiles.Add(44, @"Gamefiles/csv_logic/tutorials_npc.csv");
 
             CSV.Tables = new Gamefiles();
-    
-            //foreach (var File in CSV.Gamefiles)
+
             Parallel.ForEach(CSV.Gamefiles, File =>
             {
                 if (new System.IO.FileInfo(File.Value).Exists)
@@ -75,6 +76,33 @@ namespace BL.Servers.CR.Files
             });
             
             Console.WriteLine(CSV.Gamefiles.Count + " CSV Files, loaded and stored in memory.\n");
+        }
+
+        ~CSV()
+        {
+            this.Dispose(false);
+        }
+
+        protected virtual void Dispose(bool Disposing)
+        {
+            if (!_Disposed)
+            {
+                if (_Disposed)
+                {
+
+                }
+
+                CSV.Gamefiles.Clear();
+                CSV.Tables.DataTables.Clear();
+            }
+
+            _Disposed = true;
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

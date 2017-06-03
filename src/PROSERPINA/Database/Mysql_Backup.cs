@@ -8,17 +8,20 @@
     using BL.Servers.CR.Logic;
     using Newtonsoft.Json;
     using MySql.Data.MySqlClient;
+    using System.Runtime.InteropServices;
 
-    internal static class Mysql_Backup
+    internal class Mysql_Backup : IDisposable
     {
-        internal static JsonSerializerSettings Settings = new JsonSerializerSettings
+        internal bool _Disposed = false;
+
+        internal JsonSerializerSettings Settings = new JsonSerializerSettings
         {
             TypeNameHandling            = TypeNameHandling.Auto,            MissingMemberHandling   = MissingMemberHandling.Ignore,
             DefaultValueHandling        = DefaultValueHandling.Include,     NullValueHandling       = NullValueHandling.Ignore,
             PreserveReferencesHandling  = PreserveReferencesHandling.All,   ReferenceLoopHandling   = ReferenceLoopHandling.Ignore,
             Formatting                  = Formatting.Indented,              Converters              = { new Utils.ArrayReferencePreservngConverter() },
         };
-        internal static MySqlConnection Connections;
+        internal MySqlConnection Connections;
         internal static string Credentials;
 
         internal static long GetClanSeed()
@@ -85,6 +88,32 @@
                 Console.ReadKey();
             }
             return 0;
+        }
+
+        ~Mysql_Backup()
+        {
+            this.Dispose(false);
+        }
+
+        protected virtual void Dispose(bool Disposing)
+        {
+            if (!_Disposed)
+            {
+                if (_Disposed)
+                {
+                    
+                }
+
+                Connections.Dispose();
+            }
+
+            _Disposed = true;
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

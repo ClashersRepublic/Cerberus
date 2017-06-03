@@ -254,17 +254,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Clans.cs" />
+    <Compile Include="Core\API\Prefixer.cs" />
+    <Compile Include="Core\API\Request.cs" />
+    <Compile Include="Core\API\Requests\Request_Player.cs" />
+    <Compile Include="Core\API\WebAPI.cs" />
+    <Compile Include="Core\Server_Components\Clans.cs" />
     <Compile Include="Core\Classes.cs" />
     <Compile Include="Core\Consoles\Prefixed.cs" />
-    <Compile Include="Core\Devices.cs" />
+    <Compile Include="Core\Server_Components\Devices.cs" />
     <Compile Include="Core\Events\Parser.cs" />
     <Compile Include="Core\Events\Region.cs" />
     <Compile Include="Core\Exceptions.cs" />
     <Compile Include="Core\Loggers.cs" />
     <Compile Include="Core\Network\Processor.cs" />
     <Compile Include="Core\Network\TCP\Pool.cs" />
-    <Compile Include="Core\Players.cs" />
+    <Compile Include="Core\Server_Components\Players.cs" />
     <Compile Include="Core\Timers.cs" />
     <Compile Include="Core\Network\TCP\Gateway.cs" />
     <Compile Include="Database\Clan.cs">
@@ -278,7 +282,7 @@
     <Compile Include="Database\Mysql_Backup.cs" />
     <Compile Include="Core\Network\TCP\SocketAsyncEventArgsPool.cs" />
     <Compile Include="Core\Network\TCP\Token.cs" />
-    <Compile Include="Core\Resources.cs" />
+    <Compile Include="Core\Server_Resources.cs" />
     <Compile Include="Database\Player.cs">
       <DependentUpon>Mysql.tt</DependentUpon>
     </Compile>
@@ -348,30 +352,30 @@
     <Compile Include="Files\CSV_Reader\Table.cs" />
     <Compile Include="Files\Home.cs" />
     <Compile Include="Logic\Entry\Clan_Member_Entry.cs" />
-    <Compile Include="Logic\Enums\Crypto.cs" />
+    <Compile Include="Logic\Enums\Server_Crypto.cs" />
     <Compile Include="Logic\Enums\Rank.cs" />
     <Compile Include="Logic\Enums\Server_Mode.cs" />
     <Compile Include="Logic\Manager\Maintenance_Timer.cs" />
     <Compile Include="Logic\Slots\Achivements.cs" />
-    <Compile Include="Logic\Components\Battle.cs" />
+    <Compile Include="Logic\Components\Battle_Profile.cs" />
     <Compile Include="Logic\Components\Component.cs" />
     <Compile Include="Logic\Components\Profile.cs" />
     <Compile Include="Logic\Player.cs" />
     <Compile Include="Logic\Clan.cs" />
-    <Compile Include="Logic\Enums\CVersion.cs" />
+    <Compile Include="Logic\Enums\Server_Version.cs" />
     <Compile Include="Logic\Enums\Database.cs" />
     <Compile Include="Logic\Enums\DBMS.cs" />
     <Compile Include="Logic\Enums\Defcon.cs" />
-    <Compile Include="Logic\Enums\Exits.cs" />
+    <Compile Include="Logic\Enums\Exit_Options.cs" />
     <Compile Include="Logic\Enums\Gamefile.cs" />
-    <Compile Include="Logic\Enums\Hiring.cs" />
-    <Compile Include="Logic\Enums\Reason.cs" />
-    <Compile Include="Logic\Enums\Resource.cs" />
-    <Compile Include="Logic\Enums\Role.cs" />
-    <Compile Include="Logic\Enums\Save.cs" />
-    <Compile Include="Logic\Enums\State.cs" />
+    <Compile Include="Logic\Enums\Clan_Type.cs" />
+    <Compile Include="Logic\Enums\LoginFailed_Reason.cs" />
+    <Compile Include="Logic\Enums\Game_Resource.cs" />
+    <Compile Include="Logic\Enums\Alliance_Role.cs" />
+    <Compile Include="Logic\Enums\Save_Options.cs" />
+    <Compile Include="Logic\Enums\Client_State.cs" />
     <Compile Include="Logic\Enums\UnlockReason.cs" />
-    <Compile Include="Core\Battles.cs" />
+    <Compile Include="Core\Server_Components\Battles.cs" />
     <Compile Include="Logic\Slots\Chats.cs" />
     <Compile Include="Logic\Slots\Chests.cs" />
     <Compile Include="Logic\Slots\Decks.cs" />
@@ -380,8 +384,8 @@
     <Compile Include="Logic\Slots\Items\Card.cs" />
     <Compile Include="Logic\Slots\Items\Chest.cs" />
     <Compile Include="Logic\Slots\Items\Entry.cs" />
-    <Compile Include="Logic\Slots\Items\Facebook.cs" />
-    <Compile Include="Logic\Slots\Items\Google.cs" />
+    <Compile Include="Logic\Slots\Items\Facebook_API.cs" />
+    <Compile Include="Logic\Slots\Items\Google_API.cs" />
     <Compile Include="Logic\Slots\Items\Member.cs" />
     <Compile Include="Logic\Slots\Items\Resource.cs" />
     <Compile Include="Logic\Slots\Items\Slot.cs" />
@@ -400,7 +404,7 @@
     <Compile Include="Packets\Commands\Client\Tournaments\Create_Custom_Tournament.cs" />
     <Compile Include="Packets\Commands\Server\Chest\Buy_Chest_Callback.cs" />
     <Compile Include="Packets\Commands\Server\Name_Change_Callback.cs" />
-    <Compile Include="Packets\Crypto.cs" />
+    <Compile Include="Packets\Cryptography\Crypto.cs" />
     <Compile Include="Packets\Cryptography\Key.cs" />
     <Compile Include="Packets\Cryptography\RC4\RC4.cs" />
     <Compile Include="Packets\Cryptography\RC4\Scrambler.cs" />
@@ -424,7 +428,6 @@
     <Compile Include="Library\TweetNaCl\verify_16.cs" />
     <Compile Include="Library\TweetNaCl\xsalsa20.cs" />
     <Compile Include="Library\TweetNaCl\xsalsa20poly1305.cs" />
-    <Compile Include="Logic\Enums\Layouts.cs" />
     <Compile Include="Library\LZMA\Common\CommandLineParser.cs" />
     <Compile Include="Library\LZMA\Common\CRC.cs" />
     <Compile Include="Library\LZMA\Common\InBuffer.cs" />
@@ -553,10 +556,18 @@
     <None Include="Gamefiles\csv_client\particle_emitters.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Gamefiles\csv_client\sorted_regions\CNT_regions.csv" />
-    <None Include="Gamefiles\csv_client\sorted_regions\CN_regions.csv" />
-    <None Include="Gamefiles\csv_client\sorted_regions\JP_regions.csv" />
-    <None Include="Gamefiles\csv_client\sorted_regions\KR_regions.csv" />
+    <None Include="Gamefiles\csv_client\sorted_regions\CNT_regions.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Gamefiles\csv_client\sorted_regions\CN_regions.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Gamefiles\csv_client\sorted_regions\JP_regions.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Gamefiles\csv_client\sorted_regions\KR_regions.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Gamefiles\csv_client\sounds.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

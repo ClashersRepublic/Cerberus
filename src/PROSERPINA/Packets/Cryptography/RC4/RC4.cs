@@ -125,8 +125,8 @@ namespace BL.Servers.CR.Packets.Cryptography.RC4
 
         internal static byte[] GenerateNonce()
         {
-            var buffer = new byte[Core.Resources.Random.Next(15, 25)];
-            Core.Resources.Random.NextBytes(buffer);
+            var buffer = new byte[Core.Server_Resources.Random.Next(15, 25)];
+            Core.Server_Resources.Random.NextBytes(buffer);
             return buffer;
         }
 

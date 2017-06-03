@@ -32,20 +32,20 @@ namespace BL.Servers.CR.Extensions
 
         public static byte[] CreateRandomByteArray()
         {
-            var buffer = new byte[Core.Resources.Random.Next(20)];
-            Core.Resources.Random.NextBytes(buffer);
+            var buffer = new byte[Core.Server_Resources.Random.Next(20)];
+            Core.Server_Resources.Random.NextBytes(buffer);
             return buffer;
         }
 
         public static string RandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789`~!@#$%^&*()-_=+{[]}:;'<,.>/?";
-            return new string(Enumerable.Repeat(chars, length).Select(s => s[Resources.Random.Next(s.Length)]).ToArray());
+            return new string(Enumerable.Repeat(chars, length).Select(s => s[Server_Resources.Random.Next(s.Length)]).ToArray());
         }
         internal static byte[] CreateByteArray(int lenght)
         {
             byte[] buffer = new byte[lenght];
-            Resources.Random.NextBytes(buffer);
+            Server_Resources.Random.NextBytes(buffer);
             return buffer;
         }
 
@@ -86,7 +86,7 @@ namespace BL.Servers.CR.Extensions
             var n = array.Length;
             while (n > 1)
             {
-                var k = Resources.Random.Next(n--);
+                var k = Server_Resources.Random.Next(n--);
                 var temp = array[n];
                 array[n] = array[k];
                 array[k] = temp;

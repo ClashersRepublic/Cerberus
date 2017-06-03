@@ -41,7 +41,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
 
             if (this.UnlockCode.Length != 12 || string.IsNullOrEmpty(this.UnlockCode))
             {
-                Resources.Devices.Remove(this.Device);
+                Server_Resources.Devices.Remove(this.Device);
                 return;
             }
 
@@ -49,7 +49,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Authentication
             {
                 if (int.TryParse(this.UnlockCode.Substring(1), out int n))
                 {
-                    var account = Resources.Players.Get(n);
+                    var account = Server_Resources.Players.Get(n);
                     if (account != null)
                     {
                         account.Locked = true;

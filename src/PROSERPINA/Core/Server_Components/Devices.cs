@@ -28,11 +28,11 @@
         {
             if (Device.Player != null)
             {
-                if (Resources.Players.ContainsValue(Device.Player))
+                if (Server_Resources.Players.ContainsValue(Device.Player))
                 {
-                    if (Resources.Players.ContainsValue(Device.Player))
+                    if (Server_Resources.Players.ContainsValue(Device.Player))
                     {
-                        Resources.Players.Remove(Device.Player);
+                        Server_Resources.Players.Remove(Device.Player);
                     }
                 }
             }

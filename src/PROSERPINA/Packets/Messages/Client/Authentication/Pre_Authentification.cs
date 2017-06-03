@@ -23,7 +23,7 @@
 
         public Pre_Authentification(Device Device, Reader Reader) : base(Device, Reader)
         {
-            this.Device.PlayerState = State.SESSION;
+            this.Device.PlayerState = Client_State.SESSION;
         }
 
         internal override void Decode()
@@ -42,30 +42,16 @@
         {
             if (string.Equals(this.Hash, Fingerprint.Sha))
             {
-                if (this.Major == (int)CVersion.Major && this.Minor == (int)CVersion.Minor)
+                if (this.Major == (int)Server_Version.Major && this.Minor == (int)Server_Version.Minor)
                 {
-                    if (!Constants.Maintenance_Enabled)
-                    {
-                        new Pre_Authentification_OK(Device).Send();
-                    }
-                    else
-                        new Authentification_Failed(Device, Reason.Maintenance).Send();
+                    new Pre_Authentification_OK(Device).Send();
                 }
                 else
-                    new Authentification_Failed(Device, Reason.Update).Send();
+                    new Authentification_Failed(Device, LoginFailed_Reason.Update).Send();
             }
             else
             {
-                Console.WriteLine(this.Major);
-                Console.WriteLine(this.Revision);
-                Console.WriteLine(this.Minor);
-
-                Console.WriteLine(this.Hash);
-                Console.WriteLine(Fingerprint.Sha);
-
-                Console.WriteLine("Patching client..");
-
-                new Authentification_Failed(this.Device, Reason.Patch).Send();
+                new Authentification_Failed(this.Device, LoginFailed_Reason.Patch).Send();
             }
         }
     }

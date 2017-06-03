@@ -1,7 +1,7 @@
 ﻿using System;
 using BL.Servers.CR.Packets;
 
-namespace BL.Servers.CR.Core
+namespace BL.Servers.CR.Core.Server_Components
 {
     using System.Collections.Generic;
     using BL.Servers.CR.Database;
@@ -9,6 +9,7 @@ namespace BL.Servers.CR.Core
     using BL.Servers.CR.Logic;
     using BL.Servers.CR.Logic.Enums;
     using Newtonsoft.Json;
+    using BL.Servers.CR.Core;
 
     internal class Players : Dictionary<long, Logic.Player>
     {
@@ -54,32 +55,32 @@ namespace BL.Servers.CR.Core
 
             if (Player.Device != null)
             {
-                if (Resources.Devices.ContainsKey(Player.Device.SocketHandle))
+                if (Server_Resources.Devices.ContainsKey(Player.Device.SocketHandle))
                 {
-                    Resources.Devices.Remove(Player.Device);
+                    Server_Resources.Devices.Remove(Player.Device);
                     Player.Device = null;
                 }
             }
         }
 
-        internal Logic.Player Get(long UserId, DBMS DBMS = Constants.Database, bool Store = true)
+        internal Player Get(long UserId, DBMS DBMS = Constants.Database, bool Store = true)
         {
             if (!this.ContainsKey(UserId))
             {
-                Logic.Player Player = null;
+                Player Player = null;
 
                 switch (DBMS)
                 {
                     case DBMS.MySQL:
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            BL.Servers.CR.Database.Player Data = Database.Player.Find(UserId);
+                            PlayerDB Data = Database.PlayerDB.Find(UserId);
 
                             if (!string.IsNullOrEmpty(Data?.Data))
                             {
                                 if (!string.IsNullOrEmpty(Data?.Data))
                                 {
-                                    Player = JsonConvert.DeserializeObject<Logic.Player>(Data.Data, this.Settings);
+                                    Player = JsonConvert.DeserializeObject<Player>(Data.Data, this.Settings);
 
                                     if (Store)
                                     {
@@ -119,27 +120,27 @@ namespace BL.Servers.CR.Core
             return this[UserId];
         }
 
-        internal Logic.Player New(long UserId = 0, DBMS DBMS = Constants.Database, bool Store = true)
+        internal Player New(long UserId = 0, DBMS DBMS = Constants.Database, bool Store = true)
         {
-            Logic.Player Player = null;
+            Player Player = null;
 
             if (UserId == 0)
             {
                 lock (this.Gate)
                 {
-                    Player = new Logic.Player(null, this.Seed++);
+                    Player = new Player(null, this.Seed++);
                 }
             }
             else
             {
-                Player = new Logic.Player(null, UserId);
+                Player = new Player(null, UserId);
             }
 
             if (string.IsNullOrEmpty(Player.Token))
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    char Letter = (char) Resources.Random.Next('A', 'Z');
+                    char Letter = (char)Server_Resources.Random.Next('A', 'Z');
                     Player.Token += Letter;
                 }
             }
@@ -147,8 +148,8 @@ namespace BL.Servers.CR.Core
             {
                 for (int i = 0; i < 6; i++)
                 {
-                    char Letter = (char) Resources.Random.Next('A', 'Z');
-                    char Number = (char) Resources.Random.Next('1', '9');
+                    char Letter = (char)Server_Resources.Random.Next('A', 'Z');
+                    char Number = (char)Server_Resources.Random.Next('1', '9');
                     Player.Password += Letter;
                     Player.Password += Number;
                 }
@@ -165,7 +166,7 @@ namespace BL.Servers.CR.Core
 
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.Player.Add(new BL.Servers.CR.Database.Player
+                            Database.PlayerDB.Add(new BL.Servers.CR.Database.PlayerDB
                             {
                                 ID = Player.UserId,
                                 Data = JsonConvert.SerializeObject(Player, this.Settings)
@@ -223,7 +224,7 @@ namespace BL.Servers.CR.Core
 
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            var Data = Database.Player.Find(Player.UserId);
+                            var Data = Database.PlayerDB.Find(Player.UserId);
 
                             if (Data != null)
                             {

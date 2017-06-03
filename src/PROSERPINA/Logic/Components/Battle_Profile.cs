@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BL.Servers.CR.Logic.Components
 {
-    internal class Battle
+    internal class Battle_Profile
     {
         internal Player Player;
 
-        internal Battle(Player Player)
+        internal Battle_Profile(Player Player)
         {
             this.Player = Player;
         }

@@ -20,7 +20,7 @@ namespace BL.Servers.CR.Logic
 
         [JsonProperty("clan_badge")] internal int Badge;
 
-        [JsonProperty("clan_type")] internal Hiring Type = Hiring.OPEN;
+        [JsonProperty("clan_type")] internal Clan_Type Type = Clan_Type.OPEN;
 
         [JsonProperty("req_score")] internal int Required_Score;
 

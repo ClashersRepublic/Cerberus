@@ -45,9 +45,9 @@ namespace BL.Servers.CR.Core.Events
                             Console.WriteLine();
                             Console.WriteLine("#" + DateTime.Now.ToString("d") + " ---- STATS ---- " + DateTime.Now.ToString("T") + " #");
                             Console.WriteLine("# ----------------------------------- #");
-                            Console.WriteLine("# In-Memory Players  # " + Utils.Padding(Resources.Players.Count + " - " + Constants.MaxPlayers, 14) + " #");
-                            Console.WriteLine("# In-Memory Waiting  # " + Utils.Padding(Resources.Battles.Waiting.Count.ToString(), 14) + " #");
-                            Console.WriteLine("# In-Memory SAEA     # " + Utils.Padding(Resources.Gateway.ReadPool.Pool.Count + " - " + Resources.Gateway.WritePool.Pool.Count, 14) + " #");
+                            Console.WriteLine("# In-Memory Players  # " + Utils.Padding(Server_Resources.Players.Count + " - " + Constants.MaxPlayers, 14) + " #");
+                            Console.WriteLine("# In-Memory Waiting  # " + Utils.Padding(Server_Resources.Battles.Waiting.Count.ToString(), 14) + " #");
+                            Console.WriteLine("# In-Memory SAEA     # " + Utils.Padding(Server_Resources.Gateway.ReadPool.Pool.Count + " - " + Server_Resources.Gateway.WritePool.Pool.Count, 14) + " #");
                             Console.WriteLine("# ----------------------------------- #");
                             break;
                         }
@@ -68,8 +68,8 @@ namespace BL.Servers.CR.Core.Events
 
                                             if (Int32.TryParse(Console.ReadLine(), out int i))
                                             {
-                                                Resources.Classes.Checker.Maintenance(i);
-                                                Resources.Classes.Checker.LTimers[4].Start();
+                                                Server_Resources.Classes.Checker.Maintenance(i);
+                                                Server_Resources.Classes.Checker.LTimers[4].Start();
                                             }
                                             else
                                                 Console.WriteLine("Value is invalid, Request cancelled");
@@ -100,10 +100,10 @@ namespace BL.Servers.CR.Core.Events
                             {
                                 Constants.Maintenance_Timer = null;
 
-                                Resources.Classes.Checker.LTimers[4].Stop();
-                                Resources.Classes.Checker.LTimers[5].Stop();
-                                Resources.Classes.Checker.LTimers.Remove(4);
-                                Resources.Classes.Checker.LTimers.Remove(5);
+                                Server_Resources.Classes.Checker.LTimers[4].Stop();
+                                Server_Resources.Classes.Checker.LTimers[5].Stop();
+                                Server_Resources.Classes.Checker.LTimers.Remove(4);
+                                Server_Resources.Classes.Checker.LTimers.Remove(5);
 
                                 Console.WriteLine("# " + DateTime.Now.ToString("d") + " ---- Exited Maintanance Mode---- " + DateTime.Now.ToString("T") + " #");
                             }
@@ -131,26 +131,26 @@ namespace BL.Servers.CR.Core.Events
 
                     case ConsoleKey.R:
                         {
-                            foreach (var _Device in Resources.Devices.Values.ToList())
+                            foreach (var _Device in Server_Resources.Devices.Values.ToList())
                             {
                                 if (_Device.Player != null)
                                 {
                                     new Out_Of_Sync(_Device).Send();
                                 }
-                                Resources.Gateway.Disconnect(_Device.Token.Args);
+                                Server_Resources.Gateway.Disconnect(_Device.Token.Args);
                             }
                             break;
                         }
 
                     case ConsoleKey.B:
                         {
-                            foreach (var _Device in Resources.Devices.Values.ToList())
+                            foreach (var _Device in Server_Resources.Devices.Values.ToList())
                             {
-                                if (_Device.Player != null && _Device.PlayerState == Logic.Enums.State.IN_BATTLE)
+                                if (_Device.Player != null && _Device.PlayerState == Logic.Enums.Client_State.IN_BATTLE)
                                 {
                                     new Battle_End(_Device.Player.Device).Send();
 
-                                    Resources.Battles.Remove(_Device.Player.BattleID);
+                                    Server_Resources.Battles.Remove(_Device.Player.BattleID);
 
                                     break;
                                 }

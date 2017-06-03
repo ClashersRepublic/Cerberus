@@ -17,7 +17,7 @@ namespace BL.Servers.CR.Logic.Entry
         internal Clan_Member_Entry(Player Player)
         {
             this.Player = Player;
-            this.Clan = Resources.Clans.Get(Player.ClanId);
+            this.Clan = Server_Resources.Clans.Get(Player.ClanId);
         }
 
         internal byte[] ToBytes

@@ -1,6 +1,6 @@
 ﻿namespace BL.Servers.CR.Logic.Enums
 {
-    public enum Reason
+    public enum LoginFailed_Reason
     {
         Default = 0,
         Reset = 1,

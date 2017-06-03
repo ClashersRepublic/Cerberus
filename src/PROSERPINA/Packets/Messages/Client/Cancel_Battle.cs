@@ -11,12 +11,12 @@ namespace BL.Servers.CR.Packets.Messages.Client
     {
         public Cancel_Battle(Device Device, Reader Reader) : base(Device, Reader)
         {
-            this.Device.PlayerState = Logic.Enums.State.LOGGED;
+            this.Device.PlayerState = Logic.Enums.Client_State.LOGGED;
         }
 
         internal override void Process()
         {
-            Resources.Battles.Dequeue(this.Device.Player);
+            Server_Resources.Battles.Dequeue(this.Device.Player);
 
             new Cancel_Battle_OK(Device).Send();
         }

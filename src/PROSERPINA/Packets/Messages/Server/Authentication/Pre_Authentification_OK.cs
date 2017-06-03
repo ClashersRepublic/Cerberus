@@ -14,7 +14,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
         internal Pre_Authentification_OK(Device Device) : base(Device)
         {
             this.Identifier = 20100;
-            this.Device.PlayerState = State.SESSION_OK;
+            this.Device.PlayerState = Client_State.SESSION_OK;
         }
 
         /// <summary>

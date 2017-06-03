@@ -38,7 +38,7 @@ namespace BL.Servers.CR.Logic.Slots
                 this.Initialize();
         }
 
-        internal int Gems => this.Get(Enums.Resource.Diamonds);
+        internal int Gems => this.Get(Enums.Game_Resource.Diamonds);
 
         internal int Get(int Gl_ID)
         {
@@ -50,7 +50,7 @@ namespace BL.Servers.CR.Logic.Slots
             return 0;
         }
 
-        internal int Get(Enums.Resource Gl_ID)
+        internal int Get(Enums.Game_Resource Gl_ID)
         {
             return this.Get(3000000 + (int) Gl_ID);
         }
@@ -64,7 +64,7 @@ namespace BL.Servers.CR.Logic.Slots
             else this.Add(new Items.Resource(Gl_ID, Count));
         }
 
-        internal void Set(Enums.Resource Resource, int Count)
+        internal void Set(Enums.Game_Resource Resource, int Count)
         {
             this.Set(3000000 + (int)Resource, Count);
         }
@@ -78,7 +78,7 @@ namespace BL.Servers.CR.Logic.Slots
             else this.Add(new Items.Resource(Gl_ID, Count));
         }
 
-        internal void Plus(Enums.Resource Resource, int Count)
+        internal void Plus(Enums.Game_Resource Resource, int Count)
         {
             this.Plus(3000000 + (int) Resource, Count);
         }
@@ -97,7 +97,7 @@ namespace BL.Servers.CR.Logic.Slots
             return false;
         }
 
-        internal void Minus(Enums.Resource _Resource, int _Value)
+        internal void Minus(Enums.Game_Resource _Resource, int _Value)
         {
             int Index = this.FindIndex(T => T.Identifier == 3000000 + (int) _Resource);
 
@@ -126,17 +126,17 @@ namespace BL.Servers.CR.Logic.Slots
 
         internal void Initialize()
         {
-            this.Set(Enums.Resource.Diamonds, Utils.ParseConfigInt("startingGems"));
-            this.Set(Enums.Resource.Gold, Utils.ParseConfigInt("startingGold"));
-            this.Set(Enums.Resource.Chest_Index, 0);
-            this.Set(Enums.Resource.Chest_Count, 0);
-            this.Set(Enums.Resource.Free_Gold, 0);
-            this.Set(Enums.Resource.Max_Trophies, 0);
-            this.Set(Enums.Resource.Card_Count, 0);
-            this.Set(Enums.Resource.Donations, 0);
-            this.Set(Enums.Resource.Reward_Gold, 0);
-            this.Set(Enums.Resource.Reward_Count, 0);
-            this.Set(Enums.Resource.Shop_Day_Count, 0);
+            this.Set(Enums.Game_Resource.Diamonds, Utils.ParseConfigInt("startingGems"));
+            this.Set(Enums.Game_Resource.Gold, Utils.ParseConfigInt("startingGold"));
+            this.Set(Enums.Game_Resource.Chest_Index, 0);
+            this.Set(Enums.Game_Resource.Chest_Count, 0);
+            this.Set(Enums.Game_Resource.Free_Gold, 0);
+            this.Set(Enums.Game_Resource.Max_Trophies, 0);
+            this.Set(Enums.Game_Resource.Card_Count, 0);
+            this.Set(Enums.Game_Resource.Donations, 0);
+            this.Set(Enums.Game_Resource.Reward_Gold, 0);
+            this.Set(Enums.Game_Resource.Reward_Count, 0);
+            this.Set(Enums.Game_Resource.Shop_Day_Count, 0);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
         {
             this.Identifier = 20104;
             this.Version = 1;
-            this.Device.PlayerState = State.LOGGED;
+            this.Device.PlayerState = Client_State.LOGGED;
         }
 
         internal override void Encode()
@@ -74,7 +74,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
         }
         internal override void EncryptSodium()
         {
-            if (this.Device.PlayerState >= State.LOGIN)
+            if (this.Device.PlayerState >= Client_State.LOGIN)
             {
                 Blake2BHasher Blake = new Blake2BHasher();
 

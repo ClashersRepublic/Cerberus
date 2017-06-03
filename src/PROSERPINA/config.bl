@@ -6,17 +6,11 @@
 
   <!-- ____________________________________ SERVER SETTINGS ____________________________________ -->
 
-  <add key="MaintenanceEnabled" value="false" />
-  <!-- If the server should send a LoginFailed (maintenance) upon LoginMessage -->
-
   <add key="BattlesDisabled" value="false" />
   <!-- If the server should use allow users to enter the queue and battle -->
 
-  <add key="CustomPatch" value="false" />
-  <!-- If the server should use custom patchs -->
-
   <!-- ____________________________________ DATABASE SETTINGS ____________________________________ -->
-  <add key="RedisIPAddress" value="database.barbarianland.xyz" />
+  <add key="RedisIPAddress" value="localhost" />
   <!-- Redis server IP address-->
   <add key="RedisPort" value="6379" />
   <!--  Redis server port-->
@@ -27,7 +21,7 @@
   <!-- MySql IP Address -->
   <add key="MysqlPort" value="3306" />
   <!-- MySql Username -->
-  <add key="MysqlUsername" value="CrayCray" />
+  <add key="MysqlUsername" value="root" />
   <!-- MySql Username -->
   <add key="MysqlPassword" value="WR29rusb" />
   <!--  MySql server password-->

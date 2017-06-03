@@ -6,12 +6,16 @@ namespace BL.Servers.CR
     using BL.Servers.CR.Core;
     using BL.Servers.CR.Core.Consoles;
     using BL.Servers.CR.Extensions;
+    using System.Threading.Tasks;
 
     internal class Program
     {
         internal static Stopwatch Stopwatch = Stopwatch.StartNew();
 
         internal static void Main()
+            => new Program().Start().GetAwaiter().GetResult();
+
+        public async Task Start()
         {
 #if DEBUG
             Console.Title = $"[DEBUG] BarbarianLand Royale Server - © BarbarianLand Development [Session ID: " + Utils.GetSessionID() + "]";
@@ -41,11 +45,12 @@ namespace BL.Servers.CR
             Console.WriteLine(@"BarbarianLand does NOT own 'Clash of Clans', 'Boom Beach', 'Clash Royale', 'Hayday', and 'Gunshine'.");
 
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
-            Resources.Initialize();
+
+            Server_Resources.Initialize();
 
             Console.WriteLine(@"-------------------------------------" + Environment.NewLine);
 
-            while (true);
+            await Task.Delay(-1);
         }
     }
 }

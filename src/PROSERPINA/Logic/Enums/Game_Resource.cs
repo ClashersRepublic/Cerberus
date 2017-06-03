@@ -1,6 +1,6 @@
 ﻿namespace BL.Servers.CR.Logic.Enums
 {
-    public enum Resource
+    public enum Game_Resource
     {
         Diamonds,
         Gold,

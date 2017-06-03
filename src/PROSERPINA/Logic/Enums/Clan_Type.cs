@@ -1,6 +1,6 @@
 ﻿namespace BL.Servers.CR.Logic.Enums
 {
-    public enum Hiring
+    public enum Clan_Type
     {
         OPEN = 0,
         CLOSED = 1,

@@ -11,7 +11,7 @@ using BL.Servers.CR.Files.CSV_Logic;
 using BL.Servers.CR.Logic;
 using BL.Servers.CR.Logic.Enums;
 using BL.Servers.CR.Packets.Messages.Server.Alliance;
-using Resources = BL.Servers.CR.Core.Resources;
+using Server_Resources = BL.Servers.CR.Core.Server_Resources;
 
 namespace BL.Servers.CR.Packets.Messages.Client.Alliance
 {
@@ -25,7 +25,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Alliance
         internal int Required_Score = 0;
         internal int Type = 0;
 
-        internal Clan Clan = Resources.Clans.New(0, Constants.Database, true);
+        internal Clan Clan = Server_Resources.Clans.New(0, Constants.Database, true);
 
         public Request_Create_Alliance(Device Device, Reader Reader) : base(Device, Reader)
         {
@@ -37,7 +37,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Alliance
             this.Clan.Description = this.Reader.ReadString();
             this.Reader.ReadVInt();
             this.Clan.Badge = this.Reader.ReadVInt();
-            this.Clan.Type = (Hiring)this.Reader.ReadVInt();
+            this.Clan.Type = (Clan_Type)this.Reader.ReadVInt();
             this.Clan.Required_Score = this.Reader.ReadVInt();
             this.Reader.ReadVInt();
             this.Clan.Origin = this.Reader.ReadVInt();
@@ -47,9 +47,9 @@ namespace BL.Servers.CR.Packets.Messages.Client.Alliance
         {
             int Cost = (CSV.Tables.Get(Gamefile.Globals).GetData("ALLIANCE_CREATE_COST") as Globals).NumberValue;
 
-            if (this.Device.Player.HasEnoughResources(Resource.Gold, Cost))
+            if (this.Device.Player.HasEnoughResources(Game_Resource.Gold, Cost))
             {
-                this.Device.Player.Resources.Minus(Resource.Gold, Cost);
+                this.Device.Player.Resources.Minus(Game_Resource.Gold, Cost);
 
                 this.Device.Player.ClanId = this.Clan.ClanID;
 
@@ -58,7 +58,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Alliance
                 new Response_Create_Alliance(this.Device, this.Clan, 142, true).Send();
             }
 
-            Resources.Clans.Save(this.Clan);
+            Server_Resources.Clans.Save(this.Clan);
         }
     }
 }

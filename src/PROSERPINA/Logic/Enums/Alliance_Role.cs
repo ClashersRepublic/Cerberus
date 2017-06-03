@@ -1,6 +1,6 @@
 ﻿namespace BL.Servers.CR.Logic.Enums
 {
-    public enum Role
+    public enum Alliance_Role
     {
         Member = 1,
         Leader = 2,
