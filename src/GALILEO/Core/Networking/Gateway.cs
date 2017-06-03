@@ -314,7 +314,7 @@ namespace BL.Servers.CoC.Core.Networking
                 }
                 catch (Exception ex)
                 {
-                    //ExceptionLogger.Log(ex, "Exception while starting receive");
+                    Resources.Exceptions.Catch(ex, "Exception while starting receive");
                 }
             }
         }
@@ -346,7 +346,7 @@ namespace BL.Servers.CoC.Core.Networking
                 }
                 catch (Exception ex)
                 {
-                    //ExceptionLogger.Log(ex, "Exception while processing send");
+                    Resources.Exceptions.Catch(ex, "Exception while processing send");
                 }
             }
             /*while (true)

@@ -35,9 +35,10 @@ namespace BL.Servers.CoC.Core.Networking
 
         internal void SetData()
         {
-            byte[] Data = new byte[this.Args.BytesTransferred];
-            Array.Copy(this.Args.Buffer, 0, Data, 0, this.Args.BytesTransferred);
-            this.Packet.AddRange(Data);
+            var buffer = this.Args.Buffer;
+            var offset = this.Args.Offset;
+            for (int i = 0; i < this.Args.BytesTransferred; i++)
+                this.Packet.Add(buffer[offset + i]);
         }
 
         internal void Process()

@@ -9,6 +9,7 @@ using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Packets.Messages.Server.Errors;
+using SharpRaven.Data;
 
 namespace BL.Servers.CoC.Packets.Messages.Client
 {
@@ -34,7 +35,9 @@ namespace BL.Servers.CoC.Packets.Messages.Client
             this.Count = this.Reader.ReadInt32();
 
             this.STick += (int)Math.Floor(DateTime.UtcNow.Subtract(this.Device.Player.Avatar.LastTick).TotalSeconds * 20);
+#if DEBUG
             this.LCommands = new List<Command>((int)this.Count);
+#endif
             this.Commands = this.Reader.ReadBytes((int)(this.Reader.BaseStream.Length - this.Reader.BaseStream.Position));
         }
 
@@ -67,8 +70,10 @@ namespace BL.Servers.CoC.Packets.Messages.Client
 
 
             if (this.Device.State == Logic.Enums.State.IN_PC_BATTLE)
-                Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database).Battle_Tick = (int)this.CTick;
-            if (this.Count > -1 && this.Count <= 400)
+                Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database).Battle_Tick =
+                    (int) this.CTick;
+        
+            if (this.Count > -1 && this.Count <= Constants.MaxCommand)
             {
                 this.Device.Player.Tick();
                 using (Reader Reader = new Reader(this.Commands))
@@ -89,8 +94,9 @@ namespace BL.Servers.CoC.Packets.Messages.Client
 #endif
                                 Command.Decode();
                                 Command.Process();
-
+#if DEBUG
                                 this.LCommands.Add(Command);
+#endif
                             }
                         }
                         else
@@ -108,7 +114,8 @@ namespace BL.Servers.CoC.Packets.Messages.Client
             }
             else
             {
-                //new OutOfSyncMessage(this.Device).Send();
+                Resources.Exceptions.RavenClient.Capture(new SentryEvent($"Count value is weird {this.Count}"));
+                new Out_Of_Sync(this.Device).Send();
             }
         }
     }

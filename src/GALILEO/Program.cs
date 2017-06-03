@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using BL.Servers.CoC.Core;
 using BL.Servers.CoC.Core.Database;
@@ -54,7 +55,6 @@ namespace BL.Servers.CoC
 #endif*/
             Resources.Initialize();
 
-            Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is sponsored by GobelinLand");
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
             Thread.Sleep(Timeout.Infinite);
 

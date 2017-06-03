@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>BL.Servers.CoC</RootNamespace>
     <AssemblyName>BarbarianLand Clash Server</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -39,6 +39,7 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>7</LangVersion>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,6 +50,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>7</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Server.ico</ApplicationIcon>
@@ -430,8 +432,8 @@
     <Compile Include="Packets\Commands\Server\Name_Change_Callback.cs" />
     <Compile Include="Packets\Commands\Server\Receive_Troop_Callback.cs" />
     <Compile Include="Packets\Commands\Server\Role_Update.cs" />
-    <Compile Include="Packets\Cryptography\RC4.cs" />
-    <Compile Include="Packets\Cryptography\Scrambler.cs" />
+    <Compile Include="Packets\Cryptography\RC4\RC4.cs" />
+    <Compile Include="Packets\Cryptography\RC4\Scrambler.cs" />
     <Compile Include="Packets\Debug.cs" />
     <Compile Include="Packets\DebugFactory.cs" />
     <Compile Include="Packets\Messages\Client\Add_Global_Chat.cs" />
@@ -442,7 +444,7 @@
     <Compile Include="Packets\Messages\Client\Authentication\Authentication.cs" />
     <Compile Include="Packets\Messages\Client\Authentication\Pre_Authentication.cs" />
     <Compile Include="Packets\Messages\Client\Authentication\Unlock_Account.cs" />
-    <Compile Include="Packets\Crypto.cs" />
+    <Compile Include="Packets\Cryptography\Crypto.cs" />
     <Compile Include="Packets\Cryptography\Key.cs" />
     <Compile Include="Packets\Message.cs" />
     <Compile Include="Packets\MessageFactory.cs" />
@@ -514,7 +516,6 @@
     <Compile Include="Packets\Messages\Server\Own_Home_Data.cs" />
     <Compile Include="Packets\Messages\Server\Server_Commands.cs" />
     <Compile Include="Packets\Messages\Server\Visit_Home_Data.cs" />
-    <Compile Include="Packets\Cryptography\RC4Core.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Database\Mysql.Context.cs">

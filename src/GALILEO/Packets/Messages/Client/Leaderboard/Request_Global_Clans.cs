@@ -20,10 +20,10 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Leaderboard
 
         internal override void Process()
         {
-            if (this.Unknown == 0)
+            /*if (this.Unknown == 0)
                 new Global_Clans(this.Device).Send();
             else
-                new Local_Clans(this.Device).Send();
+                new Local_Clans(this.Device).Send();*/
         }
     }
 }

@@ -17,7 +17,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Leaderboard
 
         internal override void Process()
         {
-            new Local_Clans(this.Device).Send();
+            //new Local_Clans(this.Device).Send();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace BL.Servers.CoC.Core
 {
     internal class Global_Chat : List<List_Devices>
     {
-        internal const int Max_Devices_In_Chat = 100;
+        internal const int Max_Devices_In_Chat = 200;
         internal const int Max_Chat = 1000;
 
         internal void Add(Device Device)

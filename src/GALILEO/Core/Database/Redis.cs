@@ -19,7 +19,7 @@ namespace BL.Servers.CoC.Core.Database
             Configuration.Password = Utils.ParseConfigString("RedisPassword");
             Configuration.ClientName = this.GetType().Assembly.FullName;
             Configuration.HighPrioritySocketThreads = true;
-            Configuration.SyncTimeout = (int)TimeSpan.FromSeconds(5).TotalMilliseconds;
+            Configuration.SyncTimeout = (int)TimeSpan.FromSeconds(7).TotalMilliseconds;
 
             ConnectionMultiplexer Connection = ConnectionMultiplexer.Connect(Configuration);
 

@@ -24,6 +24,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Battle
                 this.Data.AddRange(this.Device.Player.Avatar.ToBytes);
 
                 this.Data.AddInt(this.Npc_ID);
+                this.Data.AddByte(0);
             }
         }
 
