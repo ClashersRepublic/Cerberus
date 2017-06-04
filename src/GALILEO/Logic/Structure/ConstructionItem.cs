@@ -194,6 +194,33 @@ namespace BL.Servers.CoC.Logic.Structure
             return result;
         }
 
+        internal void FinishUnlocking()
+        {
+            this.IsConstructing = false;
+
+            if (Builder_Village)
+                this.Level.BuilderVillageWorkerManager.DeallocateWorker(this);
+            else
+                this.Level.VillageWorkerManager.DeallocateWorker(this);
+
+            this.Unlock();
+            if (GetResourceProductionComponent() != null)
+            {
+                GetResourceProductionComponent().Reset();
+            }
+
+            int constructionTime = GetConstructionItemData().GetConstructionTime(GetUpgradeLevel());
+            this.Level.Avatar.AddExperience((int)Math.Pow(constructionTime, 0.5f));
+            if (GetHeroBaseComponent(true) != null)
+            {
+                Buildings data = (Buildings)GetData();
+                Heroes hd = CSV.Tables.Get(Gamefile.Heroes).GetData(data.HeroType) as Heroes;
+                Level.Avatar.SetUnitUpgradeLevel(hd, 0);
+                Level.Avatar.SetHeroHealth(hd, 0);
+                Level.Avatar.SetHeroState(hd, 3);
+            }
+        }
+
         internal void FinishConstruction()
         {
             this.IsConstructing = false;
@@ -330,9 +357,7 @@ namespace BL.Servers.CoC.Logic.Structure
             this.X = (int) vector.X;
             this.Y = (int) vector.Y;
             this.Builder_Village = builder_village;
-            Console.WriteLine(instant);
             int constructionTime = instant ? 0 : GetConstructionItemData().GetConstructionTime(0);
-            Console.WriteLine(constructionTime);
             if (constructionTime < 1)
             {
                 FinishConstruction();
@@ -357,6 +382,27 @@ namespace BL.Servers.CoC.Logic.Structure
             if (constructionTime < 1)
             {
                 FinishConstruction();
+            }
+            else
+            {
+                this.IsConstructing = true;
+                this.Timer = new Timer();
+                this.Timer.StartTimer(this.Level.Avatar.LastTick, constructionTime);
+                if (Builder_Village)
+                    this.Level.BuilderVillageWorkerManager.AllocateWorker(this);
+                else
+                    this.Level.VillageWorkerManager.AllocateWorker(this);
+            }
+        }
+        [Obsolete] //Not Working ¯\_(ツ)_/¯
+        internal void StartUnlocking(bool builder_village)
+        {
+            this.Builder_Village = builder_village;
+            int constructionTime = GetConstructionItemData().GetConstructionTime(0);
+            Console.WriteLine(constructionTime);
+            if (constructionTime < 1)
+            {
+                FinishUnlocking();
             }
             else
             {
@@ -405,6 +451,9 @@ namespace BL.Servers.CoC.Logic.Structure
             {
                 if (this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick) <= 0)
                 {
+                    if (this.Locked)
+                        FinishUnlocking();
+                    else
                     FinishConstruction();
                 }
             }

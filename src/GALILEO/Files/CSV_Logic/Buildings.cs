@@ -222,8 +222,8 @@ namespace BL.Servers.CoC.Files.CSV_Logic
             if (BuildTimeS.Length > level + 1)
                 Total_Time += BuildTimeS[level];
 
-            return Total_Time;
-            //return BuildTimeS[level] + BuildTimeM[level] * 60 + BuildTimeH[level] * 60 * 60 + BuildTimeD[level] * 60 * 60 * 24;
+            //return Total_Time;
+            return BuildTimeS[level] + BuildTimeM[level] * 60 + BuildTimeH[level] * 3600 + BuildTimeD[level] * 86400;
         }
         public int GetUnitProduction(int level) => UnitProduction[level];
 

@@ -58,8 +58,6 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 #if DEBUG
                                 Loggers.Log(b.ClassId == 0 ? "Building" : "Builder Building" + $" : Upgrading {name} with ID {BuildingId}", true);
 #endif
-                                if (name == "Hero Altar Warmachine")
-                                    b.Unlock();
 
                                 if (bd.IsTownHall2())
                                 {

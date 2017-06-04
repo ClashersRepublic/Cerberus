@@ -76,6 +76,9 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
                     if (this.Device.Player.HasFreeBuilderVillageWorkers)
                     {
+                        var rd = bd.GetBuildResource(0);
+                        ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
+
                         b.StartConstructing(this.Vector, true);
                         this.Device.Player.GameObjectManager.AddGameObject(b);
                     }

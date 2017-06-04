@@ -1,5 +1,6 @@
 ﻿using BL.Servers.CoC.Core;
 using BL.Servers.CoC.Extensions.Binary;
+using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Files.CSV_Logic;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
@@ -48,6 +49,18 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                     ca.Castle_Level++;
                     ca.Castle_Total = al.GetUnitStorageCapacity(ca.Castle_Level);
                     ca.Castle_Total_SP = al.GetAltUnitStorageCapacity(ca.Castle_Level);
+                }
+                if (name == "Hero Altar Warmachine")
+                {
+
+                    if (b.GetHeroBaseComponent(true) != null)
+                    {
+                        Buildings data = (Buildings)b. GetData();
+                        Heroes hd = CSV.Tables.Get(Gamefile.Heroes).GetData(data.HeroType) as Heroes;
+                        this.Device.Player.Avatar.SetUnitUpgradeLevel(hd, 0);
+                        this.Device.Player.Avatar.SetHeroHealth(hd, 0);
+                        this.Device.Player.Avatar.SetHeroState(hd, 3);
+                    }
                 }
 
                 var rd = bd.GetBuildResource(b.GetUpgradeLevel());
