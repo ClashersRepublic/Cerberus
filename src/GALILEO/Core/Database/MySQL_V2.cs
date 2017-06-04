@@ -48,7 +48,6 @@ namespace BL.Servers.CoC.Core.Database
                     CMD.Prepare();
                     Seed = Convert.ToInt64(CMD.ExecuteScalar());
                 }
-                Conn.Close();
             }
 
 
@@ -69,7 +68,6 @@ namespace BL.Servers.CoC.Core.Database
                     CMD.Prepare();
                     Seed = Convert.ToInt64(CMD.ExecuteScalar());
                 }
-                Conn.Close();
             }
 
 
@@ -95,7 +93,6 @@ namespace BL.Servers.CoC.Core.Database
                         Seed.Add(Convert.ToInt64(reader["ID"]));
                     }
                 }
-                Conn.Close();
             }
 
             return Seed;
@@ -132,7 +129,6 @@ namespace BL.Servers.CoC.Core.Database
                         CMD.Prepare();
                         Seed = Convert.ToInt64(CMD.ExecuteScalar());
                     }
-                    Connections.Close();
                 }
                 return Seed;
             }

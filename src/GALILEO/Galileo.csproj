@@ -322,6 +322,7 @@
     <Compile Include="Logic\Enums\Variable.cs" />
     <Compile Include="Logic\Enums\Village_Mode.cs" />
     <Compile Include="Logic\Enums\WarState.cs" />
+    <Compile Include="Logic\Manager\Builder_Village_Worker_Manager.cs" />
     <Compile Include="Logic\Objects.cs" />
     <Compile Include="Logic\Player.cs" />
     <Compile Include="Logic\Components\Hitpoint_Component.cs" />
@@ -338,7 +339,7 @@
     <Compile Include="Logic\Level.cs" />
     <Compile Include="Logic\Manager\ComponentManager.cs" />
     <Compile Include="Logic\Manager\GameObjectManager.cs" />
-    <Compile Include="Logic\Manager\WorkerManager.cs" />
+    <Compile Include="Logic\Manager\Village_Worker_Manager.cs" />
     <Compile Include="Logic\Structure\API\Gamecenter.cs" />
     <Compile Include="Logic\Structure\API\Google.cs" />
     <Compile Include="Logic\Structure\Builder_Building.cs" />
@@ -401,6 +402,7 @@
     <Compile Include="Packets\Commands\Client\Battle\Surrender_Attack.cs" />
     <Compile Include="Packets\Commands\Client\Boost_Building.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Building.cs" />
+    <Compile Include="Packets\Commands\Client\Buy_Multiple_Wall.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Resource.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Trap.cs" />
     <Compile Include="Packets\Commands\Client\Change_Weapon_Heading.cs" />
@@ -408,6 +410,7 @@
     <Compile Include="Packets\Commands\Client\Change_Village_Mode.cs" />
     <Compile Include="Packets\Commands\Client\Clan\Send_Mail.cs" />
     <Compile Include="Packets\Commands\Client\Collect_Resources.cs" />
+    <Compile Include="Packets\Commands\Client\Free_Worker.cs" />
     <Compile Include="Packets\Commands\Client\Mission_Progress.cs" />
     <Compile Include="Packets\Commands\Client\Move_Building.cs" />
     <Compile Include="Packets\Commands\Client\My_League.cs" />
@@ -417,11 +420,13 @@
     <Compile Include="Packets\Commands\Client\New_Shop_Items_Seen.cs" />
     <Compile Include="Packets\Commands\Client\Remove_Obstacle.cs" />
     <Compile Include="Packets\Commands\Client\SpeedUp_Construction.cs" />
+    <Compile Include="Packets\Commands\Client\SpeedUp_Hero_Upgrade.cs" />
     <Compile Include="Packets\Commands\Client\SpeedUp_Upgrade_Unit.cs" />
     <Compile Include="Packets\Commands\Client\Swap_Buildings.cs" />
     <Compile Include="Packets\Commands\Client\Train_Unit.cs" />
     <Compile Include="Packets\Commands\Client\Unlock_Building.cs" />
     <Compile Include="Packets\Commands\Client\Upgrade_Building.cs" />
+    <Compile Include="Packets\Commands\Client\Upgrade_Hero.cs" />
     <Compile Include="Packets\Commands\Client\Upgrade_Multiple_Buildings.cs" />
     <Compile Include="Packets\Commands\Client\Upgrade_Unit.cs" />
     <Compile Include="Packets\Commands\Server\Changed_Alliance_Setting.cs" />

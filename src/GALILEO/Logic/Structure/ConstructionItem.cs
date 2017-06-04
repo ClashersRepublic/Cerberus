@@ -28,6 +28,7 @@ namespace BL.Servers.CoC.Logic.Structure
         internal bool IsBoostPause;
         internal int  UpgradeLevel;
         internal bool IsConstructing;
+        internal bool Builder_Village;
         public void BoostBuilding()
         {
             this.IsBoosted = true;
@@ -114,7 +115,12 @@ namespace BL.Servers.CoC.Logic.Structure
                 int resourceCount = (int)((cost * multiplier * (long)1374389535) >> 32);
                 resourceCount = Math.Max((resourceCount >> 5) + (resourceCount >> 31), 0);
                 this.Level.Avatar.Resources.ResourceChangeHelper(rd.GetGlobalID(), resourceCount);
-                this.Level.WorkerManager.DeallocateWorker(this);
+
+                if (Builder_Village)
+                    this.Level.BuilderVillageWorkerManager.DeallocateWorker(this);
+                else
+                    this.Level.VillageWorkerManager.DeallocateWorker(this);
+
                 if (UpgradeLevel == -1)
                 {
                     this.Level.GameObjectManager.RemoveGameObject(this);
@@ -191,7 +197,12 @@ namespace BL.Servers.CoC.Logic.Structure
         internal void FinishConstruction()
         {
             this.IsConstructing = false;
-            this.Level.WorkerManager.DeallocateWorker(this);
+
+            if (Builder_Village)
+                this.Level.BuilderVillageWorkerManager.DeallocateWorker(this);
+            else
+                this.Level.VillageWorkerManager.DeallocateWorker(this);
+
             SetUpgradeLevel(GetUpgradeLevel() + 1);
              if (GetResourceProductionComponent() != null)
             {
@@ -210,18 +221,28 @@ namespace BL.Servers.CoC.Logic.Structure
             }
         }
 
-        public int GetRemainingConstructionTime() => this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick);
+        internal int GetRemainingConstructionTime() => this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick);
 
-        public int GetRequiredTownHallLevelForUpgrade()
+        internal int GetRequiredTownHallLevelForUpgrade()
         {
-            int upgradeLevel = Math.Min(UpgradeLevel + 1, GetConstructionItemData().GetUpgradeLevelCount() - 1);
+            var upgradeLevel = Math.Min(UpgradeLevel + 1, GetConstructionItemData().GetUpgradeLevelCount() - 1);
             return GetConstructionItemData().GetRequiredTownHallLevel(upgradeLevel);
         }
 
         public new void Load(JObject jsonObject)
         {
-            UpgradeLevel = jsonObject["lvl"].ToObject<int>();
-            this.Level.WorkerManager.DeallocateWorker(this);
+            var builderVillageToken = jsonObject["bv"];
+            if (builderVillageToken != null)
+            {
+                this.Builder_Village = builderVillageToken.ToObject<bool>();
+
+            }
+            this.UpgradeLevel = jsonObject["lvl"].ToObject<int>();
+
+            if (Builder_Village)
+                this.Level.BuilderVillageWorkerManager.DeallocateWorker(this);
+            else
+                this.Level.VillageWorkerManager.DeallocateWorker(this);
 
             var constTimeToken = jsonObject["const_t"];
             var constTimeEndToken = jsonObject["const_t_end"];
@@ -239,7 +260,10 @@ namespace BL.Servers.CoC.Logic.Structure
 
                 this.Timer.StartTimer(this.Level.Avatar.LastTick, duration);
 
-                this.Level.WorkerManager.AllocateWorker(this);
+                if (Builder_Village)
+                    this.Level.BuilderVillageWorkerManager.AllocateWorker(this);
+                else
+                    this.Level.VillageWorkerManager.AllocateWorker(this);
             }
             var boostToken = jsonObject["boost_t"];
             var boostEndToken = jsonObject["boost_t_end"];
@@ -261,13 +285,13 @@ namespace BL.Servers.CoC.Logic.Structure
             {
                 Locked = lockedToken.ToObject<bool>();
             }
-
-            SetUpgradeLevel(UpgradeLevel);
+            this.SetUpgradeLevel(this.UpgradeLevel);
             base.Load(jsonObject);
         }
 
         public new JObject Save(JObject jsonObject)
         {
+            jsonObject.Add("bv", this.Builder_Village);
             jsonObject.Add("lvl", UpgradeLevel);
             if (IsConstructing)
             {
@@ -281,11 +305,12 @@ namespace BL.Servers.CoC.Logic.Structure
             }
             if (Locked)
                 jsonObject.Add("locked", true);
+
             base.Save(jsonObject);
             return jsonObject;
         }
 
-        public void SpeedUpConstruction()
+        internal void SpeedUpConstruction()
         {
             if (this.IsConstructing)
             {
@@ -300,12 +325,14 @@ namespace BL.Servers.CoC.Logic.Structure
             }
         }
 
-        public void StartConstructing(Vector vector)
+        internal void StartConstructing(Vector vector, bool builder_village, bool instant = false)
         {
-            X = (int)vector.X;
-            Y = (int)vector.Y;
-
-            int constructionTime = GetConstructionItemData().GetConstructionTime(UpgradeLevel + 1);
+            this.X = (int) vector.X;
+            this.Y = (int) vector.Y;
+            this.Builder_Village = builder_village;
+            Console.WriteLine(instant);
+            int constructionTime = instant ? 0 : GetConstructionItemData().GetConstructionTime(0);
+            Console.WriteLine(constructionTime);
             if (constructionTime < 1)
             {
                 FinishConstruction();
@@ -314,12 +341,18 @@ namespace BL.Servers.CoC.Logic.Structure
             {
                 this.Timer = new Timer();
                 this.Timer.StartTimer(this.Level.Avatar.LastTick, constructionTime);
-                this.Level.WorkerManager.AllocateWorker(this);
+                if (builder_village)
+                    this.Level.BuilderVillageWorkerManager.AllocateWorker(this);
+                else
+                    this.Level.VillageWorkerManager.AllocateWorker(this);
                 this.IsConstructing = true;
             }
+
         }
-        public void StartUpgrading()
+
+        internal void StartUpgrading(bool builder_village)
         {
+            this.Builder_Village = builder_village;
             int constructionTime = GetConstructionItemData().GetConstructionTime(UpgradeLevel + 1);
             if (constructionTime < 1)
             {
@@ -330,13 +363,16 @@ namespace BL.Servers.CoC.Logic.Structure
                 this.IsConstructing = true;
                 this.Timer = new Timer();
                 this.Timer.StartTimer(this.Level.Avatar.LastTick, constructionTime);
-                this.Level.WorkerManager.AllocateWorker(this);
+                if (Builder_Village)
+                    this.Level.BuilderVillageWorkerManager.AllocateWorker(this);
+                else
+                    this.Level.VillageWorkerManager.AllocateWorker(this);
             }
         }
 
-        public void SetUpgradeLevel(int level)
+        internal void SetUpgradeLevel(int level)
         {
-            UpgradeLevel = level;
+            this.UpgradeLevel = level;
             if (UpgradeLevel > -1 || IsUpgrading() || !IsConstructing)
             {
                 /*if (GetUnitStorageComponent(true) != null)

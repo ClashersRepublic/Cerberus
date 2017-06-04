@@ -1,4 +1,5 @@
-﻿using BL.Servers.CoC.Files.CSV_Helpers;
+﻿using System;
+using BL.Servers.CoC.Files.CSV_Helpers;
 using BL.Servers.CoC.Files.CSV_Reader;
 using BL.Servers.CoC.Logic.Enums;
 
@@ -85,7 +86,7 @@ namespace BL.Servers.CoC.Files.CSV_Logic
                 Total_Time += BuildTimeH[level] * 3600;
             if (BuildTimeM.Length > level + 1)
                 Total_Time += BuildTimeM[level] * 60;
-
+            
             return Total_Time;
             //return BuildTimeS[level] + BuildTimeM[level] * 60 + BuildTimeH[level] * 60 * 60 + BuildTimeD[level] * 60 * 60 * 24;
         }

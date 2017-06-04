@@ -23,6 +23,7 @@ namespace BL.Servers.CoC.Core
             this.Random();
             this.Run();
         }
+
         internal void Maintenance(int durations)
         {
             foreach (var _Device in Resources.Players.Values.ToList())
@@ -35,12 +36,12 @@ namespace BL.Servers.CoC.Core
 
             Timer Timer = new Timer
             {
-                Interval = TimeSpan.FromMinutes(5).TotalMilliseconds,
+                Interval = TimeSpan.FromSeconds(5).TotalMilliseconds,
                 AutoReset = false,
             };
 
             Timer.Elapsed += (_Sender, _Args) =>
-            {
+            {   
                 foreach (var _Device in Resources.Devices.Values.ToList())
                 {
                     Resources.Gateway.Disconnect(_Device.Token.Args);
@@ -48,29 +49,30 @@ namespace BL.Servers.CoC.Core
 
                 Constants.Maintenance = new Maintenance_Timer();
                 Constants.Maintenance.StartTimer(DateTime.Now, (int)TimeSpan.FromMinutes(durations).TotalSeconds);
+                Timer Timer2 = new Timer
+                {
+                    Interval = (int)TimeSpan.FromMinutes(durations).TotalMilliseconds,
+                    AutoReset = false
+                };
 
                 Console.WriteLine("# " + DateTime.Now.ToString("d") + " ---- Entered Maintanance Mode---- " + DateTime.Now.ToString("T") + " #");
                 Console.WriteLine("# ----------------------------------- #");
                 Console.WriteLine("# Maintanance Duration    # " + Utils.Padding(durations.ToString()) + " #");
                 Console.WriteLine("# Maintanance End Time    # " + Utils.Padding(Constants.Maintenance.GetEndTime.ToString("T")) + " #");
                 Console.WriteLine("# ----------------------------------- #");
-                Timer Timer2 = new Timer
-                {
-                    Interval = TimeSpan.FromSeconds(Constants.Maintenance.GetRemainingSeconds(DateTime.Now)).TotalMilliseconds,
-                    AutoReset = false
-                };
                 Timer2.Start();
-                this.LTimers.Add(5, Timer2);
 
                 Timer2.Elapsed += (_Sender2, _Args2) =>
                 {
-                    Console.WriteLine("# " + DateTime.Now.ToString("d") + " ---- Exited from Maintanance Mode---- " + DateTime.Now.ToString("T") + " #");
                     Constants.Maintenance = null;
-                    Timer2.Stop();
                     this.LTimers.Remove(4);
                     this.LTimers.Remove(5);
+                    Console.WriteLine("# " + DateTime.Now.ToString("d") + " ---- Exited from Maintanance Mode---- " + DateTime.Now.ToString("T") + " #");
                 };
+                this.LTimers.Add(5, Timer2);
+
             };
+
 
             this.LTimers.Add(4, Timer);
         }
@@ -84,7 +86,7 @@ namespace BL.Servers.CoC.Core
             };
             Timer.Elapsed += (_Sender, _Args) =>
             {
-                Resources.Random = new Random(DateTime.Now.ToString().GetHashCode());
+                Resources.Random = new Random(DateTime.Now.ToString("T").GetHashCode());
             };
             this.LTimers.Add(3, Timer);
         }
@@ -93,7 +95,7 @@ namespace BL.Servers.CoC.Core
         {
             Timer Timer = new Timer
             {
-                Interval = 60000,
+                Interval = TimeSpan.FromMinutes(3).TotalMilliseconds,
                 AutoReset = true
             };
 

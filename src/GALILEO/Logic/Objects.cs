@@ -36,7 +36,7 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddCompressed(this.Json);
                 //_Packet.AddCompressed(File.ReadAllText(@"starting_home.json"));
                 _Packet.AddCompressed("{\"event\":[]}");
-                _Packet.AddCompressed("{\"Village2\":{\"TownHallMaxLevel\":5}}");
+                _Packet.AddCompressed("{\"Village2\":{\"TownHallMaxLevel\":8}}");
                 return _Packet.ToArray();
             }
         }

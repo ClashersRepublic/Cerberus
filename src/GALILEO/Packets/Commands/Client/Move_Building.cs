@@ -15,8 +15,6 @@ namespace BL.Servers.CoC.Packets.Commands.Client
         internal int BuildingId;
         internal int Tick;
         internal Vector Position;
-        internal int X;
-        internal int Y;
 
         public Move_Building(Reader reader, Device client, int id) : base(reader, client, id)
         {

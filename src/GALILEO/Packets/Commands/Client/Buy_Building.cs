@@ -45,12 +45,19 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
                 if (ca.HasEnoughResources(bd.GetBuildResource(0).GetGlobalID(), bd.GetBuildCost(0)))
                 {
-                    if (bd.IsWorkerBuilding() || this.Device.Player.HasFreeWorkers)
+                    if (bd.IsWorkerBuilding())
+                    {
+                        b.StartConstructing(this.Vector, false);
+                        this.Device.Player.GameObjectManager.AddGameObject(b);
+                        return;
+                    }
+
+                    if (this.Device.Player.HasFreeVillageWorkers)
                     {
                         var rd = bd.GetBuildResource(0);
                         ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
 
-                        b.StartConstructing(this.Vector);
+                        b.StartConstructing(this.Vector, this.Device.Player.Avatar.Variables.IsBuilderVillage);
                         this.Device.Player.GameObjectManager.AddGameObject(b);
                     }
                 }
@@ -60,12 +67,16 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                 var b = new Builder_Building(bd, this.Device.Player);
                 if (ca.HasEnoughResources(bd.GetBuildResource(0).GetGlobalID(), bd.GetBuildCost(0)))
                 {
-                    if (bd.IsWorkerBuilding() || this.Device.Player.HasFreeWorkers)
+                    if (bd.IsWorker2Building())
                     {
-                        var rd = bd.GetBuildResource(0);
-                        ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
+                        b.StartConstructing(this.Vector, true);
+                        this.Device.Player.GameObjectManager.AddGameObject(b);
+                        return;
+                    }
 
-                        b.StartConstructing(this.Vector);
+                    if (this.Device.Player.HasFreeBuilderVillageWorkers)
+                    {
+                        b.StartConstructing(this.Vector, true);
                         this.Device.Player.GameObjectManager.AddGameObject(b);
                     }
                 }

@@ -11,18 +11,21 @@ namespace BL.Servers.CoC.Logic
         internal Player Avatar;
 
         internal GameObjectManager GameObjectManager;
-        internal WorkerManager WorkerManager;
+        internal Village_Worker_Manager VillageWorkerManager;
+        internal Builder_Village_Worker_Manager BuilderVillageWorkerManager;
 
         internal Level()
         {
-            this.WorkerManager = new WorkerManager();
+            this.BuilderVillageWorkerManager = new Builder_Village_Worker_Manager();
+            this.VillageWorkerManager = new Village_Worker_Manager();
             this.GameObjectManager = new GameObjectManager(this);
             this.Avatar = new Player();
         }
 
         internal Level(long id)
         {
-            this.WorkerManager = new WorkerManager();
+            this.BuilderVillageWorkerManager = new Builder_Village_Worker_Manager();
+            this.VillageWorkerManager = new Village_Worker_Manager();
             this.GameObjectManager = new GameObjectManager(this);
             this.Avatar = new Player(id);
         }
@@ -41,6 +44,7 @@ namespace BL.Servers.CoC.Logic
 
         internal ComponentManager GetComponentManager => this.GameObjectManager.GetComponentManager();
 
-        internal bool HasFreeWorkers => this.WorkerManager.GetFreeWorkers() > 0;
+        internal bool HasFreeVillageWorkers => this.VillageWorkerManager.GetFreeWorkers() > 0;
+        internal bool HasFreeBuilderVillageWorkers => this.BuilderVillageWorkerManager.GetFreeWorkers() > 0;
     }
 }

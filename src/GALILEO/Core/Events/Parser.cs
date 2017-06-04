@@ -55,7 +55,7 @@ namespace BL.Servers.CoC.Core.Events
 
                     case ConsoleKey.M:
                     {
-                        if (Resources.Classes.Timers.LTimers.Count < 4)
+                        if (Resources.Classes.Timers.LTimers.Count <= 3)
                         {
                             Console.WriteLine("Press Y to continue and N to cancle");
                             ConsoleKeyInfo Command2 = Console.ReadKey(false);
@@ -64,8 +64,7 @@ namespace BL.Servers.CoC.Core.Events
                             {
                                 case ConsoleKey.Y:
                                 {
-                                    Console.WriteLine(
-                                        "Please enter the duration of Maintenance (Enter value in int only).");
+                                    Console.WriteLine("Please enter the duration of Maintenance (Enter value in int only).");
                                     Console.Write("(Minute): ");
                                     if (Int32.TryParse(Console.ReadLine(), out int i))
                                     {
@@ -76,11 +75,13 @@ namespace BL.Servers.CoC.Core.Events
                                         Console.WriteLine("Value is invalid, Request cancelled");
                                     break;
                                 }
+
                                 case ConsoleKey.N:
                                 {
                                     Console.WriteLine("Request cancelled");
                                     break;
                                 }
+
                                 default:
                                 {
                                     Console.WriteLine("Press Y to continue and N to cancle");

@@ -403,13 +403,21 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
-                _Packet.AddInt(2); //Builder base troop should be in attack
-                _Packet.AddInt(4000037);
-                _Packet.AddInt(2);
-                _Packet.AddInt(4000038);
-                _Packet.AddInt(2);
-                _Packet.AddInt(0); //Troop in camp for training
-
+                _Packet.AddInt(14); //Builder base troop should be in attack
+                _Packet.AddInt(4000031);
+                _Packet.AddInt(4);
+                _Packet.AddInt(4000032);
+                _Packet.AddInt(4);
+                for (int i = 0; i < 12; i++)
+                {
+                    _Packet.AddInt(4000033);
+                    _Packet.AddInt(0);
+                }
+                _Packet.AddInt(2); //Troop in camp for training
+                _Packet.AddInt(4000031);
+                _Packet.AddInt(0);
+                _Packet.AddInt(4000032);
+                _Packet.AddInt(0);
                 return _Packet.ToArray();
             }
 

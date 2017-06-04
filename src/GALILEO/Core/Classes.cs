@@ -9,7 +9,7 @@ using BL.Servers.CoC.Core.Events;
 
 namespace BL.Servers.CoC.Core
 {
-    internal class Classes
+    internal class Classes : IDisposable
     {
         internal MessageFactory MFactory;
         internal CommandFactory CFactory;
@@ -47,6 +47,11 @@ namespace BL.Servers.CoC.Core
             this.Timers = new Timers();
             
             this.Test = new Test();
+        }
+
+        void IDisposable.Dispose()
+        {
+            this.Loggers.Dispose();
         }
     }
 }

@@ -8,8 +8,8 @@ namespace BL.Servers.CoC.Extensions
         internal const int ID = 1;
         internal const int MaxCommand  = 500;
         internal const int SendBuffer = 4096;
-        internal const int PRE_ALLOC_SEA = 10000;
         internal const int ReceiveBuffer = 4096;
+        internal const int PRE_ALLOC_SEA = 4096;
         internal const bool Local = false;
         internal const bool PacketCompression = true;
 

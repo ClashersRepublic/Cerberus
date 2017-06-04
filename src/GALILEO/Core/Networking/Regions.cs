@@ -9,7 +9,7 @@ using MaxMind.GeoIP2.Exceptions;
 
 namespace BL.Servers.CoC.Core.Networking
 {
-    internal class Region
+    internal class Region : IDisposable
     {
         internal DatabaseReader Reader;
         internal string DbPath = "Gamefiles/database/Database.mmdb";
@@ -107,6 +107,10 @@ namespace BL.Servers.CoC.Core.Networking
             s.Stop();
             Console.WriteLine("Total second {0:N0}", s.Elapsed.TotalSeconds);
             Console.WriteLine("{0:N0} queries per second", count / s.Elapsed.TotalSeconds);
+        }
+        void IDisposable.Dispose()
+        {
+            this.Reader.Dispose();
         }
     }
 }

@@ -33,7 +33,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
         internal override void Encode()
         {
             this.Data.AddInt((int)this.Reason);
-            this.Data.AddString(Fingerprint.Json);
+            this.Data.AddString(this.Reason == Reason.Patch ? Fingerprint.Json : null);
             this.Data.AddString(this.RedirectDomain);
             this.Data.AddString(this.PatchingHost);
             this.Data.AddString(Constants.UpdateServer);

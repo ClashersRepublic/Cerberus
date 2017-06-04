@@ -10,6 +10,7 @@ using BL.Servers.CoC.Logic.Manager;
 using BL.Servers.CoC.Logic.Structure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using BL.Servers.CoC.Extensions;
 
 namespace BL.Servers.CoC.Logic.Manager
 {
@@ -45,7 +46,7 @@ namespace BL.Servers.CoC.Logic.Manager
                     var b = (Building) go;
                     var bd = b.GetBuildingData;
                     if (bd.IsWorkerBuilding())
-                        this.Level.WorkerManager.IncreaseWorkerCount();
+                        this.Level.VillageWorkerManager.IncreaseWorkerCount();
                 }
             }
             else
@@ -56,7 +57,7 @@ namespace BL.Servers.CoC.Logic.Manager
                     var b = (Builder_Building)go;
                     var bd = b.GetBuildingData;
                     if (bd.IsWorkerBuilding())
-                        this.Level.WorkerManager.IncreaseWorkerCount();
+                        this.Level.BuilderVillageWorkerManager.IncreaseWorkerCount();
                 }
             }
             this.GameObjects[go.ClassId].Add(go);
@@ -205,6 +206,28 @@ namespace BL.Servers.CoC.Logic.Manager
                 }
 
                 Player pl = this.Level.Avatar;
+                /*
+                var unitSlot = new JArray
+                {new JObject
+                    {
+                        {"id", 4000001},
+                        {"cnt", 1},
+                    },
+                    new JObject
+                    {
+                        {"id", 4000001},
+                        {"cnt", 26},
+                        {"t", true }
+                    },
+
+                };
+                var unit = new JObject
+                {
+                    {"t", TimeUtils.ToTick(TimeSpan.FromSeconds(0.5)) },
+                    {"slots", unitSlot }
+
+                };
+                */
                 var jsonData = new JObject
                 {
                     {"exp_ver", 1},
@@ -220,7 +243,7 @@ namespace BL.Servers.CoC.Logic.Manager
                     {"traps", JTraps},
                     {"decos", JDecos},
                     {"vobjs", JObject},
-                    {"units", new JArray { "unit_prod" } },
+                    {"units",new JArray { "unit_prod" } },
                     {"spells",new JArray { "unit_prod" } },
                     {"buildings2", JBuildings2},
                     {"obstacles2", JObstacles2},
@@ -355,7 +378,16 @@ namespace BL.Servers.CoC.Logic.Manager
                 var bd = b.GetBuildingData;
                 if (bd.IsWorkerBuilding())
                 {
-                   this.Level.WorkerManager.DecreaseWorkerCount();
+                   this.Level.VillageWorkerManager.DecreaseWorkerCount();
+                }
+            }
+            if (go.ClassId == 7)
+            {
+                var b = (Builder_Building)go;
+                var bd = b.GetBuildingData;
+                if (bd.IsWorkerBuilding())
+                {
+                    this.Level.BuilderVillageWorkerManager.DecreaseWorkerCount();
                 }
             }
             RemoveGameObjectReferences(go);
@@ -402,7 +434,14 @@ namespace BL.Servers.CoC.Logic.Manager
                 var b = (Building) go;
                 var bd = b.GetBuildingData;
                 if (bd.IsWorkerBuilding())
-                    this.Level.WorkerManager.DecreaseWorkerCount();
+                    this.Level.VillageWorkerManager.DecreaseWorkerCount();
+            }
+            if (go.ClassId == 7)
+            {
+                var b = (Builder_Building)go;
+                var bd = b.GetBuildingData;
+                if (bd.IsWorkerBuilding())
+                    this.Level.BuilderVillageWorkerManager.DecreaseWorkerCount();
             }
             RemoveGameObjectReferences(go);
         }

@@ -4,13 +4,13 @@ using BL.Servers.CoC.Logic.Structure;
 
 namespace BL.Servers.CoC.Logic.Manager
 {
-    internal class WorkerManager
+    internal class Village_Worker_Manager
     {
         internal List<GameObject> GameObjectReferences;
 
         internal int WorkerCount;
 
-        public WorkerManager()
+        public Village_Worker_Manager()
         {
             this.GameObjectReferences = new List<GameObject>();
             this.WorkerCount = 0;
@@ -47,10 +47,13 @@ namespace BL.Servers.CoC.Logic.Manager
             {
                 if (go.ClassId == 3)
                 {
+                    var b = (Obstacle) go;
+                    if (b.IsClearing)
+                        b.SpeedUpClearing();
                 }
                 else
                 {
-                    var b = (ConstructionItem)go;
+                    var b = (ConstructionItem) go;
                     if (b.IsConstructing)
                         b.SpeedUpConstruction();
                     else
@@ -77,6 +80,11 @@ namespace BL.Servers.CoC.Logic.Manager
                     currentGOTime = -1;
                     if (go.ClassId == 3)
                     {
+                        var c = (Obstacle)go;
+                        if (c.IsClearing)
+                        {
+                            currentGOTime = c.GetRemainingClearingTime();
+                        }
                     }
                     else
                     {

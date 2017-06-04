@@ -26,7 +26,7 @@ namespace BL.Servers.CoC.Logic.Structure
             if (!IsClearing)
                 throw new InvalidOperationException("Obstacle object is not being cleared.");
 
-            this.Level.WorkerManager.DeallocateWorker(this);
+            this.Level.BuilderVillageWorkerManager.DeallocateWorker(this);
             this.IsClearing = false;
             this.Timer = null;
             var od = GetObstacleData;
@@ -45,7 +45,23 @@ namespace BL.Servers.CoC.Logic.Structure
                 this.Timer = new Timer();
                 this.IsClearing = true;
                 this.Timer.StartTimer(this.Level.Avatar.LastTick, constructionTime);
-                this.Level.WorkerManager.AllocateWorker(this);
+                this.Level.BuilderVillageWorkerManager.AllocateWorker(this);
+            }
+        }
+        internal void SpeedUpClearing()
+        {
+            int remainingSeconds = 0;
+            if (this.IsClearing)
+            {
+                remainingSeconds = this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick);
+            }
+
+            int cost = GameUtils.GetSpeedUpCost(remainingSeconds);
+            var ca = this.Level.Avatar;
+            if (ca.Resources.Gems >= cost)
+            {
+                ca.Resources.Minus(Enums.Resource.Diamonds, cost);
+                ClearingFinished();
             }
         }
 
@@ -68,7 +84,7 @@ namespace BL.Servers.CoC.Logic.Structure
 
         internal void ClearingFinished()
         {
-            this.Level.WorkerManager.DeallocateWorker(this);
+            this.Level.BuilderVillageWorkerManager.DeallocateWorker(this);
             this.IsClearing = false;
             this.Timer = null;
             var constructionTime = GetObstacleData.ClearTimeSeconds;
@@ -109,7 +125,7 @@ namespace BL.Servers.CoC.Logic.Structure
                     duration = 0;
 
                 this.Timer.StartTimer(this.Level.Avatar.LastTick, duration);
-                this.Level.WorkerManager.AllocateWorker(this);
+                this.Level.BuilderVillageWorkerManager.AllocateWorker(this);
             }
             base.Load(jsonObject);
         }

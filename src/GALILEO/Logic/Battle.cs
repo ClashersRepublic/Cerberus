@@ -109,8 +109,8 @@ namespace BL.Servers.CoC.Logic
         internal string Json => JsonConvert.SerializeObject(new
         {
             level = this.Level,
-            attacker = this.Attacker,
-            defender = this.Defender,
+            attacker = this.Attacker, //TODO: Only add required stuff,Possible issue..Gain access to other user acc 
+            defender = this.Defender, //TODO: Only add required stuff,Possible issue..Gain access to other user acc 
             end_tick = this.End_Tick,
             timestamp = this.TimeStamp,
             cmd = this.Commands,

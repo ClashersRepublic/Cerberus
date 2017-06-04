@@ -42,12 +42,12 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
                 if (ca.HasEnoughResources(td.GetBuildResource(0).GetGlobalID(), td.GetBuildCost(0)))
                 {
-                    if (this.Device.Player.HasFreeWorkers)
+                    if (this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.HasFreeBuilderVillageWorkers : this.Device.Player.HasFreeVillageWorkers)
                     {
                         var rd = td.GetBuildResource(0);
                         ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -td.GetBuildCost(0));
 
-                        b.StartConstructing(this.Vector);
+                        b.StartConstructing(this.Vector, false);
                         this.Device.Player.GameObjectManager.AddGameObject(b);
                     }
                 }
@@ -57,12 +57,12 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                 var b = new Builder_Trap(td, this.Device.Player);
                 if (ca.HasEnoughResources(td.GetBuildResource(0).GetGlobalID(), td.GetBuildCost(0)))
                 {
-                    if (this.Device.Player.HasFreeWorkers)
+                    if (this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.HasFreeBuilderVillageWorkers : this.Device.Player.HasFreeVillageWorkers)
                     {
                         var rd = td.GetBuildResource(0);
                         ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -td.GetBuildCost(0));
 
-                        b.StartConstructing(this.Vector);
+                        b.StartConstructing(this.Vector, true, true);
                         this.Device.Player.GameObjectManager.AddGameObject(b);
                     }
                 }

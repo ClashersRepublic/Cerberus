@@ -237,6 +237,7 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public bool IsAllianceCastle() => Name == "Alliance Castle";
 
         public bool IsWorkerBuilding() => BuildingClass == "Worker";
+        public bool IsWorker2Building() => BuildingClass == "Worker2";
 
         public Resource GetAltBuildResource(int level) => CSV.Tables.Get(Gamefile.Resources).GetData(AltBuildResource[level]) as Resource;
 

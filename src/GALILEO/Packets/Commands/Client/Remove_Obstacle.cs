@@ -27,8 +27,8 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                 {
                     var obstacleData = Object.GetObstacleData();
                     int ResourceID = obstacleData.GetClearingResource().GetGlobalID();
-                    if (this.Device.Player.Avatar.HasEnoughResources(ResourceID, obstacleData.ClearCost) &&
-                        this.Device.Player.HasFreeWorkers)
+                        if (this.Device.Player.Avatar.HasEnoughResources(ResourceID, obstacleData.ClearCost) &&
+                            this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.HasFreeBuilderVillageWorkers : this.Device.Player.HasFreeVillageWorkers)
                     {
                         this.Device.Player.Avatar.Resources.Minus(ResourceID, obstacleData.ClearCost);
                         Object.StartClearing();
@@ -42,11 +42,24 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                 {
                     var obstacleData = Object.GetObstacleData;
                     int ResourceID = obstacleData.GetClearingResource().GetGlobalID();
-                    if (this.Device.Player.Avatar.HasEnoughResources(ResourceID, obstacleData.ClearCost) &&
-                        this.Device.Player.HasFreeWorkers)
+                    if (obstacleData.TallGrass)
                     {
-                        this.Device.Player.Avatar.Resources.Minus(ResourceID, obstacleData.ClearCost);
-                        Object.StartClearing();
+                        if (this.Device.Player.Avatar.HasEnoughResources(ResourceID, obstacleData.ClearCost))
+                        {
+                            this.Device.Player.Avatar.Resources.Minus(ResourceID, obstacleData.ClearCost);
+                            Object.StartClearing();
+                        }
+                    }
+                    else
+                    {
+                        if (this.Device.Player.Avatar.HasEnoughResources(ResourceID, obstacleData.ClearCost) &&
+                            this.Device.Player.Avatar.Variables.IsBuilderVillage
+                            ? this.Device.Player.HasFreeBuilderVillageWorkers
+                            : this.Device.Player.HasFreeVillageWorkers)
+                        {
+                            this.Device.Player.Avatar.Resources.Minus(ResourceID, obstacleData.ClearCost);
+                            Object.StartClearing();
+                        }
                     }
                 }
             }

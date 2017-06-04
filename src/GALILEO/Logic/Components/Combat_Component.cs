@@ -13,8 +13,12 @@ namespace BL.Servers.CoC.Logic.Components
 {
     internal class Combat_Component : Component
     {
+        internal ConstructionItem Item;
+
         public Combat_Component(ConstructionItem ci) : base(ci)
         {
+            this.Item = ci;
+
             if (ci.ClassId == 4 || ci.ClassId == 11)
             {
                 var td = (Traps) ci.Data;
@@ -26,6 +30,7 @@ namespace BL.Servers.CoC.Logic.Components
             else if (ci.ClassId == 0 || ci.ClassId == 7)
             {
                 var bd = (Buildings) ci.Data;
+
                 if (bd.AmmoCount > 0)
                     this.Ammo = bd.AmmoCount;
 
@@ -53,6 +58,7 @@ namespace BL.Servers.CoC.Logic.Components
         internal bool AirMode = false;
         internal bool AirModeDraft = false;
         internal bool AltTrapAttackMode = false;
+        internal bool NeedsRepair = true;
 
         internal void FillAmmo()
         {
@@ -66,8 +72,10 @@ namespace BL.Servers.CoC.Logic.Components
                 this.Ammo = bd.AmmoCount;
             }
         }
+
         internal override void Load(JObject jsonObject)
         {
+
             if (jsonObject["gear"] != null)
                 this.GearUp = jsonObject["gear"].ToObject<int>();
             
@@ -103,14 +111,17 @@ namespace BL.Servers.CoC.Logic.Components
                 this.TrapDirection = jsonObject["trapd"].ToObject<int>();
                 this.TrapDirectionDraft = jsonObject["trapd_draft"].ToObject<int>();
             }
+
         }
+
         internal override JObject Save(JObject jsonObject)
         {
+
             if (this.GearUp >= 0)
                 jsonObject.Add("gear", this.GearUp);
 
             if (this.Ammo >= 0)
-            jsonObject.Add("ammo", this.Ammo);
+                jsonObject.Add("ammo", this.Ammo);
 
             if (this.AltAttackMode)
             {
@@ -135,7 +146,7 @@ namespace BL.Servers.CoC.Logic.Components
                 jsonObject.Add("trapd", this.TrapDirection);
                 jsonObject.Add("trapd_draft", this.TrapDirectionDraft);
             }
-
+            
             return jsonObject;
         }
     }

@@ -98,9 +98,9 @@ namespace BL.Servers.CoC.Logic.Structure.Slots
                     _Packet.AddInt(0); // Order ?
                     _Packet.AddInt(0); // Previous Order ?
                     _Packet.AddInt(0); // Builder Base Order ?
-                    _Packet.AddInt(0); // Builder Base Previous Order ?
-                    _Packet.AddInt(785097);
+                    _Packet.AddInt(0); // Builder Base Previous Order ?=
                     _Packet.AddInt(Member.New ? 1 : 0);
+                    _Packet.AddInt(785097); //War Cooldown
                     _Packet.AddInt(_Player.Avatar.WarState ? 1 : 0);
                     _Packet.AddByte(1);
                     _Packet.AddLong(_Player.Avatar.UserId);

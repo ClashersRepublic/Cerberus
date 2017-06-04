@@ -112,7 +112,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Clans.War
             this.Data.AddLong(20);
             this.Data.AddLong(10);
             this.Data.AddLong(10);
-            this.Data.AddString($"Eiffel The DMCA Master");
+            this.Data.AddString($"Eishit The DMCA Master 2.0");
 
             this.Data.AddInt(0);
             this.Data.AddInt(0);

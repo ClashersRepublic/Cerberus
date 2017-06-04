@@ -12,6 +12,10 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
         internal override void Decode()
         {
+            this.Reader.ReadInt32();
+            this.Reader.ReadInt32();
+            this.Reader.ReadInt32();
+            this.Reader.ReadInt32();
         }
     }
 }

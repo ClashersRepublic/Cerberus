@@ -15,7 +15,7 @@ using BL.Servers.CoC.Packets.Cryptography.RC4;
 
 namespace BL.Servers.CoC.Logic
 {
-    internal partial class Device
+    internal class Device
     {
         internal Socket Socket;
         internal Level Player;

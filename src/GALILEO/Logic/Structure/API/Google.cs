@@ -9,7 +9,7 @@ using global::Google.Apis.Util.Store;
 
 namespace BL.Servers.CoC.Logic.Structure.API
 {
-    internal class Google
+    internal class Google 
     {
         internal const string GlobalPlayersID = "";
         internal const string GlobalClansID = "";

@@ -74,7 +74,6 @@ namespace BL.Servers.CoC.Packets.Commands.Client
             {
                 new Out_Of_Sync(this.Device).Send();
             }
-            Console.WriteLine("Buy {0}   Resource : {1}", this.Resource_Count, this.Resource_Data);
         }
     }
 }

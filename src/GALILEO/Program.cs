@@ -54,7 +54,7 @@ namespace BL.Servers.CoC
             Console.WriteLine(Environment.NewLine);
 #endif*/
             Resources.Initialize();
-
+            Console.WriteLine(new DateTime(1308762992));
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
             Thread.Sleep(Timeout.Infinite);
 

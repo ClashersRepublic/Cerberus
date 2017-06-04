@@ -117,7 +117,7 @@ namespace BL.Servers.CoC.Core.Networking
                 }
                 catch (Exception ex)
                 {
-                    //ExceptionLogger.Log(ex, "Exception while start receive: ");
+                    Resources.Exceptions.Catch(ex, "Exception while start receive: ");
                 }
             }
         }
@@ -305,7 +305,8 @@ namespace BL.Servers.CoC.Core.Networking
                     {
                         if (!socket.SendAsync(AsyncEvent))
                             this.ProcessSend(AsyncEvent);
-                        else break;
+                        else
+                            break;
                     }
                 }
                 catch (ObjectDisposedException)

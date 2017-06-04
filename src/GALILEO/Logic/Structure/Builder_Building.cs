@@ -18,12 +18,10 @@ namespace BL.Servers.CoC.Logic.Structure
             }
             if (GetBuildingData.UpgradesUnits)
                 AddComponent(new Unit_Upgrade_Component(this));
-
             if (GetBuildingData.UnitProduction[0] > 0)
             {
                 AddComponent(new Unit_Production_Component(this));
             }
-
             //if (GetBuildingData.HousingSpace[0] > 0)
             {
                 //AddComponent(new UnitStorageComponent(this, 0));

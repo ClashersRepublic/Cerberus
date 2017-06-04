@@ -20,6 +20,7 @@ namespace BL.Servers.CoC.Logic.Components
 
         internal Heroes HeroData;
         internal Timer Timer;
+        internal bool Builder_Village;
         internal int UpgradeLevelInProgress;
 
         internal void CancelUpgrade()
@@ -35,7 +36,10 @@ namespace BL.Servers.CoC.Logic.Components
                 var resourceCount = (int)((cost * multiplier * (long)1374389535) >> 32);
                 resourceCount = Math.Max((resourceCount >> 5) + (resourceCount >> 31), 0);
                 ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), resourceCount);
-                GetParent.Level.WorkerManager.DeallocateWorker(GetParent);
+                if (Builder_Village)
+                    GetParent.Level.BuilderVillageWorkerManager.DeallocateWorker(GetParent);
+                else
+                    GetParent.Level.VillageWorkerManager.DeallocateWorker(GetParent);
                 this.Timer = null;
             }
         }
@@ -60,7 +64,10 @@ namespace BL.Servers.CoC.Logic.Components
             var ca = GetParent.Level.Avatar;
             var currentLevel = ca.GetUnitUpgradeLevel(this.HeroData);
             ca.SetUnitUpgradeLevel(this.HeroData, currentLevel + 1);
-            GetParent.Level.WorkerManager.DeallocateWorker(GetParent);
+            if (Builder_Village)
+                GetParent.Level.BuilderVillageWorkerManager.DeallocateWorker(GetParent);
+            else
+                GetParent.Level.VillageWorkerManager.DeallocateWorker(GetParent);
             this.Timer = null;
         }
 
@@ -120,11 +127,15 @@ namespace BL.Servers.CoC.Logic.Components
             }
         }
 
-        internal void StartUpgrading()
+        internal void StartUpgrading(bool builder_village)
         {
             if (CanStartUpgrading())
             {
-                GetParent.Level.WorkerManager.AllocateWorker(GetParent);
+                this.Builder_Village = builder_village;
+                if (builder_village)
+                    GetParent.Level.BuilderVillageWorkerManager.DeallocateWorker(GetParent);
+                else
+                    GetParent.Level.VillageWorkerManager.DeallocateWorker(GetParent);
                 this.Timer = new Timer();
                 this.Timer.StartTimer(GetParent.Level.Avatar.LastTick, GetTotalSeconds());
                 this.UpgradeLevelInProgress = GetParent.Level.Avatar.GetUnitUpgradeLevel(this.HeroData) + 1;
