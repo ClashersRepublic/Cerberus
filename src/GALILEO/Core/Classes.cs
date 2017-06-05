@@ -13,6 +13,7 @@ namespace BL.Servers.CoC.Core
     {
         internal MessageFactory MFactory;
         internal CommandFactory CFactory;
+        internal DebugFactory DFactory;
         internal Loggers Loggers;
 
         internal CSV CSV;
@@ -27,6 +28,7 @@ namespace BL.Servers.CoC.Core
         {
             this.MFactory = new MessageFactory();
             this.CFactory = new CommandFactory();
+            this.DFactory = new DebugFactory();
             this.Loggers = new Loggers();
             this.CSV = new CSV();
             this.Home = new Home();
@@ -42,7 +44,7 @@ namespace BL.Servers.CoC.Core
             }
             this.Events = new EventsHandler();
 #if DEBUG
-            Console.WriteLine("We loaded " + MessageFactory.Messages.Count + " messages, " + CommandFactory.Commands.Count + " commands, and 0 debug commands.\n");
+            Console.WriteLine("We loaded " + MessageFactory.Messages.Count + " messages, " + CommandFactory.Commands.Count + " commands, and " + DebugFactory.Debugs.Count + " debug commands.\n");
 #endif
             this.Timers = new Timers();
             

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using BL.Servers.CoC.Packets.Debugs;
 
 namespace BL.Servers.CoC.Packets
 {
     internal class DebugFactory
     {
-        internal const char Delimiter = '/';
+        internal const string Delimiter = "/";
 
         public static Dictionary<string, Type> Debugs;
 
@@ -13,7 +14,7 @@ namespace BL.Servers.CoC.Packets
         {
             Debugs = new Dictionary<string, Type>
             {
-                // DebugFactory.
+                {"resource", typeof(Resource_Update)}
             };
         }
     }

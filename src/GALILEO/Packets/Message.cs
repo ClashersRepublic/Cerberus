@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Extensions.List;
 using BL.Servers.CoC.External.Sodium;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
+using BL.Servers.CoC.Packets.Messages.Server;
 
 namespace BL.Servers.CoC.Packets
 {
@@ -134,6 +134,16 @@ namespace BL.Servers.CoC.Packets
                               BitConverter.ToString(
                                   this.Reader.ReadBytes(
                                       (int) (this.Reader.BaseStream.Length - this.Reader.BaseStream.Position))));
+        }
+
+        internal void SendChatMessage(string message)
+        {
+            new Global_Chat_Entry(this.Device)
+            {
+                Message = message,
+                Message_Sender = this.Device.Player.Avatar,
+                Bot = true
+            }.Send();
         }
 
         internal void ShowValues()

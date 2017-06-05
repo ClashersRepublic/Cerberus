@@ -16,6 +16,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server
         internal string Message = string.Empty;
         internal Logic.Player Message_Sender = null;
         internal bool Sender = false;
+        internal bool Bot = false;
 
         public Global_Chat_Entry(Device Device) : base(Device)
         {
@@ -25,9 +26,9 @@ namespace BL.Servers.CoC.Packets.Messages.Server
         internal override void Encode()
         {
             this.Data.AddString(this.Message);
-            this.Data.AddString(Sender ? "You" : this.Message_Sender.Name);
-            this.Data.AddInt(0); // Unknown
-            this.Data.AddInt(this.Message_Sender.League);
+            this.Data.AddString(Bot ? "Command System" :  Sender ? "You" : this.Message_Sender.Name);
+            this.Data.AddInt(this.Message_Sender.Level); // Unknown
+            this.Data.AddInt(Bot ? 22 : this.Message_Sender.League);
 
             this.Data.AddLong(this.Message_Sender.UserId);
             this.Data.AddLong(this.Message_Sender.UserId);
@@ -35,7 +36,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server
             this.Data.AddBool(this.Message_Sender.ClanId > 0);
             if (this.Message_Sender.ClanId > 0)
             {
-                Logic.Clan _Clan = Resources.Clans.Get(this.Message_Sender.ClanId, Constants.Database, false);
+                var _Clan = Resources.Clans.Get(this.Message_Sender.ClanId, Constants.Database);
 
                 this.Data.AddLong(_Clan.Clan_ID);
                 this.Data.AddString(_Clan.Name);

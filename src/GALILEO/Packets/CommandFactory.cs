@@ -44,6 +44,7 @@ namespace BL.Servers.CoC.Packets
                 {577, typeof(Swap_Buildings)},
                 {590, typeof(Buy_Multiple_Wall)},
                 {591, typeof(Change_Village_Mode)},
+                {592, typeof(Train_Unit_V2)},
                 {601, typeof(Search_Opponent_2)},
                 {700, typeof(Place_Attacker)},
                 {701, typeof(Place_Alliance_Attacker)},

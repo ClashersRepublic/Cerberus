@@ -424,6 +424,7 @@
     <Compile Include="Packets\Commands\Client\SpeedUp_Upgrade_Unit.cs" />
     <Compile Include="Packets\Commands\Client\Swap_Buildings.cs" />
     <Compile Include="Packets\Commands\Client\Train_Unit.cs" />
+    <Compile Include="Packets\Commands\Client\Train_Unit_V2.cs" />
     <Compile Include="Packets\Commands\Client\Unlock_Building.cs" />
     <Compile Include="Packets\Commands\Client\Upgrade_Building.cs" />
     <Compile Include="Packets\Commands\Client\Upgrade_Hero.cs" />
@@ -441,6 +442,7 @@
     <Compile Include="Packets\Cryptography\RC4\Scrambler.cs" />
     <Compile Include="Packets\Debug.cs" />
     <Compile Include="Packets\DebugFactory.cs" />
+    <Compile Include="Packets\Debugs\Resource_Update.cs" />
     <Compile Include="Packets\Messages\Client\Add_Global_Chat.cs" />
     <Compile Include="Packets\Messages\Client\API\Bind_Google_Account.cs" />
     <Compile Include="Packets\Messages\Client\API\Facebook_Connect.cs" />
@@ -1004,9 +1006,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Packets\Debugs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>RMDIR /S /Q "$(TargetDir)Library\"
