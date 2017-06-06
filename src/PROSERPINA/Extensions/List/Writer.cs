@@ -250,7 +250,7 @@ namespace BL.Servers.CR.Extensions.List
         /// <returns></returns>
         public static byte[] HexaToBytes(this string _Value)
         {
-            string _Tmp = _Value.Replace("-", string.Empty);
+            string _Tmp = _Value.Contains("-") ? _Value.Replace("-", string.Empty) : _Value.Replace(" ", string.Empty);
             return Enumerable.Range(0, _Tmp.Length)
                 .Where(x => x % 2 == 0)
                 .Select(x => Convert.ToByte(_Tmp.Substring(x, 2), 16))

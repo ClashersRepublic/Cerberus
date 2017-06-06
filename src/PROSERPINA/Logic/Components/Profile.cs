@@ -153,7 +153,7 @@ namespace BL.Servers.CR.Logic.Components
 
                 _Packet.AddVInt(this.Player.Tutorial); // Tutorial
 
-                _Packet.AddVInt(0); // Tournament?
+                _Packet.AddVInt(0); // Tournament? (bool)
 
                 _Packet.AddVInt(0); // Unknown
 
