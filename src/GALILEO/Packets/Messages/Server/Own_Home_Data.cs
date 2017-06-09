@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using BL.Servers.CoC.Extensions.List;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
