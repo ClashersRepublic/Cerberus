@@ -28,12 +28,6 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
         internal override void Process()
         {
-            ShowValues();
-            Console.WriteLine($"Unit name {this.Unit.Name}");
-            Console.WriteLine($"Unit cost {this.Unit.TrainingCost[this.Device.Player.Avatar.GetUnitUpgradeLevel(this.Unit)]}");
-            Console.WriteLine($"Unit resource {this.Unit.TrainingResource}");
-            Console.WriteLine($"Unit count in camp {this.Unit.UnitsInCamp[this.Device.Player.Avatar.GetUnitUpgradeLevel(this.Unit)]}");
-
         }
     }
 }

@@ -53,7 +53,7 @@ namespace BL.Servers.CoC.Core.Events
                         Console.WriteLine("# In-Memory Battles           # " +
                                           Utils.Padding(Resources.Battles.Seed.ToString(), 15) + " #");
                         Console.WriteLine("# In-Memory SAEA    # " +
-                                          Utils.Padding(Resources.Gateway.ReadPool.Pool.Count + " - " +  Resources.Gateway.WritePool.Pool.Count + " - " + Resources.Gateway.AcceptPool.Pool.Count, 25) + " #");
+                                          Utils.Padding(Resources.Gateway.ReadPool.Pool.Count + " - " +  Resources.Gateway.WritePool.Pool.Count, 25) + " #");
                         Console.WriteLine("# ----------------------------------- #");
                         break;
                     }

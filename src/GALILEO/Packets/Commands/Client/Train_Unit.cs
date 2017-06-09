@@ -48,7 +48,6 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
         internal override void Process()
         {
-            ShowValues();
             Player _Player = this.Device.Player.Avatar;
 
             if (IsSpell)

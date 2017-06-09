@@ -15,8 +15,6 @@ namespace BL.Servers.CoC.Core.Networking
 {
     internal class Gateway
     {
-
-        internal SocketAsyncEventArgsPool AcceptPool;
         internal SocketAsyncEventArgsPool ReadPool;
         internal SocketAsyncEventArgsPool WritePool;
         internal Pool<byte[]> BufferPool;
@@ -26,7 +24,6 @@ namespace BL.Servers.CoC.Core.Networking
 
         internal Gateway()
         {
-            this.AcceptPool = new SocketAsyncEventArgsPool();
             this.ReadPool = new SocketAsyncEventArgsPool();
             this.WritePool = new SocketAsyncEventArgsPool();
             this.BufferPool = new Pool<byte[]>();
@@ -51,7 +48,10 @@ namespace BL.Servers.CoC.Core.Networking
                 $" has been started on {Utils.LocalNetworkIP} in {Math.Round(Program.Stopwatch.Elapsed.TotalSeconds, 4)} Seconds!",
                 true);
 
-            this.StartAccept();
+            SocketAsyncEventArgs AcceptEvent = new SocketAsyncEventArgs();
+            AcceptEvent.Completed += this.OnIOCompleted;
+
+            this.StartAccept(AcceptEvent);
         }
 
         internal void Initialize()
@@ -66,30 +66,26 @@ namespace BL.Servers.CoC.Core.Networking
                 WriterEvent.Completed += this.OnIOCompleted;
                 this.WritePool.Enqueue(WriterEvent);
             }
-            for (int Index = 0; Index < 5; Index++)
+        }
+
+        internal void StartAccept(SocketAsyncEventArgs e)
+        {
+            try
             {
-                SocketAsyncEventArgs AcceptEvent = new SocketAsyncEventArgs();
-                AcceptEvent.Completed += this.OnIOCompleted;
-                this.AcceptPool.Enqueue(AcceptEvent);
+                while (true)
+                {
+                    if (!this.Listener.AcceptAsync(e))
+                        this.ProcessAccept(e, false);
+                    else
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Resources.Exceptions.Catch(ex, "Exception while starting to accept(critical)");
             }
         }
 
-        internal void StartAccept()
-        {
-            SocketAsyncEventArgs AcceptEvent = this.AcceptPool.Dequeue();
-            if (AcceptEvent == null)
-            {
-                AcceptEvent = new SocketAsyncEventArgs();
-                AcceptEvent.Completed += this.OnIOCompleted;
-            }
-            while (true)
-            {
-                if (!this.Listener.AcceptAsync(AcceptEvent))
-                    this.ProcessAccept(AcceptEvent, false);
-                else
-                    break;
-            }
-        }
         internal void StartReceive(SocketAsyncEventArgs AsyncEvent)
         {
             var client = (Token)AsyncEvent.UserToken;
@@ -132,19 +128,18 @@ namespace BL.Servers.CoC.Core.Networking
                 {
                     if (!Constants.AuthorizedIP.Contains(Socket.RemoteEndPoint.ToString().Split(':')[0]))
                     {
-                       Socket.Close();
+                        Socket.Close();
                         AsyncEvent.AcceptSocket = null;
-                        this.AcceptPool.Enqueue(AsyncEvent);
                         if (startNew)
-                            StartAccept();
+                            StartAccept(AsyncEvent);
                         return;
                     }
                 }
 
 
-                Loggers.Log($"New client connected -> {((IPEndPoint)Socket.RemoteEndPoint).Address}", true);
+                Loggers.Log($"New client connected -> {((IPEndPoint) Socket.RemoteEndPoint).Address}", true);
 
-                SocketAsyncEventArgs ReadEvent = this.ReadPool.Dequeue();
+                SocketAsyncEventArgs ReadEvent = this.GetReadEvent();
 
                 if (ReadEvent != null)
                 {
@@ -153,7 +148,7 @@ namespace BL.Servers.CoC.Core.Networking
                     ReadEvent.SetBuffer(buffer, 0, buffer.Length);
                     Device device = new Device(Socket)
                     {
-                        IPAddress = ((IPEndPoint)Socket.RemoteEndPoint).Address.ToString()
+                        IPAddress = ((IPEndPoint) Socket.RemoteEndPoint).Address.ToString()
                     };
 
                     Token Token = new Token(ReadEvent, device);
@@ -162,47 +157,22 @@ namespace BL.Servers.CoC.Core.Networking
                     Resources.Devices.Add(device);
 
                     this.StartReceive(ReadEvent);
-
                 }
                 else
                 {
-                    try
-                    {
-
-                        ReadEvent = new SocketAsyncEventArgs();
-                        ReadEvent.SetBuffer(new byte[Constants.ReceiveBuffer], 0, Constants.ReceiveBuffer);
-                        ReadEvent.Completed += this.OnIOCompleted;
-                        ReadEvent.AcceptSocket = Socket;
-
-                        Device device = new Device(Socket)
-                        {
-                            IPAddress = ((IPEndPoint)Socket.RemoteEndPoint).Address.ToString()
-                        };
-
-                        Token Token = new Token(ReadEvent, device);
-                        device.Token = Token;
-                        Interlocked.Increment(ref this.ConnectedSockets);
-                        Resources.Devices.Add(device);
-
-                        this.StartReceive(ReadEvent);
-                    }
-                    catch (Exception ex)
-                    {
-                        Resources.Exceptions.RavenClient.Capture(
-                            new SentryEvent("There are no more available sockets to allocate."));
-                    }
+                    Resources.Exceptions.RavenClient.Capture(new SentryEvent("Read Event is null"));
                 }
+
             }
             else
             {
                 Loggers.Log("Not connected or error at ProcessAccept.", false, Defcon.ERROR);
-                Socket.Close(5);
+                this.KillSocket(Socket);
             }
 
             AsyncEvent.AcceptSocket = null;
-            this.AcceptPool.Enqueue(AsyncEvent);
             if (startNew)
-                StartAccept();
+                StartAccept(AsyncEvent);
         }
 
         internal void ProcessReceive(SocketAsyncEventArgs AsyncEvent, bool startNew)
@@ -260,7 +230,7 @@ namespace BL.Servers.CoC.Core.Networking
 
         internal void Send(Message Message)
         {
-            SocketAsyncEventArgs WriteEvent = this.WritePool.Dequeue();
+            SocketAsyncEventArgs WriteEvent = this.GetWriteEvent();
 
             if (WriteEvent != null)
             {
@@ -274,17 +244,7 @@ namespace BL.Servers.CoC.Core.Networking
             }
             else
             {
-                WriteEvent = new SocketAsyncEventArgs();
-
-                WriteEvent.SetBuffer(Message.ToBytes, Message.Offset, Message.Length + 7 - Message.Offset);
-
-                WriteEvent.Completed += this.OnIOCompleted;
-
-                WriteEvent.AcceptSocket = Message.Device.Socket;
-                WriteEvent.RemoteEndPoint = Message.Device.Socket.RemoteEndPoint;
-                WriteEvent.UserToken = Message.Device.Token;
-
-                this.StartSend(WriteEvent);
+                Resources.Exceptions.RavenClient.Capture(new SentryEvent("Write event is null"));
             }
         }
 
@@ -322,7 +282,6 @@ namespace BL.Servers.CoC.Core.Networking
 
         internal void ProcessSend(SocketAsyncEventArgs Args)
         {
-            var client = (Token)Args.UserToken;
             var transferred = Args.BytesTransferred;
             if (transferred == 0 || Args.SocketError != SocketError.Success)
             {
@@ -410,6 +369,40 @@ namespace BL.Servers.CoC.Core.Networking
         {
             if (buffer?.Length == Constants.ReceiveBuffer)
                 this.BufferPool.Push(buffer);
+        }
+        internal void KillSocket(Socket socket)
+        {
+            if (socket == null)
+                return;
+
+            try { socket.Disconnect(false); }
+            catch { /* Swallow */ }
+            try { socket.Close(5); }
+            catch { /* Swallow */ }
+            try { socket.Dispose(); }
+            catch { /* SWallow */ }
+        }
+
+        internal SocketAsyncEventArgs GetReadEvent()
+        {
+            var args = this.ReadPool.Dequeue();
+            if (args == null)
+            {
+                args = new SocketAsyncEventArgs();
+                args.Completed += this.OnIOCompleted;
+            }
+            return args;
+        }
+
+        internal SocketAsyncEventArgs GetWriteEvent()
+        {
+            var args = this.WritePool.Dequeue();
+            if (args == null)
+            {
+                args = new SocketAsyncEventArgs();
+                args.Completed += this.OnIOCompleted;
+            }
+            return args;
         }
 
         internal byte[] GetBuffer => this.BufferPool.Pop() ?? new byte[Constants.ReceiveBuffer];

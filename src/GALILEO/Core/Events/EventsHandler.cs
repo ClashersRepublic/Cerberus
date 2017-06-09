@@ -73,6 +73,7 @@ namespace BL.Servers.CoC.Core.Events
                         }
                     }
                 }
+                Thread.Sleep(-1);
             }
             catch (Exception)
             {
