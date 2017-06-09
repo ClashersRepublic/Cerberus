@@ -26,9 +26,9 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
             this.Role = (Role) this.Reader.ReadInt32();
         }
 
-        internal override void Process()
+        internal override async void Process()
         {
-            Level Player = Resources.Players.Get(this.UserID, Constants.Database, false);
+            Level Player = await Resources.Players.Get(this.UserID, Constants.Database, false);
             Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
             if (Alliance != null && Player != null)
             {

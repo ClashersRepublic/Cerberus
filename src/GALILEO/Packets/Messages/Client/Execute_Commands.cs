@@ -43,6 +43,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
 
         internal override void Process()
         {
+
            /* //Checksum check xD...Why not?
             if (this.Device.Last_Checksum != 0 && this.Device.Last_Tick != 0)
             {

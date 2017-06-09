@@ -38,6 +38,7 @@ namespace BL.Servers.CoC.Extensions
 
             return _String;
         }
+
         internal static void Increment(this byte[] nonce, int timesToIncrease = 2)
         {
             for (int j = 0; j < timesToIncrease; j++)

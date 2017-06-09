@@ -11,5 +11,7 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
         [JsonProperty("x")] internal int X;
 
         [JsonProperty("y")] internal int Y;
+
+        [JsonProperty("t")] internal int Tick;
     }
 }

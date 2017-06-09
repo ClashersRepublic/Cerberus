@@ -83,7 +83,6 @@ namespace BL.Servers.CoC.Logic
             this.Attacker.Units = new Units();
             this.Attacker.Spells = new Units();
             this.Attacker.Heroes_Health = new Slots();
-            this.Attacker.Heroes_States = new Slots();
         }
 
         internal void Add_Command(Battle_Command Command)
@@ -103,6 +102,8 @@ namespace BL.Servers.CoC.Logic
             this.Replay_Info.Stats.Home_ID[1] = this.Defender.UserLowId;
             this.Replay_Info.Stats.Original_Attacker_Score = this.Attacker.Trophies;
             this.Replay_Info.Stats.Original_Defender_Score = this.Defender.Trophies;
+            this.Replay_Info.Stats.Alliance_Name = this.Attacker.Alliance_Name;
+            this.Replay_Info.Stats.Alliance_Badge = this.Attacker.Badge_ID;
             this.Replay_Info.Stats.Battle_Time = 180 - (int)this.Attack_Time + 1;
         }
 

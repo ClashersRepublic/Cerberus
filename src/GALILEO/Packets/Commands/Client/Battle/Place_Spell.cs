@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Files;
@@ -10,18 +13,18 @@ using BL.Servers.CoC.Logic.Structure.Slots.Items;
 
 namespace BL.Servers.CoC.Packets.Commands.Client.Battle
 {
-    internal class Place_Attacker : Command
+    internal class Place_Spell : Command
     {
-
-        internal Characters Troop;
-
         internal int GlobalId;
         internal int X;
         internal int Y;
+        internal byte Unknown_Byte;
+        internal int Unknown_Int;
         internal int Tick;
 
+        internal Spells Spell;
 
-        public Place_Attacker(Reader reader, Device client, int id) : base(reader, client, id)
+        public Place_Spell(Reader reader, Device client, int id) : base(reader, client, id)
         {
         }
 
@@ -30,8 +33,9 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
             this.X = this.Reader.ReadInt32();
             this.Y = this.Reader.ReadInt32();
             this.GlobalId = this.Reader.ReadInt32();
-            this.Troop = CSV.Tables.Get(Gamefile.Characters).GetDataWithID(GlobalId) as Characters;
-
+            this.Spell = CSV.Tables.Get(Gamefile.Spells).GetDataWithID(GlobalId) as Spells;
+            this.Unknown_Byte = this.Reader.ReadByte();
+            this.Unknown_Int = this.Reader.ReadInt32();
             this.Tick = this.Reader.ReadInt32();
         }
 
@@ -57,14 +61,13 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
                         };
                     Battle.Add_Command(Command);
 
-
-                    int Index = Battle.Replay_Info.Units.FindIndex(T => T[0] == this.GlobalId);
+                    int Index = Battle.Replay_Info.Spells.FindIndex(T => T[0] == this.GlobalId);
                     if (Index > -1)
-                        Battle.Replay_Info.Units[Index][1]++;
+                        Battle.Replay_Info.Spells[Index][1]++;
                     else
-                        Battle.Replay_Info.Units.Add(new[] {this.GlobalId, 1});
+                        Battle.Replay_Info.Spells.Add(new[] {this.GlobalId, 1});
 
-                    Battle.Attacker.Add_Unit(GlobalId, 1);
+                    Battle.Attacker.Add_Spells(GlobalId, 1);
 
                 }
                 else
@@ -86,30 +89,13 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
                     this.Device.Player.Avatar.Battle_V2.Add_Command(Command);
                 }
             }
+            List<Slot> _PlayerSpells = this.Device.Player.Avatar.Spells;
 
-            List<Slot> _PlayerUnits = this.Device.Player.Avatar.Units;
-
-            Slot _DataSlot = _PlayerUnits.Find(t => t.Data == GlobalId);
+            Slot _DataSlot = _PlayerSpells.Find(t => t.Data == GlobalId);
             if (_DataSlot != null)
             {
                 _DataSlot.Count -= 1;
             }
-
-
-            /*            List<Component> components = level.GetComponentManager().GetComponents(0);
-            for (int i = 0; i < components.Count; i++)
-            {
-                UnitStorageComponent c = (UnitStorageComponent)components[i];
-                if (c.GetUnitTypeIndex(Unit) != -1)
-                {
-                    var storageCount = c.GetUnitCountByData(Unit);
-                    if (storageCount >= 1)
-                    {
-                        c.RemoveUnits(Unit, 1);
-                        break;
-                    }
-                }
-            }*/
         }
     }
 }

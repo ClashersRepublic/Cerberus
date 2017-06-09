@@ -14,7 +14,8 @@ namespace BL.Servers.CoC.Packets
         {
             Debugs = new Dictionary<string, Type>
             {
-                {"resource", typeof(Resource_Update)}
+                {"resource", typeof(Resource_Update)},
+                {"stats", typeof(Statistics) }
             };
         }
     }

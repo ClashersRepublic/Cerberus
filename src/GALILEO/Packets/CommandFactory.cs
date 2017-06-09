@@ -49,6 +49,9 @@ namespace BL.Servers.CoC.Packets
                 {700, typeof(Place_Attacker)},
                 {701, typeof(Place_Alliance_Attacker)},
                 {703, typeof(Surrender_Attack)},
+                {704, typeof(Place_Spell)},
+                {705, typeof(Place_Hero)},
+                {706, typeof(Hero_Rage)},
                 {800, typeof(Search_Opponent)}
             };
         }

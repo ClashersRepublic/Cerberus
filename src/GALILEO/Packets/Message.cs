@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.Binary;
@@ -65,7 +66,6 @@ namespace BL.Servers.CoC.Packets
 
         internal virtual void Process()
         {
-
         }
 
         internal virtual void DecryptPepper()

@@ -16,7 +16,8 @@ namespace BL.Servers.CoC.Packets.Messages.Server
 
         internal override void Encode()
         {
-            this.Data.AddLong(0);
+            this.Data.AddByte(1);
+            this.Data.AddInt(2);
             this.Data.AddString(this.Name);
         }
     }

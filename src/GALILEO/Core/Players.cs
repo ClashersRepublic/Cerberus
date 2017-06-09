@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 using BL.Servers.CoC.Core.Database;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Logic;
 using Newtonsoft.Json;
 using BL.Servers.CoC.Logic.Enums;
+using MySql.Data.MySqlClient;
+using Player = Google.Apis.Games.v1.Data.Player;
 
 namespace BL.Servers.CoC.Core
 {
@@ -62,7 +66,7 @@ namespace BL.Servers.CoC.Core
             }
         }
 
-        internal Level Get(long UserId, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal async Task<Level> Get(long UserId, DBMS DBMS = DBMS.Mysql, bool Store = true)
         {
             if (!this.ContainsKey(UserId))
             {
@@ -73,7 +77,7 @@ namespace BL.Servers.CoC.Core
                     case DBMS.Mysql:
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.Player Data = Database.Player.Find(UserId);
+                             var Data = await Database.Player.FindAsync(UserId);
 
                             if (!string.IsNullOrEmpty(Data?.Data))
                             {
@@ -119,11 +123,11 @@ namespace BL.Servers.CoC.Core
                         }
                         break;
                     case DBMS.Both:
-                        Player = this.Get(UserId, DBMS.Redis, Store);
+                        Player = await this.Get(UserId, DBMS.Redis, Store);
 
                         if (Player == null)
                         {
-                            Player = this.Get(UserId, DBMS.Mysql, Store);
+                            Player = await this.Get(UserId, DBMS.Mysql, Store);
                             if (Player != null)
                                 this.Save(Player, DBMS.Redis);
 
@@ -135,7 +139,7 @@ namespace BL.Servers.CoC.Core
             return this[UserId];
         }
 
-        internal Level New(long UserId = 0, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal async Task<Level> New(long UserId = 0, DBMS DBMS = DBMS.Mysql, bool Store = true)
         {
             Level Player = null;
 
@@ -182,11 +186,12 @@ namespace BL.Servers.CoC.Core
                             Database.Player.Add(new Database.Player
                             {
                                 ID = Player.Avatar.UserId,
-                                Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,
+                                Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" +
+                                       Player.JSON,
                                 FacebookID = "#:#:#:#",
                             });
 
-                            Database.SaveChanges();
+                            await Database.SaveChangesAsync();
                         }
 
                         if (Store)
@@ -194,7 +199,7 @@ namespace BL.Servers.CoC.Core
                             this.Add(Player);
                         }
                         break;
-                }
+                    }
 
                     case DBMS.Redis:
                     {
@@ -226,7 +231,7 @@ namespace BL.Servers.CoC.Core
             return Player;
         }
 
-        internal void Save(Level Player, DBMS DBMS = DBMS.Mysql)
+        internal async void Save(Level Player, DBMS DBMS = DBMS.Mysql)
         {
             Player.Avatar.LastSave = DateTime.UtcNow;
             while (true)
@@ -245,7 +250,7 @@ namespace BL.Servers.CoC.Core
                                 Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON;
                                 Data.Trophies = Player.Avatar.Trophies;
                                 Data.FacebookID = Player.Avatar.Facebook.Identifier ?? "#:#:#:#";
-                                Database.SaveChanges();
+                                await Database.SaveChangesAsync();
                             }
                         }
                         break;
@@ -260,6 +265,59 @@ namespace BL.Servers.CoC.Core
                     case DBMS.Both:
                     {
                         this.Save(Player);
+                        DBMS = DBMS.Redis;
+                        continue;
+                    }
+                }
+                break;
+            }
+        }
+
+        internal async void Save(List<Level> Players, DBMS DBMS = DBMS.Mysql)
+        {
+            while (true)
+            {
+                switch (DBMS)
+                {
+                    case DBMS.Mysql:
+                    {
+
+                        using (MysqlEntities Database = new MysqlEntities())
+                        {
+                            foreach (var Player in Players)
+                            {
+                                lock (Player)
+                                {
+                                    Player.Avatar.LastSave = DateTime.UtcNow;
+                                    var Data = Database.Player.Find(Player.Avatar.UserId);
+
+                                    if (Data != null)
+                                    {
+                                        Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON;
+                                        Data.Trophies = Player.Avatar.Trophies;
+                                        Data.FacebookID = Player.Avatar.Facebook.Identifier ?? "#:#:#:#";
+                                    }
+                                }
+                            }
+                       
+                            await Database.SaveChangesAsync();
+                        }
+                        break;
+                    }
+
+                    case DBMS.Redis:
+                    {
+                        foreach (var Player in Players)
+                        {
+                            Player.Avatar.LastSave = DateTime.UtcNow;
+                            await Redis.Players.StringSetAsync(Player.Avatar.UserId.ToString(), JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,  TimeSpan.FromHours(4));
+                        }
+                        break;
+                    }
+
+                    case DBMS.Both:
+                    {
+                        this.Save(Players);
                         DBMS = DBMS.Redis;
                         continue;
                     }

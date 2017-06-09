@@ -395,8 +395,11 @@
     <Compile Include="Logic\Structure\Village_Object.cs" />
     <Compile Include="Packets\Command.cs" />
     <Compile Include="Packets\CommandFactory.cs" />
+    <Compile Include="Packets\Commands\Client\Battle\Hero_Rage.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Place_Alliance_Attacker.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Place_Attacker.cs" />
+    <Compile Include="Packets\Commands\Client\Battle\Place_Hero.cs" />
+    <Compile Include="Packets\Commands\Client\Battle\Place_Spell.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Search_Opponent.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Search_Opponent_2.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Surrender_Attack.cs" />
@@ -443,6 +446,7 @@
     <Compile Include="Packets\Debug.cs" />
     <Compile Include="Packets\DebugFactory.cs" />
     <Compile Include="Packets\Debugs\Resource_Update.cs" />
+    <Compile Include="Packets\Debugs\Statistics.cs" />
     <Compile Include="Packets\Messages\Client\Add_Global_Chat.cs" />
     <Compile Include="Packets\Messages\Client\API\Bind_Google_Account.cs" />
     <Compile Include="Packets\Messages\Client\API\Facebook_Connect.cs" />
@@ -496,10 +500,14 @@
     <Compile Include="Packets\Messages\Server\Avatar_Stream.cs" />
     <Compile Include="Packets\Messages\Server\Avatar_Stream_Entry.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Battle_Failed.cs" />
+    <Compile Include="Packets\Messages\Server\Battle\Live_Battle.cs" />
+    <Compile Include="Packets\Messages\Server\Battle\Live_Battle_Stats.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Pc_Battle_Data_V2.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Npc_Data.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Pc_Battle_Data.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Replay_Data.cs" />
+    <Compile Include="Packets\Messages\Server\Battle\V2_Battle_Info.cs" />
+    <Compile Include="Packets\Messages\Server\Battle\V2_Battle_Result.cs" />
     <Compile Include="Packets\Messages\Server\Clans\Alliance_Change_Role_Ok.cs" />
     <Compile Include="Packets\Messages\Server\Clans\Alliance_Data.cs" />
     <Compile Include="Packets\Messages\Server\Clans\Alliance_Full_Entry.cs" />
@@ -511,6 +519,7 @@
     <Compile Include="Packets\Messages\Server\Clans\War\War_Map.cs" />
     <Compile Include="Packets\Messages\Server\Errors\Server_Error.cs" />
     <Compile Include="Packets\Messages\Server\Errors\Server_Shutdown.cs" />
+    <Compile Include="Packets\Messages\Server\Game_News.cs" />
     <Compile Include="Packets\Messages\Server\Global_Chat_Entry.cs" />
     <Compile Include="Packets\Messages\Server\Keep_Alive_OK.cs" />
     <Compile Include="Packets\Messages\Server\Leaderboard\Global_Clans.cs" />

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Logic.Structure;
 using BL.Servers.CoC.Packets.Messages.Server.Errors;
+using ThreadState = System.Diagnostics.ThreadState;
 
 namespace BL.Servers.CoC.Core.Events
 {
@@ -12,6 +15,7 @@ namespace BL.Servers.CoC.Core.Events
     {
         internal Thread Thread;
         internal Boolean BleeedingEdge;
+
         internal Parser()
         {
             this.Thread = new Thread(this.Parse)
@@ -21,6 +25,7 @@ namespace BL.Servers.CoC.Core.Events
             };
             this.Thread.Start();
         }
+
         internal void Parse()
         {
             while (true)
@@ -134,6 +139,9 @@ namespace BL.Servers.CoC.Core.Events
                         Console.WriteLine("# " + DateTime.Now.ToString("d") + " ---- HELPS ---- " +
                                           DateTime.Now.ToString("T") + " #");
                         Console.WriteLine("# ----------------------------------- #");
+                            Console.WriteLine(((IEnumerable)Process.GetCurrentProcess().Threads)
+                                    .OfType<ProcessThread>()
+                                    .Count(t => t.ThreadState == ThreadState.Running));
                         Console.WriteLine("# ----------------------------------- #");
                         break;
                     }

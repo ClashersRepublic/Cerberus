@@ -34,16 +34,9 @@ namespace BL.Servers.CoC.Core.Events
                     if (Resources.Players.Count > 0)
                     {
                         List<Level> Players = Resources.Players.Values.ToList();
-
-                        Parallel.ForEach(Players, (_Player) =>
-                        {
-                            if (_Player != null)
-                            {
-                                Resources.Players.Save(_Player, Constants.Database);
-                                //Resources.Players.Remove(_Player); //Let's not waste resource to delete them,Save only should be ok
-                                //Redis.Players.KeyDelete(_Player.LowID.ToString());
-                            }
-                        });
+                        Resources.Players.Save(Players, Constants.Database);
+                        //Resources.Players.Remove(_Player); //Let's not waste resource to delete them,Save only should be ok
+                        //Redis.Players.KeyDelete(_Player.LowID.ToString());
                     }
                 }
 

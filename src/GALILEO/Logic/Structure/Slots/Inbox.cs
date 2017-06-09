@@ -27,7 +27,7 @@ namespace BL.Servers.CoC.Logic.Structure.Slots
             this.Slots = new List<Mail>(Limit);
         }
 
-        internal void Add(Mail Message)
+        internal async void Add(Mail Message)
         {
             lock (this.Gate)
             {
@@ -44,7 +44,7 @@ namespace BL.Servers.CoC.Logic.Structure.Slots
                 }
             }
 
-            var Avatar = Core.Resources.Players.Get(Player.UserId, Constants.Database, false);
+            var Avatar = await Core.Resources.Players.Get(Player.UserId, Constants.Database, false);
             if (Avatar?.Client != null)
             {
                 new Avatar_Stream_Entry(Avatar.Client, Message).Send();

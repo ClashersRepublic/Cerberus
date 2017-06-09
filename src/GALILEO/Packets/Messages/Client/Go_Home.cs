@@ -11,6 +11,8 @@ using BL.Servers.CoC.Extensions.Binary;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Structure.Slots.Items;
 using BL.Servers.CoC.Packets.Messages.Server;
+using BL.Servers.CoC.Packets.Messages.Server.Authentication;
+using BL.Servers.CoC.Packets.Messages.Server.Battle;
 
 namespace BL.Servers.CoC.Packets.Messages.Client
 {
@@ -29,9 +31,8 @@ namespace BL.Servers.CoC.Packets.Messages.Client
             this.Reader.ReadByte();
         }
 
-        internal override void Process()
+        internal override async void Process()
         {
-
             if (State == 1)
             {
                 this.Device.State = Logic.Enums.State.WAR_EMODE;
@@ -56,8 +57,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
                                 Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
                             if (Battle.Commands.Count > 0)
                             {
-                                Level Player =
-                                    Core.Resources.Players.Get(Battle.Defender.UserId, Constants.Database, false);
+                                Level Player = await Core.Resources.Players.Get(Battle.Defender.UserId, Constants.Database, false);
 
                                 if (Utils.IsOdd(Resources.Random.Next(1, 1000)))
                                 {
@@ -68,9 +68,14 @@ namespace BL.Servers.CoC.Packets.Messages.Client
                                         this.Device.Player.Avatar.Trophies -= (int) Battle.LoseTrophies();
                                     else
                                         this.Device.Player.Avatar.Trophies = 0;
+
+                                    Battle.Replay_Info.Stats.Defender_Score = (int)Battle.WinTrophies();
+                                    Battle.Replay_Info.Stats.Attacker_Score = lost > 0 ? -lost : 0;
+                                    Battle.Replay_Info.Stats.Destruction_Percentage = Resources.Random.Next(49);
                                 }
                                 else
                                 {
+
                                     int lost = (int) Battle.LoseTrophies();
                                     if (Player.Avatar.Trophies >= lost)
                                         Player.Avatar.Trophies -= (int) Battle.LoseTrophies();
@@ -78,10 +83,14 @@ namespace BL.Servers.CoC.Packets.Messages.Client
                                         Player.Avatar.Trophies = 0;
 
                                     this.Device.Player.Avatar.Trophies += (int) Battle.WinTrophies();
-                                }
+                                    Battle.Replay_Info.Stats.Attacker_Score = (int)Battle.WinTrophies();
+                                    Battle.Replay_Info.Stats.Defender_Score = lost > 0 ? -lost : 0;
 
-                                Battle.WinTrophies();
-                                Battle.LoseTrophies();
+                                    Battle.Replay_Info.Stats.Destruction_Percentage = Resources.Random.Next(50, 100);
+                                    if (Battle.Replay_Info.Stats.Destruction_Percentage == 100)
+                                        Battle.Replay_Info.Stats.TownHall_Destroyed = true;
+                                }
+                                
                                 Battle.Set_Replay_Info();
                                 this.Device.Player.Avatar.Inbox.Add(
                                     new Mail

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BL.Servers.CoC.Core.Database;
 using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Logic;
 using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Logic.Structure;
 using BL.Servers.CoC.Packets.Messages.Server.Errors;
+using Battle = BL.Servers.CoC.Logic.Battle;
+using Clan = BL.Servers.CoC.Logic.Clan;
 using Timer = System.Timers.Timer;
 
 namespace BL.Servers.CoC.Core
@@ -112,19 +115,7 @@ namespace BL.Servers.CoC.Core
                     {
                         if (Resources.Players.Count > 0)
                         {
-                            List<Level> Players = Resources.Players.Values.ToList();
-
-                            Parallel.ForEach(Players, (_Player) =>
-                            {
-                                if (_Player != null)
-                                {
-                                    lock (_Player)
-                                    {
-                                        _Player.Tick();
-                                        Resources.Players.Save(_Player, Constants.Database);
-                                    }
-                                }
-                            });
+                            Resources.Players.Save(Resources.Players.Values.ToList(), Constants.Database);
                         }
                     }
                     lock (Resources.Clans.Gate)

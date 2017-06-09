@@ -24,7 +24,6 @@ namespace BL.Assets.Editor.ScOld
             _matrixs = new List<Matrix>();
             _infoFile = infoFile;
             _textureFile = textureFile;
-            Console.WriteLine();
         }
 
         #endregion

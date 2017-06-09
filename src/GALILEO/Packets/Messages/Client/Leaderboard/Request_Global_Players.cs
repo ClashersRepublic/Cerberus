@@ -12,7 +12,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Leaderboard
         }
         internal override void Process()
         {
-            //new Global_Players(this.Device).Send();
+            new Global_Players(this.Device).Send();
         }
     }
 }

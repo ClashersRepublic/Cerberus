@@ -14,9 +14,9 @@ namespace BL.Servers.CoC.Packets.Messages.Server
         {
             this.Identifier = 24334;
         }
-        internal override void Encode()
+        internal override async void Encode()
         {
-            this.Player = this.UserID == this.Device.Player.Avatar.UserId ? this.Device.Player : Resources.Players.Get(UserID, Constants.Database, false);
+            this.Player = this.UserID == this.Device.Player.Avatar.UserId ? this.Device.Player : await Resources.Players.Get(UserID, Constants.Database, false);
 
             this.Data.AddRange(this.Player.Avatar.ToBytes);
             this.Data.AddCompressed(this.Player.JSON, false);

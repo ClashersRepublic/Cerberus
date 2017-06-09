@@ -127,11 +127,11 @@ namespace BL.Servers.CoC.Logic
 
         [JsonProperty("unit_upgrades")] internal Upgrades Unit_Upgrades;
         [JsonProperty("spell_upgrades")] internal Upgrades Spell_Upgrades;
-        [JsonProperty("hereos_upgrades")] internal Upgrades Heroes_Upgrades;
+        [JsonProperty("hero_upgrade")] internal Upgrades Heroes_Upgrades;
 
-        [JsonProperty("heroes_states")] internal Slots Heroes_States;
-        [JsonProperty("hereos_health")] internal Slots Heroes_Health;
-        [JsonProperty("hereos_modes")] internal Slots Heroes_Modes;
+        [JsonProperty("hero_states")] internal Slots Heroes_States;
+        [JsonProperty("hero_health")] internal Slots Heroes_Health;
+        [JsonProperty("hero_modes")] internal Slots Heroes_Modes;
 
         [JsonProperty("resources")] internal Resources Resources;
         [JsonProperty("resources_cap")] internal Resources Resources_Cap;
@@ -248,9 +248,9 @@ namespace BL.Servers.CoC.Logic
                         }
                         else
                         {
-                            foreach (int userid in clan?.Members.Keys)
+                            foreach (var userid in clan?.Members.Keys)
                             {
-                                var player = Core.Resources.Players.Get(userid, Constants.Database, false);
+                                var player = Core.Resources.Players.Get(userid, Constants.Database, false).GetAwaiter().GetResult();
                                 player.Avatar.ClanId = 0;
                                 player.Avatar.Alliance_Role = -1;
                                 player.Avatar.Alliance_Level = -1;
@@ -338,18 +338,18 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(220);
                 _Packet.AddInt(1828055880);
 
-                _Packet.AddBool(this.NameState > 0); //Not a bool
+                _Packet.AddByte(this.NameState); //Name changed count
 
-                _Packet.AddInt(0); //1
+                _Packet.AddInt(this.NameState > 1 ? 1 : 0); //Name Changed
 
-                _Packet.AddInt(0); //6900
+                _Packet.AddInt(6900); //6900
                 _Packet.AddInt(0);
                 _Packet.AddInt(this.WarState ? 1 : 0);
 
                 _Packet.AddInt(0);
                 _Packet.AddInt(0); // Total Attack with shield
 
-                _Packet.AddBool(this.NameState > 1); //0
+                _Packet.AddBool(false); //0
 
                 _Packet.AddDataSlots(this.Resources_Cap);
 
@@ -403,19 +403,8 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
-                _Packet.AddInt(14); //Builder base troop should be in attack
-                for (int i = 0; i < 14; i++)
-                {
-                    _Packet.AddInt(4000031);
-                    _Packet.AddInt(4);
-                }
-
-                _Packet.AddInt(14); //Troop in camp for training
-                for (int i = 0; i < 14; i++)
-                {
-                    _Packet.AddInt(4000031);
-                    _Packet.AddInt(0);
-                }
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
                 return _Packet.ToArray();
             }
 

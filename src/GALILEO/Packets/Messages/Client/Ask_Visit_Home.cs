@@ -21,9 +21,9 @@ namespace BL.Servers.CoC.Packets.Messages.Client
             this.AvatarId = this.Reader.ReadInt64();
         }
 
-        internal override void Process()
+        internal override async void Process()
         {
-            var target = Resources.Players.Get(this.AvatarId, Constants.Database, false);
+            var target = await Resources.Players.Get(this.AvatarId, Constants.Database, false);
             if (target != null)
             {
                 new Visit_Home_Data(this.Device, target).Send();

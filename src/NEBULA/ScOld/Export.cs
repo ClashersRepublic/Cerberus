@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Text;
 using System.IO;
+using System.Linq;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace BL.Assets.Editor.ScOld
 {
@@ -146,6 +150,26 @@ namespace BL.Assets.Editor.ScOld
         public void SetExportName(string name)
         {
             _exportName = name;
+        }
+        public override Bitmap Render(RenderingOptions options)
+        {
+            Console.WriteLine("XY:");
+            foreach (Shape chunk in _scFile.GetShapes())
+            {
+            }
+
+            foreach (Shape chunk in _scFile.GetShapes())
+            {
+                foreach (ShapeChunk a in chunk.Children)
+                {
+                    foreach (var p in a.UV)
+                    {
+                        Console.WriteLine("u: " + p.X + ", u: " + p.Y);
+                    }
+                }
+                Console.WriteLine("");
+            }
+            return null;
         }
         #endregion
     }

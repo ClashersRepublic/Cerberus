@@ -31,13 +31,13 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Battle
             this.Stream_Low_ID = this.Reader.ReadInt32();
         }
 
-        internal override void Process()
+        internal override async void Process()
         {
             var Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
             Entry Stream = Alliance.Chats.Get(this.Stream_Low_ID);
             if (Stream != null)
             {
-                var Player = Resources.Players.Get(Stream.Sender_ID, Constants.Database, false);
+                var Player = await Resources.Players.Get(Stream.Sender_ID, Constants.Database, false);
                 if (Player != null)
                 {
                     this.Device.State = State.IN_AMICAL_BATTLE;

@@ -21,7 +21,6 @@ namespace BL.Servers.CoC.Extensions
                 StringBuilder Stringer = new StringBuilder();
                 int Count = 11;
                 Identifier = ((long) GameUtils.GetLowID(Identifier) << 8) + GameUtils.GetHighID(Identifier);
-
                 while (++Count > 0)
                 {
                     Stringer.Append(GameUtils.SEARCH_TAG_CHARS[(int) (Identifier % GameUtils.SEARCH_TAG_LENGTH)]);

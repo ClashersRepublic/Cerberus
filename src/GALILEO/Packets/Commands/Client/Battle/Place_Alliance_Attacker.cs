@@ -30,7 +30,21 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
             {
                 System.Console.WriteLine(GlobalId);
                 var Battle = Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
-                Battle_Command Command = new Battle_Command { Command_Type = this.Identifier, Command_Base = new Command_Base { Base = new Base { Tick = this.Tick }, Data = this.GlobalId, X = this.X, Y = this.Y } };
+                Battle_Command Command = 
+                    new Battle_Command
+                    {
+                        Command_Type = this.Identifier,
+                        Command_Base = new Command_Base
+                        {
+                            Base = new Base
+                            {
+                                Tick = this.Tick   
+                            },
+                            Data = this.GlobalId,
+                            X = this.X,
+                            Y = this.Y
+                        }
+                    };
                 Battle.Add_Command(Command);
                 Battle.Replay_Info.Stats.Alliance_Used = true;
                 Battle.Attacker.Castle_Units = this.Device.Player.Avatar.Castle_Units.Clone();

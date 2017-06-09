@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using BL.Servers.CoC.Core.Events;
 using BL.Servers.CoC.Core.Networking;
 
@@ -21,6 +22,7 @@ namespace BL.Servers.CoC.Core
 
         internal static void Initialize()
         {
+           
             Resources.Exceptions = new Exceptions();
             Resources.Classes = new Classes();
             Resources.Devices = new Devices();

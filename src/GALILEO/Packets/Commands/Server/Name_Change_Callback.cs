@@ -22,7 +22,7 @@ namespace BL.Servers.CoC.Packets.Commands.Server
         internal override void Encode()
         {
             this.Data.AddString(this.Device.Player.Avatar.Name);
-            this.Data.AddInt(0);
+            this.Data.AddInt(this.Device.Player.Avatar.NameState);
             this.Data.AddInt(4);
             this.Data.AddInt(-1);
         }

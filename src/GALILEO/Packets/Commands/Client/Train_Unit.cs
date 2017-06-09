@@ -14,6 +14,14 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
     internal class Train_Unit : Command
     {
+        internal Characters Troop;
+        internal Spells Spell;
+
+        internal int GlobalId;
+        internal int Count;
+        internal int Tick;
+
+        internal bool IsSpell;
         public Train_Unit(Reader reader, Device client, int id) : base(reader, client, id)
         {
 
@@ -23,22 +31,35 @@ namespace BL.Servers.CoC.Packets.Commands.Client
         {
             this.Reader.ReadInt32();
             this.Reader.ReadUInt32();
-            this.UnitType = this.Reader.ReadInt32();
+            this.GlobalId = this.Reader.ReadInt32();
+            if (this.GlobalId >= 26000000)
+            {
+                this.IsSpell = true;
+                this.Spell = CSV.Tables.Get(Gamefile.Spells).GetDataWithID(GlobalId) as Spells;
+            }
+            else
+            {
+                this.Troop = CSV.Tables.Get(Gamefile.Characters).GetDataWithID(GlobalId) as Characters;
+            }
             this.Count = this.Reader.ReadInt32();
             this.Reader.ReadUInt32();
             this.Tick = this.Reader.ReadInt32();
         }
 
-        internal int Count;
-        internal int UnitType;
-        internal int Tick;
-
         internal override void Process()
         {
+            ShowValues();
             Player _Player = this.Device.Player.Avatar;
 
-            var _TroopData = CSV.Tables.Get(Gamefile.Characters).GetDataWithID(UnitType) as Combat_Item;
-            _Player.Add_Unit(_TroopData.GetGlobalID(), Count);
+            if (IsSpell)
+            {
+                _Player.Add_Spells(this.Spell.GetGlobalID(), Count);
+            }
+            else
+            {
+                _Player.Add_Unit(this.Troop.GetGlobalID(), Count);
+
+            }
         }
     }
 }

@@ -15,6 +15,7 @@ using BL.Servers.CoC.Packets.Messages.Server;
 using BL.Servers.CoC.Packets.Messages.Server.Clans;
 using BL.Servers.CoC.Packets.Messages.Server.Clans.War;
 using BL.Servers.CoC.Packets.Cryptography;
+using BL.Servers.CoC.Packets.Messages.Server.Battle;
 
 namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 {
@@ -107,7 +108,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
             this.ClientVersion = this.Reader.ReadString().Split('.');
         }
 
-        internal override void Process()
+        internal override async void Process()
         {
             if (Constants.RC4)
                 new Session_Key(this.Device).Send();
@@ -126,7 +127,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
             if (this.UserId == 0)
             {
-                this.Device.Player = Resources.Players.New(0, Constants.Database);
+                this.Device.Player = await Resources.Players.New(0, Constants.Database);
 
                 if (this.Device.Player != null)
                 {
@@ -146,7 +147,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
             }
             else if (this.UserId > 0)
             {
-                this.Device.Player = Resources.Players.Get(this.UserId, Constants.Database);
+                this.Device.Player = await Resources.Players.Get(this.UserId, Constants.Database);
                 if (this.Device.Player != null)
                 {
                     if (string.Equals(this.Token, this.Device.Player.Avatar.Token))
@@ -206,10 +207,11 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
             //new Authentication_Failed(this.Device,(Reason)19).Send();
             new Authentication_OK(this.Device).Send();
+
             new Own_Home_Data(this.Device).Send();
 
             new Server.Avatar_Stream(this.Device).Send();
-
+            //new Game_News(this.Device).Send();
             if (this.Device.Player.Avatar.ClanId > 0)
             {
                 Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
@@ -217,6 +219,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                 if (Alliance != null)
                 {
                     this.Device.Player.Avatar.Alliance_Level = Alliance.Level;
+
                     new Alliance_Full_Entry(this.Device) {Clan = Alliance}.Send();
                     new War_Map(this.Device).Send();
 

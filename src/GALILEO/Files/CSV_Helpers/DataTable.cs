@@ -65,6 +65,9 @@ namespace BL.Servers.CoC.Files.CSV_Helpers
                 case 21:
                     _Data = new Missions(_Row, this);
                     break;
+                case 26:
+                    _Data = new Spells(_Row, this);
+                    break;
                 case 28:
                     _Data = new Heroes(_Row, this);
                     break;

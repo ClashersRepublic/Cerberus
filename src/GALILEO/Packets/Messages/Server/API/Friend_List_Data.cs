@@ -15,7 +15,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.API
         public Friend_List_Data(Device Device, List<string> ID) : base(Device)
         {
             this.Identifier = 20105;
-            this.Players = MySQL_V2.GetPlayerViaFID(ID);
+            this.Players = MySQL_V2.GetPlayerViaFIDAsync(ID).GetAwaiter().GetResult();
             this.Players = this.Players?.OrderByDescending(t => t.Avatar.Trophies).ToList();
         }
 
