@@ -54,7 +54,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
 
 
                             var Battle =
-                                Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
+                                await Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
                             if (Battle.Commands.Count > 0)
                             {
                                 Level Player = await Core.Resources.Players.Get(Battle.Defender.UserId, Constants.Database, false);
@@ -120,7 +120,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
                 }
                 else if (this.Device.State == Logic.Enums.State.IN_AMICAL_BATTLE)
                 {
-                    var Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
+                    var Alliance = await Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
                     Entry Stream = Alliance.Chats.Get(this.Device.Player.Avatar.Amical_ID);
                     if (Stream != null)
                     {

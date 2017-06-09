@@ -14,12 +14,12 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Clans.War
             this.Identifier = 24335;
         }
 
-        internal override void Encode()
+        internal override async void Encode()
         {
             this.Data.AddInt((int) WarState.BATTLE_DAY);
             this.Data.AddInt((int) TimeSpan.FromHours(900).TotalSeconds);
             this.Data.AddLong(this.Device.Player.Avatar.ClanId);
-            var clan = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
+            var clan = await Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
 
             this.Data.AddString(clan.Name);
             this.Data.AddInt(clan.Badge);

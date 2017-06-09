@@ -41,7 +41,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
             this.Commands = this.Reader.ReadBytes((int)(this.Reader.BaseStream.Length - this.Reader.BaseStream.Position));
         }
 
-        internal override void Process()
+        internal override  void Process()
         {
 
            /* //Checksum check xD...Why not?
@@ -71,7 +71,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
 
 
             if (this.Device.State == Logic.Enums.State.IN_PC_BATTLE)
-                Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database).Battle_Tick =
+                 Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database).GetAwaiter().GetResult().Battle_Tick =
                     (int) this.CTick;
         
             if (this.Count > -1 && this.Count <= Constants.MaxCommand)

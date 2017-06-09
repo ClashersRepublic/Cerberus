@@ -22,7 +22,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Clans
         internal override void Encode()
         {
             this.Data.AddInt(0);
-            this.Data.AddRange(Alliance != null ? this.Alliance.Chats.ToBytes : Core.Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database).Chats.ToBytes);
+            this.Data.AddRange(Alliance != null ? this.Alliance.Chats.ToBytes : Core.Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database).GetAwaiter().GetResult().Chats.ToBytes);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
 
         internal override async void Process()
         {
-            Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
+            Clan Alliance = await Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
             Entry Stream = Alliance.Chats.Get(this.StreamLowId);
             if (Stream != null)
             {

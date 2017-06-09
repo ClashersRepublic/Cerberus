@@ -23,7 +23,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server
             this.Identifier = 24715;
         }
 
-        internal override void Encode()
+        internal override async void Encode()
         {
             this.Data.AddString(this.Message);
             this.Data.AddString(Bot ? "Command System" :  Sender ? "You" : this.Message_Sender.Name);
@@ -36,7 +36,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server
             this.Data.AddBool(this.Message_Sender.ClanId > 0);
             if (this.Message_Sender.ClanId > 0)
             {
-                var _Clan = Resources.Clans.Get(this.Message_Sender.ClanId, Constants.Database);
+                var _Clan = await Resources.Clans.Get(this.Message_Sender.ClanId, Constants.Database);
 
                 this.Data.AddLong(_Clan.Clan_ID);
                 this.Data.AddString(_Clan.Name);

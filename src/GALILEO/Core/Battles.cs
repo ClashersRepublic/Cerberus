@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using BL.Servers.CoC.Core.Database;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Logic;
@@ -43,7 +44,7 @@ namespace BL.Servers.CoC.Core
             }
         }
 
-        internal Battle Get(long _BattleID, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal async Task<Battle> Get(long _BattleID, DBMS DBMS = DBMS.Mysql, bool Store = true)
         {
             if (!this.ContainsKey(_BattleID))
             {
@@ -54,7 +55,7 @@ namespace BL.Servers.CoC.Core
                     case DBMS.Mysql:
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.Battle Data = Database.Battle.Find(_BattleID);
+                            Database.Battle Data = await Database.Battle.FindAsync(_BattleID);
 
                             if (!string.IsNullOrEmpty(Data?.Data))
                             {
@@ -68,7 +69,7 @@ namespace BL.Servers.CoC.Core
                             }
                         break;
                     case DBMS.Redis:
-                        string Property = Redis.Battles.StringGet(_BattleID.ToString()).ToString();
+                        string Property = await Redis.Battles.StringGetAsync(_BattleID.ToString());
 
                         if (!string.IsNullOrEmpty(Property))
                         {
@@ -82,11 +83,11 @@ namespace BL.Servers.CoC.Core
                         }
                         break;
                     case DBMS.Both:
-                        _Battle = this.Get(_BattleID, DBMS.Redis, Store);
+                        _Battle = await this.Get(_BattleID, DBMS.Redis, Store);
 
                         if (_Battle == null)
                         {
-                            _Battle = this.Get(_BattleID, DBMS.Mysql, Store);
+                            _Battle = await this.Get(_BattleID, DBMS.Mysql, Store);
                             if (_Battle != null)
                                 this.Save(_Battle, DBMS.Redis);
 
@@ -193,6 +194,55 @@ namespace BL.Servers.CoC.Core
                     case DBMS.Both:
                     {
                         this.Save(_Battle);
+                        DBMS = DBMS.Redis;
+                        continue;
+                    }
+                }
+                break;
+            }
+        }
+        internal async void Save(List<Battle> Battles, DBMS DBMS = DBMS.Mysql)
+        {
+            while (true)
+            {
+                switch (DBMS)
+                {
+                    case DBMS.Mysql:
+                    {
+
+                        using (MysqlEntities Database = new MysqlEntities())
+                        {
+                            foreach (var Battle in Battles)
+                            {
+                                lock (Battle)
+                                {
+                                    var Data = Database.Battle.Find(Battle.Battle_ID);
+
+                                    if (Data != null)
+                                    {
+                                        Data.Data = JsonConvert.SerializeObject(Battle, this.Settings);
+                                        Database.SaveChanges();
+                                    }
+                                }
+                            }
+                            await Database.SaveChangesAsync();
+                        }
+                        break;
+                    }
+
+                    case DBMS.Redis:
+                    {
+                        foreach (var Battle in Battles)
+                        {
+                            await Redis.Battles.StringSetAsync(Battle.Battle_ID.ToString(),
+                                JsonConvert.SerializeObject(Battle, this.Settings), TimeSpan.FromHours(4));
+                        }
+                        break;
+                    }
+
+                    case DBMS.Both:
+                    {
+                        this.Save(Battles);
                         DBMS = DBMS.Redis;
                         continue;
                     }

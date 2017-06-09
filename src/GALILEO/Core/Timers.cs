@@ -123,17 +123,7 @@ namespace BL.Servers.CoC.Core
                         if (Resources.Clans.Count > 0)
                         {
                             List<Clan> Clans = Resources.Clans.Values.ToList();
-
-                            Parallel.ForEach(Clans, (_Clan) =>
-                            {
-                                if (_Clan != null)
-                                {
-                                    lock (_Clan)
-                                    {
-                                        Resources.Clans.Save(_Clan, Constants.Database);
-                                    }
-                                }
-                            });
+                            Resources.Clans.Save(Clans, Constants.Database);
                         }
                     }
                     lock (Resources.Battles.Gate)
@@ -141,17 +131,7 @@ namespace BL.Servers.CoC.Core
                         if (Resources.Battles.Count > 0)
                         {
                             List<Battle> Battles = Resources.Battles.Values.ToList();
-
-                            Parallel.ForEach(Battles, (_Battle) =>
-                            {
-                                if (_Battle != null)
-                                {
-                                    lock (_Battle)
-                                    {
-                                        Resources.Battles.Save(_Battle, Constants.Database);
-                                    }
-                                }
-                            });
+                            Resources.Battles.Save(Battles, Constants.Database);
                         }
                     }
                 }

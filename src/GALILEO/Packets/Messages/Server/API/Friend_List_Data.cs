@@ -19,7 +19,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.API
             this.Players = this.Players?.OrderByDescending(t => t.Avatar.Trophies).ToList();
         }
 
-        internal override void Encode()
+        internal override async void Encode()
         {
             this.Data.AddInt(0);
             this.Data.AddInt(this.Players.Count);
@@ -43,7 +43,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.API
 
                 if (Player.Avatar.ClanId > 0)
                 {
-                    Logic.Clan _Clan = Resources.Clans.Get(Player.Avatar.ClanId, Constants.Database, false);
+                    Logic.Clan _Clan = await Resources.Clans.Get(Player.Avatar.ClanId, Constants.Database, false);
                     this.Data.AddLong(Player.Avatar.ClanId);
                     this.Data.AddInt(_Clan.Badge);
                     this.Data.AddString(_Clan.Name);

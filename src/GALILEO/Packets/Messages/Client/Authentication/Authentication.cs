@@ -127,7 +127,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
             if (this.UserId == 0)
             {
-                this.Device.Player = await Resources.Players.New(0, Constants.Database);
+                this.Device.Player = Resources.Players.New(0, Constants.Database);
 
                 if (this.Device.Player != null)
                 {
@@ -197,7 +197,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
         }
 
-        internal void Login()
+        internal async void Login()
         {
             this.Device.Player.Client = this.Device;
             this.Device.Player.Avatar.Region = Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress = this.Device.IPAddress);
@@ -214,7 +214,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
             //new Game_News(this.Device).Send();
             if (this.Device.Player.Avatar.ClanId > 0)
             {
-                Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
+                Clan Alliance = await Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
 
                 if (Alliance != null)
                 {

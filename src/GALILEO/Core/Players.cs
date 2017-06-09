@@ -139,7 +139,7 @@ namespace BL.Servers.CoC.Core
             return this[UserId];
         }
 
-        internal async Task<Level> New(long UserId = 0, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal Level New(long UserId = 0, DBMS DBMS = DBMS.Mysql, bool Store = true)
         {
             Level Player = null;
 
@@ -191,7 +191,7 @@ namespace BL.Servers.CoC.Core
                                 FacebookID = "#:#:#:#",
                             });
 
-                            await Database.SaveChangesAsync();
+                            Database.SaveChanges();
                         }
 
                         if (Store)
@@ -231,7 +231,7 @@ namespace BL.Servers.CoC.Core
             return Player;
         }
 
-        internal async void Save(Level Player, DBMS DBMS = DBMS.Mysql)
+        internal void Save(Level Player, DBMS DBMS = DBMS.Mysql)
         {
             Player.Avatar.LastSave = DateTime.UtcNow;
             while (true)
@@ -250,7 +250,7 @@ namespace BL.Servers.CoC.Core
                                 Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON;
                                 Data.Trophies = Player.Avatar.Trophies;
                                 Data.FacebookID = Player.Avatar.Facebook.Identifier ?? "#:#:#:#";
-                                await Database.SaveChangesAsync();
+                                Database.SaveChanges();
                             }
                         }
                         break;

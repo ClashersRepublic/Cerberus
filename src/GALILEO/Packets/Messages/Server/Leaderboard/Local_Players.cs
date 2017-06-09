@@ -24,7 +24,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Leaderboard
 
         }
 
-        internal override void Encode()
+        internal override async void Encode()
         {
             this.Data.AddInt(this.Players.Count);
 
@@ -53,7 +53,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Leaderboard
 
                 if (_Player.Avatar.ClanId > 0)
                 {
-                    var _Clan = Resources.Clans.Get(_Player.Avatar.ClanId, Constants.Database, true);
+                    var _Clan = await Resources.Clans.Get(_Player.Avatar.ClanId, Constants.Database, true);
                     this.Data.AddLong(_Player.Avatar.ClanId);
                     this.Data.AddString(_Clan.Name);
                     this.Data.AddInt(_Clan.Badge);

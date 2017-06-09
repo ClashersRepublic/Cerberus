@@ -229,7 +229,7 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddBool(this.ClanId > 0);
                 if (this.ClanId > 0)
                 {
-                    Clan clan = Core.Resources.Clans.Get(ClanId, Constants.Database);
+                    Clan clan = Core.Resources.Clans.Get(ClanId, Constants.Database).GetAwaiter().GetResult();
 
                     if (clan != null)
                     {

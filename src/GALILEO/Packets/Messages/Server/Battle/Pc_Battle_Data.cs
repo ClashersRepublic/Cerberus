@@ -49,7 +49,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Battle
             }
             else
             {
-                Core.Resources.Battles.Save(Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database, false));
+                Core.Resources.Battles.Save(Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database, false).GetAwaiter().GetResult());
                 Core.Resources.Battles.Remove(this.Device.Player.Avatar.Battle_ID);
 
                 Core.Resources.Battles.New(this.Device.Player, await Core.Resources.Players.Get(this.Device.Player.Avatar.Last_Attack_Enemy_ID[this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count - 1], Constants.Database), Constants.Database);

@@ -22,7 +22,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
 
         internal override void Process()
         {
-            Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database).Chats.Add(
+            Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database).GetAwaiter().GetResult().Chats.Add(
                 new Entry
                 {
                     Stream_Type = Logic.Enums.Alliance_Stream.CHAT,
@@ -30,7 +30,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
                     Sender_Name = this.Device.Player.Avatar.Name,
                     Sender_Level = this.Device.Player.Avatar.Level,
                     Sender_League = this.Device.Player.Avatar.League,
-                    Sender_Role = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database).Members[this.Device.Player.Avatar.UserId].Role,
+                    Sender_Role = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database).GetAwaiter().GetResult().Members[this.Device.Player.Avatar.UserId].Role,
                     Message = this.Message
                 });
         }

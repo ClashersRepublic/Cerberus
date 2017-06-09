@@ -24,12 +24,11 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
             this.Tick = this.Reader.ReadInt32();
         }
 
-        internal override void Process()
+        internal override async void Process()
         {
             if (this.Device.State == State.IN_PC_BATTLE)
             {
-                System.Console.WriteLine(GlobalId);
-                var Battle = Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
+                var Battle = await Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
                 Battle_Command Command = 
                     new Battle_Command
                     {

@@ -40,8 +40,21 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
             get
             {
                 Battle Battle = null;
-                if (this.Stream_Type == Avatar_Stream.ATTACK || this.Stream_Type == Avatar_Stream.DEFENSE)
-                    Battle = Core.Resources.Battles.Get(Battle_ID, Constants.Database, false);
+                Clan Clan = null;
+
+                switch (this.Stream_Type)
+                {
+                    case Avatar_Stream.ATTACK:
+                    case Avatar_Stream.DEFENSE:
+                        Battle = Core.Resources.Battles.Get(Battle_ID, Constants.Database, false).GetAwaiter().GetResult();
+                        break;
+                    case Avatar_Stream.REMOVED_CLAN:
+                    case Avatar_Stream.CLAN_MAIL:
+                    case Avatar_Stream.INVITATION:
+                        Clan = Core.Resources.Clans.Get(this.Alliance_ID, Constants.Database, false).GetAwaiter().GetResult();
+                        break;
+                }
+                
 
                 List<byte> _Packet = new List<byte>();
                 _Packet.AddInt((int)this.Stream_Type);
@@ -93,29 +106,26 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
                         break;
 
                     case Avatar_Stream.REMOVED_CLAN:
-                        var clan1 = Core.Resources.Clans.Get(this.Alliance_ID, Constants.Database, false);
                         _Packet.AddString(this.Message);
                         _Packet.AddLong(this.Alliance_ID);
-                        _Packet.AddString(clan1.Name);
-                        _Packet.AddInt(clan1.Badge);
+                        _Packet.AddString(Clan.Name);
+                        _Packet.AddInt(Clan.Badge);
                         _Packet.AddBool(true);
                         _Packet.AddLong(this.Sender_ID);
                         break;
 
                     case Avatar_Stream.CLAN_MAIL:
-                        var clan2 = Core.Resources.Clans.Get(this.Alliance_ID, Constants.Database, false);
                         _Packet.AddString(this.Message);
                         _Packet.AddBool(true);
                         _Packet.AddLong(this.Sender_ID);
                         _Packet.AddLong(this.Alliance_ID);
-                        _Packet.AddString(clan2.Name);
-                        _Packet.AddInt(clan2.Badge);
+                        _Packet.AddString(Clan.Name);
+                        _Packet.AddInt(Clan.Badge);
                         break;
                     case Avatar_Stream.INVITATION:
-                        var clan3 = Core.Resources.Clans.Get(this.Alliance_ID, Constants.Database, false);
                         _Packet.AddLong(this.Alliance_ID);
-                        _Packet.AddString(clan3.Name);
-                        _Packet.AddInt(clan3.Badge);
+                        _Packet.AddString(Clan.Name);
+                        _Packet.AddInt(Clan.Badge);
                         _Packet.AddBool(true);
                         _Packet.AddLong(this.Sender_ID);
                         _Packet.AddInt(11);

@@ -20,9 +20,9 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
             this.ClanID = this.Reader.ReadInt64();
         }
 
-        internal override void Process()
+        internal override async void Process()
         {
-            new Alliance_Data(this.Device) {Clan = Resources.Clans.Get(this.ClanID)}.Send();
+            new Alliance_Data(this.Device) {Clan = await Resources.Clans.Get(this.ClanID)}.Send();
         }
     }
 }

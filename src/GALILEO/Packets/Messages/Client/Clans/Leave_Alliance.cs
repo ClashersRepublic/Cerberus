@@ -22,10 +22,10 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
         {
 
         }
-        internal override void Process()
+        internal override async void Process()
         {
             Player User = this.Device.Player.Avatar;
-            Clan Alliance = Resources.Clans.Get(User.ClanId, Constants.Database, false);
+            Clan Alliance = await Resources.Clans.Get(User.ClanId, Constants.Database, false);
 
             if (Alliance != null)
             {

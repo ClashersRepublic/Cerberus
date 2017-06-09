@@ -45,15 +45,7 @@ namespace BL.Servers.CoC.Core.Events
                     if (Resources.Clans.Count > 0)
                     {
                         List<Clan> Clans = Resources.Clans.Values.ToList();
-
-                        foreach (Clan _Clan in Clans)
-                        {
-                            if (_Clan != null)
-                            {
-                                Resources.Clans.Save(_Clan, Constants.Database);
-                                //Redis.Clans.KeyDelete(_Clan.LowID.ToString());
-                            }
-                        }
+                        Resources.Clans.Save(Clans, Constants.Database);
                     }
                 }
 
@@ -62,18 +54,9 @@ namespace BL.Servers.CoC.Core.Events
                     if (Resources.Battles.Count > 0)
                     {
                         List<Battle> Battles = Resources.Battles.Values.ToList();
-
-                        foreach (Battle _Battle in Battles)
-                        {
-                            if (_Battle != null)
-                            {
-                                Resources.Battles.Save(_Battle, Constants.Database);
-                                //Redis.Battles.KeyDelete(Battles.LowID.ToString());
-                            }
-                        }
+                        Resources.Battles.Save(Battles, Constants.Database);
                     }
                 }
-                Thread.Sleep(-1);
             }
             catch (Exception)
             {

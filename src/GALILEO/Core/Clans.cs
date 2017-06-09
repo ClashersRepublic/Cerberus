@@ -90,7 +90,7 @@ namespace BL.Servers.CoC.Core
             }
         }
 
-        internal Clan Get(long ClanID, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal async Task<Clan> Get(long ClanID, DBMS DBMS = DBMS.Mysql, bool Store = true)
         {
             if (!this.ContainsKey(ClanID))
             {
@@ -101,7 +101,7 @@ namespace BL.Servers.CoC.Core
                     case DBMS.Mysql:
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.Clan Data = Database.Clan.Find(ClanID);
+                           var Data = await Database.Clan.FindAsync(ClanID);
 
                             if (!string.IsNullOrEmpty(Data?.Data))
                             {
@@ -118,8 +118,9 @@ namespace BL.Servers.CoC.Core
                             }
                         }
                         break;
+
                     case DBMS.Redis:
-                        string Property = Redis.Clans.StringGet(ClanID.ToString()).ToString();
+                        string Property = await Redis.Clans.StringGetAsync(ClanID.ToString());
 
                         if (!string.IsNullOrEmpty(Property))
                         {
@@ -134,12 +135,13 @@ namespace BL.Servers.CoC.Core
 
                         }
                         break;
+
                     case DBMS.Both:
-                        Clan = this.Get(ClanID, DBMS.Redis, Store);
+                        Clan = await this.Get(ClanID, DBMS.Redis, Store);
 
                         if (Clan == null)
                         {
-                            Clan = this.Get(ClanID, DBMS.Mysql, Store);
+                            Clan = await this.Get(ClanID, DBMS.Mysql, Store);
                             if (Clan != null)
                                 this.Save(Clan, DBMS.Redis);
 
@@ -256,6 +258,57 @@ namespace BL.Servers.CoC.Core
                             DBMS = DBMS.Redis;
                             continue;
                         }
+                }
+                break;
+            }
+        }
+
+        internal async void Save(List<Clan> Clans, DBMS DBMS = DBMS.Mysql)
+        {
+            while (true)
+            {
+
+                switch (DBMS)
+                {
+                    case DBMS.Mysql:
+                    {
+                        using (MysqlEntities Database = new MysqlEntities())
+                        {
+                            foreach (var Clan in Clans)
+                            {
+                                lock (Clan)
+                                {
+                                    var Data = Database.Clan.Find(Clan.Clan_ID);
+
+                                    if (Data != null)
+                                    {
+                                        Data.Data = JsonConvert.SerializeObject(Clan, this.Settings);
+                                        Database.SaveChanges();
+                                    }
+                                }
+                            }
+                            await Database.SaveChangesAsync();
+                        }
+
+                        break;
+                    }
+
+                    case DBMS.Redis:
+                    {
+                        foreach (var Clan in Clans)
+                        {
+                            await Redis.Clans.StringSetAsync(Clan.Clan_ID.ToString(),
+                                JsonConvert.SerializeObject(Clan, this.Settings), TimeSpan.FromHours(4));
+                        }
+                        break;
+                    }
+
+                    case DBMS.Both:
+                    {
+                        this.Save(Clans);
+                        DBMS = DBMS.Redis;
+                        continue;
+                    }
                 }
                 break;
             }

@@ -22,9 +22,9 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Clan
 
             this.Reader.ReadInt32(); // Tick ?
         }
-        internal override void Process()
+        internal override async void Process()
         {
-            var Clan = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
+            var Clan = await Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
 
             foreach (var Old_Entry in Clan.Chats.Slots.FindAll(M => M.Sender_ID == this.Device.Player.Avatar.UserId && M.Stream_Type == Alliance_Stream.AMICAL_BATTLE))
             {

@@ -48,7 +48,7 @@ namespace BL.Servers.CoC.Packets.Client.Authentication
                   {
                       if (n == 0)
                       {
-                          new Unlock_Account_OK(this.Device) {Account = Resources.Players.New().GetAwaiter().GetResult().Avatar}.Send();
+                          new Unlock_Account_OK(this.Device) {Account = Resources.Players.New().Avatar}.Send();
                           return;
                       }
 

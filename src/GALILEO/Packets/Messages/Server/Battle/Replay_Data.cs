@@ -14,9 +14,9 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Battle
             this.Identifier = 24114;
         }
 
-        internal override void Encode()
+        internal override async void Encode()
         {
-            var Battle = Core.Resources.Battles.Get(this.Battle_ID, Constants.Database, false);
+            var Battle = await Core.Resources.Battles.Get(this.Battle_ID, Constants.Database, false);
             if (Battle != null)
                 this.Data.AddCompressed(Battle.Json, false);
         }
