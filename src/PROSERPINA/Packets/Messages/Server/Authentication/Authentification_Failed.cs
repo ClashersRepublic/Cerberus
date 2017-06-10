@@ -37,7 +37,7 @@ namespace BL.Servers.CR.Packets.Messages.Server.Authentication
             this.Version = 2;
         }
             
-        internal string ContentURL => Fingerprint.Custom ? "https://github.com/OMGItssCrayCray/BarbarianLand_Patching/tree/master/clashroyale" : "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
+        internal string ContentURL => Fingerprint.Custom ? "http://192.168.0.5/" : "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
 
         internal override void Encode()
         {

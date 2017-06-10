@@ -12,7 +12,7 @@ namespace BL.Servers.CR.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class PlayerDB
+    public partial class Player
     {
         public long ID { get; set; }
         public string Data { get; set; }

@@ -25,7 +25,7 @@ namespace BL.Servers.CR.Database
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ClanDB> ClanDB { get; set; }
-        public virtual DbSet<PlayerDB> PlayerDB { get; set; }
+        public virtual DbSet<Clan> ClanDB { get; set; }
+        public virtual DbSet<Player> PlayerDB { get; set; }
     }
 }

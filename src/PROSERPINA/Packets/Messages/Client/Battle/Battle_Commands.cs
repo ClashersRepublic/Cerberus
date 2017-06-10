@@ -50,7 +50,13 @@ namespace BL.Servers.CR.Packets.Messages.Client.Battle
             {
                 Server_Resources.Battles[this.Device.Player.BattleID].Commands.Enqueue(new Place_Troop(_Enemy.Device)
                 {
-                    SenderID = this.Device.Player.UserId
+                    SenderID = this.Device.Player.UserId,
+                    Checksum = this.CommandSum,
+                    TroopType = 27,
+                    TroopID = 33,
+                    Tick = this.CommandTick,
+                    X = 15000,
+                    Y = 15000
                 });
 
                 new Battle_Command_Data(this.Device)

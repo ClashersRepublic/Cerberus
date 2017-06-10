@@ -1,13 +1,13 @@
-﻿using BL.Servers.CR.Database;
-using BL.Servers.CR.Extensions;
-using BL.Servers.CR.Logic;
+﻿using BL.Servers.CR.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BL.Servers.CR.Database;
 using BL.Servers.CR.Logic.Enums;
+using Clan = BL.Servers.CR.Logic.Clan;
 
 namespace BL.Servers.CR.Core.Server_Components
 {
@@ -71,7 +71,7 @@ namespace BL.Servers.CR.Core.Server_Components
                     case Logic.Enums.DBMS.MySQL:
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.ClanDB Data = Database.ClanDB.Find(ClanID);
+                            var Data = Database.ClanDB.Find(ClanID);
 
                             if (!string.IsNullOrEmpty(Data?.Data))
                             {
@@ -146,7 +146,7 @@ namespace BL.Servers.CR.Core.Server_Components
                         {
                             using (MysqlEntities Database = new MysqlEntities())
                             {
-                                Database.ClanDB.Add(new Database.ClanDB
+                                Database.ClanDB.Add(new Database.Clan
                                 {
                                     ID = Clan.ClanID,
                                     Data = JsonConvert.SerializeObject(Clan, this.Settings)

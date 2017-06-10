@@ -1,10 +1,10 @@
 ﻿using System;
+using BL.Servers.CR.Database;
 using BL.Servers.CR.Packets;
 
 namespace BL.Servers.CR.Core.Server_Components
 {
     using System.Collections.Generic;
-    using BL.Servers.CR.Database;
     using BL.Servers.CR.Extensions;
     using BL.Servers.CR.Logic;
     using BL.Servers.CR.Logic.Enums;
@@ -74,7 +74,7 @@ namespace BL.Servers.CR.Core.Server_Components
                     case DBMS.MySQL:
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            PlayerDB Data = Database.PlayerDB.Find(UserId);
+                            var Data = Database.PlayerDB.Find(UserId);
 
                             if (!string.IsNullOrEmpty(Data?.Data))
                             {
@@ -166,7 +166,7 @@ namespace BL.Servers.CR.Core.Server_Components
 
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.PlayerDB.Add(new BL.Servers.CR.Database.PlayerDB
+                            Database.PlayerDB.Add(new CR.Database.Player
                             {
                                 ID = Player.UserId,
                                 Data = JsonConvert.SerializeObject(Player, this.Settings)
