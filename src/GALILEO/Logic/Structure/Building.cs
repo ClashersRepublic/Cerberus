@@ -28,10 +28,12 @@ namespace BL.Servers.CoC.Logic.Structure
             {
                 //AddComponent(new UnitStorageComponent(this, 0));
             }
+
             if (GetBuildingData.BuildingClass == "Defense")
             {
                 AddComponent(new Combat_Component(this));
             }
+
             if (!string.IsNullOrEmpty(GetBuildingData.ProducesResource))
             {
                 AddComponent(new Resource_Production_Component(this, level));

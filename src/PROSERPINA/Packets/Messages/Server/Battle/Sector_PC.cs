@@ -207,8 +207,6 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
                 this.Data.AddRange("00000000000000A401A401".HexaToBytes());
             }
 
-            this.Data.AddRange("FF0184010A2A0B1F0B190B2509020B0707060B00".HexaToBytes()); //Deck - Card Type-ID-Level 
-
             this.Data.AddHexa("FE03");
 
             if (this.Battle.Player1 == this.Device.Player)
@@ -219,9 +217,27 @@ namespace BL.Servers.CR.Packets.Messages.Server.Battle
             {
                 this.Data.AddRange(this.Battle.Player2.Decks.Hand());
             }
+            this.Data.AddVInt(0);
+            this.Data.AddVInt(0);       
 
-            this.Data.AddRange("0000050602020402010300000000000000060901010000000000000000000000010000000000000000000000000C00000080A1B0A80F002A002B".HexaToBytes());
-
+            this.Data.AddRange("05060202040201".HexaToBytes());
+            this.Data.AddVInt(TimeSpan.FromSeconds(Battle.Time.GetRemainingSeconds(DateTime.Now)).Minutes);
+            this.Data.AddVInt(TimeSpan.FromSeconds(Battle.Time.GetRemainingSeconds(DateTime.Now)).Seconds);
+            this.Data.AddVInt(0);
+            this.Data.AddVInt(0);
+            this.Data.AddVInt(0);
+            this.Data.AddVInt(0);
+            this.Data.AddVInt(0);
+            this.Data.AddVInt(0);
+            this.Data.AddVInt(6);
+            this.Data.AddVInt(9);
+            this.Data.AddVInt(1);
+            this.Data.AddVInt(1);
+            this.Data.AddHexa("0000000000000000000000010000000000000000000000000C000000");
+            this.Data.AddHexa("80A1B0A80F");
+            this.Data.AddHexa("002A");
+            this.Data.AddHexa("002B");
+            
             ZlibStream.CompressBuffer(this.Data.ToArray());
         }
     }

@@ -22,10 +22,10 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Clans
             this.Clan = clan;
         }
 
-        internal override async void Encode()
+        internal override void Encode()
         {
             if (Clan == null)
-                Clan = await Resources.Clans.Get(this.ClanID == 0 ? this.Device.Player.Avatar.ClanId : this.ClanID, Constants.Database, false);
+                Clan = Resources.Clans.Get(this.ClanID == 0 ? this.Device.Player.Avatar.ClanId : this.ClanID, Constants.Database, false);
 
             this.Data.AddString(this.Clan.Description);
             this.Data.AddInt((int)WarState.NONE); //War state:

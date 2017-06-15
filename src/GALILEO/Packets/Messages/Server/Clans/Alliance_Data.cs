@@ -1,8 +1,10 @@
 ﻿using System;
 using BL.Servers.CoC.Core;
+using BL.Servers.CoC.Core.Networking;
 using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Extensions.List;
 using BL.Servers.CoC.Logic;
+using BL.Servers.CoC.Packets.Messages.Server.Errors;
 
 namespace BL.Servers.CoC.Packets.Messages.Server.Clans
 {
@@ -22,21 +24,29 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Clans
             this.Clan = clan;
         }
         
-        internal override async void Encode()
+        internal override void Encode()
         {
             if (Clan == null)
-                Clan = await Resources.Clans.Get(this.ClanID == 0 ? this.Device.Player.Avatar.ClanId : this.ClanID , Constants.Database, false);
+                Clan = Resources.Clans.Get(this.ClanID == 0 ? this.Device.Player.Avatar.ClanId : this.ClanID , Constants.Database, false);
 
-            this.Data.AddRange(Clan.ToBytes);
 
-            this.Data.AddString(Clan.Description);
-            this.Data.AddInt(6);
-            this.Data.AddBool(false);
-            this.Data.AddInt(0);
-            this.Data.AddByte(0);
-            this.Data.AddRange(Clan.Members.ToBytes);
-            this.Data.AddInt(0);
-            this.Data.AddInt(32);
+            if (Clan != null)
+            {
+                this.Data.AddRange(Clan.ToBytes);
+
+                this.Data.AddString(Clan.Description);
+                this.Data.AddInt(6);
+                this.Data.AddBool(false);
+                this.Data.AddInt(0);
+                this.Data.AddByte(0);
+                this.Data.AddRange(Clan.Members.ToBytes);
+                this.Data.AddInt(0);
+                this.Data.AddInt(32);
+            }
+            else
+            {
+                new Out_Of_Sync(this.Device).Send();
+            }
         }
     }
 }

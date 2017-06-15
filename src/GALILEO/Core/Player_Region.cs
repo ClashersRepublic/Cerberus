@@ -28,11 +28,11 @@ namespace BL.Servers.CoC.Core
             }
         }
 
-        internal async void Fetch()
+        internal void Fetch()
         {
-            foreach (var _Id in await MySQL_V2.GetTopPlayer())
+            foreach (var _Id in MySQL_V2.GetTopPlayer())
             {
-                this.Add("INTERNATIONAL", await Resources.Players.Get(_Id, Constants.Database, true));
+                this.Add("INTERNATIONAL", Resources.Players.Get(_Id, Constants.Database, true));
             }
             
             Timer Timer = new Timer
@@ -42,12 +42,12 @@ namespace BL.Servers.CoC.Core
             };
 
 
-            Timer.Elapsed += async (_Sender, _Args) =>
+            Timer.Elapsed += (_Sender, _Args) =>
             {
                 this.Remove("INTERNATIONAL");
-                foreach (var _Id in await MySQL_V2.GetTopPlayer())
+                foreach (var _Id in MySQL_V2.GetTopPlayer())
                 {
-                    this.Add("INTERNATIONAL", await Resources.Players.Get(_Id, Constants.Database, true));
+                    this.Add("INTERNATIONAL", Resources.Players.Get(_Id, Constants.Database, true));
                 }
             };
 

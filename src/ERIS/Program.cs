@@ -1,3 +1,5 @@
+using System.Threading;
+
 namespace BL.Servers.BB
 {
     using System;
@@ -14,11 +16,6 @@ namespace BL.Servers.BB
         internal static void Main()
         {
             Console.Title = $"BarbarianLand BoomBeach Server - ©BarbarianLand ";
-            if (Type.GetType("Mono.Runtime") != null)
-            {
-                Constants.IsMono = true;
-                Console.Title += "(Mono Mode)";
-            }
 
             Console.SetOut(new Prefixed());
             Console.ForegroundColor = Utils.ChooseRandomColor();
@@ -66,7 +63,7 @@ namespace BL.Servers.BB
              Console.WriteLine("{0:N0} queries per second", count / s.Elapsed.TotalSeconds);*/
             Console.WriteLine(@"-------------------------------------" + Environment.NewLine);
 
-            while (true) ;
+            Thread.Sleep(-1);
         }
     }
 }

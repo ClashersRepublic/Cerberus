@@ -26,9 +26,9 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Clan
             if (this.Have_Message) this.Message = this.Reader.ReadString();
         }
 
-        internal override async void Process()
+        internal override  void Process()
         {
-            var Clan = await Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
+            var Clan = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
             foreach (var Old_Entry in Clan.Chats.Slots.FindAll(M => M.Sender_ID == this.Device.Player.Avatar.UserId && M.Stream_Type == Alliance_Stream.TROOP_REQUEST))
             {
                 Clan.Chats.Remove(Old_Entry);

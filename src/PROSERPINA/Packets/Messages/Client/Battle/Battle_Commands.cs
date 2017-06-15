@@ -65,7 +65,7 @@ namespace BL.Servers.CR.Packets.Messages.Client.Battle
                 }.Send();
 
                 new Battle_Command_Data(_Enemy.Device)
-                {
+                {   
                     Battle = Server_Resources.Battles[_Enemy.Decks.Player.BattleID]
                 }.Send();
             }

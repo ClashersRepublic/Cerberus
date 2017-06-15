@@ -24,7 +24,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Leaderboard
             }
         }
 
-        internal override async void Encode()
+        internal override void Encode()
         {
             List<byte> _Packet = new List<byte>();
             int i = 0;
@@ -52,7 +52,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Leaderboard
 
                 if (_Player.Avatar.ClanId > 0)
                 {
-                    var _Clan = await Resources.Clans.Get(_Player.Avatar.ClanId, Constants.Database, true);
+                    var _Clan = Resources.Clans.Get(_Player.Avatar.ClanId, Constants.Database, true);
                     _Packet.AddLong(_Player.Avatar.ClanId);
                     _Packet.AddString(_Clan.Name);
                     _Packet.AddInt(_Clan.Badge);

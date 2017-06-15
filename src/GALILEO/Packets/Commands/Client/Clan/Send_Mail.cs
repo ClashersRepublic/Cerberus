@@ -24,13 +24,13 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Clan
             this.Reader.ReadInt32();
         }
 
-        internal override async void Process()
+        internal override void Process()
         {
             var AllianceID = this.Device.Player.Avatar.ClanId;
 
             if (AllianceID > 0)
             {
-                var Clan = await Resources.Clans.Get(AllianceID, Constants.Database, false);
+                var Clan = Resources.Clans.Get(AllianceID, Constants.Database, false);
                 if (Clan != null)
                 {
                     var Mail = new Mail

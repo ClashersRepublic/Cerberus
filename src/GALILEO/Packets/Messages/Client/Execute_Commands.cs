@@ -70,7 +70,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
 
 
             if (this.Device.State == Logic.Enums.State.IN_PC_BATTLE)
-                 Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database).GetAwaiter().GetResult().Battle_Tick =
+                 Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database).Battle_Tick =
                     (int) this.CTick;
         
             if (this.Count > -1 && this.Count <= Constants.MaxCommand)

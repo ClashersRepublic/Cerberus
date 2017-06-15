@@ -33,14 +33,6 @@ namespace BL.Servers.CoC.Core.Networking
             this.Packet = new List<byte>(Constants.ReceiveBuffer);
         }
 
-        internal void SetData()
-        {
-            var buffer = this.Args.Buffer;
-            var offset = this.Args.Offset;
-            for (int i = 0; i < this.Args.BytesTransferred; i++)
-                this.Packet.Add(buffer[offset + i]);
-        }
-
         internal void Process()
         {
             byte[] Data = this.Packet.ToArray();

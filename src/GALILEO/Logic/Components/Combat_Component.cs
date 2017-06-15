@@ -46,6 +46,9 @@ namespace BL.Servers.CoC.Logic.Components
         internal override int Type => 1;
         internal int Ammo = -1;
         internal int GearUp = -1;
+        internal int WallX = -1;
+        internal int WallP = -1;
+        internal int WallI = -1;
         internal int AimAngle;
         internal int AimAngleDraft;
         internal int TrapDirection;
@@ -82,7 +85,21 @@ namespace BL.Servers.CoC.Logic.Components
 
             if (jsonObject["ammo"] != null)
                 this.Ammo = jsonObject["ammo"].ToObject<int>();
-            
+
+
+            if (jsonObject["wX"] != null)
+                this.WallX = jsonObject["wX"].ToObject<int>();
+
+            if (jsonObject["wP"] != null)
+                this.WallP = jsonObject["wP"].ToObject<int>();
+
+            if (jsonObject["wI"] != null)
+            {
+                this.WallI = jsonObject["wI"].ToObject<int>();
+                if (this.WallI > GetParent.Level.Avatar.Wall_Group_ID)
+                    GetParent.Level.Avatar.Wall_Group_ID = this.WallI;
+            }
+
 
             if (jsonObject["attack_mode"] != null)
             {
@@ -122,6 +139,15 @@ namespace BL.Servers.CoC.Logic.Components
 
             if (this.Ammo >= 0)
                 jsonObject.Add("ammo", this.Ammo);
+
+            if (this.WallX >= 0)
+                jsonObject.Add("wX", this.WallX);
+
+            if (this.WallP >= 0)
+                jsonObject.Add("wP", this.WallP);
+
+            if (this.WallI >= 0)
+                jsonObject.Add("wI", this.WallI);
 
             if (this.AltAttackMode)
             {

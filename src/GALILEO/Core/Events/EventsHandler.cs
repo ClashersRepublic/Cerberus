@@ -1,14 +1,7 @@
-﻿using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic;
+﻿using BL.Servers.CoC.Extensions;
 using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Packets.Messages.Server;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BL.Servers.CoC.Core.Events
 {
@@ -29,41 +22,38 @@ namespace BL.Servers.CoC.Core.Events
         {
             try
             {
-                lock (Resources.Players.Gate)
+                if (Resources.Players.Count > 0)
                 {
-                    if (Resources.Players.Count > 0)
+                    lock (Resources.Players.Gate)
                     {
-                        List<Level> Players = Resources.Players.Values.ToList();
-                        Resources.Players.Save(Players, Constants.Database);
-                        //Resources.Players.Remove(_Player); //Let's not waste resource to delete them,Save only should be ok
-                        //Redis.Players.KeyDelete(_Player.LowID.ToString());
+                        Resources.Players.Save(Constants.Database).Wait();
                     }
                 }
 
-                lock (Resources.Clans.Gate)
+                if (Resources.Clans.Count > 0)
                 {
-                    if (Resources.Clans.Count > 0)
+                    lock (Resources.Clans.Gate)
                     {
-                        List<Clan> Clans = Resources.Clans.Values.ToList();
-                        Resources.Clans.Save(Clans, Constants.Database);
+                        Resources.Clans.Save(Constants.Database).Wait();
                     }
                 }
 
-                lock (Resources.Battles.Gate)
+
+                if (Resources.Battles.Count > 0)
                 {
-                    if (Resources.Battles.Count > 0)
+                    lock (Resources.Battles.Gate)
                     {
-                        List<Battle> Battles = Resources.Battles.Values.ToList();
-                        Resources.Battles.Save(Battles, Constants.Database);
+                        Resources.Battles.Save(Constants.Database).Wait();
                     }
                 }
+
             }
             catch (Exception)
             {
                 Console.WriteLine("Mmh, something happen when we tried to save everything.");
             }
         }
-        internal void Handler(Logic.Enums.Exits Type = Logic.Enums.Exits.CTRL_CLOSE_EVENT)
+        internal void Handler(Exits Type = Exits.CTRL_CLOSE_EVENT)
         {
             Console.WriteLine("The program is shutting down.");
             this.ExitHandler();

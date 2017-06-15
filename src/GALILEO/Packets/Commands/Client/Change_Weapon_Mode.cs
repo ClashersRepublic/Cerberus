@@ -31,7 +31,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
             var Object = this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(this.BuildingID) : this.Device.Player.GameObjectManager.GetGameObjectByID(this.BuildingID);
             if (Object?.GetComponent(1, true) == null)
                 return;
-            var a = ((Combat_Component) Object.GetComponent(1, true));
+            var a = ((Combat_Component) Object.GetComponent(1, false));
             if (a.AltAttackMode)
             {
                 a.AttackMode = !a.AttackMode;

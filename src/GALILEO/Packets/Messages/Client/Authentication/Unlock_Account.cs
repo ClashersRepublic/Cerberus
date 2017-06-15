@@ -34,7 +34,7 @@ namespace BL.Servers.CoC.Packets.Client.Authentication
             this.UnlockCode = this.Reader.ReadString();
         }
 
-        internal override async void Process()
+        internal override void Process()
         {
             if (this.UnlockCode.Length != 12 || string.IsNullOrEmpty(this.UnlockCode))
             {
@@ -52,7 +52,7 @@ namespace BL.Servers.CoC.Packets.Client.Authentication
                           return;
                       }
 
-                      var account = await Resources.Players.Get(n);
+                      var account = Resources.Players.Get(n);
                       if (account != null)
                       {
                           account.Avatar.Locked = true;

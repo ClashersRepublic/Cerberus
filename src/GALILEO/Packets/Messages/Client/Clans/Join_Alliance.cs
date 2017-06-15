@@ -25,9 +25,9 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
             this.ClanID = this.Reader.ReadInt64();
         }
 
-        internal override async void Process()
+        internal override void Process()
         {
-            Clan Alliance = await Resources.Clans.Get(this.ClanID, Constants.Database, false);
+            Clan Alliance = Resources.Clans.Get(this.ClanID, Constants.Database, false);
 
             if (Alliance != null)
             {

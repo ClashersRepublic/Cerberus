@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Threading.Tasks;
 using BL.Servers.CoC.Core.Database;
 using BL.Servers.CoC.Extensions;
@@ -44,7 +45,7 @@ namespace BL.Servers.CoC.Core
             }
         }
 
-        internal async Task<Battle> Get(long _BattleID, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal Battle Get(long _BattleID, DBMS DBMS = DBMS.Mysql, bool Store = true)
         {
             if (!this.ContainsKey(_BattleID))
             {
@@ -55,7 +56,7 @@ namespace BL.Servers.CoC.Core
                     case DBMS.Mysql:
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.Battle Data = await Database.Battle.FindAsync(_BattleID);
+                            Database.Battle Data = Database.Battle.Find(_BattleID);
 
                             if (!string.IsNullOrEmpty(Data?.Data))
                             {
@@ -69,7 +70,7 @@ namespace BL.Servers.CoC.Core
                             }
                         break;
                     case DBMS.Redis:
-                        string Property = await Redis.Battles.StringGetAsync(_BattleID.ToString());
+                        string Property = Redis.Battles.StringGet(_BattleID.ToString());
 
                         if (!string.IsNullOrEmpty(Property))
                         {
@@ -83,11 +84,11 @@ namespace BL.Servers.CoC.Core
                         }
                         break;
                     case DBMS.Both:
-                        _Battle = await this.Get(_BattleID, DBMS.Redis, Store);
+                        _Battle = this.Get(_BattleID, DBMS.Redis, Store);
 
                         if (_Battle == null)
                         {
-                            _Battle = await this.Get(_BattleID, DBMS.Mysql, Store);
+                            _Battle = this.Get(_BattleID, DBMS.Mysql, Store);
                             if (_Battle != null)
                                 this.Save(_Battle, DBMS.Redis);
 
@@ -163,7 +164,7 @@ namespace BL.Servers.CoC.Core
             return _Battle;
         }
 
-        internal void Save(Battle _Battle, DBMS DBMS = DBMS.Mysql)
+        internal async Task Save(Battle _Battle, DBMS DBMS = DBMS.Mysql)
         {
             while (true)
             {
@@ -174,26 +175,29 @@ namespace BL.Servers.CoC.Core
 
                         using (MysqlEntities Database = new MysqlEntities())
                         {
+                            Database.Configuration.AutoDetectChangesEnabled = false;
+                            Database.Configuration.ValidateOnSaveEnabled = false;
                             var Data = Database.Battle.Find(_Battle.Battle_ID);
 
                             if (Data != null)
                             {
                                 Data.Data = JsonConvert.SerializeObject(_Battle, this.Settings);
-                                Database.SaveChanges();
-                            }
+                                Database.Entry(Data).State = EntityState.Modified;
+                                }
+                            await Database.SaveChangesAsync();
                         }
                         break;
                     }
 
                     case DBMS.Redis:
                     {
-                        Redis.Battles.StringSet(_Battle.Battle_ID.ToString(), JsonConvert.SerializeObject(_Battle, this.Settings), TimeSpan.FromHours(4));
+                        await Redis.Battles.StringSetAsync(_Battle.Battle_ID.ToString(), JsonConvert.SerializeObject(_Battle, this.Settings), TimeSpan.FromHours(4));
                         break;
                     }
 
                     case DBMS.Both:
                     {
-                        this.Save(_Battle);
+                        await this.Save(_Battle);
                         DBMS = DBMS.Redis;
                         continue;
                     }
@@ -201,7 +205,8 @@ namespace BL.Servers.CoC.Core
                 break;
             }
         }
-        internal async void Save(List<Battle> Battles, DBMS DBMS = DBMS.Mysql)
+
+        internal async Task Save(DBMS DBMS = DBMS.Mysql)
         {
             while (true)
             {
@@ -212,7 +217,9 @@ namespace BL.Servers.CoC.Core
 
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            foreach (var Battle in Battles)
+                            Database.Configuration.AutoDetectChangesEnabled = false;
+                            Database.Configuration.ValidateOnSaveEnabled = false;
+                            foreach (var Battle in this.Values)
                             {
                                 lock (Battle)
                                 {
@@ -221,7 +228,7 @@ namespace BL.Servers.CoC.Core
                                     if (Data != null)
                                     {
                                         Data.Data = JsonConvert.SerializeObject(Battle, this.Settings);
-                                        Database.SaveChanges();
+                                        Database.Entry(Data).State = EntityState.Modified;
                                     }
                                 }
                             }
@@ -232,7 +239,7 @@ namespace BL.Servers.CoC.Core
 
                     case DBMS.Redis:
                     {
-                        foreach (var Battle in Battles)
+                        foreach (var Battle in this.Values)
                         {
                             await Redis.Battles.StringSetAsync(Battle.Battle_ID.ToString(),
                                 JsonConvert.SerializeObject(Battle, this.Settings), TimeSpan.FromHours(4));
@@ -242,7 +249,7 @@ namespace BL.Servers.CoC.Core
 
                     case DBMS.Both:
                     {
-                        this.Save(Battles);
+                        await this.Save();
                         DBMS = DBMS.Redis;
                         continue;
                     }

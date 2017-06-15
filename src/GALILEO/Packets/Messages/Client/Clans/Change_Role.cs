@@ -26,10 +26,10 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
             this.Role = (Role) this.Reader.ReadInt32();
         }
 
-        internal override async void Process()
+        internal override void Process()
         {
-            Level Player = await Resources.Players.Get(this.UserID, Constants.Database, false);
-            Clan Alliance = await Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
+            Level Player = Resources.Players.Get(this.UserID, Constants.Database, false);
+            Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
             if (Alliance != null && Player != null)
             {
                 Role JudgeRole = Alliance.Members[this.Device.Player.Avatar.UserId].Role;

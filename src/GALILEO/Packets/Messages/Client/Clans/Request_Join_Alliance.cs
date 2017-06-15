@@ -21,11 +21,11 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
             this.Message = this.Reader.ReadString();
         }
 
-        internal override async void Process()
+        internal override void Process()
         {
             if (AllianceID > 0)
             {
-                var clan = await Resources.Clans.Get(AllianceID, Constants.Database, false);
+                var clan = Resources.Clans.Get(AllianceID, Constants.Database, false);
                 clan?.Chats.Add(
                     new Entry
                     {

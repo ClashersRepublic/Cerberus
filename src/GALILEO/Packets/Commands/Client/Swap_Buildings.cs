@@ -24,11 +24,14 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
         internal override void Process()
         {
-            Vector Building1Position = this.Device.Player.GameObjectManager.GetGameObjectByID(Building1).GetPosition();
-            Vector Building2Position = this.Device.Player.GameObjectManager.GetGameObjectByID(Building2).GetPosition();
+            var Building1Position = this.Device.Player.GameObjectManager.GetGameObjectByID(Building1);
+            var Building2Position = this.Device.Player.GameObjectManager.GetGameObjectByID(Building2);
 
-            this.Device.Player.GameObjectManager.GetGameObjectByID(Building1).SetPositionXY(Building2Position);
-            this.Device.Player.GameObjectManager.GetGameObjectByID(Building2).SetPositionXY(Building1Position);
+            if (Building1Position == null || Building2Position == null)
+                return;
+
+            this.Device.Player.GameObjectManager.GetGameObjectByID(Building1).SetPositionXY(Building2Position.GetPosition());
+            this.Device.Player.GameObjectManager.GetGameObjectByID(Building2).SetPositionXY(Building1Position.GetPosition());
         }
     }
 }

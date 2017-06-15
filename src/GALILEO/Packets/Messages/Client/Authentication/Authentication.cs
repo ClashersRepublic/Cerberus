@@ -108,7 +108,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
             this.ClientVersion = this.Reader.ReadString().Split('.');
         }
 
-        internal override async void Process()
+        internal override void Process()
         {
             if (Constants.RC4)
                 new Session_Key(this.Device).Send();
@@ -147,7 +147,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
             }
             else if (this.UserId > 0)
             {
-                this.Device.Player = await Resources.Players.Get(this.UserId, Constants.Database);
+                this.Device.Player = Resources.Players.Get(this.UserId, Constants.Database);
                 if (this.Device.Player != null)
                 {
                     if (string.Equals(this.Token, this.Device.Player.Avatar.Token))
@@ -197,7 +197,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
         }
 
-        internal async void Login()
+        internal void Login()
         {
             this.Device.Player.Client = this.Device;
             this.Device.Player.Avatar.Region = Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress = this.Device.IPAddress);
@@ -214,7 +214,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
             //new Game_News(this.Device).Send();
             if (this.Device.Player.Avatar.ClanId > 0)
             {
-                Clan Alliance = await Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
+                Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
 
                 if (Alliance != null)
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using BL.Servers.CoC.Core.Database;
@@ -66,7 +67,7 @@ namespace BL.Servers.CoC.Core
             }
         }
 
-        internal async Task<Level> Get(long UserId, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal Level Get(long UserId, DBMS DBMS = DBMS.Mysql, bool Store = true)
         {
             if (!this.ContainsKey(UserId))
             {
@@ -77,12 +78,12 @@ namespace BL.Servers.CoC.Core
                     case DBMS.Mysql:
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                             var Data = await Database.Player.FindAsync(UserId);
+                            var Data = Database.Player.Find(UserId);
 
                             if (!string.IsNullOrEmpty(Data?.Data))
                             {
                                 string[] _Datas =
-                                    Data.Data.Split(new string[1] { "#:#:#:#" }, StringSplitOptions.None);
+                                    Data.Data.Split(new string[1] {"#:#:#:#"}, StringSplitOptions.None);
 
                                 if (!string.IsNullOrEmpty(_Datas[0]) && !string.IsNullOrEmpty(_Datas[1]))
                                 {
@@ -105,7 +106,7 @@ namespace BL.Servers.CoC.Core
 
                         if (!string.IsNullOrEmpty(Property))
                         {
-                            string[] _Datas = Property.Split(new string[1] { "#:#:#:#" }, StringSplitOptions.None);
+                            string[] _Datas = Property.Split(new string[1] {"#:#:#:#"}, StringSplitOptions.None);
 
                             if (!string.IsNullOrEmpty(_Datas[0]) && !string.IsNullOrEmpty(_Datas[1]))
                             {
@@ -113,7 +114,7 @@ namespace BL.Servers.CoC.Core
                                 {
                                     Avatar = JsonConvert.DeserializeObject<Logic.Player>(_Datas[0], this.Settings),
                                     JSON = _Datas[1],
-                                 };
+                                };
 
                                 if (Store)
                                 {
@@ -123,14 +124,15 @@ namespace BL.Servers.CoC.Core
                         }
                         break;
                     case DBMS.Both:
-                        Player = await this.Get(UserId, DBMS.Redis, Store);
+                        Player = this.Get(UserId, DBMS.Redis, Store);
 
                         if (Player == null)
                         {
-                            Player = await this.Get(UserId, DBMS.Mysql, Store);
+                            Player = this.Get(UserId, DBMS.Mysql, Store);
                             if (Player != null)
-                                this.Save(Player, DBMS.Redis);
-
+                                Redis.Players.StringSet(Player.Avatar.UserId.ToString(),
+                                    JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,
+                                    TimeSpan.FromHours(4));
                         }
                         break;
                 }
@@ -203,7 +205,10 @@ namespace BL.Servers.CoC.Core
 
                     case DBMS.Redis:
                     {
-                        this.Save(Player, DBMS);
+                        Redis.Players.StringSet(Player.Avatar.UserId.ToString(),
+                            JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,
+                            TimeSpan.FromHours(4));
+
 
                         if (Store)
                         {
@@ -214,7 +219,9 @@ namespace BL.Servers.CoC.Core
 
                     case DBMS.Both:
                     {
-                        this.Save(Player, DBMS);
+                        Redis.Players.StringSet(Player.Avatar.UserId.ToString(),
+                            JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,
+                            TimeSpan.FromHours(4));
                         DBMS = DBMS.Mysql;
 
                         if (Store)
@@ -231,7 +238,7 @@ namespace BL.Servers.CoC.Core
             return Player;
         }
 
-        internal void Save(Level Player, DBMS DBMS = DBMS.Mysql)
+        internal async Task Save(Level Player, DBMS DBMS = DBMS.Mysql)
         {
             Player.Avatar.LastSave = DateTime.UtcNow;
             while (true)
@@ -243,28 +250,36 @@ namespace BL.Servers.CoC.Core
 
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            var Data = Database.Player.Find(Player.Avatar.UserId);
+                            Database.Configuration.AutoDetectChangesEnabled = false;
+                            Database.Configuration.ValidateOnSaveEnabled = false;
+                            var Data = await Database.Player.FindAsync(Player.Avatar.UserId);
 
                             if (Data != null)
                             {
-                                Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON;
+                                Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" +
+                                            Player.JSON;
                                 Data.Trophies = Player.Avatar.Trophies;
                                 Data.FacebookID = Player.Avatar.Facebook.Identifier ?? "#:#:#:#";
-                                Database.SaveChanges();
+                                Database.Entry(Data).State = EntityState.Modified;
                             }
+
+                            await Database.SaveChangesAsync();
                         }
                         break;
                     }
 
                     case DBMS.Redis:
                     {
-                        Redis.Players.StringSet(Player.Avatar.UserId.ToString(), JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON, TimeSpan.FromHours(4));
+                        var a = await Redis.Players.StringSetAsync(Player.Avatar.UserId.ToString(),
+                            JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,
+                            TimeSpan.FromHours(4));
+                        Console.WriteLine(a);
                         break;
                     }
 
                     case DBMS.Both:
                     {
-                        this.Save(Player);
+                        await this.Save(Player);
                         DBMS = DBMS.Redis;
                         continue;
                     }
@@ -273,7 +288,7 @@ namespace BL.Servers.CoC.Core
             }
         }
 
-        internal async void Save(List<Level> Players, DBMS DBMS = DBMS.Mysql)
+        internal async Task Save(DBMS DBMS = DBMS.Mysql)
         {
             while (true)
             {
@@ -284,7 +299,9 @@ namespace BL.Servers.CoC.Core
 
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            foreach (var Player in Players)
+                            Database.Configuration.AutoDetectChangesEnabled = false;
+                            Database.Configuration.ValidateOnSaveEnabled = false;
+                            foreach (var Player in this.Values)
                             {
                                 lock (Player)
                                 {
@@ -296,28 +313,32 @@ namespace BL.Servers.CoC.Core
                                         Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON;
                                         Data.Trophies = Player.Avatar.Trophies;
                                         Data.FacebookID = Player.Avatar.Facebook.Identifier ?? "#:#:#:#";
+                                        Database.Entry(Data).State = EntityState.Modified;
                                     }
                                 }
                             }
-                       
+
                             await Database.SaveChangesAsync();
                         }
+
                         break;
                     }
 
                     case DBMS.Redis:
                     {
-                        foreach (var Player in Players)
+                        foreach (var Player in this.Values)
                         {
-                            Player.Avatar.LastSave = DateTime.UtcNow;
-                            await Redis.Players.StringSetAsync(Player.Avatar.UserId.ToString(), JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,  TimeSpan.FromHours(4));
+                            var a = await Redis.Players.StringSetAsync(Player.Avatar.UserId.ToString(),
+                                JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,
+                                TimeSpan.FromHours(4));
+                                Console.WriteLine(a);
                         }
                         break;
                     }
 
                     case DBMS.Both:
                     {
-                        this.Save(Players);
+                        await this.Save();
                         DBMS = DBMS.Redis;
                         continue;
                     }

@@ -42,12 +42,12 @@ namespace BL.Servers.CoC.Packets.Debugs
             }
         }
 
-        internal override async void Process()
+        internal override void Process()
         {
             if (this.UserID > 0)
             {
                 var builder = new StringBuilder();
-                var level = await Resources.Players.Get(this.UserID, Constants.Database, false);
+                var level = Resources.Players.Get(this.UserID, Constants.Database, false);
                 if (level != null)
                 {
                     builder.AppendLine($"Statistics for user {level.Avatar.Name}: ");

@@ -37,7 +37,7 @@ namespace BL.Servers.CoC.Core.Database
                     foreach (var validationError in validationErrors.ValidationErrors)
                     {
                         Trace.TraceInformation($"Class: {validationErrors.Entry.Entity.GetType().FullName}, Property: {validationError.PropertyName}, Error: {validationError.ErrorMessage}");
-                        Loggers.Log($"Class: {validationErrors.Entry.Entity.GetType().FullName}, Property: {validationError.PropertyName}, Error: {validationError.ErrorMessage}", false, Defcon.TRACE);
+                        Loggers.Log($"Class: {validationErrors.Entry.Entity.GetType().FullName}, Property: {validationError.PropertyName}, Error: {validationError.ErrorMessage}", false, Defcon.FATAL);
                     }
                 }
 

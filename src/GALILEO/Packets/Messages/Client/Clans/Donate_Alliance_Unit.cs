@@ -51,13 +51,13 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
             this.PaidTroop = this.Reader.ReadByte() > 0;
         }
 
-        internal override async void Process()
+        internal override void Process()
         {
-            Clan Alliance = await Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
+            Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
             Entry Stream = Alliance.Chats.Get(this.StreamLowId);
             if (Stream != null)
             {
-                Level Receiver = await Resources.Players.Get(Stream.Sender_ID, Constants.Database, false);
+                Level Receiver = Resources.Players.Get(Stream.Sender_ID, Constants.Database, false);
 
                 if (IsSpell)
                 {

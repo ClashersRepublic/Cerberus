@@ -22,7 +22,7 @@ namespace BL.Servers.CoC.Core.Database
             Formatting                  = Formatting.Indented,              Converters              = { new Utils.ArrayReferencePreservngConverter() },
         };
 
-        internal static async Task<List<Level>> GetPlayerViaFIDAsync(List<string> ID)
+        internal static List<Level> GetPlayerViaFID(List<string> ID)
         {
             const string SQL = "SELECT ID FROM player WHERE FacebookID=@FacebookID";
             List<Level> Level = new List<Level>();
@@ -36,7 +36,7 @@ namespace BL.Servers.CoC.Core.Database
                         CMD.Parameters.AddWithValue("@FacebookID", _ID);
                         CMD.Prepare();
                         long UserID = Convert.ToInt64(CMD.ExecuteScalar());
-                        Level User = await Resources.Players.Get(UserID, Constants.Database, false);
+                        Level User = Resources.Players.Get(UserID, Constants.Database, false);
                         if (User != null)
                             Level.Add(User);
                     }
@@ -85,20 +85,20 @@ namespace BL.Servers.CoC.Core.Database
             return Seed;
         }
 
-        internal static async Task<List<long>> GetTopPlayer()
+        internal static List<long> GetTopPlayer()
         {
             const string SQL = "SELECT ID FROM player ORDER BY TROPHIES DESC LIMIT 100";
             List<long> Seed = new List<long>(100);
 
             using (MySqlConnection Conn = new MySqlConnection(Credentials))
             {
-                await Conn.OpenAsync();
+                Conn.Open();
 
                 using (MySqlCommand CMD = new MySqlCommand(SQL, Conn))
                 {
                     CMD.Prepare();
 
-                    var reader = await CMD.ExecuteReaderAsync();
+                    var reader = CMD.ExecuteReader();
                     while (reader.Read())
                     {
                         Seed.Add(Convert.ToInt64(reader["ID"]));

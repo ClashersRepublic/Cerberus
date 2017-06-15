@@ -4,6 +4,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using BL.Servers.CoC.Core;
 using BL.Servers.CoC.Core.Database;
 using BL.Servers.CoC.Core.Networking;
@@ -20,7 +21,9 @@ namespace BL.Servers.CoC
     internal class Program
     {
         internal static Stopwatch Stopwatch = Stopwatch.StartNew();
-        internal static void Main(string[] args)
+        internal static void Main(string[] args) => new Program().StartAsync().GetAwaiter().GetResult();
+
+        internal async Task StartAsync()
         {
             Console.Title = $"BarbarianLand Clash Server - ©BarbarianLand ";
             //NativeCalls.SetWindowLong(NativeCalls.GetConsoleWindow(), -20, (int) NativeCalls.GetWindowLong(NativeCalls.GetConsoleWindow(), -20) ^ 0x80000);
@@ -55,7 +58,8 @@ namespace BL.Servers.CoC
 #endif*/
             Resources.Initialize();
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
-            Thread.Sleep(Timeout.Infinite);
+
+            await Task.Delay(-1);
 
         }
     }

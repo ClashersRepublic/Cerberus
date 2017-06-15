@@ -94,7 +94,7 @@ namespace BL.Servers.CoC.Core
             this.LTimers.Add(3, Timer);
         }
 
-        internal void Save()
+        internal async Task Save()
         {
             Timer Timer = new Timer
             {
@@ -102,7 +102,7 @@ namespace BL.Servers.CoC.Core
                 AutoReset = true
             };
 
-            Timer.Elapsed += (_Sender, _Args) =>
+            Timer.Elapsed += async (_Sender, _Args) =>
             {
 #if DEBUG
                 Loggers.Log(
@@ -111,33 +111,25 @@ namespace BL.Servers.CoC.Core
 #endif
                 try
                 {
-                    lock (Resources.Players.Gate)
+
+                    if (Resources.Players.Count > 0)
                     {
-                        if (Resources.Players.Count > 0)
-                        {
-                            Resources.Players.Save(Resources.Players.Values.ToList(), Constants.Database);
-                        }
+                        await Resources.Players.Save(Constants.Database);
                     }
-                    lock (Resources.Clans.Gate)
+                    if (Resources.Clans.Count > 0)
                     {
-                        if (Resources.Clans.Count > 0)
-                        {
-                            List<Clan> Clans = Resources.Clans.Values.ToList();
-                            Resources.Clans.Save(Clans, Constants.Database);
-                        }
+                        await Resources.Clans.Save(Constants.Database);
                     }
-                    lock (Resources.Battles.Gate)
+
+                    if (Resources.Battles.Count > 0)
                     {
-                        if (Resources.Battles.Count > 0)
-                        {
-                            List<Battle> Battles = Resources.Battles.Values.ToList();
-                            Resources.Battles.Save(Battles, Constants.Database);
-                        }
+                        await Resources.Battles.Save(Constants.Database);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Resources.Exceptions.Catch(ex, "[: Failed at " + DateTime.Now.ToString("T") + ']' + Environment.NewLine + ex.StackTrace);
+                    Resources.Exceptions.Catch(ex,
+                        "[: Failed at " + DateTime.Now.ToString("T") + ']' + Environment.NewLine + ex.StackTrace);
                     Loggers.Log(
                         Utils.Padding(ex.GetType().Name, 15) + " : " + ex.Message + ".[: Failed at " +
                         DateTime.Now.ToString("T") + ']' + Environment.NewLine + ex.StackTrace, true, Defcon.ERROR);

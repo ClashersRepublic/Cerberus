@@ -34,7 +34,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
             this.Clan.War_Amical = this.Reader.ReadByte() > 0;
         }
 
-        internal override void Process()
+        internal override async void Process()
         {
             int ResourceID = (CSV.Tables.Get(Gamefile.Resources).GetData((CSV.Tables.Get(Gamefile.Globals).GetData("ALLIANCE_CREATE_RESOURCE") as Globals).TextValue) as Files.CSV_Logic.Resource).GetGlobalID();
             int Cost = (CSV.Tables.Get(Gamefile.Globals).GetData("ALLIANCE_CREATE_COST") as Globals).NumberValue;
@@ -63,7 +63,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Clans
                     Event_Player_Name = this.Device.Player.Avatar.Name
                 });
 
-                Resources.Clans.Save(this.Clan);
+                await Resources.Clans.Save(this.Clan);
                 
                 new Server_Commands(this.Device) { Command = new Joined_Alliance(this.Device) { Clan = this.Clan }.Handle() }.Send();
                 new Server_Commands(this.Device) { Command = new Role_Update(this.Device) { Clan = this.Clan, Role = (int)Role.Leader }.Handle() }.Send();

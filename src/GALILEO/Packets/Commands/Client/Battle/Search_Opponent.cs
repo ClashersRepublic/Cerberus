@@ -26,7 +26,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
             this.Reader.ReadInt32();
         }
 
-        internal override async void Process()
+        internal override void Process()
         {
             if (this.Device.State == Logic.Enums.State.LOGGED)
             {
@@ -49,7 +49,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
                 {
                     if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.FindIndex(P => P == this.Enemy_ID) < 0)
                     {
-                        this.Enemy_Player = await Core.Resources.Players.Get(this.Enemy_ID, Constants.Database, false);
+                        this.Enemy_Player = Core.Resources.Players.Get(this.Enemy_ID, Constants.Database, false);
 
                         if (this.Enemy_Player == null)
                         {

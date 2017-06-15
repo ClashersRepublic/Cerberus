@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -90,7 +91,7 @@ namespace BL.Servers.CoC.Core
             }
         }
 
-        internal async Task<Clan> Get(long ClanID, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal Clan Get(long ClanID, DBMS DBMS = DBMS.Mysql, bool Store = true)
         {
             if (!this.ContainsKey(ClanID))
             {
@@ -101,7 +102,7 @@ namespace BL.Servers.CoC.Core
                     case DBMS.Mysql:
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                           var Data = await Database.Clan.FindAsync(ClanID);
+                           var Data = Database.Clan.Find(ClanID);
 
                             if (!string.IsNullOrEmpty(Data?.Data))
                             {
@@ -120,7 +121,7 @@ namespace BL.Servers.CoC.Core
                         break;
 
                     case DBMS.Redis:
-                        string Property = await Redis.Clans.StringGetAsync(ClanID.ToString());
+                        string Property = Redis.Clans.StringGet(ClanID.ToString());
 
                         if (!string.IsNullOrEmpty(Property))
                         {
@@ -137,13 +138,13 @@ namespace BL.Servers.CoC.Core
                         break;
 
                     case DBMS.Both:
-                        Clan = await this.Get(ClanID, DBMS.Redis, Store);
+                        Clan = this.Get(ClanID, DBMS.Redis, Store);
 
                         if (Clan == null)
                         {
-                            Clan = await this.Get(ClanID, DBMS.Mysql, Store);
+                            Clan = this.Get(ClanID, DBMS.Mysql, Store);
                             if (Clan != null)
-                                this.Save(Clan, DBMS.Redis);
+                                 Redis.Clans.StringSet(Clan.Clan_ID.ToString(), JsonConvert.SerializeObject(Clan, this.Settings), TimeSpan.FromHours(4));
 
                         }
                         break;
@@ -223,7 +224,7 @@ namespace BL.Servers.CoC.Core
             return Clan;
         }
 
-        internal void Save(Clan Clan, DBMS DBMS = DBMS.Mysql)
+        internal async Task Save(Clan Clan, DBMS DBMS = DBMS.Mysql)
         {
             while (true)
             {
@@ -235,26 +236,30 @@ namespace BL.Servers.CoC.Core
 
                             using (MysqlEntities Database = new MysqlEntities())
                             {
-                                var Data = Database.Clan.Find(Clan.Clan_ID);
+                                Database.Configuration.AutoDetectChangesEnabled = false;
+                                Database.Configuration.ValidateOnSaveEnabled = false;
+                                var Data = await Database.Clan.FindAsync(Clan.Clan_ID);
 
                                 if (Data != null)
                                 {
                                     Data.Data = JsonConvert.SerializeObject(Clan, this.Settings);
-                                    Database.SaveChanges();
+                                    Database.Entry(Data).State = EntityState.Modified;
                                 }
+
+                                await Database.SaveChangesAsync();
                             }
                             break;
                         }
 
                     case DBMS.Redis:
                         {
-                            Redis.Clans.StringSet(Clan.Clan_ID.ToString(), JsonConvert.SerializeObject(Clan, this.Settings), TimeSpan.FromHours(4));
+                            await Redis.Clans.StringSetAsync(Clan.Clan_ID.ToString(), JsonConvert.SerializeObject(Clan, this.Settings), TimeSpan.FromHours(4));
                             break;
                         }
 
                     case DBMS.Both:
                         {
-                            this.Save(Clan);
+                            await this.Save(Clan);
                             DBMS = DBMS.Redis;
                             continue;
                         }
@@ -263,7 +268,7 @@ namespace BL.Servers.CoC.Core
             }
         }
 
-        internal async void Save(List<Clan> Clans, DBMS DBMS = DBMS.Mysql)
+        internal async Task Save(DBMS DBMS = DBMS.Mysql)
         {
             while (true)
             {
@@ -274,7 +279,9 @@ namespace BL.Servers.CoC.Core
                     {
                         using (MysqlEntities Database = new MysqlEntities())
                         {
-                            foreach (var Clan in Clans)
+                            Database.Configuration.AutoDetectChangesEnabled = false;
+                            Database.Configuration.ValidateOnSaveEnabled = false;
+                            foreach (var Clan in this.Values)
                             {
                                 lock (Clan)
                                 {
@@ -283,7 +290,8 @@ namespace BL.Servers.CoC.Core
                                     if (Data != null)
                                     {
                                         Data.Data = JsonConvert.SerializeObject(Clan, this.Settings);
-                                        Database.SaveChanges();
+
+                                        Database.Entry(Data).State = EntityState.Modified;
                                     }
                                 }
                             }
@@ -295,7 +303,7 @@ namespace BL.Servers.CoC.Core
 
                     case DBMS.Redis:
                     {
-                        foreach (var Clan in Clans)
+                        foreach (var Clan in this.Values)
                         {
                             await Redis.Clans.StringSetAsync(Clan.Clan_ID.ToString(),
                                 JsonConvert.SerializeObject(Clan, this.Settings), TimeSpan.FromHours(4));
@@ -305,7 +313,7 @@ namespace BL.Servers.CoC.Core
 
                     case DBMS.Both:
                     {
-                        this.Save(Clans);
+                        await this.Save();
                         DBMS = DBMS.Redis;
                         continue;
                     }

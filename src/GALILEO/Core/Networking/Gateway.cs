@@ -185,16 +185,16 @@ namespace BL.Servers.CoC.Core.Networking
             }
             else
             {
-                Token Token = AsyncEvent.UserToken as Token;
+                Token Token = (Token)AsyncEvent.UserToken;
 
-                Token.SetData();
+                var buffer = AsyncEvent.Buffer;
+                var offset = AsyncEvent.Offset;
+                for (int i = 0; i < AsyncEvent.BytesTransferred; i++)
+                    Token.Packet.Add(buffer[offset + i]);
 
                 try
                 {
-                    if (Token.Device.Socket.Available == 0)
-                    {
-                        Token.Process();
-                    }
+                    Token.Process();
                 }
                 catch (Exception ex)
                 {
@@ -209,9 +209,7 @@ namespace BL.Servers.CoC.Core.Networking
 
         internal void Disconnect(SocketAsyncEventArgs AsyncEvent)
         {
-            Token Token = AsyncEvent.UserToken as Token;
-
-            Token.Aborting = true;
+            Token Token = (Token) AsyncEvent.UserToken;
 
             if (Token.Device.Player != null)
             {
@@ -223,6 +221,7 @@ namespace BL.Servers.CoC.Core.Networking
             else if (!Token.Device.Connected())
             {
                 Resources.Devices.Remove(Token.Device);
+                Interlocked.CompareExchange(ref Token.Device.Dropped, 1, 0);
             }
 
             Interlocked.Decrement(ref ConnectedSockets);

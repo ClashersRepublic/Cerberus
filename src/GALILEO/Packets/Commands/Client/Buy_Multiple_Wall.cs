@@ -8,6 +8,7 @@ using System.Windows;
 using BL.Servers.CoC.Files;
 using BL.Servers.CoC.Files.CSV_Logic;
 using BL.Servers.CoC.Logic;
+using BL.Servers.CoC.Logic.Components;
 using BL.Servers.CoC.Logic.Enums;
 using BL.Servers.CoC.Logic.Structure;
 
@@ -30,7 +31,6 @@ namespace BL.Servers.CoC.Packets.Commands.Client
             for (int i = 0; i < this.Count; i++)
             {
                 this.WallXYs.Add(new Vector(this.Reader.ReadInt32(), this.Reader.ReadInt32()));
-
             }
             this.WallID = this.Reader.ReadInt32();
             this.Tick = this.Reader.ReadInt32();
@@ -38,6 +38,8 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
         internal override void Process()
         {
+            ShowValues();
+            this.Device.Player.Avatar.Wall_Group_ID++;
             foreach (var WallXY in this.WallXYs)
             {
                 var bd = (Buildings)CSV.Tables.Get(Gamefile.Buildings).GetDataWithID(this.WallID);
@@ -52,6 +54,8 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                             var rd = bd.GetBuildResource(0);
                             this.Device.Player.Avatar.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
 
+                            var a = (Combat_Component) b.GetComponent(1, false);
+                            a.WallI = this.Device.Player.Avatar.Wall_Group_ID;
                             b.StartConstructing(WallXY, this.Device.Player.Avatar.Variables.IsBuilderVillage);
                             this.Device.Player.GameObjectManager.AddGameObject(b);
                         }
@@ -66,7 +70,8 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                         {
                             var rd = bd.GetBuildResource(0);
                             this.Device.Player.Avatar.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
-
+                            var a = (Combat_Component)b.GetComponent(1, false);
+                            a.WallI = this.Device.Player.Avatar.Wall_Group_ID;
                             b.StartConstructing(WallXY, this.Device.Player.Avatar.Variables.IsBuilderVillage);
                             this.Device.Player.GameObjectManager.AddGameObject(b);
                         }

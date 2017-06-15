@@ -53,11 +53,10 @@ namespace BL.Servers.CoC.Packets.Messages.Client
                         {
 
 
-                            var Battle =
-                                await Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
+                            var Battle =  Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
                             if (Battle.Commands.Count > 0)
                             {
-                                Level Player = await Core.Resources.Players.Get(Battle.Defender.UserId, Constants.Database, false);
+                                Level Player = Core.Resources.Players.Get(Battle.Defender.UserId, Constants.Database, false);
 
                                 if (Utils.IsOdd(Resources.Random.Next(1, 1000)))
                                 {
@@ -109,7 +108,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
                                             Battle_ID = this.Device.Player.Avatar.Battle_ID
                                         });
                                 }
-                                Core.Resources.Battles.Save(Battle);
+                               await Core.Resources.Battles.Save(Battle);
                             }
                             else
                                 Core.Resources.Battles.Remove(this.Device.Player.Avatar.Battle_ID);
@@ -120,7 +119,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
                 }
                 else if (this.Device.State == Logic.Enums.State.IN_AMICAL_BATTLE)
                 {
-                    var Alliance = await Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
+                    var Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
                     Entry Stream = Alliance.Chats.Get(this.Device.Player.Avatar.Amical_ID);
                     if (Stream != null)
                     {

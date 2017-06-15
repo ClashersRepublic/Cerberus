@@ -115,6 +115,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("account_locked")] internal bool Locked = false;
 
         [JsonProperty("badge_id")] internal int Badge_ID = -1;
+        [JsonProperty("wall_group_id")] internal int Wall_Group_ID = -1;
         [JsonProperty("alliance_role")] internal int Alliance_Role = -1;
         [JsonProperty("alliance_level")] internal int Alliance_Level = -1;
 
@@ -229,7 +230,7 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddBool(this.ClanId > 0);
                 if (this.ClanId > 0)
                 {
-                    Clan clan = Core.Resources.Clans.Get(ClanId, Constants.Database).GetAwaiter().GetResult();
+                    Clan clan = Core.Resources.Clans.Get(ClanId, Constants.Database);
 
                     if (clan != null)
                     {
@@ -250,7 +251,7 @@ namespace BL.Servers.CoC.Logic
                         {
                             foreach (var userid in clan?.Members.Keys)
                             {
-                                var player = Core.Resources.Players.Get(userid, Constants.Database, false).GetAwaiter().GetResult();
+                                var player = Core.Resources.Players.Get(userid, Constants.Database, false);
                                 player.Avatar.ClanId = 0;
                                 player.Avatar.Alliance_Role = -1;
                                 player.Avatar.Alliance_Level = -1;

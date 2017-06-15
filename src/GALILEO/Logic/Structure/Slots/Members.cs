@@ -84,7 +84,7 @@ namespace BL.Servers.CoC.Logic.Structure.Slots
                     
                 foreach (Member Member in this.Values)
                 {
-                    Level _Player = Core.Resources.Players.Get(Member.UserID, Constants.Database, false).GetAwaiter().GetResult();
+                    Level _Player = Core.Resources.Players.Get(Member.UserID, Constants.Database, false);
 
                     _Packet.AddLong(_Player.Avatar.UserId);
                     _Packet.AddString(_Player.Avatar.Name);

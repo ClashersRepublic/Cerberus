@@ -46,12 +46,12 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
                 {
                     case Avatar_Stream.ATTACK:
                     case Avatar_Stream.DEFENSE:
-                        Battle = Core.Resources.Battles.Get(Battle_ID, Constants.Database, false).GetAwaiter().GetResult();
+                        Battle = Core.Resources.Battles.Get(Battle_ID, Constants.Database, false);
                         break;
                     case Avatar_Stream.REMOVED_CLAN:
                     case Avatar_Stream.CLAN_MAIL:
                     case Avatar_Stream.INVITATION:
-                        Clan = Core.Resources.Clans.Get(this.Alliance_ID, Constants.Database, false).GetAwaiter().GetResult();
+                        Clan = Core.Resources.Clans.Get(this.Alliance_ID, Constants.Database, false);
                         break;
                 }
                 

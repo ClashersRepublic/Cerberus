@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Timers;
 using BL.Servers.CR.Core.Network;
+using BL.Servers.CR.Logic.Manager;
 using BL.Servers.CR.Packets;
 using BL.Servers.CR.Packets.Messages.Server.Battle;
 
@@ -17,6 +18,7 @@ namespace BL.Servers.CR.Logic.Slots.Items
         internal Player Player1;
         internal Player Player2;
 
+        internal Maintenance_Timer Time;
         internal Timer Timer = new Timer();
         internal Queue<Command> Commands = new Queue<Command>();
 
@@ -31,6 +33,8 @@ namespace BL.Servers.CR.Logic.Slots.Items
             this.Player2 = _Player2;
 
             this.Timer = new Timer();
+            this.Time = new Maintenance_Timer();
+            this.Time.StartTimer(DateTime.Now, (int)TimeSpan.FromMinutes(3).TotalSeconds);
             this.Commands = new Queue<Command>();
         }
 
@@ -48,11 +52,11 @@ namespace BL.Servers.CR.Logic.Slots.Items
             this.Timer.Elapsed += (Fuck, Gl) =>
             {
                 this.Tick++;
-
-                if (this.Tick == (TimeSpan.FromMinutes(3).TotalSeconds * 2))
+                if (this.Time.GetRemainingSeconds(DateTime.Now) <= 0)
                 {
                     this.Stop();
                 }
+                
 
                 new Battle_Command_Data(this.Player1.Device)
                 {
@@ -63,6 +67,7 @@ namespace BL.Servers.CR.Logic.Slots.Items
                 {
                     Battle = this
                 }.Send();
+                
             };
 
             this.Timer.Start();

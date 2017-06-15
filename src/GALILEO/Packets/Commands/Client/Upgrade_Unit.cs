@@ -39,6 +39,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
             {
                 this.Troop = CSV.Tables.Get(Gamefile.Characters).GetDataWithID(GlobalId) as Characters;
             }
+            this.Tick = this.Reader.ReadInt32();
         }
 
         internal override void Process()

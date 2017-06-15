@@ -15,11 +15,11 @@ namespace BL.Servers.CoC.Packets.Messages.Server.API
         public Friend_List_Data(Device Device, List<string> ID) : base(Device)
         {
             this.Identifier = 20105;
-            this.Players = MySQL_V2.GetPlayerViaFIDAsync(ID).GetAwaiter().GetResult();
+            this.Players = MySQL_V2.GetPlayerViaFID(ID);
             this.Players = this.Players?.OrderByDescending(t => t.Avatar.Trophies).ToList();
         }
 
-        internal override async void Encode()
+        internal override void Encode()
         {
             this.Data.AddInt(0);
             this.Data.AddInt(this.Players.Count);
@@ -43,7 +43,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.API
 
                 if (Player.Avatar.ClanId > 0)
                 {
-                    Logic.Clan _Clan = await Resources.Clans.Get(Player.Avatar.ClanId, Constants.Database, false);
+                    Logic.Clan _Clan = Resources.Clans.Get(Player.Avatar.ClanId, Constants.Database, false);
                     this.Data.AddLong(Player.Avatar.ClanId);
                     this.Data.AddInt(_Clan.Badge);
                     this.Data.AddString(_Clan.Name);
