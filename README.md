@@ -1,7 +1,7 @@
 ## Cerberus - Project
 
 ***Cerberus*** is a _3 Dimension Project_.
-It has been **written by Vicky & Cray** from **BarbarianLand**.  
+It has been **written by Vicky** from **BarbarianLand**.  
 The goal of this project is to ensure a clean, easy-to-die code environment.
 All programs developed by the BarbariansLand Development Team are licensed by a license
 
