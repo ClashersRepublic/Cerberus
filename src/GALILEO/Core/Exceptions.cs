@@ -4,11 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Extensions;
+using Republic.Magic.Extensions;
 using SharpRaven;
 using SharpRaven.Data;
 
-namespace BL.Servers.CoC.Core
+namespace Republic.Magic.Core
 {
     internal class Exceptions
     {
@@ -22,18 +22,20 @@ namespace BL.Servers.CoC.Core
             else
             {
 #if DEBUG
-                Enviroment = "debug";          
+                Enviroment = "debug";
 #else
                 Enviroment = "production";
 #endif
             }
-            this.RavenClient = new RavenClient("https://66e83d54af364f3f82dfd0872b0a723a:66c50f4676aa4496bd927d1c5a440422@sentry.io/173499")
-            {
+            this.RavenClient =
+                new RavenClient(
+                    "https://4b2650dcbbed430eac450a5eb400aaa0:c9ce7df40227445c8bd027d77b88b9f3@sentry.io/180208")
+                {
                     Environment = Enviroment,
                     Release = Assembly.GetExecutingAssembly().GetName().Version.ToString(),
                     Timeout = TimeSpan.FromSeconds(5)
                 };
-        }
+        }   
 
         internal async void Catch(Exception Exception)
         {

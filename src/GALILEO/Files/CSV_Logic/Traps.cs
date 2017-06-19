@@ -1,9 +1,9 @@
 ﻿using System;
-using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Files.CSV_Reader;
-using BL.Servers.CoC.Logic.Enums;
+using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Files.CSV_Reader;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Files.CSV_Logic
+namespace Republic.Magic.Files.CSV_Logic
 {
     internal class Traps : Construction_Item
     {
@@ -80,12 +80,12 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public override int GetConstructionTime(int level)
         {
             int Total_Time = 0;
-            if (BuildTimeD.Length > level + 1)
-                Total_Time += BuildTimeD[level] * 86400;
-            if (BuildTimeH.Length > level + 1)
-                Total_Time += BuildTimeH[level] * 3600;
-            if (BuildTimeM.Length > level + 1)
-                Total_Time += BuildTimeM[level] * 60;
+            if (this.BuildTimeD.Length > level + 1)
+                Total_Time += this.BuildTimeD[level] * 86400;
+            if (this.BuildTimeH.Length > level + 1)
+                Total_Time += this.BuildTimeH[level] * 3600;
+            if (this.BuildTimeM.Length > level + 1)
+                Total_Time += this.BuildTimeM[level] * 60;
             
             return Total_Time;
             //return BuildTimeS[level] + BuildTimeM[level] * 60 + BuildTimeH[level] * 60 * 60 + BuildTimeD[level] * 60 * 60 * 24;

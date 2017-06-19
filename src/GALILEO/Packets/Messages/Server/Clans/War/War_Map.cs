@@ -1,11 +1,11 @@
 ﻿using System;
-using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
+using Republic.Magic.Core;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Clans.War
+namespace Republic.Magic.Packets.Messages.Server.Clans.War
 {
     internal class War_Map : Message
     {

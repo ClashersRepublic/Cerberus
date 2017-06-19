@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Extensions;
+using Republic.Magic.Extensions;
 
-namespace BL.Servers.CoC.Logic.Structure
+namespace Republic.Magic.Logic.Structure
 {
     internal class Maintenance_Timer
     {

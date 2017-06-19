@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BL.Servers.CoC.Logic.Structure.Slots.Items
+namespace Republic.Magic.Logic.Structure.Slots.Items
 {
     internal class List_Regions
     {

@@ -1,9 +1,9 @@
 ﻿using System;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Packets.Messages.Server
+namespace Republic.Magic.Packets.Messages.Server
 {
     internal class Own_Home_Data : Message
     {

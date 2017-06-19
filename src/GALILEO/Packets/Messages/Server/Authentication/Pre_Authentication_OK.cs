@@ -1,9 +1,9 @@
-﻿using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Packets.Cryptography;
+﻿using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Packets.Cryptography;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
+namespace Republic.Magic.Packets.Messages.Server.Authentication
 {
     internal class Pre_Authentication_OK : Message
     {

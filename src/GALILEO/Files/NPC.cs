@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace BL.Servers.CoC.Files
+namespace Republic.Magic.Files
 {
     internal class NPC
     {

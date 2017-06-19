@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Packets;
+using Republic.Magic.Extensions;
+using Republic.Magic.Packets;
 
-namespace BL.Servers.CoC.Core.Networking
+namespace Republic.Magic.Core.Networking
 {
     internal static class Processor
     {

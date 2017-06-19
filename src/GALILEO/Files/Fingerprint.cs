@@ -2,7 +2,7 @@
 using System.IO;
 using Newtonsoft.Json.Linq;
 
-namespace BL.Servers.CoC.Files
+namespace Republic.Magic.Files
 {
     internal class Fingerprint
     {

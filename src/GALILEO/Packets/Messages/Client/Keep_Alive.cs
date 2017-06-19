@@ -1,9 +1,9 @@
-﻿using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Packets.Messages.Server;
+﻿using Republic.Magic.Logic;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Packets.Messages.Server;
 
-namespace BL.Servers.CoC.Packets.Messages.Client
+namespace Republic.Magic.Packets.Messages.Client
 {
    internal class Keep_Alive : Message
     {

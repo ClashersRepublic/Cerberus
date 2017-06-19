@@ -1,14 +1,10 @@
-﻿using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Packets.Messages.Server;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Packets.Messages.Server;
 
-namespace BL.Servers.CoC.Packets.Messages.Client
+
+namespace Republic.Magic.Packets.Messages.Client
 {
     internal class Request_Name_Change : Message
     {

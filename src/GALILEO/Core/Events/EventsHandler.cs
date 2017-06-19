@@ -1,9 +1,9 @@
-﻿using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic.Enums;
+﻿using Republic.Magic.Extensions;
+using Republic.Magic.Logic.Enums;
 using System;
 using System.Runtime.InteropServices;
 
-namespace BL.Servers.CoC.Core.Events
+namespace Republic.Magic.Core.Events
 {
     internal class EventsHandler
     {

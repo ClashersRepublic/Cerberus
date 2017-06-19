@@ -1,6 +1,6 @@
-﻿using BL.Servers.CoC.Logic;
+﻿using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Battle
+namespace Republic.Magic.Packets.Messages.Server.Battle
 {
     internal class Battle_Failed : Message
     {

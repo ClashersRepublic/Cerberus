@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-namespace BL.Servers.CoC.Logic.Structure
+namespace Republic.Magic.Logic.Structure
 {
-    using BL.Servers.CoC.Files.CSV_Helpers;
-    using BL.Servers.CoC.Files.CSV_Logic;
+    using Republic.Magic.Files.CSV_Helpers;
+    using Republic.Magic.Files.CSV_Logic;
     using Newtonsoft.Json.Linq;
 
     internal class Builder_Deco : GameObject

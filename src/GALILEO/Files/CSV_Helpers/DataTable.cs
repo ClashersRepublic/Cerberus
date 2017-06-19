@@ -1,8 +1,8 @@
-﻿using BL.Servers.CoC.Files.CSV_Reader;
+﻿using Republic.Magic.Files.CSV_Reader;
 using System.Collections.Generic;
-using BL.Servers.CoC.Files.CSV_Logic;
+using Republic.Magic.Files.CSV_Logic;
 
-namespace BL.Servers.CoC.Files.CSV_Helpers
+namespace Republic.Magic.Files.CSV_Helpers
 {
     internal class DataTable
     {

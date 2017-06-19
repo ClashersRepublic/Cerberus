@@ -1,6 +1,6 @@
-﻿using BL.Servers.CoC.Logic;
+﻿using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Messages.Server
+namespace Republic.Magic.Packets.Messages.Server
 {
     internal class Keep_Alive_OK : Message
     {

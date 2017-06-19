@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Core.Database;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic;
+using Republic.Magic.Core;
+using Republic.Magic.Core.Database;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Messages.Server
+namespace Republic.Magic.Packets.Messages.Server
 {
     internal class Global_Chat_Entry : Message
     {
@@ -17,6 +17,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server
         internal Logic.Player Message_Sender = null;
         internal bool Sender = false;
         internal bool Bot = false;
+        internal bool Regex = false;
 
         public Global_Chat_Entry(Device Device) : base(Device)
         {
@@ -26,7 +27,8 @@ namespace BL.Servers.CoC.Packets.Messages.Server
         internal override void Encode()
         {
             this.Data.AddString(this.Message);
-            this.Data.AddString(Bot ? "Command System" :  Sender ? "You" : this.Message_Sender.Name);
+            this.Data.AddString(Bot ? "Command System" : Sender  ? "You" : Regex ? $"[{this.Message_Sender.Rank}] {this.Message_Sender.Name}" : this.Message_Sender.Name);
+
             this.Data.AddInt(this.Message_Sender.Level); // Unknown
             this.Data.AddInt(Bot ? 22 : this.Message_Sender.League);
 

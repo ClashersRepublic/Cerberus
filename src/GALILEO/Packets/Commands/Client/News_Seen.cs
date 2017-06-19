@@ -1,8 +1,8 @@
 ﻿using System;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Commands.Client
+namespace Republic.Magic.Packets.Commands.Client
 {
     internal class News_Seen : Command
     {

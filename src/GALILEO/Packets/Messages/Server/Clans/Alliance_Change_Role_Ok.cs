@@ -1,8 +1,8 @@
-﻿using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
+﻿using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Clans
+namespace Republic.Magic.Packets.Messages.Server.Clans
 {
     internal class Alliance_Change_Role_Ok : Message
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using BL.Servers.CoC.Packets.Commands.Client;
-using BL.Servers.CoC.Packets.Commands.Client.Battle;
-using BL.Servers.CoC.Packets.Commands.Client.Clan;
+using Republic.Magic.Packets.Commands.Client;
+using Republic.Magic.Packets.Commands.Client.Battle;
+using Republic.Magic.Packets.Commands.Client.Clan;
 
-namespace BL.Servers.CoC.Packets
+namespace Republic.Magic.Packets
 {
     internal class CommandFactory
     {
@@ -23,6 +23,7 @@ namespace BL.Servers.CoC.Packets
                 {508, typeof(Train_Unit)},
                 {510, typeof(Buy_Trap)},
                 {511, typeof(Request_Alliance_Troops)},
+                {512, typeof(Buy_Deco)},
                 {516, typeof(Upgrade_Unit)},
                 {517, typeof(SpeedUp_Upgrade_Unit)},
                 {518, typeof(Buy_Resource)},
@@ -34,6 +35,7 @@ namespace BL.Servers.CoC.Packets
                 {527, typeof(Upgrade_Hero)},
                 {528, typeof(SpeedUp_Hero_Upgrade)},
                 {584, typeof(Boost_Building)},
+                {533, typeof(Move_Multiple_Buildings)},
                 {537, typeof(Send_Mail)},
                 {532, typeof(New_Shop_Items_Seen)},
                 {538, typeof(My_League)},
@@ -45,6 +47,7 @@ namespace BL.Servers.CoC.Packets
                 {590, typeof(Buy_Multiple_Wall)},
                 {591, typeof(Change_Village_Mode)},
                 {592, typeof(Train_Unit_V2)},
+                {600, typeof(Gear_Up)},
                 {601, typeof(Search_Opponent_2)},
                 {700, typeof(Place_Attacker)},
                 {701, typeof(Place_Alliance_Attacker)},

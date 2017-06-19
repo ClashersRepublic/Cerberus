@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace BL.Servers.CoC.Files.CSV_Reader
+namespace Republic.Magic.Files.CSV_Reader
 {
     public class Row
     {

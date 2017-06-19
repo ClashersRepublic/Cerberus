@@ -1,8 +1,8 @@
-﻿using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic; 
+﻿using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic; 
 
-namespace BL.Servers.CoC.Packets.Messages.Client.Leaderboard
+namespace Republic.Magic.Packets.Messages.Client.Leaderboard
 {
     internal class Request_Local_Players : Message
     {

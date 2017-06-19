@@ -1,7 +1,7 @@
-﻿using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
+﻿using Republic.Magic.Logic;
+using Republic.Magic.Logic.Structure.Slots.Items;
 
-namespace BL.Servers.CoC.Packets.Messages.Server
+namespace Republic.Magic.Packets.Messages.Server
 {
     internal class Avatar_Stream_Entry : Message
     {

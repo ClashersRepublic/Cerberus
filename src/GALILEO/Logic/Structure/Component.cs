@@ -1,4 +1,4 @@
-﻿namespace BL.Servers.CoC.Logic.Structure
+﻿namespace Republic.Magic.Logic.Structure
 {
     using Newtonsoft.Json.Linq;
     internal class Component

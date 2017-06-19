@@ -1,6 +1,6 @@
-﻿using BL.Servers.CoC.Logic;
+﻿using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.API
+namespace Republic.Magic.Packets.Messages.Server.API
 {
     internal class Facebook_Connect_OK : Message
     {

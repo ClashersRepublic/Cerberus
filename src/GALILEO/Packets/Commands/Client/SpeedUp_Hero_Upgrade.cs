@@ -1,8 +1,8 @@
-﻿using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Structure;
+﻿using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Structure;
 
-namespace BL.Servers.CoC.Packets.Commands.Client
+namespace Republic.Magic.Packets.Commands.Client
 {
     internal class SpeedUp_Hero_Upgrade : Command
     {
@@ -25,7 +25,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
             var go = this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(BuildingId) : this.Device.Player.GameObjectManager.GetGameObjectByID(BuildingId);
             if (go != null)
             {
-                var hero = (go as ConstructionItem).GetHeroBaseComponent();
+                var hero = ((ConstructionItem)go).GetHeroBaseComponent();
                 hero?.SpeedUpUpgrade();
             }
         }

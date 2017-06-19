@@ -1,7 +1,7 @@
-﻿using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic;
+﻿using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Battle
+namespace Republic.Magic.Packets.Messages.Server.Battle
 {
     internal class Live_Battle_Stats : Message
     {

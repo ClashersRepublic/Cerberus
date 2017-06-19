@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Files.CSV_Reader;
-using BL.Servers.CoC.Logic.Enums;
+using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Files.CSV_Reader;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Files.CSV_Logic
+namespace Republic.Magic.Files.CSV_Logic
 {
     internal class Buildings : Construction_Item
     {
@@ -213,18 +213,21 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public override int GetConstructionTime(int level)
         {
             int Total_Time = 0;
-            if (BuildTimeD.Length > level + 1)
-                Total_Time += BuildTimeD[level] * 86400;
-            if (BuildTimeH.Length > level + 1)
-                Total_Time += BuildTimeH[level] * 3600;
-            if (BuildTimeM.Length > level + 1)
-                Total_Time += BuildTimeM[level] * 60;
-            if (BuildTimeS.Length > level + 1)
-                Total_Time += BuildTimeS[level];
+            if (this.BuildTimeD.Length > level + 1)
+                Total_Time += this.BuildTimeD[level] * 86400;
+            if (this.BuildTimeH.Length > level + 1)
+                Total_Time += this.BuildTimeH[level] * 3600;
+            if (this.BuildTimeM.Length > level + 1)
+                Total_Time += this.BuildTimeM[level] * 60;
+            if (this.BuildTimeS.Length > level + 1)
+                Total_Time += this.BuildTimeS[level];
 
-            //return Total_Time;
-            return BuildTimeS[level] + BuildTimeM[level] * 60 + BuildTimeH[level] * 3600 + BuildTimeD[level] * 86400;
+            return Total_Time;
+            //return BuildTimeS[level] + BuildTimeM[level] * 60 + BuildTimeH[level] * 3600 + BuildTimeD[level] * 86400;
         }
+
+        public override int GetGearUpTime(int level) => this.GearUpTime[level] * 60;
+
         public int GetUnitProduction(int level) => UnitProduction[level];
 
         public int GetUnitStorageCapacity(int level) => HousingSpace[level];
@@ -233,7 +236,7 @@ namespace BL.Servers.CoC.Files.CSV_Logic
 
         public override bool IsTownHall() => BuildingClass == "Town Hall";
         public override bool IsTownHall2() => BuildingClass == "Town Hall2";
-
+        public bool IsSpellForge() => ForgesSpells || ForgesMiniSpells;
         public bool IsAllianceCastle() => Name == "Alliance Castle";
 
         public bool IsWorkerBuilding() => BuildingClass == "Worker";

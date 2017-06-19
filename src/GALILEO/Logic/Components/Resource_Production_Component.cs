@@ -1,13 +1,13 @@
 ﻿using System;
-using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure;
+using Republic.Magic.Core;
+using Republic.Magic.Extensions;
+using Republic.Magic.Files;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure;
 using Newtonsoft.Json.Linq;
 
-namespace BL.Servers.CoC.Logic.Components
+namespace Republic.Magic.Logic.Components
 {
     internal class Resource_Production_Component : Component
     {

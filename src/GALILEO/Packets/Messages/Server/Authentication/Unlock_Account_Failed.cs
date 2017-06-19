@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.External.Sodium;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.External.Sodium;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
+namespace Republic.Magic.Packets.Messages.Server.Authentication
 {
     internal class Unlock_Account_Failed : Message
     {

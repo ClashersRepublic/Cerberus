@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
+using Republic.Magic.Extensions;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 
-namespace BL.Servers.CoC.Core.Database
+namespace Republic.Magic.Core.Database
 {
     internal class MySQL_V2
     {
@@ -132,7 +132,8 @@ namespace BL.Servers.CoC.Core.Database
                 }
 
                 Credentials = builder.ToString();
-                using (MySqlConnection Connections = new MySqlConnection(Credentials))
+                Console.WriteLine(Credentials);
+                using (MySqlConnection Connections = new MySqlConnection(Credentials))  
                 {
                     Connections.Open();
                     using (MySqlCommand CMD = new MySqlCommand(SQL, Connections))

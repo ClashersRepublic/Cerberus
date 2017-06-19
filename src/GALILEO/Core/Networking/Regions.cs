@@ -7,7 +7,7 @@ using MaxMind.Db;
 using MaxMind.GeoIP2;
 using MaxMind.GeoIP2.Exceptions;
 
-namespace BL.Servers.CoC.Core.Networking
+namespace Republic.Magic.Core.Networking
 {
     internal class Region : IDisposable
     {

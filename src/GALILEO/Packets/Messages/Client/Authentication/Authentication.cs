@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.External.Blake2B;
-using BL.Servers.CoC.External.Sodium;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Packets.Messages.Server.Authentication;
-using BL.Servers.CoC.Packets.Messages.Server;
-using BL.Servers.CoC.Packets.Messages.Server.Clans;
-using BL.Servers.CoC.Packets.Messages.Server.Clans.War;
-using BL.Servers.CoC.Packets.Cryptography;
-using BL.Servers.CoC.Packets.Messages.Server.Battle;
+using Republic.Magic.Core;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.External.Blake2B;
+using Republic.Magic.External.Sodium;
+using Republic.Magic.Files;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Packets.Messages.Server.Authentication;
+using Republic.Magic.Packets.Messages.Server;
+using Republic.Magic.Packets.Messages.Server.Clans;
+using Republic.Magic.Packets.Messages.Server.Clans.War;
+using Republic.Magic.Packets.Cryptography;
+using Republic.Magic.Packets.Messages.Server.Battle;
 
-namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
+namespace Republic.Magic.Packets.Messages.Client.Authentication
 {
     internal class Authentication : Message
     {
@@ -38,7 +38,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
 
         internal override void DecryptPepper()
         {
-            byte[] Buffer = this.Reader.ReadBytes(this.Length);
+            byte[] Buffer = this.Reader.ReadBytes((int)this.Length);
             Console.WriteLine($"Raw {BitConverter.ToString(Buffer.ToArray()).Replace("-", "")}");
             Console.WriteLine($"Buffer Lenght {Buffer.ToArray().Length}");
             this.Device.Keys.PublicKey = Buffer.Take(32).ToArray();
@@ -221,7 +221,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Authentication
                     this.Device.Player.Avatar.Alliance_Level = Alliance.Level;
 
                     new Alliance_Full_Entry(this.Device) {Clan = Alliance}.Send();
-                    new War_Map(this.Device).Send();
+                    //new War_Map(this.Device).Send();
 
                     if (Alliance.Chats != null)
                     {

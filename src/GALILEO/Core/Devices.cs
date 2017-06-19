@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using BL.Servers.CoC.Logic;
+using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Core
+namespace Republic.Magic.Core
 {
     internal class Devices : Dictionary<IntPtr, Device>
     {

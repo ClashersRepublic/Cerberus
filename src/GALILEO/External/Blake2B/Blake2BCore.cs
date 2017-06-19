@@ -1,4 +1,4 @@
-﻿namespace BL.Servers.CoC.External.Blake2B
+﻿namespace Republic.Magic.External.Blake2B
 {
     #region Usings
 

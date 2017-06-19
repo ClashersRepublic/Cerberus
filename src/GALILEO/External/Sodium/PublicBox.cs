@@ -1,7 +1,7 @@
-﻿namespace BL.Servers.CoC.External.Sodium
+﻿namespace Republic.Magic.External.Sodium
 {
     using System;
-    using BL.Servers.CoC.External.TweetNaCl;
+    using Republic.Magic.External.TweetNaCl;
 
     public class PublicBox
     {

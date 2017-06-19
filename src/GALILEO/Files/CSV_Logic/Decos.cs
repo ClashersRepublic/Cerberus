@@ -1,7 +1,8 @@
-﻿using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Files.CSV_Reader;
+﻿using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Files.CSV_Reader;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Files.CSV_Logic
+namespace Republic.Magic.Files.CSV_Logic
 {
     internal class Decos : Data
     {
@@ -34,6 +35,14 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public int GreenAdd { get; set; }
         public int BlueAdd { get; set; }
         public bool LightsOn { get; set; }
+        public int GetBuildCost() => BuildCost;
 
+        public Resource GetBuildResource() => CSV.Tables.Get(Gamefile.Resources).GetData(BuildResource) as Resource;
+
+        public int GetSellPrice()
+        {
+            var calculation = (int)((BuildCost * (long)1717986919) >> 32);
+            return (calculation >> 2) + (calculation >> 31);
+        }
     }
 }

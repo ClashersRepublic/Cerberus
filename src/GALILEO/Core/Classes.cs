@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Data.Entity.Infrastructure;
-using BL.Servers.CoC.Core.Database;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Packets;
-using BL.Servers.CoC.Core.Events;
+using Republic.Magic.Core.Database;
+using Republic.Magic.Extensions;
+using Republic.Magic.Files;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Packets;
+using Republic.Magic.Core.Events;
 
-namespace BL.Servers.CoC.Core
+namespace Republic.Magic.Core
 {
     internal class Classes : IDisposable
     {

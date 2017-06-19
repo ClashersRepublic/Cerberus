@@ -1,12 +1,12 @@
 ﻿using System;
-using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Packets.Messages.Server.Errors;
+using Republic.Magic.Core;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic;
+using Republic.Magic.Packets.Messages.Server.Errors;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Clans
+namespace Republic.Magic.Packets.Messages.Server.Clans
 {
     internal class Alliance_Data : Message
     {

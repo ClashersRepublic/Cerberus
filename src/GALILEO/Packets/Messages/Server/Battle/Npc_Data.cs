@@ -1,9 +1,9 @@
-﻿using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
+﻿using Republic.Magic.Extensions.List;
+using Republic.Magic.Files;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Battle
+namespace Republic.Magic.Packets.Messages.Server.Battle
 {
     internal class Npc_Data : Message
     {

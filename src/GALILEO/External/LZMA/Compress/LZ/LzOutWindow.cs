@@ -1,4 +1,4 @@
-namespace BL.Servers.CoC.External.LZMA.Compress.LZ
+namespace Republic.Magic.External.LZMA.Compress.LZ
 {
     public class OutWindow
     {

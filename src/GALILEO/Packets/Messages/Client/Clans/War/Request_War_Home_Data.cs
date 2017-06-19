@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Packets.Messages.Server.Clans.War;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Packets.Messages.Server.Clans.War;
 
-namespace BL.Servers.CoC.Packets.Messages.Client.Clans.War
+namespace Republic.Magic.Packets.Messages.Client.Clans.War
 {
     internal class Request_War_Home_Data : Message
     {

@@ -1,12 +1,12 @@
-﻿namespace BL.Servers.CoC.Logic.Enums
+﻿namespace Republic.Magic.Logic.Enums
 {
     public enum Rank
     {
-        Player = 1,
-        Premium = 2,
-        SModerator = 3,
-        Moderator = 4,
-        Administrator = 5,
-        Founder = 6
+        PLAYER = 1,
+        DONATOR = 2,
+        VIP = 3,
+        MODS = 4,
+        ADMIN = 5,
+        FOUNDER = 6
     }
 }

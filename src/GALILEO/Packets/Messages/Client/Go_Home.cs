@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Core.Database;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
-using BL.Servers.CoC.Packets.Messages.Server;
-using BL.Servers.CoC.Packets.Messages.Server.Authentication;
-using BL.Servers.CoC.Packets.Messages.Server.Battle;
+using Republic.Magic.Core;
+using Republic.Magic.Core.Database;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Structure.Slots.Items;
+using Republic.Magic.Packets.Messages.Server;
+using Republic.Magic.Packets.Messages.Server.Authentication;
+using Republic.Magic.Packets.Messages.Server.Battle;
 
-namespace BL.Servers.CoC.Packets.Messages.Client
+namespace Republic.Magic.Packets.Messages.Client
 {
     internal class Go_Home : Message
     {

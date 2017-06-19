@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.External.Sodium;
-using BL.Servers.CoC.Logic;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.External.Sodium;
+using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
+namespace Republic.Magic.Packets.Messages.Server.Authentication
 {
     internal class Unlock_Account_OK : Message
     {

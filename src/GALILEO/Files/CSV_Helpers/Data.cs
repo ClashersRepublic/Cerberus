@@ -1,7 +1,7 @@
 ﻿using System;
-using BL.Servers.CoC.Files.CSV_Reader;
+using Republic.Magic.Files.CSV_Reader;
 
-namespace BL.Servers.CoC.Files.CSV_Helpers
+namespace Republic.Magic.Files.CSV_Helpers
 {
     public class Data
     {

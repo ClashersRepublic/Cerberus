@@ -1,14 +1,14 @@
 ﻿using System;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
-using BL.Servers.CoC.Packets.Messages.Server.Battle;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Files;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Structure.Slots.Items;
+using Republic.Magic.Packets.Messages.Server.Battle;
 
-namespace BL.Servers.CoC.Packets.Messages.Client.Battle
+namespace Republic.Magic.Packets.Messages.Client.Battle
 {
     internal class Attack_NPC : Message
     {

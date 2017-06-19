@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Windows;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic.Components;
-using BL.Servers.CoC.Logic.Enums;
+using Republic.Magic.Extensions;
+using Republic.Magic.Files;
+using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic.Components;
+using Republic.Magic.Logic.Enums;
 using Newtonsoft.Json.Linq;
 
-namespace BL.Servers.CoC.Logic.Structure
+namespace Republic.Magic.Logic.Structure
 {
     internal class ConstructionItem : GameObject
     {
@@ -17,6 +17,7 @@ namespace BL.Servers.CoC.Logic.Structure
             this.IsBoosted = false;
             this.IsBoostPause = false;
             this.IsConstructing = false;
+            this.IsGearing = false;
             this.UpgradeLevel = -1;
         }
         
@@ -28,6 +29,7 @@ namespace BL.Servers.CoC.Logic.Structure
         internal bool IsBoostPause;
         internal int  UpgradeLevel;
         internal bool IsConstructing;
+        internal bool IsGearing;
         internal bool Builder_Village;
         public void BoostBuilding()
         {
@@ -271,6 +273,31 @@ namespace BL.Servers.CoC.Logic.Structure
             else
                 this.Level.VillageWorkerManager.DeallocateWorker(this);
 
+            var gearingToken = jsonObject["gearing"];
+            var gearingTimeToken = jsonObject["const_t"];
+            var gearingTimeEndToken = jsonObject["const_t_end"];
+
+            if (gearingToken != null && gearingTimeToken != null && gearingTimeEndToken != null)
+            {
+                this.Timer = new Timer();
+                this.IsGearing = true;
+
+                var remainingGearingTime = gearingTimeEndToken.ToObject<int>();
+                var startTime = (int)TimeUtils.ToUnixTimestamp(this.Level.Avatar.LastTick);
+                var duration = remainingGearingTime - startTime;
+
+                if (duration < 0)
+                    duration = 0;
+
+                this.Timer.StartTimer(this.Level.Avatar.LastTick, duration);
+
+
+                if (Builder_Village)
+                    this.Level.BuilderVillageWorkerManager.AllocateWorker(this);
+                else
+                    this.Level.VillageWorkerManager.AllocateWorker(this);
+            }
+
             var constTimeToken = jsonObject["const_t"];
             var constTimeEndToken = jsonObject["const_t_end"];
             if (constTimeToken != null && constTimeEndToken != null)
@@ -320,17 +347,24 @@ namespace BL.Servers.CoC.Logic.Structure
         {
             jsonObject.Add("bv", this.Builder_Village);
             jsonObject.Add("lvl", UpgradeLevel);
-            if (IsConstructing)
+            if (this.IsGearing)
+            {
+                jsonObject.Add("gearing", this.IsGearing);
+                jsonObject.Add("const_t", this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick));
+                jsonObject.Add("const_t_end", this.Timer.EndTime);
+            }
+
+            if (this.IsConstructing)
             {
                 jsonObject.Add("const_t", this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick));
                 jsonObject.Add("const_t_end", this.Timer.EndTime);
             }
-            if (IsBoosted)
+            if (this.IsBoosted)
             {
                 jsonObject.Add("boost_t", this.BoostTimer.GetRemainingSeconds(this.Level.Avatar.LastTick));
                 jsonObject.Add("boost_t_end", this.BoostTimer.EndTime);
             }
-            if (Locked)
+            if (this.Locked)
                 jsonObject.Add("locked", true);
 
             base.Save(jsonObject);
@@ -394,6 +428,28 @@ namespace BL.Servers.CoC.Logic.Structure
                     this.Level.VillageWorkerManager.AllocateWorker(this);
             }
         }
+
+        [Obsolete] //Not Working ¯\_(ツ)_/¯
+        internal void StartGearUp(bool builder_village)
+        {
+            this.Builder_Village = builder_village;
+            int gearUpTime = GetConstructionItemData().GetGearUpTime(UpgradeLevel + 1);
+            if (gearUpTime < 1)
+            {
+                FinishConstruction();
+            }
+            else
+            {
+                this.IsGearing = true;
+                this.Timer = new Timer();
+                this.Timer.StartTimer(this.Level.Avatar.LastTick, gearUpTime);
+                if (Builder_Village)
+                    this.Level.BuilderVillageWorkerManager.AllocateWorker(this);
+                else
+                    this.Level.VillageWorkerManager.AllocateWorker(this);
+            }
+        }
+
         [Obsolete] //Not Working ¯\_(ツ)_/¯
         internal void StartUnlocking(bool builder_village)
         {
@@ -452,9 +508,9 @@ namespace BL.Servers.CoC.Logic.Structure
                 if (this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick) <= 0)
                 {
                     if (this.Locked)
-                        FinishUnlocking();
+                        this.FinishUnlocking();
                     else
-                    FinishConstruction();
+                        this.FinishConstruction();
                 }
             }
             if (this.IsBoosted)
@@ -464,7 +520,16 @@ namespace BL.Servers.CoC.Logic.Structure
                     this.IsBoosted = false;
                 }
             }
+
+            if (this.IsGearing)
+            {
+                if (this.Timer.GetRemainingSeconds(this.Level.Avatar.LastTick) <= 0)
+                {
+                    this.FinishConstruction();
+                }
+            }
         }
+
         internal void Unlock()
         {
             Locked = false;

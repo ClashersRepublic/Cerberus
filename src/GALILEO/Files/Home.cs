@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace BL.Servers.CoC.Files
+namespace Republic.Magic.Files
 {
     internal class Home
     {

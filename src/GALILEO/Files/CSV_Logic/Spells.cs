@@ -1,13 +1,13 @@
-﻿using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Files.CSV_Reader;
+﻿using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Files.CSV_Reader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Logic.Enums;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Files.CSV_Logic
+namespace Republic.Magic.Files.CSV_Logic
 {
     internal class Spells : Combat_Item
     {
@@ -94,6 +94,26 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public int DamageTHPercent { get; set; }
         public bool ScaleByTH { get; set; }
         public bool EnabledByCalendar { get; set; }
+
+        public override int GetCombatItemType() => 1;
+        public override int GetHousingSpace() => HousingSpace[0];
+
+        public override int GetRequiredLaboratoryLevel(int level) => LaboratoryLevel[level];
+
+        public override int GetRequiredProductionHouseLevel() => SpellForgeLevel[0];
+
+        public override int GetTrainingCost(int level) => TrainingCost[level];
+
+        public override Resource GetTrainingResource() => CSV.Tables.Get(Gamefile.Resources).GetData(TrainingResource) as Resource;
+
+        public override int GetTrainingTime() => TrainingTime[0];
+
+        public override int GetUpgradeCost(int level) => UpgradeCost[level];
+
+        public override int GetUpgradeLevelCount() => UpgradeCost.Length;
+
         public override Resource GetUpgradeResource() => CSV.Tables.Get(Gamefile.Resources).GetData(UpgradeResource) as Resource;
+
+        public override int GetUpgradeTime(int level) => UpgradeTimeH[level] * 3600;
     }
 }

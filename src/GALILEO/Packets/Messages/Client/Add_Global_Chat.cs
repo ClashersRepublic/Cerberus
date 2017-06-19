@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Packets.Messages.Server;
+using Republic.Magic.Core;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Packets.Messages.Server;
 
-namespace BL.Servers.CoC.Packets.Messages.Client
+namespace Republic.Magic.Packets.Messages.Client
 {
     internal class Add_Global_Chat : Message 
     {
@@ -42,8 +42,19 @@ namespace BL.Servers.CoC.Packets.Messages.Client
                             Console.WriteLine($"Debug Command {commandName} has  been handled.");
                             Console.ResetColor();
 #endif
-                            Debug.Decode();
-                            Debug.Process();
+
+                            try
+                            {
+                                Debug.Process();
+                            }
+                            catch (Exception ex)
+                            {
+                                Resources.Exceptions.Catch(ex,
+                                    $"Unable to process debug command with ID: {commandName}" + Environment.NewLine +
+                                    ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine +
+                                    ex.Data, this.Device.Model, this.Device.OSVersion, this.Device.Player.Avatar.Token,
+                                    this.Device.Player?.Avatar.UserId ?? 0);
+                            }
                         }
 
                     }
@@ -61,6 +72,7 @@ namespace BL.Servers.CoC.Packets.Messages.Client
                     {
                         Message = this.Message,
                         Message_Sender = this.Device.Player.Avatar,
+                        Regex = true,
                         Sender = this.Device == _Device
                     }.Send();
                 }

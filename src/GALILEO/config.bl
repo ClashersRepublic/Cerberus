@@ -2,10 +2,16 @@
   <!-- ____________________________________ Database SETTINGS ____________________________________ -->
 
   <add key="RC4" value="true" />
-  <!-- 0 for Mysql, 1 for Mysql + Redis-->
+  <!-- Use RC4-->
   
   <add key="DatabaseMode" value="1" />
   <!-- 0 for Mysql, 1 for Mysql + Redis-->
+
+  <add key="UpdateUrl" value="http://bfy.tw/CQAh" />
+  <!-- Location to redirect outdated player-->
+
+  <add key="PatchUrl" value="http://192.168.0.5/" />
+  <!-- Location of your patching server-->
   
   <add key="RedisIPAddress" value="127.0.0.1" />
   <!-- Redis server IP address-->

@@ -1,10 +1,10 @@
 ﻿using System;
-using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
+using Republic.Magic.Core;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Packets.Commands.Client
+namespace Republic.Magic.Packets.Commands.Client
 {
     internal class Change_Village_Mode : Command
     {

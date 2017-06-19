@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
+using Republic.Magic.Logic.Structure.Slots.Items;
 using Newtonsoft.Json;
 
-namespace BL.Servers.CoC.Logic.Structure.Slots
+namespace Republic.Magic.Logic.Structure.Slots
 {
     internal class Calendar
     {

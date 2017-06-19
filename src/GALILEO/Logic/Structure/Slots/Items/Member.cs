@@ -1,9 +1,9 @@
 ﻿using System;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic.Enums;
+using Republic.Magic.Extensions;
+using Republic.Magic.Logic.Enums;
 using Newtonsoft.Json;
 
-namespace BL.Servers.CoC.Logic.Structure.Slots.Items
+namespace Republic.Magic.Logic.Structure.Slots.Items
 {
     internal class Member
     {

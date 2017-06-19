@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Servers.CoC.Files.CSV_Reader
+namespace Republic.Magic.Files.CSV_Reader
 {
 
     [DebuggerDisplay("Name = {Name}")]

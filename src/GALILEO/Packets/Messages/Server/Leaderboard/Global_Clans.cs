@@ -1,14 +1,14 @@
-﻿using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic;
+﻿using Republic.Magic.Core;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Leaderboard
+namespace Republic.Magic.Packets.Messages.Server.Leaderboard
 {
     internal class Global_Clans : Message
     {

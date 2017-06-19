@@ -1,10 +1,10 @@
-﻿using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic.Enums;
+﻿using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace BL.Servers.CoC.Logic.Structure.Slots.Items
+namespace Republic.Magic.Logic.Structure.Slots.Items
 {
     internal class Entry
     {

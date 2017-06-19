@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Manager;
-using BL.Servers.CoC.Logic.Structure;
+using Republic.Magic.Files;
+using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Manager;
+using Republic.Magic.Logic.Structure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using BL.Servers.CoC.Extensions;
+using Republic.Magic.Extensions;
 
-namespace BL.Servers.CoC.Logic.Manager
+namespace Republic.Magic.Logic.Manager
 {
     internal class GameObjectManager
     {

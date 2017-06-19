@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System;
 
-namespace BL.Servers.CoC.Logic.Structure.API
+namespace Republic.Magic.Logic.Structure.API
 {
     internal class Facebook
     {

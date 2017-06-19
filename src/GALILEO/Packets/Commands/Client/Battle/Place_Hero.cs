@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
+using Republic.Magic.Core;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Files;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure.Slots.Items;
 
-namespace BL.Servers.CoC.Packets.Commands.Client.Battle
+namespace Republic.Magic.Packets.Commands.Client.Battle
 {
     internal class Place_Hero : Command
     {
@@ -74,6 +75,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
                 else
                 {
 
+                    var Battle = Resources.Battles_V2.GetPlayer(this.Device.Player.Avatar.Battle_ID_V2, this.Device.Player.Avatar.UserId);
                     Battle_Command Command =
                         new Battle_Command
                         {
@@ -87,7 +89,14 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
                                     Y = this.Y
                                 }
                         };
-                    this.Device.Player.Avatar.Battle_V2.Add_Command(Command);
+                    Battle.Add_Command(Command);
+                    int Index = Battle.Replay_Info.Units.FindIndex(T => T[0] == this.GlobalId);
+                    if (Index > -1)
+                        Battle.Replay_Info.Units[Index][1]++;
+                    else
+                        Battle.Replay_Info.Units.Add(new[] { this.GlobalId, 1 });
+
+                    Battle.Attacker.Heroes_Health.Add(new Slot(GlobalId, 0));
                 }
             }
             List<Slot> _PlayerSpells = this.Device.Player.Avatar.Spells;

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BL.Servers.CoC.Core.Database
+namespace Republic.Magic.Core.Database
 {
     using System;
     using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace BL.Servers.CoC.Logic.Structure.Slots.Items
+namespace Republic.Magic.Logic.Structure.Slots.Items
 {
     internal class Village_2
     {

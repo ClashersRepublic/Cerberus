@@ -5,13 +5,13 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Threading;
-using BL.Servers.CoC.Packets;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
+using Republic.Magic.Packets;
+using Republic.Magic.Extensions;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
 using SharpRaven.Data;
 
-namespace BL.Servers.CoC.Core.Networking
+namespace Republic.Magic.Core.Networking
 {
     internal class Gateway
     {
@@ -210,7 +210,7 @@ namespace BL.Servers.CoC.Core.Networking
         internal void Disconnect(SocketAsyncEventArgs AsyncEvent)
         {
             Token Token = (Token) AsyncEvent.UserToken;
-
+            
             if (Token.Device.Player != null)
             {
                 if (Resources.Players.ContainsValue(Token.Device.Player))
@@ -233,7 +233,7 @@ namespace BL.Servers.CoC.Core.Networking
 
             if (WriteEvent != null)
             {
-                WriteEvent.SetBuffer(Message.ToBytes, Message.Offset, Message.Length + 7 - Message.Offset);
+                WriteEvent.SetBuffer(Message.ToBytes, Message.Offset, (int)Message.Length + 7 - Message.Offset);
 
                 WriteEvent.AcceptSocket = Message.Device.Socket;
                 WriteEvent.RemoteEndPoint = Message.Device.Socket.RemoteEndPoint;

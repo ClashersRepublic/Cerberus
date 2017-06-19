@@ -1,7 +1,7 @@
-﻿using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Files.CSV_Reader;
+﻿using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Files.CSV_Reader;
 
-namespace BL.Servers.CoC.Files.CSV_Logic
+namespace Republic.Magic.Files.CSV_Logic
 {
     internal class Construction_Item : Data
     {
@@ -14,6 +14,8 @@ namespace BL.Servers.CoC.Files.CSV_Logic
         public virtual Resource GetBuildResource(int level) => null;
 
         public virtual int GetConstructionTime(int level) => -1;
+
+        public virtual int GetGearUpTime(int level) => -1;
 
         public virtual int GetRequiredTownHallLevel(int level) => -1;
 

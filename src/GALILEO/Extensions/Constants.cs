@@ -1,11 +1,11 @@
-﻿using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure;
+﻿using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure;
 
-namespace BL.Servers.CoC.Extensions
+namespace Republic.Magic.Extensions
 {
     internal class Constants
     {
-        internal const int ID = 1;
+        internal const int ID = 0;
         internal const int MaxCommand  = 500;
         internal const int SendBuffer = 4096;
         internal const int ReceiveBuffer = 4096;
@@ -17,7 +17,8 @@ namespace BL.Servers.CoC.Extensions
         internal static int MaintenanceDuration = 0;
         internal static Maintenance_Timer Maintenance = null;
         internal static bool RC4 = Utils.ParseConfigBoolean("RC4");
-        internal static readonly DBMS Database = (DBMS)Utils.ParseConfigInt("DatabaseMode");
+        internal static readonly DBMS Database = (DBMS) Utils.ParseConfigInt("DatabaseMode");
+        internal static readonly string PatchServer = Utils.ParseConfigString("PatchUrl");
         internal static readonly string UpdateServer = Utils.ParseConfigString("UpdateUrl");
 
         internal static string[] AuthorizedIP =

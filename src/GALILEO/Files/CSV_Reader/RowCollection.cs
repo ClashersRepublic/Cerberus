@@ -1,4 +1,4 @@
-﻿namespace BL.Servers.CoC.Files.CSV_Reader
+﻿namespace Republic.Magic.Files.CSV_Reader
 {
     using System;
     using System.Collections;

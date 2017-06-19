@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Files;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure;
 
-namespace BL.Servers.CoC.Packets.Commands.Client
+namespace Republic.Magic.Packets.Commands.Client
 {
     internal class Buy_Trap : Command
     {

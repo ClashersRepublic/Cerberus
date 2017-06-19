@@ -1,12 +1,12 @@
-﻿using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
-using BL.Servers.CoC.Packets.Messages.Server.Clans;
+﻿using Republic.Magic.Core;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Structure.Slots.Items;
+using Republic.Magic.Packets.Messages.Server.Clans;
 
-namespace BL.Servers.CoC.Packets.Commands.Client.Clan
+namespace Republic.Magic.Packets.Commands.Client.Clan
 {
     internal class Send_Mail : Command
     {

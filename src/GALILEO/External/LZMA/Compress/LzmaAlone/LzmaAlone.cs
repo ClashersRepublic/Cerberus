@@ -1,9 +1,9 @@
 using System;
 using System.IO;
-using BL.Servers.CoC.External.LZMA.Common;
-using BL.Servers.CoC.External.LZMA.Compress.LZMA;
+using Republic.Magic.External.LZMA.Common;
+using Republic.Magic.External.LZMA.Compress.LZMA;
 
-namespace BL.Servers.CoC.External.LZMA.Compress.LzmaAlone
+namespace Republic.Magic.External.LZMA.Compress.LzmaAlone
 {
     public class CDoubleStream : Stream
     {

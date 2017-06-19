@@ -1,8 +1,8 @@
-﻿using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Logic.Enums;
+﻿using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Logic.Enums;
 using System.Collections.Generic;
 
-namespace BL.Servers.CoC.Files.CSV_Reader
+namespace Republic.Magic.Files.CSV_Reader
 {
     internal class Gamefiles
     {

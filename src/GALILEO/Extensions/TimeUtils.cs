@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BL.Servers.CoC.Extensions
+namespace Republic.Magic.Extensions
 {
     internal static class TimeUtils
     {

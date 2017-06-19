@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
-using BL.Servers.CoC.Packets.Messages.Server;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic.Structure.Slots.Items;
+using Republic.Magic.Packets.Messages.Server;
 using Newtonsoft.Json;
 
-namespace BL.Servers.CoC.Logic.Structure.Slots
+namespace Republic.Magic.Logic.Structure.Slots
 {
     internal class Inbox 
     {

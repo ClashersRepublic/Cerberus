@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ionic.Zlib;
-using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Logic.Structure.Slots;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
-using Resources = BL.Servers.CoC.Core.Resources;
+using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Logic.Structure.Slots.Items;
+using Resources = Republic.Magic.Core.Resources;
 
-namespace BL.Servers.CoC.Extensions.List
+namespace Republic.Magic.Extensions.List
 {
     public static class Writer
     {
@@ -31,7 +30,12 @@ namespace BL.Servers.CoC.Extensions.List
         {
             _Packet.AddRange(BitConverter.GetBytes(_Value).Reverse().Skip(_Skip));
         }
-        
+
+        public static void AddInt24(this List<byte> _Packet, int _Value)
+        {
+            _Packet.AddRange(BitConverter.GetBytes(_Value).Reverse().Skip(1));
+        }
+
         public static void AddLong(this List<byte> _Packet, long _Value)
         {
             _Packet.AddRange(BitConverter.GetBytes(_Value).Reverse());
@@ -67,6 +71,11 @@ namespace BL.Servers.CoC.Extensions.List
             _Packet.AddRange(BitConverter.GetBytes(_Value).Reverse());
         }
 
+        public static void AddUInt24(this List<byte> _Packet, uint _Value)
+        {
+            _Packet.AddRange(BitConverter.GetBytes(_Value).Reverse().Skip(1));
+        }
+
         public static void AddCompressed(this List<byte> _Packet, string _Value, bool addbool = true)
         {
             if (addbool)
@@ -96,7 +105,7 @@ namespace BL.Servers.CoC.Extensions.List
         
         public static byte[] HexaToBytes(this string _Value)
         {
-            string _Tmp = _Value.Replace("-", string.Empty);
+            string _Tmp = _Value.Contains("-") ? _Value.Replace("-", string.Empty) : _Value.Replace(" ", string.Empty);
             return Enumerable.Range(0, _Tmp.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(_Tmp.Substring(x, 2), 16)).ToArray();
         }
         

@@ -1,11 +1,10 @@
-﻿using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
+﻿using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Packets.Messages.Server.Errors;
 
-namespace BL.Servers.CoC.Packets.Commands.Client
+namespace Republic.Magic.Packets.Commands.Client
 {
     internal class Mission_Progress : Command
     {
@@ -26,7 +25,11 @@ namespace BL.Servers.CoC.Packets.Commands.Client
         {
             if (this.Device.Player.Avatar.Mission_Finish(Mission_ID))
             {
-                Missions Mission = CSV.Tables.Get(Gamefile.Missions).GetDataWithID(Mission_ID) as Missions;
+               // Missions Mission = CSV.Tables.Get(Gamefile.Missions).GetDataWithID(Mission_ID) as Missions;
+            }
+            else
+            {
+                new Out_Of_Sync(this.Device).Send();
             }
         }
     }

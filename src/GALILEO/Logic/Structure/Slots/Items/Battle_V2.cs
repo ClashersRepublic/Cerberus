@@ -1,11 +1,9 @@
 ﻿using System;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic.Structure.Slots;
+using Republic.Magic.Extensions;
 using Newtonsoft.Json;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
 using Newtonsoft.Json.Linq;
 
-namespace BL.Servers.CoC.Logic
+namespace Republic.Magic.Logic.Structure.Slots.Items
 {
     internal class Battle_V2
     {
@@ -34,12 +32,12 @@ namespace BL.Servers.CoC.Logic
                 if (this.Preparation_Time >= 1 && this.Commands.Count < 1)
                 {
                     this.Preparation_Time -= (value - this.Last_Tick) / 63;
-                    //Console.WriteLine("Preparation Time : " + TimeSpan.FromSeconds(this.Preparation_Time).TotalSeconds);
+                    Console.WriteLine($"Preparation Time for {this.Attacker.Name} : " + TimeSpan.FromSeconds(this.Preparation_Time).TotalSeconds);
                 }
                 else
                 {
                     this.Attack_Time -= (value - this.Last_Tick) / 63;
-                    //Console.WriteLine("Attack Time      : " + TimeSpan.FromSeconds(this.Attack_Time).TotalSeconds);
+                    Console.WriteLine($"Attack Time for {this.Attacker.Name} : " + TimeSpan.FromSeconds(this.Attack_Time).TotalSeconds);
                 }
                 this.Last_Tick = value;
                 this.End_Tick = (int)value;
@@ -65,17 +63,13 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("globals")] internal Globals_Replay Globals = new Globals_Replay();
 
         [JsonProperty("prep_skip")] internal int Preparation_Skip;
-
-        [JsonProperty("battle_id")] internal long Battle_ID;
         internal Battle_V2()
         {
             //Batle
         }
 
-        internal Battle_V2(long Battle, Level _Attacker, Level _Enemy)
+        internal Battle_V2(Level _Attacker, Level _Enemy)
         {
-            this.Battle_ID = Battle;
-
             this.Attacker = _Attacker.Avatar.Clone();
             this.Defender = _Enemy.Avatar.Clone();
             this.Level = _Enemy.GameObjectManager.JSON;
@@ -93,12 +87,6 @@ namespace BL.Servers.CoC.Logic
 
         internal void Set_Replay_Info()
         {
-            foreach (Slot _Slot in this.Defender.Resources)
-            {
-                this.Replay_Info.Loot.Add(new[] { _Slot.Data, _Slot.Count }); // For Debug
-                this.Replay_Info.Available_Loot.Add(new[] { _Slot.Data, _Slot.Count });
-            }
-
             this.Replay_Info.Stats.Home_ID[0] = this.Defender.UserHighId;
             this.Replay_Info.Stats.Home_ID[1] = this.Defender.UserLowId;
             this.Replay_Info.Stats.Original_Attacker_Score = this.Attacker.Trophies;
@@ -116,8 +104,7 @@ namespace BL.Servers.CoC.Logic
             cmd = this.Commands,
             calendar = this.Calendar,
             globals = this.Globals,
-            prep_skip = this.Preparation_Skip,
-            battle_id = this.Battle_ID
+            prep_skip = this.Preparation_Skip
         }, this.Client_JsonSettings);
     }
 }

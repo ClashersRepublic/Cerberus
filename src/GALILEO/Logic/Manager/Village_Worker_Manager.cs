@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Logic.Structure;
+using Republic.Magic.Logic.Structure;
 
-namespace BL.Servers.CoC.Logic.Manager
+namespace Republic.Magic.Logic.Manager
 {
     internal class Village_Worker_Manager
     {

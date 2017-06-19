@@ -1,10 +1,10 @@
-﻿using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
+﻿using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure.Slots.Items;
 
-namespace BL.Servers.CoC.Packets.Commands.Client.Battle
+namespace Republic.Magic.Packets.Commands.Client.Battle
 {
     internal class Place_Alliance_Attacker : Command
     {

@@ -1,13 +1,13 @@
-﻿using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
-using BL.Servers.CoC.Packets.Commands.Server;
-using BL.Servers.CoC.Packets.Messages.Server;
+﻿using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure.Slots.Items;
+using Republic.Magic.Packets.Commands.Server;
+using Republic.Magic.Packets.Messages.Server;
 
-namespace BL.Servers.CoC.Packets.Messages.Client.Clans
+namespace Republic.Magic.Packets.Messages.Client.Clans
 {
     internal class Edit_Alliance_Settings : Message
     {

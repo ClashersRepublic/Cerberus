@@ -1,12 +1,8 @@
-﻿using System;
-using System.Text;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Components;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure;
+﻿using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Components;
 
-namespace BL.Servers.CoC.Packets.Commands.Client
+namespace Republic.Magic.Packets.Commands.Client
 {
     internal class Change_Weapon_Mode : Command
     {

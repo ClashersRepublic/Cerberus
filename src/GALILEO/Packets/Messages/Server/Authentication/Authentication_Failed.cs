@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.External.Blake2B;
-using BL.Servers.CoC.External.Sodium;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Packets.Cryptography;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.External.Blake2B;
+using Republic.Magic.External.Sodium;
+using Republic.Magic.Files;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Packets.Cryptography;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
+namespace Republic.Magic.Packets.Messages.Server.Authentication
 {
     internal class Authentication_Failed : Message
     {
@@ -25,7 +25,7 @@ namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
 
 
         internal Reason Reason = Reason.Default;
-        internal string PatchingHost => Fingerprint.Custom ? "http://g.smksultanismail2.com/" : "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
+        internal string PatchingHost => Fingerprint.Custom ? Constants.PatchServer : "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
 
         internal string Message;
         internal string RedirectDomain;

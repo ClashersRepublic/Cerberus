@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure.Slots;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure.Slots;
 using Newtonsoft.Json;
 
-namespace BL.Servers.CoC.Logic
+namespace Republic.Magic.Logic
 {
     internal class Clan
     {

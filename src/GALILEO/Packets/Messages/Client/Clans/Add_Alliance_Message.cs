@@ -1,10 +1,10 @@
-﻿using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
+﻿using Republic.Magic.Core;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Structure.Slots.Items;
 
-namespace BL.Servers.CoC.Packets.Messages.Client.Clans
+namespace Republic.Magic.Packets.Messages.Client.Clans
 {
     internal class Add_Alliance_Message : Message
     {

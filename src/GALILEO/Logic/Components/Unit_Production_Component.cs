@@ -3,43 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Logic.Structure;
-using BL.Servers.CoC.Logic.Structure.Slots;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic.Structure;
+using Republic.Magic.Logic.Structure.Slots;
+using Newtonsoft.Json.Linq;
 
-namespace BL.Servers.CoC.Logic.Components
+namespace Republic.Magic.Logic.Components
 {
-    internal class Unit_Production_Component  : Component
+    internal class Unit_Production_Component : Component
     {
-        internal List<DataSlot> Units;
         internal bool IsSpellForge;
-        internal bool IsWaitingForSpace;
-        internal Timer Timer;
 
         public Unit_Production_Component(GameObject go) : base(go)
         {
-            this.Units = new List<DataSlot>();
-            SetUnitType(go);
-            this.Timer = null;
-            this.IsWaitingForSpace = false;
+            SetProductionType(go);
         }
 
         internal override int Type => 3;
-
-        internal void SetUnitType(GameObject go)
+        public void SetProductionType(GameObject go)
         {
-            if (go.ClassId <= 6 || go.ClassId == 8)
-            {
-                var b = (Building) GetParent;
-                var bd = b.GetBuildingData;
-                this.IsSpellForge = bd.ForgesSpells || bd.ForgesSpells;
-            }
-            else
-            {
-                var b = (Builder_Building)GetParent;
-                var bd = b.GetBuildingData;
-                this.IsSpellForge = bd.ForgesSpells || bd.ForgesSpells;
-
-            }
+            var b = (ConstructionItem)GetParent;
+            var bd = (Buildings)b.GetData();
+            this.IsSpellForge = bd.IsSpellForge();
         }
+        internal override void Load(JObject jsonObject)
+        {
+            var unitProdObject = (JObject) jsonObject["unit_prod"];
+            if (unitProdObject != null)
+            this.IsSpellForge = unitProdObject["unit_type"].ToObject<int>() == 1;
+        }
+
+        internal override JObject Save(JObject jsonObject)
+        {
+            var unitProdObject = new JObject {{"m", 1}, {"unit_type", this.IsSpellForge ? 1 : 0}};
+            jsonObject.Add("unit_prod", unitProdObject);
+            return jsonObject;
+        }
+
     }
 }

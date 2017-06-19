@@ -1,7 +1,7 @@
-﻿using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic;
+﻿using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Commands.Server
+namespace Republic.Magic.Packets.Commands.Server
 {
     internal class Name_Change_Callback : Command
     {

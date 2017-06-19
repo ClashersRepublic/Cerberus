@@ -4,21 +4,21 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.External.Sodium;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Packets.Messages.Server;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.External.Sodium;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Packets.Messages.Server;
 
-namespace BL.Servers.CoC.Packets
+namespace Republic.Magic.Packets
 {
     internal class Message
     {
         internal ushort Identifier;
-        internal ushort Length;
+        internal uint Length;
         internal ushort Version;
 
         internal Device Device;
@@ -45,8 +45,7 @@ namespace BL.Servers.CoC.Packets
                 List<byte> Packet = new List<byte>();
 
                 Packet.AddUShort(this.Identifier);
-                Packet.Add(0);
-                Packet.AddUShort(this.Length);
+                Packet.AddUInt24(this.Length);
                 Packet.AddUShort(this.Version);
                 Packet.AddRange(this.Data);
 
@@ -74,7 +73,7 @@ namespace BL.Servers.CoC.Packets
             {
                 this.Device.Keys.SNonce.Increment();
 
-                byte[] Decrypted = Sodium.Decrypt(new byte[16].Concat(this.Reader.ReadBytes(this.Length)).ToArray(),
+                byte[] Decrypted = Sodium.Decrypt(new byte[16].Concat(this.Reader.ReadBytes((int)this.Length)).ToArray(),
                     this.Device.Keys.SNonce, this.Device.Keys.PublicKey);
 
                 if (Decrypted == null)
@@ -89,13 +88,14 @@ namespace BL.Servers.CoC.Packets
 
         internal virtual void DecryptRC4()
         {
-            byte[] Decrypted = this.Reader.ReadBytes(this.Length).ToArray();
+            byte[] Decrypted = this.Reader.ReadBytes((int)this.Length).ToArray();
             if (this.Identifier != 10100)
             {
                 //Console.WriteLine($"Raw {BitConverter.ToString(Decrypted.ToArray()).Replace("-", "")}");
                 //Console.WriteLine($"Buffer Lenght {Decrypted.ToArray().Length}");
                 this.Device.RC4.Decrypt(ref Decrypted);
             }
+            
             this.Reader = new Reader(Decrypted);
             this.Length = (ushort) this.Reader.BaseStream.Length;
             //Console.WriteLine($"Decrypted {BitConverter.ToString(Decrypted.ToArray()).Replace("-", "")}");

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Servers.CoC.Extensions
+namespace Republic.Magic.Extensions
 {
     internal class NativeCalls
     {

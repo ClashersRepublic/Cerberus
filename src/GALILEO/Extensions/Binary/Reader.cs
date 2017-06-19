@@ -3,11 +3,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Ionic.Zlib;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Files.CSV_Reader;
+using Republic.Magic.Files;
+using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Files.CSV_Reader;
 
-namespace BL.Servers.CoC.Extensions.Binary
+namespace Republic.Magic.Extensions.Binary
 {
     public class Reader : BinaryReader
     {

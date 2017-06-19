@@ -1,13 +1,14 @@
 ﻿using System;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
-using BL.Servers.CoC.Packets.Messages.Server.Battle;
+using Republic.Magic.Core;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Extensions;
+using Republic.Magic.Logic.Structure.Slots.Items;
+using Republic.Magic.Packets.Messages.Server.Battle;
 
-namespace BL.Servers.CoC.Packets.Commands.Client.Battle
+namespace Republic.Magic.Packets.Commands.Client.Battle
 {
     internal class Surrender_Attack : Command
     {
@@ -38,14 +39,15 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
                 }
                 else
                 {
-
+                    var Battle = Resources.Battles_V2.GetPlayer(this.Device.Player.Avatar.Battle_ID_V2, this.Device.Player.Avatar.UserId);
+                    Battle.Set_Replay_Info();
                     new V2_Battle_Result(this.Device).Send();
                     Battle_Command Command = new Battle_Command
                     {
                         Command_Type = this.Identifier,
                         Command_Base = new Command_Base { Tick = this.Tick }
                     };
-                    this.Device.Player.Avatar.Battle_V2.Add_Command(Command);
+                    Battle.Add_Command(Command);
 
                 }
             }

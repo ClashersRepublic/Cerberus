@@ -1,9 +1,9 @@
 ﻿using System;
-using BL.Servers.CoC.Logic.Manager;
+using Republic.Magic.Logic.Manager;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace BL.Servers.CoC.Logic
+namespace Republic.Magic.Logic
 {
     internal class Level
     {

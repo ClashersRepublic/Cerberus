@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Core.Database;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic;
+using Republic.Magic.Core.Database;
+using Republic.Magic.Extensions;
+using Republic.Magic.Logic;
 using Newtonsoft.Json;
-using BL.Servers.CoC.Logic.Enums;
-using MySql.Data.MySqlClient;
-using Player = Google.Apis.Games.v1.Data.Player;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Core
+namespace Republic.Magic.Core
 {
     internal class Players : Dictionary<long, Level>
     {
@@ -270,10 +267,9 @@ namespace BL.Servers.CoC.Core
 
                     case DBMS.Redis:
                     {
-                        var a = await Redis.Players.StringSetAsync(Player.Avatar.UserId.ToString(),
+                        await Redis.Players.StringSetAsync(Player.Avatar.UserId.ToString(),
                             JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,
                             TimeSpan.FromHours(4));
-                        Console.WriteLine(a);
                         break;
                     }
 
@@ -328,10 +324,9 @@ namespace BL.Servers.CoC.Core
                     {
                         foreach (var Player in this.Values)
                         {
-                            var a = await Redis.Players.StringSetAsync(Player.Avatar.UserId.ToString(),
+                            await Redis.Players.StringSetAsync(Player.Avatar.UserId.ToString(),
                                 JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,
                                 TimeSpan.FromHours(4));
-                                Console.WriteLine(a);
                         }
                         break;
                     }

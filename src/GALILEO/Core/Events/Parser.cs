@@ -3,13 +3,13 @@ using System.Collections;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic.Structure;
-using BL.Servers.CoC.Packets.Messages.Server.Errors;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions;
+using Republic.Magic.Logic.Structure;
+using Republic.Magic.Packets.Messages.Server.Errors;
 using ThreadState = System.Diagnostics.ThreadState;
 
-namespace BL.Servers.CoC.Core.Events
+namespace Republic.Magic.Core.Events
 {
     internal class Parser
     {

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
+using Republic.Magic.Files;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Extensions
+namespace Republic.Magic.Extensions
 {
     internal static class GameUtils
     {
@@ -35,6 +35,22 @@ namespace BL.Servers.CoC.Extensions
             }
 
             return string.Empty;
+        }
+
+        internal static long GetUserID(string HashTag)
+        {
+            const string Search_Tag = "0289PYLQGRJCUV";
+            long identifier = 0;
+            foreach (var character in HashTag.Replace("#", "").ToUpper().ToCharArray())
+            {
+                int Index = Search_Tag.IndexOf(character);
+                if (Index == -1)
+                    return -1;
+
+                identifier *= GameUtils.SEARCH_TAG_LENGTH;
+                identifier += Index;
+            }
+            return (identifier % 256 | (identifier - (identifier % 256) >> 8));
         }
 
         internal static int GetLowID(long Identifier)

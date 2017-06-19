@@ -7,7 +7,7 @@ using global::Google.Apis.Auth.OAuth2;
 using global::Google.Apis.Services;
 using global::Google.Apis.Util.Store;
 
-namespace BL.Servers.CoC.Logic.Structure.API
+namespace Republic.Magic.Logic.Structure.API
 {
     internal class Google 
     {

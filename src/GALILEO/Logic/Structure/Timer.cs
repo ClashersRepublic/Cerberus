@@ -1,6 +1,6 @@
-﻿using BL.Servers.CoC.Extensions;
+﻿using Republic.Magic.Extensions;
 
-namespace BL.Servers.CoC.Logic.Structure
+namespace Republic.Magic.Logic.Structure
 {
     using System;
     internal class Timer

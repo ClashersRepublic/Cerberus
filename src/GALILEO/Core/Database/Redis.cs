@@ -1,8 +1,8 @@
 ﻿using System;
-using BL.Servers.CoC.Extensions;
+using Republic.Magic.Extensions;
 using StackExchange.Redis;
 
-namespace BL.Servers.CoC.Core.Database
+namespace Republic.Magic.Core.Database
 {
     internal class Redis
     {

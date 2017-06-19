@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
 
-namespace BL.Servers.CoC.Logic
+namespace Republic.Magic.Logic
 {
     internal class Objects : IDisposable
     {

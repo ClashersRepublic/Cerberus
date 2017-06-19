@@ -1,12 +1,12 @@
 ﻿using System;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Structure.Slots.Items;
 using System.Collections.Generic;
 using System.Timers;
-using BL.Servers.CoC.Core.Database;
-using BL.Servers.CoC.Extensions;
+using Republic.Magic.Core.Database;
+using Republic.Magic.Extensions;
 
-namespace BL.Servers.CoC.Core
+namespace Republic.Magic.Core
 {
     internal class Player_Region : Dictionary<string, List_Regions>
     {

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{9257A23D-569D-40E6-9744-A34F6374DD47}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>BL.Servers.CoC</RootNamespace>
-    <AssemblyName>BarbarianLand Clash Server</AssemblyName>
+    <RootNamespace>Republic.Magic</RootNamespace>
+    <AssemblyName>Republic Clash Server</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -77,7 +77,8 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>BL.Servers.CoC.Program</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -190,6 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Battles.cs" />
+    <Compile Include="Core\Battles_V2.cs" />
     <Compile Include="Core\Classes.cs" />
     <Compile Include="Core\Database\Battle.cs">
       <DependentUpon>Mysql.tt</DependentUpon>
@@ -300,13 +302,15 @@
     <Compile Include="Files\Fingerprint.cs" />
     <Compile Include="Files\Home.cs" />
     <Compile Include="Files\NPC.cs" />
-    <Compile Include="Logic\Battle_V2.cs" />
+    <Compile Include="Logic\Structure\Slots\Battle_V2.cs" />
+    <Compile Include="Logic\Structure\Slots\Items\Battle_V2.cs" />
     <Compile Include="Logic\Battle.cs" />
     <Compile Include="Logic\Clan.cs" />
     <Compile Include="Logic\Components\Combat_Component.cs" />
     <Compile Include="Logic\Components\Hero_Base_Component.cs" />
     <Compile Include="Logic\Components\Resource_Production_Component.cs" />
     <Compile Include="Logic\Components\Unit_Production_Component.cs" />
+    <Compile Include="Logic\Components\Unit_Storage_V2_Componenent.cs" />
     <Compile Include="Logic\Components\Unit_Upgrade_Component.cs" />
     <Compile Include="Logic\Enums\Alliance_Stream.cs" />
     <Compile Include="Logic\Enums\Amical_Mode.cs" />
@@ -404,7 +408,9 @@
     <Compile Include="Packets\Commands\Client\Battle\Search_Opponent_2.cs" />
     <Compile Include="Packets\Commands\Client\Battle\Surrender_Attack.cs" />
     <Compile Include="Packets\Commands\Client\Boost_Building.cs" />
+    <Compile Include="Packets\Commands\Client\BuildingToMove.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Building.cs" />
+    <Compile Include="Packets\Commands\Client\Buy_Deco.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Multiple_Wall.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Resource.cs" />
     <Compile Include="Packets\Commands\Client\Buy_Trap.cs" />
@@ -414,8 +420,10 @@
     <Compile Include="Packets\Commands\Client\Clan\Send_Mail.cs" />
     <Compile Include="Packets\Commands\Client\Collect_Resources.cs" />
     <Compile Include="Packets\Commands\Client\Free_Worker.cs" />
+    <Compile Include="Packets\Commands\Client\Gear_Up.cs" />
     <Compile Include="Packets\Commands\Client\Mission_Progress.cs" />
     <Compile Include="Packets\Commands\Client\Move_Building.cs" />
+    <Compile Include="Packets\Commands\Client\Move_Multiple_Buildings.cs" />
     <Compile Include="Packets\Commands\Client\My_League.cs" />
     <Compile Include="Packets\Commands\Client\Clan\Request_Alliance_Troops.cs" />
     <Compile Include="Packets\Commands\Client\Clan\Request_Amical_Challenge.cs" />
@@ -445,7 +453,10 @@
     <Compile Include="Packets\Cryptography\RC4\Scrambler.cs" />
     <Compile Include="Packets\Debug.cs" />
     <Compile Include="Packets\DebugFactory.cs" />
+    <Compile Include="Packets\Debugs\Kick_Player.cs" />
+    <Compile Include="Packets\Debugs\Max_Village.cs" />
     <Compile Include="Packets\Debugs\Resource_Update.cs" />
+    <Compile Include="Packets\Debugs\Set_Rank.cs" />
     <Compile Include="Packets\Debugs\Statistics.cs" />
     <Compile Include="Packets\Messages\Client\Add_Global_Chat.cs" />
     <Compile Include="Packets\Messages\Client\API\Bind_Google_Account.cs" />
@@ -487,6 +498,7 @@
     <Compile Include="Packets\Messages\Client\Leaderboard\Request_League_Players.cs" />
     <Compile Include="Packets\Messages\Client\Leaderboard\Request_Local_Clans.cs" />
     <Compile Include="Packets\Messages\Client\Leaderboard\Request_Local_Players.cs" />
+    <Compile Include="Packets\Messages\Client\News_Seen.cs" />
     <Compile Include="Packets\Messages\Client\Request_Name_Change.cs" />
     <Compile Include="Packets\Messages\Server\API\Facebook_Connect_OK.cs" />
     <Compile Include="Packets\Messages\Server\API\Friend_List_Data.cs" />
@@ -529,6 +541,7 @@
     <Compile Include="Packets\Messages\Server\Leaderboard\League_Players.cs" />
     <Compile Include="Packets\Messages\Server\Name_Change_Response.cs" />
     <Compile Include="Packets\Messages\Server\Errors\Out_Of_Sync.cs" />
+    <Compile Include="Packets\Messages\Server\News_Seen_Response.cs" />
     <Compile Include="Packets\Messages\Server\Own_Home_Data.cs" />
     <Compile Include="Packets\Messages\Server\Server_Commands.cs" />
     <Compile Include="Packets\Messages\Server\Visit_Home_Data.cs" />
@@ -996,6 +1009,7 @@
     </None>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Gamefiles\database\Database.mmdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BL.Servers.CoC.Packets.Cryptography
+namespace Republic.Magic.Packets.Cryptography
 {
     internal class Crypto : IDisposable
     {

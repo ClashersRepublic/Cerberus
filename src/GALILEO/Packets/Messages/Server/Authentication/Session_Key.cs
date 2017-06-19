@@ -1,8 +1,8 @@
-﻿using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Extensions.List;
+﻿using Republic.Magic.Extensions;
+using Republic.Magic.Logic;
+using Republic.Magic.Extensions.List;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Authentication
+namespace Republic.Magic.Packets.Messages.Server.Authentication
 {
     internal class Session_Key : Message
     {

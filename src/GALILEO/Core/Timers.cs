@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Core.Database;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure;
-using BL.Servers.CoC.Packets.Messages.Server.Errors;
-using Battle = BL.Servers.CoC.Logic.Battle;
-using Clan = BL.Servers.CoC.Logic.Clan;
+using Republic.Magic.Core.Database;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure;
+using Republic.Magic.Packets.Messages.Server.Errors;
+using Battle = Republic.Magic.Logic.Battle;
+using Clan = Republic.Magic.Logic.Clan;
 using Timer = System.Timers.Timer;
 
-namespace BL.Servers.CoC.Core
+namespace Republic.Magic.Core
 {
     internal class Timers
     {
@@ -94,7 +94,7 @@ namespace BL.Servers.CoC.Core
             this.LTimers.Add(3, Timer);
         }
 
-        internal async Task Save()
+        internal void Save()
         {
             Timer Timer = new Timer
             {

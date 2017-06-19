@@ -1,8 +1,8 @@
-﻿using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic;
+﻿using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Clans
+namespace Republic.Magic.Packets.Messages.Server.Clans
 {
     internal class Alliance_All_Stream_Entry : Message
     {

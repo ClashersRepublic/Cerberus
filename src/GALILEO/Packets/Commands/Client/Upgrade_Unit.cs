@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure;
+using Republic.Magic.Core;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Files;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure;
 
-namespace BL.Servers.CoC.Packets.Commands.Client
+namespace Republic.Magic.Packets.Commands.Client
 {
     internal class Upgrade_Unit : Command
     {
@@ -30,7 +30,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
             this.BuidlingID = this.Reader.ReadInt32();
             this.Reader.ReadInt32();
             this.GlobalId = this.Reader.ReadInt32();
-            if (GlobalId < 4000000)
+            if (GlobalId >= 26000000)
             {
                 this.IsSpell = true;
                 this.Spell = CSV.Tables.Get(Gamefile.Spells).GetDataWithID(GlobalId) as Spells;
@@ -55,25 +55,21 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                     var upgradeComponent = building.GetUnitUpgradeComponent();
 
 
-                    var unitLevel = ca.GetUnitUpgradeLevel(this.IsSpell
-                        ? (Combat_Item) this.Spell
-                        : (Combat_Item) this.Troop);
-
-                    if (upgradeComponent.CanStartUpgrading(this.IsSpell
-                        ? (Combat_Item) this.Spell
-                        : (Combat_Item) this.Troop))
+                    var unitLevel = ca.GetUnitUpgradeLevel(this.IsSpell ? (Combat_Item) this.Spell : (Combat_Item) this.Troop);
+                    
+                    if (upgradeComponent.CanStartUpgrading(this.IsSpell ? (Combat_Item) this.Spell  : (Combat_Item) this.Troop))
                     {
-                        var cost = this.IsSpell
-                            ? this.Spell.GetUpgradeCost(unitLevel)
-                            : this.Troop.GetUpgradeCost(unitLevel);
+                        var cost = this.IsSpell ? this.Spell.GetUpgradeCost(unitLevel) : this.Troop.GetUpgradeCost(unitLevel);
                         var upgradeResource = this.IsSpell
                             ? this.Spell.GetUpgradeResource()
                             : this.Troop.GetUpgradeResource();
                         if (ca.HasEnoughResources(upgradeResource.GetGlobalID(), cost))
                         {
 #if DEBUG
-                            var name = this.IsSpell ? this.Spell.Row.Name : this.Troop.Row.Name;
-                            Loggers.Log($"Unit : Upgrading {name} with ID {GlobalId}", true);
+                            Loggers.Log(
+                                this.IsSpell
+                                    ? $"Spell : Upgrading {this.Spell.Row.Name} with ID {GlobalId}"
+                                    : $"Unit : Upgrading {this.Troop.Row.Name} with ID {GlobalId}", true);
 #endif
                             ca.Resources.Minus(upgradeResource.GetGlobalID(), cost);
                             upgradeComponent.StartUpgrading(this.IsSpell
@@ -91,22 +87,20 @@ namespace BL.Servers.CoC.Packets.Commands.Client
                     var unitLevel = ca.GetUnitUpgradeLevel(this.IsSpell
                         ? (Combat_Item) this.Spell
                         : (Combat_Item) this.Troop);
-
-                    if (upgradeComponent.CanStartUpgrading(this.IsSpell
-                        ? (Combat_Item) this.Spell
-                        : (Combat_Item) this.Troop))
+                    
+                    if (upgradeComponent.CanStartUpgrading(this.IsSpell ? (Combat_Item)this.Spell : (Combat_Item)this.Troop))
                     {
-                        var cost = this.IsSpell
-                            ? this.Spell.GetUpgradeCost(unitLevel)
-                            : this.Troop.GetUpgradeCost(unitLevel);
+                        var cost = this.IsSpell ? this.Spell.GetUpgradeCost(unitLevel) : this.Troop.GetUpgradeCost(unitLevel);
                         var upgradeResource = this.IsSpell
                             ? this.Spell.GetUpgradeResource()
                             : this.Troop.GetUpgradeResource();
                         if (ca.HasEnoughResources(upgradeResource.GetGlobalID(), cost))
                         {
 #if DEBUG
-                            var name = this.IsSpell ? this.Spell.Row.Name : this.Troop.Row.Name;
-                            Loggers.Log($"Builder Unit : Upgrading {name} with ID {GlobalId}", true);
+                            Loggers.Log(
+                                this.IsSpell
+                                    ? $"Spell : Upgrading {this.Spell.Row.Name} with ID {GlobalId}"
+                                    : $"Unit : Upgrading {this.Troop.Row.Name} with ID {GlobalId}", true);
 #endif
                             ca.Resources.Minus(upgradeResource.GetGlobalID(), cost);
                             upgradeComponent.StartUpgrading(this.IsSpell

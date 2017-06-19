@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Components;
-using BL.Servers.CoC.Logic.Structure;
-using Resource = BL.Servers.CoC.Logic.Enums.Resource;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Components;
+using Republic.Magic.Logic.Structure;
+using Resource = Republic.Magic.Logic.Enums.Resource;
 
-namespace BL.Servers.CoC.Packets.Commands.Client
+namespace Republic.Magic.Packets.Commands.Client
 {
     internal class Boost_Building : Command
     {

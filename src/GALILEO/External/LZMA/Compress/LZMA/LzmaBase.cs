@@ -1,4 +1,4 @@
-namespace BL.Servers.CoC.External.LZMA.Compress.LZMA
+namespace Republic.Magic.External.LZMA.Compress.LZMA
 {
     internal abstract class Base
     {

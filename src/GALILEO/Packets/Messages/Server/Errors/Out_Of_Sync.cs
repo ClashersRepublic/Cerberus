@@ -1,6 +1,6 @@
-﻿using BL.Servers.CoC.Logic;
+﻿using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Errors
+namespace Republic.Magic.Packets.Messages.Server.Errors
 {
     internal class Out_Of_Sync : Message
     {

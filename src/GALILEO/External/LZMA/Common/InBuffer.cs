@@ -1,5 +1,5 @@
 // InBuffer.cs
-namespace BL.Servers.CoC.External.LZMA.Common
+namespace Republic.Magic.External.LZMA.Common
 {
     public class InBuffer
     {

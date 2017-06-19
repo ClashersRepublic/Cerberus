@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Clans.War
+namespace Republic.Magic.Packets.Messages.Server.Clans.War
 {
    internal class Visit_War_Player : Message
     {

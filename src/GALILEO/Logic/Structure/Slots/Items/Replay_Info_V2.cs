@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace BL.Servers.CoC.Logic.Structure.Slots.Items
+namespace Republic.Magic.Logic.Structure.Slots.Items
 {
     internal class Replay_Info_V2
     {
@@ -12,10 +12,6 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
             NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.None,
         };
-
-        [JsonProperty("loot")] internal List<int[]> Loot = new List<int[]>();
-
-        [JsonProperty("availableLoot")] internal List<int[]> Available_Loot = new List<int[]>();
 
         [JsonProperty("units")] internal List<int[]> Units = new List<int[]>();
 
@@ -43,20 +39,9 @@ namespace BL.Servers.CoC.Logic.Structure.Slots.Items
                 this.Levels.Add(new[] {Data, Count});
         }
 
-        internal void Add_Available_Loot(int Data, int Count)
-        {
-            int Index = this.Available_Loot.FindIndex(U => U[0] == Data);
-
-            if (Index > -1)
-                this.Available_Loot[Index][1] += Count;
-            else
-                this.Available_Loot.Add(new[] {Data, Count});
-        }
-
         internal string Json => JsonConvert.SerializeObject(new
         {
-            loot = this.Loot,
-            availableLoot = this.Available_Loot,
+            villageType = 1,
             units = this.Units,
             level = this.Levels,
             stats = this.Stats

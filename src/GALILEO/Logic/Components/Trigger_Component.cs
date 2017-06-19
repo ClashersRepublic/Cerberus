@@ -1,6 +1,6 @@
-﻿using BL.Servers.CoC.Logic.Structure;
+﻿using Republic.Magic.Logic.Structure;
 
-namespace BL.Servers.CoC.Logic.Components
+namespace Republic.Magic.Logic.Components
 {
     internal class Trigger_Component : Component
     {

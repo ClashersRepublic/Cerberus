@@ -1,4 +1,4 @@
-﻿namespace BL.Servers.CoC.External.TweetNaCl
+﻿namespace Republic.Magic.External.TweetNaCl
 {
     public class poly1305
     {

@@ -4,22 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure;
+using Republic.Magic.Core;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Files;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure;
 
-namespace BL.Servers.CoC.Packets.Commands.Client
+namespace Republic.Magic.Packets.Commands.Client
 {
 
     internal class Buy_Building : Command
     {
         internal int BuildingId;
-        internal uint Unknown1;
+        internal int Tick;
         internal Vector Vector;
 
         public Buy_Building(Reader reader, Device client, int id) : base(reader, client, id)
@@ -32,7 +32,7 @@ namespace BL.Servers.CoC.Packets.Commands.Client
             this.Vector.X = this.Reader.ReadInt32();
             this.Vector.Y = this.Reader.ReadInt32();
             this.BuildingId = this.Reader.ReadInt32();
-            this.Unknown1 = this.Reader.ReadUInt32();
+            this.Tick = this.Reader.ReadInt32();
         }
 
         internal override void Process()

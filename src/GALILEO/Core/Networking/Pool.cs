@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace BL.Servers.CoC.Core.Networking
+namespace Republic.Magic.Core.Networking
 {
     internal class Pool<T>
     {

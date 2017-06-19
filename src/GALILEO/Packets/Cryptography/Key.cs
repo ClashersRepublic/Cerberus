@@ -1,6 +1,6 @@
-﻿using BL.Servers.CoC.External.Sodium;
+﻿using Republic.Magic.External.Sodium;
 
-namespace BL.Servers.CoC.Packets.Cryptography
+namespace Republic.Magic.Packets.Cryptography
 {
     internal class Key
     {

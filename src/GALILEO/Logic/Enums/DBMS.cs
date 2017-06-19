@@ -1,4 +1,4 @@
-﻿namespace BL.Servers.CoC.Logic.Enums
+﻿namespace Republic.Magic.Logic.Enums
 {
     public enum DBMS
     {

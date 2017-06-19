@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure.Slots.Items;
 
-namespace BL.Servers.CoC.Packets.Commands.Client.Battle
+namespace Republic.Magic.Packets.Commands.Client.Battle
 {
     internal class Hero_Rage : Command
     {
@@ -42,12 +42,14 @@ namespace BL.Servers.CoC.Packets.Commands.Client.Battle
                 }
                 else
                 {
+                    var Battle = Core.Resources.Battles_V2.GetPlayer(this.Device.Player.Avatar.Battle_ID_V2, this.Device.Player.Avatar.UserId);
+
                     Battle_Command Command = new Battle_Command
                     {
                         Command_Type = this.Identifier,
                         Command_Base = new Command_Base { Base = { Tick = this.Tick }, Data = this.GlobalId }
                     };
-                    this.Device.Player.Avatar.Battle_V2.Add_Command(Command);
+                     Battle.Add_Command(Command);
 
                 }
             }

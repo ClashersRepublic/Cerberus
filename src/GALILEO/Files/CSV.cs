@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using BL.Servers.CoC.Files.CSV_Reader;
-using BL.Servers.CoC.Logic.Enums;
+using Republic.Magic.Files.CSV_Reader;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Files
+namespace Republic.Magic.Files
 {
     internal class CSV
     {

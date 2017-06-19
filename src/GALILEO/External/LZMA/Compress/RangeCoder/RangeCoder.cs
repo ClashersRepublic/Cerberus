@@ -1,6 +1,6 @@
 using System;
 
-namespace BL.Servers.CoC.External.LZMA.Compress.RangeCoder
+namespace Republic.Magic.External.LZMA.Compress.RangeCoder
 {
     internal class Encoder
     {

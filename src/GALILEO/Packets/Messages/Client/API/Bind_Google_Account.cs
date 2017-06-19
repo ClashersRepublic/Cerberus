@@ -1,8 +1,8 @@
 ﻿using System;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Messages.Client.API
+namespace Republic.Magic.Packets.Messages.Client.API
 {
     internal class Bind_Google_Account : Message
     {

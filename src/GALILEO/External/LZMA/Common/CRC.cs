@@ -1,5 +1,5 @@
 // Common/CRC.cs
-namespace BL.Servers.CoC.External.LZMA.Common
+namespace Republic.Magic.External.LZMA.Common
 {
     internal class CRC
     {

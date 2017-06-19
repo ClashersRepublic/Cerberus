@@ -1,6 +1,6 @@
-﻿using BL.Servers.CoC.Logic;
+﻿using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Commands.Server
+namespace Republic.Magic.Packets.Commands.Server
 {
     internal class Joined_Alliance : Command
     {

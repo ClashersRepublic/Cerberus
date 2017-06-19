@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
-using BL.Servers.CoC.Core.Events;
-using BL.Servers.CoC.Core.Networking;
+using Republic.Magic.Core.Events;
+using Republic.Magic.Core.Networking;
 
-namespace BL.Servers.CoC.Core
+namespace Republic.Magic.Core
 {
     internal class Resources
     {
@@ -12,6 +12,7 @@ namespace BL.Servers.CoC.Core
         internal static Players Players;
         internal static Clans Clans;
         internal static Battles Battles;
+        internal static Battles_V2 Battles_V2;
         internal static Random Random;
         internal static Classes Classes;
         internal static Global_Chat GChat;
@@ -30,6 +31,7 @@ namespace BL.Servers.CoC.Core
             Resources.Clans = new Clans();
             Resources.GChat = new Global_Chat();
             Resources.Battles = new Battles();
+            Resources.Battles_V2 = new Battles_V2();
             Resources.Random = new Random(DateTime.Now.ToString().GetHashCode());
             Resources.Region = new Region();
             Resources.PRegion = new Player_Region();

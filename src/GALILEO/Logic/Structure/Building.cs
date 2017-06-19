@@ -1,11 +1,11 @@
-﻿using BL.Servers.CoC.Logic.Components;
-using BL.Servers.CoC.Logic.Enums;
+﻿using Republic.Magic.Logic.Components;
+using Republic.Magic.Logic.Enums;
 
-namespace BL.Servers.CoC.Logic.Structure
+namespace Republic.Magic.Logic.Structure
 {
-    using BL.Servers.CoC.Files;
-    using BL.Servers.CoC.Files.CSV_Helpers;
-    using BL.Servers.CoC.Files.CSV_Logic;
+    using Republic.Magic.Files;
+    using Republic.Magic.Files.CSV_Helpers;
+    using Republic.Magic.Files.CSV_Logic;
     internal class Building : ConstructionItem
     {
         public Building(Data data, Level level) : base(data, level)

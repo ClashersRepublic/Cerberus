@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using BL.Servers.CoC.Packets.Client.Authentication;
-using BL.Servers.CoC.Packets.Messages.Client;
-using BL.Servers.CoC.Packets.Messages.Client.API;
-using BL.Servers.CoC.Packets.Messages.Client.Authentication;
-using BL.Servers.CoC.Packets.Messages.Client.Battle;
-using BL.Servers.CoC.Packets.Messages.Client.Clans;
-using BL.Servers.CoC.Packets.Messages.Client.Clans.War;
-using BL.Servers.CoC.Packets.Messages.Client.Leaderboard;
+using Republic.Magic.Packets.Client.Authentication;
+using Republic.Magic.Packets.Messages.Client;
+using Republic.Magic.Packets.Messages.Client.API;
+using Republic.Magic.Packets.Messages.Client.Authentication;
+using Republic.Magic.Packets.Messages.Client.Battle;
+using Republic.Magic.Packets.Messages.Client.Clans;
+using Republic.Magic.Packets.Messages.Client.Clans.War;
+using Republic.Magic.Packets.Messages.Client.Leaderboard;
 
-namespace BL.Servers.CoC.Packets
+namespace Republic.Magic.Packets
 {
     internal class MessageFactory
     {
@@ -25,6 +25,7 @@ namespace BL.Servers.CoC.Packets
                 {10121, typeof(Unlock_Account)},
                 {10212, typeof(Change_Name)},
                 {10513, typeof(Facebook_Friends)},
+                {10905, typeof(News_Seen)},
                 {14101, typeof(Go_Home)},
                 {14102, typeof(Execute_Commands)},
                 {14113, typeof(Ask_Visit_Home)},

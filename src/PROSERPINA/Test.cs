@@ -36,7 +36,7 @@ namespace BL.Servers.CR
         internal void Uncompress(string Hexa)
         {
             List<byte> a = new List<byte>();
-            a.AddVInt(300);
+            a.AddVInt(89);
             Reader br = new Reader(a.ToArray());
 
             var data = br.ReadFully();

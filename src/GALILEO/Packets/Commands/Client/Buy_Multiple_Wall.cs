@@ -1,18 +1,18 @@
-﻿using BL.Servers.CoC.Extensions.Binary;
+﻿using Republic.Magic.Extensions.Binary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Components;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure;
+using Republic.Magic.Files;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Components;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure;
 
-namespace BL.Servers.CoC.Packets.Commands.Client
+namespace Republic.Magic.Packets.Commands.Client
 {
     internal class Buy_Multiple_Wall : Command
     {
@@ -38,7 +38,6 @@ namespace BL.Servers.CoC.Packets.Commands.Client
 
         internal override void Process()
         {
-            ShowValues();
             this.Device.Player.Avatar.Wall_Group_ID++;
             foreach (var WallXY in this.WallXYs)
             {

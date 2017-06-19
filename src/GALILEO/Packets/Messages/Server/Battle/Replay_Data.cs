@@ -1,9 +1,9 @@
 ﻿using System;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
+using Republic.Magic.Logic;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.Battle
+namespace Republic.Magic.Packets.Messages.Server.Battle
 {
     internal class Replay_Data : Message
     {

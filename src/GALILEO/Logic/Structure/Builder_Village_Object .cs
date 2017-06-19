@@ -1,7 +1,7 @@
-﻿using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Files.CSV_Logic;
+﻿using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Files.CSV_Logic;
 
-namespace BL.Servers.CoC.Logic.Structure
+namespace Republic.Magic.Logic.Structure
 {
     internal class Builder_Village_Object : ConstructionItem
     {

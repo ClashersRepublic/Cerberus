@@ -1,10 +1,10 @@
-﻿using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Packets.Messages.Server.Clans;
+﻿using Republic.Magic.Core;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Packets.Messages.Server.Clans;
 
-namespace BL.Servers.CoC.Packets.Messages.Client.Clans
+namespace Republic.Magic.Packets.Messages.Client.Clans
 {
     internal class Ask_Alliance : Message
     {

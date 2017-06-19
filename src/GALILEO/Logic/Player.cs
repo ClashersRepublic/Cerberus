@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure.Slots;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.Files;
+using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure.Slots;
+using Republic.Magic.Logic.Structure.Slots.Items;
+using Republic.Magic.Packets;
+using Republic.Magic.Packets.Messages.Server.Errors;
 using Newtonsoft.Json;
-using Npcs = BL.Servers.CoC.Logic.Structure.Slots.Npcs;
-using Resource = BL.Servers.CoC.Logic.Enums.Resource;
+using Npcs = Republic.Magic.Logic.Structure.Slots.Npcs;
+using Resource = Republic.Magic.Logic.Enums.Resource;
 
-namespace BL.Servers.CoC.Logic
+namespace Republic.Magic.Logic
 {
     internal class Player : ICloneable
     {
-        [JsonIgnore] internal Battle_V2 Battle_V2;
+        [JsonIgnore] internal long Battle_ID_V2;
         [JsonIgnore] internal long Battle_ID;
         [JsonIgnore] internal int Amical_ID;
         [JsonIgnore] internal int ObstacleClearCount;
@@ -97,7 +100,7 @@ namespace BL.Servers.CoC.Logic
         [JsonProperty("war_state")] internal bool WarState = true;
         [JsonProperty("name_state")] internal byte NameState;
 
-        [JsonProperty("rank")] internal Rank Rank = Rank.Player;
+        [JsonProperty("rank")] internal Rank Rank = Rank.PLAYER;
 
         [JsonProperty("town_hall_level")] internal int TownHall_Level;
         [JsonProperty("th_v2_lvl")] internal int Builder_TownHall_Level;
@@ -264,7 +267,13 @@ namespace BL.Servers.CoC.Logic
                     }
                     else
                     {
-                        Console.WriteLine("Clan is null");
+                        System.Diagnostics.Debug.WriteLine("Clan is null");
+                        this.ClanId = 0;
+                        this.Alliance_Role = -1;
+                        this.Alliance_Level = -1;
+                        this.Alliance_Name = string.Empty;
+                        this.Badge_ID = -1;
+                        new Out_Of_Sync(Core.Resources.Players.Get(this.UserId, Constants.Database).Client).Send();
                     }
                 }
 
@@ -279,6 +288,7 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
+
 
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
@@ -304,7 +314,7 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(this.Castle_Used_SP);
 
                 _Packet.AddInt(this.TownHall_Level);
-                _Packet.AddInt(this.Builder_TownHall_Level);  
+                _Packet.AddInt(this.Builder_TownHall_Level);
 
 #if DEBUG
                 _Packet.AddString($"{this.Name} #{this.UserId}:{GameUtils.GetHashtag(this.UserId)}");
@@ -332,7 +342,7 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(this.Castle_Resources.Get(Resource.WarGold));
                 _Packet.AddInt(this.Castle_Resources.Get(Resource.WarElixir));
                 _Packet.AddInt(this.Castle_Resources.Get(Resource.WarDarkElixir));
-                
+
                 _Packet.AddInt(0);
 
                 _Packet.AddBool(true);
@@ -404,11 +414,12 @@ namespace BL.Servers.CoC.Logic
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
-                _Packet.AddInt(0);
+                _Packet.AddInt(1);
+                _Packet.AddInt(4000037);
+                _Packet.AddInt(8);
                 _Packet.AddInt(0);
                 return _Packet.ToArray();
             }
-
         }
 
         public static int GetDataIndex(List<Slot> dsl, Data d) => dsl.FindIndex(ds => ds.Data == d.Id);

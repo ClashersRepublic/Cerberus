@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace BL.Servers.CoC.Logic.Structure.API
+namespace Republic.Magic.Logic.Structure.API
 {
     internal class Gamecenter
     {

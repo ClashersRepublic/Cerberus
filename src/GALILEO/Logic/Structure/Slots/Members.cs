@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure.Slots.Items;
 
-namespace BL.Servers.CoC.Logic.Structure.Slots
+namespace Republic.Magic.Logic.Structure.Slots
 {
     internal class Members : Dictionary<long, Member>
     {
@@ -99,6 +99,8 @@ namespace BL.Servers.CoC.Logic.Structure.Slots
                     _Packet.AddInt(0); // Previous Order ?
                     _Packet.AddInt(0); // Builder Base Order ?
                     _Packet.AddInt(0); // Builder Base Previous Order ?=
+
+                    //_Packet.AddInt(Member.Connected ? 1 : 0);
                     _Packet.AddInt(Member.New ? 1 : 0);
                     _Packet.AddInt(785097); //War Cooldown
                     _Packet.AddInt(_Player.Avatar.WarState ? 1 : 0);

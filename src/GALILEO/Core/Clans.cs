@@ -4,14 +4,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BL.Servers.CoC.Core.Database;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic;
+using Republic.Magic.Core.Database;
+using Republic.Magic.Extensions;
+using Republic.Magic.Logic;
 using Newtonsoft.Json;
-using BL.Servers.CoC.Logic.Enums;
-using Clan = BL.Servers.CoC.Logic.Clan;
+using Republic.Magic.Logic.Enums;
+using Clan = Republic.Magic.Logic.Clan;
 
-namespace BL.Servers.CoC.Core
+namespace Republic.Magic.Core
 {
     internal class Clans : Dictionary<long, Clan>
     {

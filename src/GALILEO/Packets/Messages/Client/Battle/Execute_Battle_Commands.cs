@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
+using Republic.Magic.Core;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Messages.Client.Battle
+namespace Republic.Magic.Packets.Messages.Client.Battle
 {
     internal class Execute_Battle_Commands : Message
     {
@@ -35,8 +35,9 @@ namespace BL.Servers.CoC.Packets.Messages.Client.Battle
         internal override void Process()
         {
             if (this.Device.State == Logic.Enums.State.IN_PC_BATTLE)
-               this.Device.Player.Avatar.Battle_V2.Battle_Tick = (int)this.CTick;
-
+            {
+                Resources.Battles_V2.GetPlayer(this.Device.Player.Avatar.Battle_ID_V2, this.Device.Player.Avatar.UserId).Battle_Tick = CTick;
+            }
             if (this.Count > -1 && this.Count <= 400)
             {
                 this.Device.Player.Tick();

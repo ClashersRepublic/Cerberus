@@ -2,17 +2,17 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.External.Sodium;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Packets;
-using BL.Servers.CoC.Packets.Messages.Server.Authentication;
+using Republic.Magic.Core;
+using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.External.Sodium;
+using Republic.Magic.Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Packets;
+using Republic.Magic.Packets.Messages.Server.Authentication;
 
-namespace BL.Servers.CoC.Packets.Client.Authentication
+namespace Republic.Magic.Packets.Client.Authentication
 {
     internal class Unlock_Account : Message
     {
@@ -85,7 +85,7 @@ namespace BL.Servers.CoC.Packets.Client.Authentication
         {
             Console.WriteLine(BitConverter.ToString(this.Device.Keys.SNonce));
             //this.Device.Keys.SNonce.Increment(0);
-            byte[] Decrypted = Sodium.Decrypt(new byte[16].Concat(this.Reader.ReadBytes(this.Length)).ToArray(), this.Device.Keys.SNonce, this.Device.Keys.PublicKey);
+            byte[] Decrypted = Sodium.Decrypt(new byte[16].Concat(this.Reader.ReadBytes((int)this.Length)).ToArray(), this.Device.Keys.SNonce, this.Device.Keys.PublicKey);
 
             if (Decrypted == null)
             {

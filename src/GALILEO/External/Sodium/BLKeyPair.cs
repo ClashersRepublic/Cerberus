@@ -1,4 +1,4 @@
-﻿namespace BL.Servers.CoC.External.Sodium
+﻿namespace Republic.Magic.External.Sodium
 {
     public class BLKeyPair
     {

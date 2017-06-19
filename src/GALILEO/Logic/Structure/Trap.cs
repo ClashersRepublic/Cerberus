@@ -1,8 +1,8 @@
-﻿using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic.Components;
+﻿using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic.Components;
 
-namespace BL.Servers.CoC.Logic.Structure
+namespace Republic.Magic.Logic.Structure
 {
     internal class Trap : ConstructionItem
     {

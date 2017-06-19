@@ -1,6 +1,6 @@
-﻿using BL.Servers.CoC.Core;
+﻿using Republic.Magic.Core;
 
-namespace BL.Servers.CoC.Logic.Structure.Slots.Items
+namespace Republic.Magic.Logic.Structure.Slots.Items
 {
     internal class List_Devices
     {

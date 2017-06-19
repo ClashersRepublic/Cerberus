@@ -1,9 +1,9 @@
-﻿using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions.Binary;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Packets.Messages.Server.API;
+﻿using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions.Binary;
+using Republic.Magic.Logic;
+using Republic.Magic.Packets.Messages.Server.API;
 
-namespace BL.Servers.CoC.Packets.Messages.Client.API
+namespace Republic.Magic.Packets.Messages.Client.API
 {
     internal class Facebook_Connect : Message
     {

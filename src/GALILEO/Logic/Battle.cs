@@ -1,11 +1,11 @@
 ﻿using System;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Logic.Structure.Slots;
+using Republic.Magic.Extensions;
+using Republic.Magic.Logic.Structure.Slots;
 using Newtonsoft.Json;
-using BL.Servers.CoC.Logic.Structure.Slots.Items;
+using Republic.Magic.Logic.Structure.Slots.Items;
 using Newtonsoft.Json.Linq;
 
-namespace BL.Servers.CoC.Logic
+namespace Republic.Magic.Logic
 {
     internal class Battle
     {

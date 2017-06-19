@@ -1,13 +1,13 @@
 ﻿using System;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Files;
-using BL.Servers.CoC.Files.CSV_Logic;
-using BL.Servers.CoC.Logic.Enums;
-using BL.Servers.CoC.Logic.Structure;
+using Republic.Magic.Extensions;
+using Republic.Magic.Files;
+using Republic.Magic.Files.CSV_Logic;
+using Republic.Magic.Logic.Enums;
+using Republic.Magic.Logic.Structure;
 using Newtonsoft.Json.Linq;
-using Resource = BL.Servers.CoC.Logic.Enums.Resource;
+using Resource = Republic.Magic.Logic.Enums.Resource;
 
-namespace BL.Servers.CoC.Logic.Components
+namespace Republic.Magic.Logic.Components
 {
     internal class Hero_Base_Component : Component
     {

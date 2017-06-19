@@ -1,8 +1,8 @@
-﻿using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic;
+﻿using Republic.Magic.Core.Networking;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic;
 
-namespace BL.Servers.CoC.Packets.Messages.Server
+namespace Republic.Magic.Packets.Messages.Server
 {
     internal class Server_Commands : Message
     {

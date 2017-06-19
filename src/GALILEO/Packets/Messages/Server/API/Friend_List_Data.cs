@@ -1,13 +1,13 @@
-﻿using BL.Servers.CoC.Core;
-using BL.Servers.CoC.Core.Database;
-using BL.Servers.CoC.Extensions;
-using BL.Servers.CoC.Extensions.List;
-using BL.Servers.CoC.Logic;
+﻿using Republic.Magic.Core;
+using Republic.Magic.Core.Database;
+using Republic.Magic.Extensions;
+using Republic.Magic.Extensions.List;
+using Republic.Magic.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BL.Servers.CoC.Packets.Messages.Server.API
+namespace Republic.Magic.Packets.Messages.Server.API
 {
     internal class Friend_List_Data : Message
     {

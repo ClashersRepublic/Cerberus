@@ -1,8 +1,8 @@
-﻿using BL.Servers.CoC.Files.CSV_Helpers;
-using BL.Servers.CoC.Files;
+﻿using Republic.Magic.Files.CSV_Helpers;
+using Republic.Magic.Files;
 using Newtonsoft.Json.Linq;
 
-namespace BL.Servers.CoC.Logic.Structure.Slots
+namespace Republic.Magic.Logic.Structure.Slots
 {
     internal class DataSlot
     {

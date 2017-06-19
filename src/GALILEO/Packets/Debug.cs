@@ -1,8 +1,8 @@
-﻿using BL.Servers.CoC.Core.Networking;
-using BL.Servers.CoC.Logic;
-using BL.Servers.CoC.Packets.Messages.Server;
+﻿using Republic.Magic.Core.Networking;
+using Republic.Magic.Logic;
+using Republic.Magic.Packets.Messages.Server;
 
-namespace BL.Servers.CoC.Packets
+namespace Republic.Magic.Packets
 {
     internal class Debug
     {
@@ -14,11 +14,6 @@ namespace BL.Servers.CoC.Packets
         {
             this.Device = Device;
             this.Parameters = Parameters;
-        }
-
-        internal virtual void Decode()
-        {
-            // Decode.
         }
 
         internal virtual void Process()
