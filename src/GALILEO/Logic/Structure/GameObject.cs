@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Republic.Magic.Files.CSV_Helpers;
+using CRepublic.Magic.Files.CSV_Helpers;
 using Newtonsoft.Json.Linq;
 
-namespace Republic.Magic.Logic.Structure
+namespace CRepublic.Magic.Logic.Structure
 {
     internal class GameObject
     {

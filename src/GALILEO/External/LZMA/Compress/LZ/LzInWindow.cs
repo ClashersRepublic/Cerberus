@@ -1,6 +1,6 @@
 using System;
 
-namespace Republic.Magic.External.LZMA.Compress.LZ
+namespace CRepublic.Magic.External.LZMA.Compress.LZ
 {
     public class InWindow
     {

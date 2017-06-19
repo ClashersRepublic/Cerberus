@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Republic.Magic.Logic.Structure;
+using CRepublic.Magic.Logic.Structure;
 
-namespace Republic.Magic.Logic.Manager
+namespace CRepublic.Magic.Logic.Manager
 {
     internal class Village_Worker_Manager
     {

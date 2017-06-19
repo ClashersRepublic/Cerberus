@@ -1,8 +1,8 @@
 ﻿using System;
-using Republic.Magic.Logic.Structure.Slots.Items;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
 using System.Collections.Generic;
 
-namespace Republic.Magic.Logic.Structure.Slots
+namespace CRepublic.Magic.Logic.Structure.Slots
 {
     internal class Castle_Units : List<Alliance_Unit>, ICloneable
     {

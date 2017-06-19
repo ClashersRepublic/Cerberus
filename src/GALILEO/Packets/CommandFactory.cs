@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Republic.Magic.Packets.Commands.Client;
-using Republic.Magic.Packets.Commands.Client.Battle;
-using Republic.Magic.Packets.Commands.Client.Clan;
+using CRepublic.Magic.Packets.Commands.Client;
+using CRepublic.Magic.Packets.Commands.Client.Battle;
+using CRepublic.Magic.Packets.Commands.Client.Clan;
 
-namespace Republic.Magic.Packets
+namespace CRepublic.Magic.Packets
 {
     internal class CommandFactory
     {

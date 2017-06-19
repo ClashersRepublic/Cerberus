@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Republic.Magic.Logic.Components
+namespace CRepublic.Magic.Logic.Components
 {
     internal class Unit_Storage_V2_Componenent
     {

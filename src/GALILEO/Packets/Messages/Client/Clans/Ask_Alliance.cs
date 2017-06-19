@@ -1,10 +1,10 @@
-﻿using Republic.Magic.Core;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
-using Republic.Magic.Packets.Messages.Server.Clans;
+﻿using CRepublic.Magic.Core;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Packets.Messages.Server.Clans;
 
-namespace Republic.Magic.Packets.Messages.Client.Clans
+namespace CRepublic.Magic.Packets.Messages.Client.Clans
 {
     internal class Ask_Alliance : Message
     {

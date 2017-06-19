@@ -1,6 +1,6 @@
-﻿using Republic.Magic.Logic;
+﻿using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Messages.Server.Battle
+namespace CRepublic.Magic.Packets.Messages.Server.Battle
 {
     internal class Battle_Failed : Message
     {

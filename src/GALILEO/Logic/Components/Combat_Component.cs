@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Files;
-using Republic.Magic.Files.CSV_Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Logic.Structure;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Files.CSV_Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure;
 using Newtonsoft.Json.Linq;
 
-namespace Republic.Magic.Logic.Components
+namespace CRepublic.Magic.Logic.Components
 {
     internal class Combat_Component : Component
     {

@@ -1,11 +1,11 @@
-﻿using Republic.Magic.Logic.Components;
-using Republic.Magic.Logic.Enums;
+﻿using CRepublic.Magic.Logic.Components;
+using CRepublic.Magic.Logic.Enums;
 
-namespace Republic.Magic.Logic.Structure
+namespace CRepublic.Magic.Logic.Structure
 {
-    using Republic.Magic.Files;
-    using Republic.Magic.Files.CSV_Helpers;
-    using Republic.Magic.Files.CSV_Logic;
+    using CRepublic.Magic.Files;
+    using CRepublic.Magic.Files.CSV_Helpers;
+    using CRepublic.Magic.Files.CSV_Logic;
     internal class Builder_Building : ConstructionItem
     {
         public Builder_Building(Data data, Level level) : base(data, level)

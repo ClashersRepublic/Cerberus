@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Messages.Server.Battle
+namespace CRepublic.Magic.Packets.Messages.Server.Battle
 {
     internal class Live_Battle : Message
     {

@@ -1,8 +1,8 @@
-﻿using Republic.Magic.Files.CSV_Helpers;
-using Republic.Magic.Files.CSV_Logic;
-using Republic.Magic.Logic.Components;
+﻿using CRepublic.Magic.Files.CSV_Helpers;
+using CRepublic.Magic.Files.CSV_Logic;
+using CRepublic.Magic.Logic.Components;
 
-namespace Republic.Magic.Logic.Structure
+namespace CRepublic.Magic.Logic.Structure
 {
     internal class Builder_Trap : ConstructionItem
     {

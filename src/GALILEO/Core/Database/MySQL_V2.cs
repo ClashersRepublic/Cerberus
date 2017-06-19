@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Extensions;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 
-namespace Republic.Magic.Core.Database
+namespace CRepublic.Magic.Core.Database
 {
     internal class MySQL_V2
     {

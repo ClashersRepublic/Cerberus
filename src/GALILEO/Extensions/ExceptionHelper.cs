@@ -4,7 +4,7 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 
-namespace Republic.Magic.Extensions
+namespace CRepublic.Magic.Extensions
 {
     internal class ExceptionHelper
     {

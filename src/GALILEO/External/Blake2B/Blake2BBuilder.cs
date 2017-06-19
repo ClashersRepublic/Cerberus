@@ -1,4 +1,4 @@
-﻿namespace Republic.Magic.External.Blake2B
+﻿namespace CRepublic.Magic.External.Blake2B
 {
     internal static class Blake2Builder
     {

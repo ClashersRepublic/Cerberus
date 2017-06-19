@@ -1,10 +1,10 @@
 ﻿using System;
-using Republic.Magic.Core;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
 
-namespace Republic.Magic.Packets.Commands.Client
+namespace CRepublic.Magic.Packets.Commands.Client
 {
     internal class Change_Village_Mode : Command
     {

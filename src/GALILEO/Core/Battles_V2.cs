@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Structure.Slots;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Structure.Slots;
 
-namespace Republic.Magic.Core
+namespace CRepublic.Magic.Core
 {
     internal class Battles_V2 : Dictionary<long, Battle_V2>
     {

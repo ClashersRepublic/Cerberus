@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Data.Entity.Infrastructure;
-using Republic.Magic.Core.Database;
-using Republic.Magic.Extensions;
-using Republic.Magic.Files;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Packets;
-using Republic.Magic.Core.Events;
+using CRepublic.Magic.Core.Database;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Packets;
+using CRepublic.Magic.Core.Events;
 
-namespace Republic.Magic.Core
+namespace CRepublic.Magic.Core
 {
     internal class Classes : IDisposable
     {

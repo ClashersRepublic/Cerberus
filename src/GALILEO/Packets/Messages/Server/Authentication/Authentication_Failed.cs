@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.External.Blake2B;
-using Republic.Magic.External.Sodium;
-using Republic.Magic.Files;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Packets.Cryptography;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.External.Blake2B;
+using CRepublic.Magic.External.Sodium;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Packets.Cryptography;
 
-namespace Republic.Magic.Packets.Messages.Server.Authentication
+namespace CRepublic.Magic.Packets.Messages.Server.Authentication
 {
     internal class Authentication_Failed : Message
     {

@@ -1,12 +1,12 @@
-﻿using Republic.Magic.Core;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Structure.Slots.Items;
-using Republic.Magic.Packets.Messages.Server.Clans;
+﻿using CRepublic.Magic.Core;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
+using CRepublic.Magic.Packets.Messages.Server.Clans;
 
-namespace Republic.Magic.Packets.Commands.Client.Clan
+namespace CRepublic.Magic.Packets.Commands.Client.Clan
 {
     internal class Send_Mail : Command
     {

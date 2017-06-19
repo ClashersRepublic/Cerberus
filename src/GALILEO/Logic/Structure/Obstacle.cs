@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Republic.Magic.Extensions;
-using Republic.Magic.Files;
-using Republic.Magic.Logic.Enums;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Logic.Enums;
 
-namespace Republic.Magic.Logic.Structure
+namespace CRepublic.Magic.Logic.Structure
 {
-    using Republic.Magic.Files.CSV_Helpers;
-    using Republic.Magic.Files.CSV_Logic;
+    using CRepublic.Magic.Files.CSV_Helpers;
+    using CRepublic.Magic.Files.CSV_Logic;
     using Newtonsoft.Json.Linq;
 
     internal class Obstacle : GameObject

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Republic.Magic.Files.CSV_Reader;
-using Republic.Magic.Logic.Enums;
+using CRepublic.Magic.Files.CSV_Reader;
+using CRepublic.Magic.Logic.Enums;
 
-namespace Republic.Magic.Files
+namespace CRepublic.Magic.Files
 {
     internal class CSV
     {

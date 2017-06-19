@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Republic.Magic.Core.Database;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Logic.Structure;
-using Republic.Magic.Packets.Messages.Server.Errors;
-using Battle = Republic.Magic.Logic.Battle;
-using Clan = Republic.Magic.Logic.Clan;
+using CRepublic.Magic.Core.Database;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure;
+using CRepublic.Magic.Packets.Messages.Server.Errors;
+using Battle = CRepublic.Magic.Logic.Battle;
+using Clan = CRepublic.Magic.Logic.Clan;
 using Timer = System.Timers.Timer;
 
-namespace Republic.Magic.Core
+namespace CRepublic.Magic.Core
 {
     internal class Timers
     {

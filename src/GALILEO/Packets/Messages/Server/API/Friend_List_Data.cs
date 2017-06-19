@@ -1,13 +1,13 @@
-﻿using Republic.Magic.Core;
-using Republic.Magic.Core.Database;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic;
+﻿using CRepublic.Magic.Core;
+using CRepublic.Magic.Core.Database;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Republic.Magic.Packets.Messages.Server.API
+namespace CRepublic.Magic.Packets.Messages.Server.API
 {
     internal class Friend_List_Data : Message
     {

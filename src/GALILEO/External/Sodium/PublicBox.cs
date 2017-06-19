@@ -1,7 +1,7 @@
-﻿namespace Republic.Magic.External.Sodium
+﻿namespace CRepublic.Magic.External.Sodium
 {
     using System;
-    using Republic.Magic.External.TweetNaCl;
+    using CRepublic.Magic.External.TweetNaCl;
 
     public class PublicBox
     {

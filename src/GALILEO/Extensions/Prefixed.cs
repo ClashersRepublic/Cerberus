@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace Republic.Magic.Extensions
+namespace CRepublic.Magic.Extensions
 {
     internal class Prefixed : TextWriter
     {
@@ -17,7 +17,7 @@ namespace Republic.Magic.Extensions
 
         public override void Write(string Message)
         {
-            this.Original.Write("[Republic.Magic]    {0}", Message);
+            this.Original.Write("[CRepublic.Magic]    {0}", Message);
         }
 
         public override void WriteLine(string Message)

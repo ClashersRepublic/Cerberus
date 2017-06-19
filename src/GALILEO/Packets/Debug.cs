@@ -1,8 +1,8 @@
-﻿using Republic.Magic.Core.Networking;
-using Republic.Magic.Logic;
-using Republic.Magic.Packets.Messages.Server;
+﻿using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Packets.Messages.Server;
 
-namespace Republic.Magic.Packets
+namespace CRepublic.Magic.Packets
 {
     internal class Debug
     {

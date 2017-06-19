@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.External.Sodium;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.External.Sodium;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
 
-namespace Republic.Magic.Packets.Messages.Server.Authentication
+namespace CRepublic.Magic.Packets.Messages.Server.Authentication
 {
     internal class Unlock_Account_Failed : Message
     {

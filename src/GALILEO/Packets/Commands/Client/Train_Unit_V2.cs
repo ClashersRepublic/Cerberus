@@ -1,11 +1,11 @@
 ﻿using System;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Files;
-using Republic.Magic.Files.CSV_Logic;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Files.CSV_Logic;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
 
-namespace Republic.Magic.Packets.Commands.Client
+namespace CRepublic.Magic.Packets.Commands.Client
 {
     internal class Train_Unit_V2 : Command
     {

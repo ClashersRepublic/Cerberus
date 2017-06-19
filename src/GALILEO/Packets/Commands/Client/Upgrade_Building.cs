@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Republic.Magic.Core;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Files;
-using Republic.Magic.Files.CSV_Logic;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Logic.Structure;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Files.CSV_Logic;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure;
 
-namespace Republic.Magic.Packets.Commands.Client
+namespace CRepublic.Magic.Packets.Commands.Client
 {
     internal class Upgrade_Building : Command
     {

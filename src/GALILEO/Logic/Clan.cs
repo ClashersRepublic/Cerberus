@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Logic.Structure.Slots;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure.Slots;
 using Newtonsoft.Json;
 
-namespace Republic.Magic.Logic
+namespace CRepublic.Magic.Logic
 {
     internal class Clan
     {

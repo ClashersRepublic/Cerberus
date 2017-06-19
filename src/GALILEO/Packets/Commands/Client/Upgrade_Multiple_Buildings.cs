@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Republic.Magic.Core;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Files.CSV_Logic;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Structure;
-using Resource = Republic.Magic.Files.CSV_Logic.Resource;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Files.CSV_Logic;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Structure;
+using Resource = CRepublic.Magic.Files.CSV_Logic.Resource;
 
-namespace Republic.Magic.Packets.Commands.Client
+namespace CRepublic.Magic.Packets.Commands.Client
 {
     internal class Upgrade_Multiple_Buildings : Command
     {

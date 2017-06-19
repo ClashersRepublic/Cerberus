@@ -1,14 +1,14 @@
 ﻿using System;
-using Republic.Magic.Core;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Extensions;
-using Republic.Magic.Logic.Structure.Slots.Items;
-using Republic.Magic.Packets.Messages.Server.Battle;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
+using CRepublic.Magic.Packets.Messages.Server.Battle;
 
-namespace Republic.Magic.Packets.Commands.Client.Battle
+namespace CRepublic.Magic.Packets.Commands.Client.Battle
 {
     internal class Surrender_Attack : Command
     {

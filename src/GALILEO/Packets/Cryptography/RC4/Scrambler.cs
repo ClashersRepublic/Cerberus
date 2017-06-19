@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Republic.Magic.Packets.Cryptography.RC4
+namespace CRepublic.Magic.Packets.Cryptography.RC4
 {
     internal class Scrambler
     {

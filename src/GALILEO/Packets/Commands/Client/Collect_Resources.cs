@@ -1,8 +1,8 @@
-﻿using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Structure;
+﻿using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Structure;
 
-namespace Republic.Magic.Packets.Commands.Client
+namespace CRepublic.Magic.Packets.Commands.Client
 {
     internal class Collect_Resources : Command
     {

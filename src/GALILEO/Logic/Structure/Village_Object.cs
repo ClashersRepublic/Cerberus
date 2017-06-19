@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Files.CSV_Helpers;
-using Republic.Magic.Files.CSV_Logic;
+using CRepublic.Magic.Files.CSV_Helpers;
+using CRepublic.Magic.Files.CSV_Logic;
 
-namespace Republic.Magic.Logic.Structure
+namespace CRepublic.Magic.Logic.Structure
 {
     internal class Village_Object : ConstructionItem
     {

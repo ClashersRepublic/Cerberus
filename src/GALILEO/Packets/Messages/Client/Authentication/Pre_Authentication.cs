@@ -1,12 +1,12 @@
-﻿using Republic.Magic.Logic;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Files;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Packets.Messages.Server.Authentication;
+﻿using CRepublic.Magic.Logic;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Packets.Messages.Server.Authentication;
 
-namespace Republic.Magic.Packets.Messages.Client.Authentication
+namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 {
     internal class Pre_Authentication : Message
     {

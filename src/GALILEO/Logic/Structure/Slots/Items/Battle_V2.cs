@@ -1,9 +1,9 @@
 ﻿using System;
-using Republic.Magic.Extensions;
+using CRepublic.Magic.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Republic.Magic.Logic.Structure.Slots.Items
+namespace CRepublic.Magic.Logic.Structure.Slots.Items
 {
     internal class Battle_V2
     {

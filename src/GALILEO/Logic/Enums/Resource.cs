@@ -1,4 +1,4 @@
-﻿namespace Republic.Magic.Logic.Enums
+﻿namespace CRepublic.Magic.Logic.Enums
 {
     public enum Resource
     {

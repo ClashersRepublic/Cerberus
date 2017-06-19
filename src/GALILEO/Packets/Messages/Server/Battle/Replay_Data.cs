@@ -1,9 +1,9 @@
 ﻿using System;
-using Republic.Magic.Logic;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.List;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.List;
 
-namespace Republic.Magic.Packets.Messages.Server.Battle
+namespace CRepublic.Magic.Packets.Messages.Server.Battle
 {
     internal class Replay_Data : Message
     {

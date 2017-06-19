@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{9257A23D-569D-40E6-9744-A34F6374DD47}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Republic.Magic</RootNamespace>
-    <AssemblyName>Republic Clash Server</AssemblyName>
+    <RootNamespace>CRepublic.Magic</RootNamespace>
+    <AssemblyName>Clashers Republic Clash Server</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

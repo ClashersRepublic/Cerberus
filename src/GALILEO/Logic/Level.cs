@@ -1,9 +1,9 @@
 ﻿using System;
-using Republic.Magic.Logic.Manager;
+using CRepublic.Magic.Logic.Manager;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Republic.Magic.Logic
+namespace CRepublic.Magic.Logic
 {
     internal class Level
     {

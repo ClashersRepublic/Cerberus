@@ -1,7 +1,7 @@
-﻿using Republic.Magic.Files.CSV_Helpers;
-using Republic.Magic.Files.CSV_Reader;
+﻿using CRepublic.Magic.Files.CSV_Helpers;
+using CRepublic.Magic.Files.CSV_Reader;
 
-namespace Republic.Magic.Files.CSV_Logic
+namespace CRepublic.Magic.Files.CSV_Logic
 {
     internal class Globals : Data
     {

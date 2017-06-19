@@ -1,10 +1,10 @@
-﻿using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic.Enums;
+﻿using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace Republic.Magic.Logic.Structure.Slots.Items
+namespace CRepublic.Magic.Logic.Structure.Slots.Items
 {
     internal class Entry
     {

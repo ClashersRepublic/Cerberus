@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Core;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Files;
-using Republic.Magic.Files.CSV_Logic;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Logic.Structure;
-using Republic.Magic.Packets.Messages.Server;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Files.CSV_Logic;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure;
+using CRepublic.Magic.Packets.Messages.Server;
 
-namespace Republic.Magic.Packets.Debugs
+namespace CRepublic.Magic.Packets.Debugs
 {
     internal class Max_Village : Debug
     {

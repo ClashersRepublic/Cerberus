@@ -1,9 +1,9 @@
-﻿using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
-using Republic.Magic.Packets.Messages.Server.Leaderboard;
+﻿using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Packets.Messages.Server.Leaderboard;
 
-namespace Republic.Magic.Packets.Messages.Client.Leaderboard
+namespace CRepublic.Magic.Packets.Messages.Client.Leaderboard
 {
     internal class Request_Global_Players :Message
     {

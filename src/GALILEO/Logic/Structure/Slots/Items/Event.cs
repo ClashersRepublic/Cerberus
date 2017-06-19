@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Republic.Magic.Logic.Structure.Slots.Items
+namespace CRepublic.Magic.Logic.Structure.Slots.Items
 {
     internal class Event
     {

@@ -4,16 +4,16 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.External.Sodium;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Packets.Messages.Server;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.External.Sodium;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Packets.Messages.Server;
 
-namespace Republic.Magic.Packets
+namespace CRepublic.Magic.Packets
 {
     internal class Message
     {

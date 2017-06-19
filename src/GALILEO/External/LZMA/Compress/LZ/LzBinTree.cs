@@ -1,8 +1,8 @@
 // LzBinTree.cs
 using System;
-using Republic.Magic.External.LZMA.Common;
+using CRepublic.Magic.External.LZMA.Common;
 
-namespace Republic.Magic.External.LZMA.Compress.LZ
+namespace CRepublic.Magic.External.LZMA.Compress.LZ
 {
     public class BinTree : InWindow, IMatchFinder
     {

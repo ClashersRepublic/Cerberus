@@ -1,8 +1,8 @@
-﻿using Republic.Magic.Files.CSV_Helpers;
-using Republic.Magic.Logic.Enums;
+﻿using CRepublic.Magic.Files.CSV_Helpers;
+using CRepublic.Magic.Logic.Enums;
 using System.Collections.Generic;
 
-namespace Republic.Magic.Files.CSV_Reader
+namespace CRepublic.Magic.Files.CSV_Reader
 {
     internal class Gamefiles
     {

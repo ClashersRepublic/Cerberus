@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
-using Republic.Magic.Packets.Messages.Server.Battle;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Packets.Messages.Server.Battle;
 
-namespace Republic.Magic.Packets.Messages.Client.Battle
+namespace CRepublic.Magic.Packets.Messages.Client.Battle
 {
     internal class Search_Opponent : Message
     {

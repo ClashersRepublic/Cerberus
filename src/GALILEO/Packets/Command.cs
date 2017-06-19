@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets
+namespace CRepublic.Magic.Packets
 {
     internal class Command
     {

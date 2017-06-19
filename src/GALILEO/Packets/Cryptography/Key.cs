@@ -1,6 +1,6 @@
-﻿using Republic.Magic.External.Sodium;
+﻿using CRepublic.Magic.External.Sodium;
 
-namespace Republic.Magic.Packets.Cryptography
+namespace CRepublic.Magic.Packets.Cryptography
 {
     internal class Key
     {

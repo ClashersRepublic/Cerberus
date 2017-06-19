@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Core;
-using Republic.Magic.Extensions;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
 
-namespace Republic.Magic.Packets.Debugs
+namespace CRepublic.Magic.Packets.Debugs
 {
     internal class Set_Rank : Debug
     {

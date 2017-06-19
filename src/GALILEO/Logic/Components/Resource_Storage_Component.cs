@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Republic.Magic.Files;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Logic.Structure;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure;
 
-namespace Republic.Magic.Logic.Components
+namespace CRepublic.Magic.Logic.Components
 {
     internal class Resource_Storage_Component : Component
     {

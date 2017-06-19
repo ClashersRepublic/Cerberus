@@ -1,8 +1,8 @@
-﻿using Republic.Magic.Files.CSV_Helpers;
-using Republic.Magic.Files;
+﻿using CRepublic.Magic.Files.CSV_Helpers;
+using CRepublic.Magic.Files;
 using Newtonsoft.Json.Linq;
 
-namespace Republic.Magic.Logic.Structure.Slots
+namespace CRepublic.Magic.Logic.Structure.Slots
 {
     internal class DataSlot
     {

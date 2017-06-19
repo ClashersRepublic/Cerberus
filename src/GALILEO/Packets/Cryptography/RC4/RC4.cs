@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Republic.Magic.Packets.Cryptography.RC4
+namespace CRepublic.Magic.Packets.Cryptography.RC4
 {
     internal class RC4_Utils
     {

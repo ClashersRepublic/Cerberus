@@ -1,4 +1,4 @@
-﻿namespace Republic.Magic.External.Sodium
+﻿namespace CRepublic.Magic.External.Sodium
 {
     internal class Sodium
     {

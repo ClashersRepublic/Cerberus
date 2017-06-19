@@ -1,10 +1,10 @@
-﻿using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Logic.Structure.Slots.Items;
+﻿using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
 
-namespace Republic.Magic.Packets.Commands.Client.Battle
+namespace CRepublic.Magic.Packets.Commands.Client.Battle
 {
     internal class Place_Alliance_Attacker : Command
     {

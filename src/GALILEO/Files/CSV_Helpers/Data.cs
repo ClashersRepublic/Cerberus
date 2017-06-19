@@ -1,7 +1,7 @@
 ﻿using System;
-using Republic.Magic.Files.CSV_Reader;
+using CRepublic.Magic.Files.CSV_Reader;
 
-namespace Republic.Magic.Files.CSV_Helpers
+namespace CRepublic.Magic.Files.CSV_Helpers
 {
     public class Data
     {

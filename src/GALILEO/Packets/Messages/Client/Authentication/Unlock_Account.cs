@@ -2,17 +2,17 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Republic.Magic.Core;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.External.Sodium;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Packets;
-using Republic.Magic.Packets.Messages.Server.Authentication;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.External.Sodium;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Packets;
+using CRepublic.Magic.Packets.Messages.Server.Authentication;
 
-namespace Republic.Magic.Packets.Client.Authentication
+namespace CRepublic.Magic.Packets.Client.Authentication
 {
     internal class Unlock_Account : Message
     {

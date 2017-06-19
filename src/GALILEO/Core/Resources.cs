@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
-using Republic.Magic.Core.Events;
-using Republic.Magic.Core.Networking;
+using CRepublic.Magic.Core.Events;
+using CRepublic.Magic.Core.Networking;
 
-namespace Republic.Magic.Core
+namespace CRepublic.Magic.Core
 {
     internal class Resources
     {

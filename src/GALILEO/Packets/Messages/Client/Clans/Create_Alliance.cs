@@ -1,17 +1,17 @@
-﻿using Republic.Magic.Core;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Files;
-using Republic.Magic.Files.CSV_Logic;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Logic.Structure.Slots.Items;
-using Republic.Magic.Packets.Commands.Server;
-using Republic.Magic.Packets.Messages.Server;
-using Republic.Magic.Packets.Messages.Server.Errors;
+﻿using CRepublic.Magic.Core;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Files.CSV_Logic;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
+using CRepublic.Magic.Packets.Commands.Server;
+using CRepublic.Magic.Packets.Messages.Server;
+using CRepublic.Magic.Packets.Messages.Server.Errors;
 
-namespace Republic.Magic.Packets.Messages.Client.Clans
+namespace CRepublic.Magic.Packets.Messages.Client.Clans
 {
     internal class Create_Alliance : Message
     {

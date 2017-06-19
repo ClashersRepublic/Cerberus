@@ -9,7 +9,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Republic.Magic.Extensions
+namespace CRepublic.Magic.Extensions
 {
     internal static class Utils
     {

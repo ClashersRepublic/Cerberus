@@ -1,8 +1,8 @@
 ﻿using System;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Messages.Client.API
+namespace CRepublic.Magic.Packets.Messages.Client.API
 {
     internal class Bind_Google_Account : Message
     {

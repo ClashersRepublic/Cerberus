@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using Republic.Magic.Core.Database;
-using Republic.Magic.Extensions;
-using Republic.Magic.Logic;
+using CRepublic.Magic.Core.Database;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic;
 using Newtonsoft.Json;
-using Republic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Enums;
 
-namespace Republic.Magic.Core
+namespace CRepublic.Magic.Core
 {
     internal class Players : Dictionary<long, Level>
     {

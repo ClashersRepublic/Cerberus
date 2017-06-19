@@ -1,11 +1,11 @@
 ﻿using System;
-using Republic.Magic.Extensions;
-using Republic.Magic.Logic.Structure.Slots;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic.Structure.Slots;
 using Newtonsoft.Json;
-using Republic.Magic.Logic.Structure.Slots.Items;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
 using Newtonsoft.Json.Linq;
 
-namespace Republic.Magic.Logic
+namespace CRepublic.Magic.Logic
 {
     internal class Battle
     {

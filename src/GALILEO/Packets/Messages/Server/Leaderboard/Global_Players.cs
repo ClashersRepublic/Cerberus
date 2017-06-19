@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Republic.Magic.Core;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Messages.Server.Leaderboard
+namespace CRepublic.Magic.Packets.Messages.Server.Leaderboard
 {
     internal class Global_Players : Message
     {

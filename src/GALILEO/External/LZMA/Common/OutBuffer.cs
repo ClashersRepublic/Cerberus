@@ -1,4 +1,4 @@
-namespace Republic.Magic.External.LZMA.Common
+namespace CRepublic.Magic.External.LZMA.Common
 {
     public class OutBuffer
     {

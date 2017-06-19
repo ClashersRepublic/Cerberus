@@ -1,7 +1,7 @@
-## Republic Of Clashers - Project
+## Clashers Repbulic - Project
 
 ***Cerberus*** is a _3 Dimension Project_.
-It has been **written by Vicky** from **Republic Of Clashers**.  
+It has been **written by Vicky** from **Clashers Repbulic**.  
 The goal of this project is to ensure a clean, easy-to-die code environment.
 All programs developed by the Republic Of Clashers Development Team are licensed by a license
 
@@ -16,7 +16,7 @@ All programs developed by the Republic Of Clashers Development Team are licensed
 * Xena - Library Patcher
 
 ## Disclaimer
-**Republic Of Clashers**'s resources and programs are protected under the license and our policies available on our website.
-**Republic Of Clashers**'s resources and programs are created by the (**BarbarianLand**) team.  
-**Republic Of Clashers** is **NOT** affiliated with '_Supercell, Oy_'.  
-**Republic Of Clashers** does **NOT** own '_Clash of Clans_', '_Boom Beach_', '_Clash Royale_', and/or '_Hay Day_'.
+**Clashers Repbulic**'s resources and programs are protected under the license and our policies available on our website.
+**Clashers Repbulic**'s resources and programs are created by the (**Clashers Repbulic**) team.  
+**Clashers Repbulic** is **NOT** affiliated with '_Supercell, Oy_'.  
+**Clashers Repbulic** does **NOT** own '_Clash of Clans_', '_Boom Beach_', '_Clash Royale_', and/or '_Hay Day_'.

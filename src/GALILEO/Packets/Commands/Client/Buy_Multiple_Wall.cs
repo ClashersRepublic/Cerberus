@@ -1,18 +1,18 @@
-﻿using Republic.Magic.Extensions.Binary;
+﻿using CRepublic.Magic.Extensions.Binary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Republic.Magic.Files;
-using Republic.Magic.Files.CSV_Logic;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Components;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Logic.Structure;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Files.CSV_Logic;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Components;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure;
 
-namespace Republic.Magic.Packets.Commands.Client
+namespace CRepublic.Magic.Packets.Commands.Client
 {
     internal class Buy_Multiple_Wall : Command
     {

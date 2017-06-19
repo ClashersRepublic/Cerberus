@@ -1,9 +1,9 @@
-﻿using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
-using Republic.Magic.Packets.Messages.Server.API;
+﻿using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Packets.Messages.Server.API;
 
-namespace Republic.Magic.Packets.Messages.Client.API
+namespace CRepublic.Magic.Packets.Messages.Client.API
 {
     internal class Facebook_Connect : Message
     {

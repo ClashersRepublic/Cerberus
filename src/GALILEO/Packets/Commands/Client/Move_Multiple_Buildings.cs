@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Commands.Client
+namespace CRepublic.Magic.Packets.Commands.Client
 {
     internal class Move_Multiple_Buildings : Command
     {

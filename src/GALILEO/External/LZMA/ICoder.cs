@@ -1,7 +1,7 @@
 // ICoder.h
 using System;
 
-namespace Republic.Magic.External.LZMA
+namespace CRepublic.Magic.External.LZMA
 {
     /// <summary>
     /// The exception that is thrown when an error in input stream occurs during decoding.

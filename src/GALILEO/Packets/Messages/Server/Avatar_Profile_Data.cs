@@ -1,9 +1,9 @@
-﻿using Republic.Magic.Core;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic;
+﻿using CRepublic.Magic.Core;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Messages.Server
+namespace CRepublic.Magic.Packets.Messages.Server
 {
     internal class Avatar_Profile_Data : Message
     {

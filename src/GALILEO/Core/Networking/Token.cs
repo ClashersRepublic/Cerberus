@@ -4,10 +4,10 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Extensions;
-using Republic.Magic.Logic;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Core.Networking
+namespace CRepublic.Magic.Core.Networking
 {
     internal class Token
     {

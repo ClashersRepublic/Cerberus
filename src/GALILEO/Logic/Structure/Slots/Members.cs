@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Logic.Structure.Slots.Items;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
 
-namespace Republic.Magic.Logic.Structure.Slots
+namespace CRepublic.Magic.Logic.Structure.Slots
 {
     internal class Members : Dictionary<long, Member>
     {

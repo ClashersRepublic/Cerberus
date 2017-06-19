@@ -1,7 +1,7 @@
 using System;
-using Republic.Magic.External.LZMA.Compress.RangeCoder;
+using CRepublic.Magic.External.LZMA.Compress.RangeCoder;
 
-namespace Republic.Magic.External.LZMA.Compress.LZMA
+namespace CRepublic.Magic.External.LZMA.Compress.LZMA
 {
     public class Encoder : ICoder, ISetCoderProperties, IWriteCoderProperties
     {

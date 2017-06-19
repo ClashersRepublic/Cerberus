@@ -4,14 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic;
-using Republic.Magic.Extensions;
-using Republic.Magic.Logic.Structure.Slots;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic.Structure.Slots;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Republic.Magic.Packets.Messages.Server.Battle
+namespace CRepublic.Magic.Packets.Messages.Server.Battle
 {
     internal class Pc_Battle_Data_V2 : Message
     {

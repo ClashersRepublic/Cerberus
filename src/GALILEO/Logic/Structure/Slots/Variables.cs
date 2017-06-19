@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Files;
-using Republic.Magic.Files.CSV_Logic;
-using Republic.Magic.Logic.Structure.Slots.Items;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Files.CSV_Logic;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
 
-namespace Republic.Magic.Logic.Structure.Slots
+namespace CRepublic.Magic.Logic.Structure.Slots
 {
     internal class Variables : List<Slot>
     {

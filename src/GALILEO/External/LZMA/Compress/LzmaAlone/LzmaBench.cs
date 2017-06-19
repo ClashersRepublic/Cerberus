@@ -1,9 +1,9 @@
 using System;
 using System.IO;
-using Republic.Magic.External.LZMA.Common;
-using Republic.Magic.External.LZMA.Compress.LZMA;
+using CRepublic.Magic.External.LZMA.Common;
+using CRepublic.Magic.External.LZMA.Compress.LZMA;
 
-namespace Republic.Magic.External.LZMA.Compress.LzmaAlone
+namespace CRepublic.Magic.External.LZMA.Compress.LzmaAlone
 {
     /// <summary>
     /// LZMA Benchmark

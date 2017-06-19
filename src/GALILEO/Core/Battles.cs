@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using Republic.Magic.Core.Database;
-using Republic.Magic.Extensions;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
+using CRepublic.Magic.Core.Database;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
 using Newtonsoft.Json;
-using Battle = Republic.Magic.Logic.Battle;
+using Battle = CRepublic.Magic.Logic.Battle;
 
-namespace Republic.Magic.Core
+namespace CRepublic.Magic.Core
 {
     internal class Battles : Dictionary<long, Battle>
     {

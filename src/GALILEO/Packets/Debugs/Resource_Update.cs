@@ -1,10 +1,10 @@
 ﻿using System.Text;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Logic;
-using Republic.Magic.Packets.Messages.Server;
-using Resource = Republic.Magic.Logic.Enums.Resource;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Packets.Messages.Server;
+using Resource = CRepublic.Magic.Logic.Enums.Resource;
 
-namespace Republic.Magic.Packets.Debugs
+namespace CRepublic.Magic.Packets.Debugs
 {
     internal class Resource_Update : Debug
     {

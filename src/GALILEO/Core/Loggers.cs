@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Packets;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Packets;
 using NLog;
 
-namespace Republic.Magic.Core
+namespace CRepublic.Magic.Core
 {
     internal class Loggers : IDisposable
     {

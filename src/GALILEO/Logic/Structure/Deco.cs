@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-namespace Republic.Magic.Logic.Structure
+namespace CRepublic.Magic.Logic.Structure
 {
-    using Republic.Magic.Files.CSV_Helpers;
-    using Republic.Magic.Files.CSV_Logic;
+    using CRepublic.Magic.Files.CSV_Helpers;
+    using CRepublic.Magic.Files.CSV_Logic;
 
     internal class Deco : GameObject
     {

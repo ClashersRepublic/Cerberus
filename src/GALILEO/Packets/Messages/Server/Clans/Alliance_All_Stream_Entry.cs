@@ -1,8 +1,8 @@
-﻿using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic;
+﻿using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Messages.Server.Clans
+namespace CRepublic.Magic.Packets.Messages.Server.Clans
 {
     internal class Alliance_All_Stream_Entry : Message
     {

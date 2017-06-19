@@ -5,13 +5,13 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Threading;
-using Republic.Magic.Packets;
-using Republic.Magic.Extensions;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
+using CRepublic.Magic.Packets;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
 using SharpRaven.Data;
 
-namespace Republic.Magic.Core.Networking
+namespace CRepublic.Magic.Core.Networking
 {
     internal class Gateway
     {

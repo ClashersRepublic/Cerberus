@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Republic.Magic.Extensions
+namespace CRepublic.Magic.Extensions
 {
     internal static class TimeUtils
     {

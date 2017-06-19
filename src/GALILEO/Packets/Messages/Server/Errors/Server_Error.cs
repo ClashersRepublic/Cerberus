@@ -1,12 +1,12 @@
-﻿using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic;
+﻿using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Republic.Magic.Packets.Messages.Server.Errors
+namespace CRepublic.Magic.Packets.Messages.Server.Errors
 {
     internal class Server_Error : Message
     {

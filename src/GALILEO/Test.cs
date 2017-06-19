@@ -2,16 +2,16 @@
 using System.IO;
 using System.Text;
 using System.Threading;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic.Enums;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic.Enums;
 using global::Google.Apis.Games.v1;
 using global::Google.Apis.Auth.OAuth2;
 using global::Google.Apis.Services;
 using global::Google.Apis.Util.Store;
 using Ionic.Zlib;
 
-namespace Republic.Magic
+namespace CRepublic.Magic
 { 
     internal class Test
     {

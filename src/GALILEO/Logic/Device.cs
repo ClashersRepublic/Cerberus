@@ -4,16 +4,16 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Core;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Packets;
-using Republic.Magic.Packets.Cryptography;
-using Republic.Magic.Packets.Cryptography.RC4;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Packets;
+using CRepublic.Magic.Packets.Cryptography;
+using CRepublic.Magic.Packets.Cryptography.RC4;
 
-namespace Republic.Magic.Logic
+namespace CRepublic.Magic.Logic
 {
     internal class Device
     {

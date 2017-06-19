@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Extensions;
-using Republic.Magic.Packets;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Packets;
 
-namespace Republic.Magic.Core.Networking
+namespace CRepublic.Magic.Core.Networking
 {
     internal static class Processor
     {

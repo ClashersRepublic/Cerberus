@@ -1,6 +1,6 @@
-﻿using Republic.Magic.Logic;
+﻿using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Messages.Server.API
+namespace CRepublic.Magic.Packets.Messages.Server.API
 {
     internal class Facebook_Connect_OK : Message
     {

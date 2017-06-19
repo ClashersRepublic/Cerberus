@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Files;
-using Republic.Magic.Files.CSV_Helpers;
-using Republic.Magic.Files.CSV_Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Logic.Structure.Slots;
-using Republic.Magic.Logic.Structure.Slots.Items;
-using Republic.Magic.Packets;
-using Republic.Magic.Packets.Messages.Server.Errors;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Files.CSV_Helpers;
+using CRepublic.Magic.Files.CSV_Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure.Slots;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
+using CRepublic.Magic.Packets;
+using CRepublic.Magic.Packets.Messages.Server.Errors;
 using Newtonsoft.Json;
-using Npcs = Republic.Magic.Logic.Structure.Slots.Npcs;
-using Resource = Republic.Magic.Logic.Enums.Resource;
+using Npcs = CRepublic.Magic.Logic.Structure.Slots.Npcs;
+using Resource = CRepublic.Magic.Logic.Enums.Resource;
 
-namespace Republic.Magic.Logic
+namespace CRepublic.Magic.Logic
 {
     internal class Player : ICloneable
     {

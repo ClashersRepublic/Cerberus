@@ -2,10 +2,10 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
-using Republic.Magic.Core;
-using Republic.Magic.Extensions;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Extensions;
 
-namespace Republic.Magic
+namespace CRepublic.Magic
 {
     internal class Program
     {
@@ -15,7 +15,7 @@ namespace Republic.Magic
 
         internal static async Task StartAsync()
         {
-            Console.Title = $"Republic Clash Server - ©Republic Of Clashers";
+            Console.Title = $"Clasher Republic Clash Server - ©Clashers Repbulic";
             //NativeCalls.SetWindowLong(NativeCalls.GetConsoleWindow(), -20, (int) NativeCalls.GetWindowLong(NativeCalls.GetConsoleWindow(), -20) ^ 0x80000);
             //NativeCalls.SetLayeredWindowAttributes(NativeCalls.GetConsoleWindow(), 0, 217, 0x2);
 
@@ -23,13 +23,13 @@ namespace Republic.Magic
 
             Console.ForegroundColor = Utils.ChooseRandomColor();
         
-            Console.WriteLine(@"__________                   ___.   .__  .__         ________   _____  _________ .__                .__                  ");
-            Console.WriteLine(@"\______   \ ____ ______  __ _\_ |__ |  | |__| ____   \_____  \_/ ____\ \_   ___ \|  | _____    _____|  |__   ___________ ______");
-            Console.WriteLine(@" |       _// __ \\____ \|  |  \ __ \|  | |  |/ ___\   /   |   \   __\  /    \  \/|  | \__  \  /  ___/  |  \_/ __ \_  __ \/  ___/");
-            Console.WriteLine(@" |    |   \  ___/|  |_> >  |  / \_\ \  |_|  \  \___  /    |    \  |    \     \___|  |__/ __ \_\___ \|   Y  \  ___/|  | \/\___ \ ");
-            Console.WriteLine(@" |____|_  /\___  >   __/|____/|___  /____/__|\___  > \_______  /__|     \______  /____(____  /____  >___|  /\___  >__|  /____  >");
-            Console.WriteLine(@"        \/     \/|__|             \/             \/          \/                \/          \/     \/     \/     \/           \/");
-            Console.WriteLine(@"                                                                                                   Developer Edition  ");
+            Console.WriteLine(@"_________ .__                .__                          __________                   ___.   .__  .__        ");
+            Console.WriteLine(@"\_   ___ \|  | _____    _____|  |__   ___________  ______ \______   \ ____ ______  __ _\_ |__ |  | |__| ____  ");
+            Console.WriteLine(@"/    \  \/|  | \__  \  /  ___/  |  \_/ __ \_  __ \/  ___/  |       _// __ \\____ \|  |  \ __ \|  | |  |/ ___\ ");
+            Console.WriteLine(@"\     \___|  |__/ __ \_\___ \|   Y  \  ___/|  | \/\___ \   |    |   \  ___/|  |_> >  |  / \_\ \  |_|  \  \___ ");
+            Console.WriteLine(@" \______  /____(____  /____  >___|  /\___  >__|  /____  >  |____|_  /\___  >   __/|____/|___  /____/__|\___  >");
+            Console.WriteLine(@"        \/          \/     \/     \/     \/           \/          \/     \/|__|             \/             \/ ");
+            Console.WriteLine(@"                                                                                        Developer Edition  ");
 
             Console.ResetColor();
 
@@ -44,10 +44,10 @@ namespace Republic.Magic
             Console.ResetColor();
             Console.WriteLine(Environment.NewLine);*/
 
-            Console.WriteLine(@"Republic Of Clashers's programs are protected by our policies, available on our main website.");
-            Console.WriteLine(@"Republic Of Clashers's programs are under the 'CC Non-Commercial-NoDerivs 3.0 Unported' license.");
-            Console.WriteLine(@"Republic Of Clashers is NOT affiliated to 'Supercell Oy'.");
-            Console.WriteLine(@"Republic Of Clashers does NOT own 'Clash of Clans', 'Boom Beach', 'Clash Royale'.");
+            Console.WriteLine(@"Clashers Repbulic's programs are protected by our policies, available on our main website.");
+            Console.WriteLine(@"Clashers Repbulic's programs are under the 'CC Non-Commercial-NoDerivs 3.0 Unported' license.");
+            Console.WriteLine(@"Clashers Repbulic is NOT affiliated to 'Supercell Oy'.");
+            Console.WriteLine(@"Clashers Repbulic does NOT own 'Clash of Clans', 'Boom Beach', 'Clash Royale'.");
 
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
 

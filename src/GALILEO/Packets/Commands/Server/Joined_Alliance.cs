@@ -1,6 +1,6 @@
-﻿using Republic.Magic.Logic;
+﻿using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Commands.Server
+namespace CRepublic.Magic.Packets.Commands.Server
 {
     internal class Joined_Alliance : Command
     {

@@ -1,6 +1,6 @@
-﻿using Republic.Magic.Extensions;
+﻿using CRepublic.Magic.Extensions;
 
-namespace Republic.Magic.Logic.Structure
+namespace CRepublic.Magic.Logic.Structure
 {
     using System;
     internal class Timer

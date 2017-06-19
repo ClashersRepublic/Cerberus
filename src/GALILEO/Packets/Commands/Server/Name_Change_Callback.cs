@@ -1,7 +1,7 @@
-﻿using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic;
+﻿using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Commands.Server
+namespace CRepublic.Magic.Packets.Commands.Server
 {
     internal class Name_Change_Callback : Command
     {

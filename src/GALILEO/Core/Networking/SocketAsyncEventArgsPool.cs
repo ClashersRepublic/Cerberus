@@ -2,10 +2,10 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.Sockets;
-using Republic.Magic.Extensions;
+using CRepublic.Magic.Extensions;
 using SharpRaven.Data;
 
-namespace Republic.Magic.Core.Networking
+namespace CRepublic.Magic.Core.Networking
 {
     internal class SocketAsyncEventArgsPool
     {

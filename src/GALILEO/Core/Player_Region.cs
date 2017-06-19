@@ -1,12 +1,12 @@
 ﻿using System;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Structure.Slots.Items;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
 using System.Collections.Generic;
 using System.Timers;
-using Republic.Magic.Core.Database;
-using Republic.Magic.Extensions;
+using CRepublic.Magic.Core.Database;
+using CRepublic.Magic.Extensions;
 
-namespace Republic.Magic.Core
+namespace CRepublic.Magic.Core
 {
     internal class Player_Region : Dictionary<string, List_Regions>
     {

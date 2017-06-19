@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using Republic.Magic.Core;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.External.Blake2B;
-using Republic.Magic.External.Sodium;
-using Republic.Magic.Files;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Packets.Messages.Server.Authentication;
-using Republic.Magic.Packets.Messages.Server;
-using Republic.Magic.Packets.Messages.Server.Clans;
-using Republic.Magic.Packets.Messages.Server.Clans.War;
-using Republic.Magic.Packets.Cryptography;
-using Republic.Magic.Packets.Messages.Server.Battle;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.External.Blake2B;
+using CRepublic.Magic.External.Sodium;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Packets.Messages.Server.Authentication;
+using CRepublic.Magic.Packets.Messages.Server;
+using CRepublic.Magic.Packets.Messages.Server.Clans;
+using CRepublic.Magic.Packets.Messages.Server.Clans.War;
+using CRepublic.Magic.Packets.Cryptography;
+using CRepublic.Magic.Packets.Messages.Server.Battle;
 
-namespace Republic.Magic.Packets.Messages.Client.Authentication
+namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 {
     internal class Authentication : Message
     {

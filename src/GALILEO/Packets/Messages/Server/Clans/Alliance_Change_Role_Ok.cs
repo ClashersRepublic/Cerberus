@@ -1,8 +1,8 @@
-﻿using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
+﻿using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
 
-namespace Republic.Magic.Packets.Messages.Server.Clans
+namespace CRepublic.Magic.Packets.Messages.Server.Clans
 {
     internal class Alliance_Change_Role_Ok : Message
     {

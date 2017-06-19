@@ -1,4 +1,4 @@
-﻿namespace Republic.Magic.Files.CSV_Helpers
+﻿namespace CRepublic.Magic.Files.CSV_Helpers
 {
     internal static class GlobalID
     {

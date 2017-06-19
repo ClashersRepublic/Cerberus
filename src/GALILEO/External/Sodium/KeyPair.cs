@@ -1,6 +1,6 @@
-﻿namespace Republic.Magic.External.Sodium
+﻿namespace CRepublic.Magic.External.Sodium
 {
-    using Republic.Magic.External.TweetNaCl;
+    using CRepublic.Magic.External.TweetNaCl;
 
     internal class KeyPair
     {

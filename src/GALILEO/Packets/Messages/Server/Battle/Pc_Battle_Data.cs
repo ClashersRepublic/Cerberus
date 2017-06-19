@@ -1,10 +1,10 @@
 ﻿using System;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
 
-namespace Republic.Magic.Packets.Messages.Server.Battle
+namespace CRepublic.Magic.Packets.Messages.Server.Battle
 {
     internal class Pc_Battle_Data : Message
     {

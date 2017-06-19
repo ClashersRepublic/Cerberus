@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ionic.Zlib;
-using Republic.Magic.Files.CSV_Helpers;
-using Republic.Magic.Logic.Structure.Slots.Items;
-using Resources = Republic.Magic.Core.Resources;
+using CRepublic.Magic.Files.CSV_Helpers;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
+using Resources = CRepublic.Magic.Core.Resources;
 
-namespace Republic.Magic.Extensions.List
+namespace CRepublic.Magic.Extensions.List
 {
     public static class Writer
     {

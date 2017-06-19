@@ -1,6 +1,6 @@
-﻿using Republic.Magic.Logic;
+﻿using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Messages.Server.Errors
+namespace CRepublic.Magic.Packets.Messages.Server.Errors
 {
     internal class Out_Of_Sync : Message
     {

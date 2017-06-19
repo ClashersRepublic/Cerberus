@@ -1,9 +1,9 @@
-﻿using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Packets.Cryptography;
+﻿using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Packets.Cryptography;
 
-namespace Republic.Magic.Packets.Messages.Server.Authentication
+namespace CRepublic.Magic.Packets.Messages.Server.Authentication
 {
     internal class Pre_Authentication_OK : Message
     {

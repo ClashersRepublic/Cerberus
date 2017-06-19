@@ -1,6 +1,6 @@
-﻿using Republic.Magic.Logic.Structure;
+﻿using CRepublic.Magic.Logic.Structure;
 
-namespace Republic.Magic.Logic.Components
+namespace CRepublic.Magic.Logic.Components
 {
     internal class Hitpoint_Component : Component
     {

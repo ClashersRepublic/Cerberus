@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using Republic.Magic.Core;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
-using Republic.Magic.Packets.Messages.Server;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Packets.Messages.Server;
 
-namespace Republic.Magic.Packets.Messages.Client
+namespace CRepublic.Magic.Packets.Messages.Client
 {
     internal class Add_Global_Chat : Message 
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Republic.Magic.Logic.Structure.Slots.Items
+namespace CRepublic.Magic.Logic.Structure.Slots.Items
 {
     internal class Replay_Info_V2
     {

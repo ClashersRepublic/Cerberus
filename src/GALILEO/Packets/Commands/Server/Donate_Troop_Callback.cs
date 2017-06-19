@@ -1,8 +1,8 @@
-﻿using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic;
+﻿using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic;
 using System;
 
-namespace Republic.Magic.Packets.Commands.Server
+namespace CRepublic.Magic.Packets.Commands.Server
 {
     internal class Donate_Troop_Callback : Command
     {

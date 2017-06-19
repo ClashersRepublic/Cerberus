@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Republic.Magic.Packets.Debugs
+namespace CRepublic.Magic.Packets.Debugs
 {
     class Kick_Player
     {

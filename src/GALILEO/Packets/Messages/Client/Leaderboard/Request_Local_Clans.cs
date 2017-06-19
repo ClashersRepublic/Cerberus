@@ -1,8 +1,8 @@
-﻿using Republic.Magic.Core.Networking;
-using Republic.Magic.Logic;
-using Republic.Magic.Packets.Messages.Server.Leaderboard;
+﻿using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Packets.Messages.Server.Leaderboard;
 
-namespace Republic.Magic.Packets.Messages.Client.Leaderboard
+namespace CRepublic.Magic.Packets.Messages.Client.Leaderboard
 {
     internal class Request_Local_Clans : Message
     {

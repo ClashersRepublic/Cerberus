@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Structure.Slots.Items;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
 
-namespace Republic.Magic.Core
+namespace CRepublic.Magic.Core
 {
     internal class Global_Chat : List<List_Devices>
     {

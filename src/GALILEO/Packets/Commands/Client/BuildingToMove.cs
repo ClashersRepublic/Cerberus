@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Republic.Magic.Packets.Commands.Client
+namespace CRepublic.Magic.Packets.Commands.Client
 {
     internal struct BuildingToMove
     {

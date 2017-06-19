@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Republic.Magic.Core.Database
+namespace CRepublic.Magic.Core.Database
 {
     using System;
     using System.Collections.Generic;

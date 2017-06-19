@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.External.Blake2B;
-using Republic.Magic.External.Sodium;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.External.Blake2B;
+using CRepublic.Magic.External.Sodium;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
 using System;
-using Republic.Magic.Packets.Cryptography;
+using CRepublic.Magic.Packets.Cryptography;
 
-namespace Republic.Magic.Packets.Messages.Server.Authentication
+namespace CRepublic.Magic.Packets.Messages.Server.Authentication
 {
     internal class Authentication_OK : Message
     {

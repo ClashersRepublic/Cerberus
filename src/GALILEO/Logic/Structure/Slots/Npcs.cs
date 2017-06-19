@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic.Structure.Slots.Items;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
 
-namespace Republic.Magic.Logic.Structure.Slots
+namespace CRepublic.Magic.Logic.Structure.Slots
 {
     internal class Npcs : List<Npc>
     {

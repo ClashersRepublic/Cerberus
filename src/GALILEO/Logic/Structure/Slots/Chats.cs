@@ -1,12 +1,12 @@
-﻿using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions.List;
-using Republic.Magic.Logic.Structure.Slots.Items;
-using Republic.Magic.Packets.Messages.Server.Clans;
+﻿using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
+using CRepublic.Magic.Packets.Messages.Server.Clans;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace Republic.Magic.Logic.Structure.Slots
+namespace CRepublic.Magic.Logic.Structure.Slots
 {
     internal class Chats
     {

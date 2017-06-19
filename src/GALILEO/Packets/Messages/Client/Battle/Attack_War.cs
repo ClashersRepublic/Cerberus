@@ -1,11 +1,11 @@
 ﻿using System;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Enums;
-using Republic.Magic.Packets.Messages.Server.Battle;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Packets.Messages.Server.Battle;
 
-namespace Republic.Magic.Packets.Messages.Client.Battle
+namespace CRepublic.Magic.Packets.Messages.Client.Battle
 {
     internal class Attack_War : Message
     {

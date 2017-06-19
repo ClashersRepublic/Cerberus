@@ -1,8 +1,8 @@
-﻿using Republic.Magic.Files.CSV_Helpers;
-using Republic.Magic.Files.CSV_Reader;
-using Republic.Magic.Logic.Enums;
+﻿using CRepublic.Magic.Files.CSV_Helpers;
+using CRepublic.Magic.Files.CSV_Reader;
+using CRepublic.Magic.Logic.Enums;
 
-namespace Republic.Magic.Files.CSV_Logic
+namespace CRepublic.Magic.Files.CSV_Logic
 {
     internal class Characters : Combat_Item
     {

@@ -1,4 +1,4 @@
-﻿namespace Republic.Magic.External.TweetNaCl
+﻿namespace CRepublic.Magic.External.TweetNaCl
 {
     public class hsalsa20
     {

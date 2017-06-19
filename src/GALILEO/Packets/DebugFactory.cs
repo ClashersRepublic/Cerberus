@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Republic.Magic.Packets.Debugs;
+using CRepublic.Magic.Packets.Debugs;
 
-namespace Republic.Magic.Packets
+namespace CRepublic.Magic.Packets
 {
     internal class DebugFactory
     {

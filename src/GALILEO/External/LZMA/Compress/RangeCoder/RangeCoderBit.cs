@@ -1,6 +1,6 @@
 using System;
 
-namespace Republic.Magic.External.LZMA.Compress.RangeCoder
+namespace CRepublic.Magic.External.LZMA.Compress.RangeCoder
 {
     internal struct BitEncoder
     {

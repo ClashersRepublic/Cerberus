@@ -1,7 +1,7 @@
-﻿using Republic.Magic.Logic.Enums;
-using Republic.Magic.Logic.Structure;
+﻿using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure;
 
-namespace Republic.Magic.Extensions
+namespace CRepublic.Magic.Extensions
 {
     internal class Constants
     {

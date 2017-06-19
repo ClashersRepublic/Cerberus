@@ -1,6 +1,6 @@
-﻿using Republic.Magic.Core;
+﻿using CRepublic.Magic.Core;
 
-namespace Republic.Magic.Logic.Structure.Slots.Items
+namespace CRepublic.Magic.Logic.Structure.Slots.Items
 {
     internal class List_Devices
     {

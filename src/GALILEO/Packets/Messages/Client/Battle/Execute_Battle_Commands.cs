@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Republic.Magic.Core;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Messages.Client.Battle
+namespace CRepublic.Magic.Packets.Messages.Client.Battle
 {
     internal class Execute_Battle_Commands : Message
     {

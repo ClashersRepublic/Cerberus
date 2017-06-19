@@ -4,11 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Extensions;
+using CRepublic.Magic.Extensions;
 using SharpRaven;
 using SharpRaven.Data;
 
-namespace Republic.Magic.Core
+namespace CRepublic.Magic.Core
 {
     internal class Exceptions
     {

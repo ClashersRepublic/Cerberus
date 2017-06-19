@@ -1,9 +1,9 @@
-﻿using Republic.Magic.Extensions;
-using Republic.Magic.Logic.Enums;
+﻿using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic.Enums;
 using System;
 using System.Runtime.InteropServices;
 
-namespace Republic.Magic.Core.Events
+namespace CRepublic.Magic.Core.Events
 {
     internal class EventsHandler
     {

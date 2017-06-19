@@ -1,10 +1,10 @@
-﻿using Republic.Magic.Core;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
-using Republic.Magic.Logic.Structure.Slots.Items;
+﻿using CRepublic.Magic.Core;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
 
-namespace Republic.Magic.Packets.Messages.Client.Clans
+namespace CRepublic.Magic.Packets.Messages.Client.Clans
 {
     internal class Add_Alliance_Message : Message
     {

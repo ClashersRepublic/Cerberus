@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Republic.Magic.Extensions;
-using Republic.Magic.Files;
-using Republic.Magic.Files.CSV_Logic;
-using Republic.Magic.Logic.Structure;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Files.CSV_Logic;
+using CRepublic.Magic.Logic.Structure;
 using Newtonsoft.Json.Linq;
-using Resource = Republic.Magic.Logic.Enums.Resource;
+using Resource = CRepublic.Magic.Logic.Enums.Resource;
 
-namespace Republic.Magic.Logic.Components
+namespace CRepublic.Magic.Logic.Components
 {
     internal class Unit_Upgrade_Component : Component
     {

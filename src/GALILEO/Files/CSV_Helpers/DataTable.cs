@@ -1,8 +1,8 @@
-﻿using Republic.Magic.Files.CSV_Reader;
+﻿using CRepublic.Magic.Files.CSV_Reader;
 using System.Collections.Generic;
-using Republic.Magic.Files.CSV_Logic;
+using CRepublic.Magic.Files.CSV_Logic;
 
-namespace Republic.Magic.Files.CSV_Helpers
+namespace CRepublic.Magic.Files.CSV_Helpers
 {
     internal class DataTable
     {

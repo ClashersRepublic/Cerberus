@@ -1,6 +1,6 @@
-﻿using Republic.Magic.Logic;
+﻿using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Messages.Server
+namespace CRepublic.Magic.Packets.Messages.Server
 {
     internal class Keep_Alive_OK : Message
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Republic.Magic.Logic;
+using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Core
+namespace CRepublic.Magic.Core
 {
     internal class Devices : Dictionary<IntPtr, Device>
     {

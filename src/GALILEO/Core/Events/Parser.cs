@@ -3,13 +3,13 @@ using System.Collections;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Republic.Magic.Core.Networking;
-using Republic.Magic.Extensions;
-using Republic.Magic.Logic.Structure;
-using Republic.Magic.Packets.Messages.Server.Errors;
+using CRepublic.Magic.Core.Networking;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic.Structure;
+using CRepublic.Magic.Packets.Messages.Server.Errors;
 using ThreadState = System.Diagnostics.ThreadState;
 
-namespace Republic.Magic.Core.Events
+namespace CRepublic.Magic.Core.Events
 {
     internal class Parser
     {

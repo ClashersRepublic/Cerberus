@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Republic.Magic.Packets.Client.Authentication;
-using Republic.Magic.Packets.Messages.Client;
-using Republic.Magic.Packets.Messages.Client.API;
-using Republic.Magic.Packets.Messages.Client.Authentication;
-using Republic.Magic.Packets.Messages.Client.Battle;
-using Republic.Magic.Packets.Messages.Client.Clans;
-using Republic.Magic.Packets.Messages.Client.Clans.War;
-using Republic.Magic.Packets.Messages.Client.Leaderboard;
+using CRepublic.Magic.Packets.Client.Authentication;
+using CRepublic.Magic.Packets.Messages.Client;
+using CRepublic.Magic.Packets.Messages.Client.API;
+using CRepublic.Magic.Packets.Messages.Client.Authentication;
+using CRepublic.Magic.Packets.Messages.Client.Battle;
+using CRepublic.Magic.Packets.Messages.Client.Clans;
+using CRepublic.Magic.Packets.Messages.Client.Clans.War;
+using CRepublic.Magic.Packets.Messages.Client.Leaderboard;
 
-namespace Republic.Magic.Packets
+namespace CRepublic.Magic.Packets
 {
     internal class MessageFactory
     {

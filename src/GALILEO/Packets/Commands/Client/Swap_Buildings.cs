@@ -1,7 +1,7 @@
-﻿using Republic.Magic.Extensions.Binary;
-using Republic.Magic.Logic;
+﻿using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Commands.Client
+namespace CRepublic.Magic.Packets.Commands.Client
 {
     internal class Swap_Buildings : Command
     {

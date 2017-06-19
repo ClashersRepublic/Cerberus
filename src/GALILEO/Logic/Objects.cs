@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Republic.Magic.Extensions;
-using Republic.Magic.Extensions.List;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Extensions.List;
 
-namespace Republic.Magic.Logic
+namespace CRepublic.Magic.Logic
 {
     internal class Objects : IDisposable
     {

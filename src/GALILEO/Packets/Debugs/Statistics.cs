@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Republic.Magic.Core;
-using Republic.Magic.Extensions;
-using Republic.Magic.Logic;
+using CRepublic.Magic.Core;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic;
 
-namespace Republic.Magic.Packets.Debugs
+namespace CRepublic.Magic.Packets.Debugs
 {
     internal class Statistics : Debug
     {
