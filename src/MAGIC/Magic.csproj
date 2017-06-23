@@ -127,7 +127,7 @@
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NLog.5.0.0-beta08\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\..\packages\NLog.5.0.0-beta09\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="NLog.StructuredEvents, Version=0.4.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.StructuredEvents.0.4.0\lib\net35\NLog.StructuredEvents.dll</HintPath>
@@ -302,6 +302,7 @@
     <Compile Include="Files\Fingerprint.cs" />
     <Compile Include="Files\Home.cs" />
     <Compile Include="Files\NPC.cs" />
+    <Compile Include="Logic\Enums\Mode.cs" />
     <Compile Include="Logic\Structure\Slots\Battle_V2.cs" />
     <Compile Include="Logic\Structure\Slots\Items\Battle_V2.cs" />
     <Compile Include="Logic\Battle.cs" />
@@ -387,6 +388,7 @@
     <Compile Include="Logic\Structure\Slots\Items\Village_2.cs" />
     <Compile Include="Logic\Structure\Slots\Members.cs" />
     <Compile Include="Logic\Structure\Slots\Npcs.cs" />
+    <Compile Include="Logic\Structure\Slots\Modes.cs" />
     <Compile Include="Logic\Structure\Slots\Variables.cs" />
     <Compile Include="Logic\Structure\Slots\Resources.cs" />
     <Compile Include="Logic\Structure\Slots\Slots.cs" />
@@ -454,6 +456,7 @@
     <Compile Include="Packets\Debug.cs" />
     <Compile Include="Packets\DebugFactory.cs" />
     <Compile Include="Packets\Debugs\Kick_Player.cs" />
+    <Compile Include="Packets\Debugs\Set_Mode.cs" />
     <Compile Include="Packets\Debugs\Max_Village.cs" />
     <Compile Include="Packets\Debugs\Resource_Update.cs" />
     <Compile Include="Packets\Debugs\Set_Rank.cs" />
@@ -1029,7 +1032,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\API\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>RMDIR /S /Q "$(TargetDir)Library\"

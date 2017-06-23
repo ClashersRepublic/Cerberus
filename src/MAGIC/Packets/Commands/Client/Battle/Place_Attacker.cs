@@ -6,7 +6,9 @@ using CRepublic.Magic.Extensions.Binary;
 using CRepublic.Magic.Files;
 using CRepublic.Magic.Files.CSV_Logic;
 using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Components;
 using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure;
 using CRepublic.Magic.Logic.Structure.Slots.Items;
 
 namespace CRepublic.Magic.Packets.Commands.Client.Battle
@@ -67,56 +69,56 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
 
                     Battle.Attacker.Add_Unit(GlobalId, 1);
 
-                }
-                else
-                {
-                    var Battle = Resources.Battles_V2.GetPlayer(this.Device.Player.Avatar.Battle_ID_V2, this.Device.Player.Avatar.UserId);
+                    List<Slot> _PlayerUnits = this.Device.Player.Avatar.Units;
 
-                    Battle_Command Command =
-                        new Battle_Command
-                        {
-                            Command_Type = this.Identifier,
-                            Command_Base =
-                                new Command_Base
-                                {
-                                    Base = new Base {Tick = this.Tick},
-                                    Data = this.GlobalId,
-                                    X = this.X,
-                                    Y = this.Y
-                                }
-                        };
-                    int Index = Battle.Replay_Info.Units.FindIndex(T => T[0] == this.GlobalId);
-                    if (Index > -1)
-                        Battle.Replay_Info.Units[Index][1]++;
-                    else
-                        Battle.Replay_Info.Units.Add(new[] { this.GlobalId, 1 });
-                    Battle.Add_Command(Command);
-                }
-            }
-
-            List<Slot> _PlayerUnits = this.Device.Player.Avatar.Units;
-
-            Slot _DataSlot = _PlayerUnits.Find(t => t.Data == GlobalId);
-            if (_DataSlot != null)
-            {
-                _DataSlot.Count -= 1;
-            }
-
-
-            /*            List<Component> components = level.GetComponentManager().GetComponents(0);
-            for (int i = 0; i < components.Count; i++)
-            {
-                UnitStorageComponent c = (UnitStorageComponent)components[i];
-                if (c.GetUnitTypeIndex(Unit) != -1)
-                {
-                    var storageCount = c.GetUnitCountByData(Unit);
-                    if (storageCount >= 1)
+                    Slot _DataSlot = _PlayerUnits.Find(t => t.Data == GlobalId);
+                    if (_DataSlot != null)
                     {
-                        c.RemoveUnits(Unit, 1);
-                        break;
+                        _DataSlot.Count -= 1;
                     }
                 }
-            }*/
+            }
+            else if (this.Device.State == State.IN_1VS1_BATTLE)
+            {
+                var Battle = Resources.Battles_V2.GetPlayer(this.Device.Player.Avatar.Battle_ID_V2,
+                    this.Device.Player.Avatar.UserId);
+
+                Battle_Command Command =
+                    new Battle_Command
+                    {
+                        Command_Type = this.Identifier,
+                        Command_Base =
+                            new Command_Base
+                            {
+                                Base = new Base {Tick = this.Tick},
+                                Data = this.GlobalId,
+                                X = this.X,
+                                Y = this.Y
+                            }
+                    };
+                int Index = Battle.Replay_Info.Units.FindIndex(T => T[0] == this.GlobalId);
+                if (Index > -1)
+                    Battle.Replay_Info.Units[Index][1]++;
+                else
+                    Battle.Replay_Info.Units.Add(new[] {this.GlobalId, 1});
+                Battle.Add_Command(Command);
+
+                List<Component> components = this.Device.Player.GetComponentManager.GetComponents(11);
+
+                foreach (Component t in components)
+                {
+                    Unit_Storage_V2_Componenent c = (Unit_Storage_V2_Componenent) t;
+                    if (c.GetUnitTypeIndex(this.Troop) != -1)
+                    {
+                        var storageCount = c.GetUnitCountByData(this.Troop);
+                        if (storageCount >= 1)
+                        {
+                            c.RemoveUnits(this.Troop, 1);
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 }

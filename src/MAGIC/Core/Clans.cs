@@ -281,7 +281,7 @@ namespace CRepublic.Magic.Core
                         {
                             Database.Configuration.AutoDetectChangesEnabled = false;
                             Database.Configuration.ValidateOnSaveEnabled = false;
-                            foreach (var Clan in this.Values)
+                            foreach (var Clan in this.Values.ToList())
                             {
                                 lock (Clan)
                                 {
@@ -303,7 +303,7 @@ namespace CRepublic.Magic.Core
 
                     case DBMS.Redis:
                     {
-                        foreach (var Clan in this.Values)
+                        foreach (var Clan in this.Values.ToList())
                         {
                             await Redis.Clans.StringSetAsync(Clan.Clan_ID.ToString(),
                                 JsonConvert.SerializeObject(Clan, this.Settings), TimeSpan.FromHours(4));

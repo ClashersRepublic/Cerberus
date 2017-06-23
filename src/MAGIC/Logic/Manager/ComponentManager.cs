@@ -14,7 +14,7 @@ namespace CRepublic.Magic.Logic.Manager
         public ComponentManager(Level l)
         {
             this.Components = new List<List<Component>>();
-            for (var i = 0; i <= 10; i++)
+            for (var i = 0; i <= 11; i++)
                 this.Components.Add(new List<Component>());
             this.Level = l;
         }
@@ -109,6 +109,15 @@ namespace CRepublic.Magic.Logic.Manager
                     }
             return result;
         }
+        public int GetTotalMaxHousingV2()
+        {
+            var result = 0;
+            var components = this.Components[11];
+            if (components.Count >= 1)
+                foreach (var c in components)
+                result += ((Unit_Storage_V2_Componenent) c).MaxCapacity;
+            return result;
+        }
 
         public int GetTotalMaxHousing(bool IsSpellForge = false)
         {
@@ -118,6 +127,15 @@ namespace CRepublic.Magic.Logic.Manager
             //    foreach (var c in components)
                   //  if (((UnitStorageComponent) c).IsSpellForge == IsSpellForge)
                     //    result += ((UnitStorageComponent) c).GetMaxCapacity();
+            return result;
+        }
+        public int GetTotalUsedHousingV2()
+        {
+            var result = 0;
+            var components = this.Components[11];
+            if (components.Count >= 1)
+              foreach (var c in components)
+                result += ((Unit_Storage_V2_Componenent) c).GetUsedCapacity();
             return result;
         }
 

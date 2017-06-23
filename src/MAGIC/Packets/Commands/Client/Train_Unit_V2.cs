@@ -3,7 +3,9 @@ using CRepublic.Magic.Extensions.Binary;
 using CRepublic.Magic.Files;
 using CRepublic.Magic.Files.CSV_Logic;
 using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Components;
 using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure;
 
 namespace CRepublic.Magic.Packets.Commands.Client
 {
@@ -28,6 +30,11 @@ namespace CRepublic.Magic.Packets.Commands.Client
 
         internal override void Process()
         {
+            var go = this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(this.BuildingID);
+
+            Builder_Building b = (Builder_Building)go;
+            Unit_Storage_V2_Componenent c = b.GetUnitStorageV2Component();
+            c.AddUnit(this.Unit);
         }
     }
 }

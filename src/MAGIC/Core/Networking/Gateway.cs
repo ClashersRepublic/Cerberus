@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using CRepublic.Magic.Packets;
 using CRepublic.Magic.Extensions;
@@ -30,16 +31,10 @@ namespace CRepublic.Magic.Core.Networking
 
             this.Initialize();
 
-            this.Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
-            {
-                ReceiveBufferSize = Constants.ReceiveBuffer,
-                SendBufferSize = Constants.SendBuffer,
-                Blocking = false,
-                NoDelay = true
-            };
+            this.Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);    
 
             this.Listener.Bind(new IPEndPoint(IPAddress.Any, 9339));
-            this.Listener.Listen(200);
+            this.Listener.Listen(100);
 
             Program.Stopwatch.Stop();
 
@@ -208,7 +203,7 @@ namespace CRepublic.Magic.Core.Networking
         }
 
         internal void Disconnect(SocketAsyncEventArgs AsyncEvent)
-        {
+        {Console.WriteLine("Disconnecting player");
             Token Token = (Token) AsyncEvent.UserToken;
             
             if (Token.Device.Player != null)
@@ -218,22 +213,31 @@ namespace CRepublic.Magic.Core.Networking
                     Resources.Players.Remove(Token.Device.Player);
                 }
             }
-            else if (!Token.Device.Connected())
+            else
             {
                 Resources.Devices.Remove(Token.Device);
-                Interlocked.CompareExchange(ref Token.Device.Dropped, 1, 0);
             }
-
+            Interlocked.CompareExchange(ref Token.Device.Dropped, 1, 0);
             Interlocked.Decrement(ref ConnectedSockets);
         }
 
         internal void Send(Message Message)
         {
             SocketAsyncEventArgs WriteEvent = this.GetWriteEvent();
-
             if (WriteEvent != null)
             {
-                WriteEvent.SetBuffer(Message.ToBytes, Message.Offset, (int)Message.Length + 7 - Message.Offset);
+                var buffer = default(byte[]);
+                try
+                {
+                    buffer = Message.ToBytes;
+                }
+                catch (Exception ex)
+                {
+                    Resources.Exceptions.Catch(ex, $"Exception while constructing message {Message.GetType()}");
+                    return;
+                }
+
+                WriteEvent.SetBuffer(buffer, 0, buffer.Length);
 
                 WriteEvent.AcceptSocket = Message.Device.Socket;
                 WriteEvent.RemoteEndPoint = Message.Device.Socket.RemoteEndPoint;
@@ -251,7 +255,7 @@ namespace CRepublic.Magic.Core.Networking
         {
             var client = (Token)AsyncEvent.UserToken;
             var socket = client.Device.Socket;
-
+            
             if (Thread.VolatileRead(ref client.Device.Dropped) == 1)
             {
                 this.Recycle(AsyncEvent, false);
@@ -274,7 +278,7 @@ namespace CRepublic.Magic.Core.Networking
                 }
                 catch (Exception ex)
                 {
-                    Resources.Exceptions.Catch(ex, "Exception while starting receive");
+                    Resources.Exceptions.Catch(ex, "Exception while starting send");
                 }
             }
         }
@@ -359,7 +363,6 @@ namespace CRepublic.Magic.Core.Networking
             if (read)
                 this.ReadPool.Enqueue(AsyncEvent);
             else
-
                 this.WritePool.Enqueue(AsyncEvent);
             this.Recycle(buffer);
         }

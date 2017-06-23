@@ -1,16 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using CRepublic.Magic.Files;
 using CRepublic.Magic.Files.CSV_Helpers;
 using CRepublic.Magic.Files.CSV_Logic;
-using CRepublic.Magic.Logic;
 using CRepublic.Magic.Logic.Enums;
-using CRepublic.Magic.Logic.Manager;
 using CRepublic.Magic.Logic.Structure;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using CRepublic.Magic.Extensions;
 
 namespace CRepublic.Magic.Logic.Manager
 {
@@ -30,11 +25,11 @@ namespace CRepublic.Magic.Logic.Manager
             this.ComponentManager     = new ComponentManager(this.Level);
 		}
 
-        readonly ComponentManager ComponentManager;
-        readonly List<GameObject> GameObjectRemoveList;
-        readonly List<List<GameObject>> GameObjects;
-        readonly List<int> GameObjectsIndex;
-        readonly Level Level;
+        internal ComponentManager ComponentManager;
+        internal List<GameObject> GameObjectRemoveList;
+        internal List<List<GameObject>> GameObjects;
+        internal List<int> GameObjectsIndex;
+        internal Level Level;
 
 		public void AddGameObject(GameObject go)
         {
@@ -56,7 +51,7 @@ namespace CRepublic.Magic.Logic.Manager
                 {
                     var b = (Builder_Building)go;
                     var bd = b.GetBuildingData;
-                    if (bd.IsWorkerBuilding())
+                    if (bd.IsWorker2Building())
                         this.Level.BuilderVillageWorkerManager.IncreaseWorkerCount();
                 }
             }
@@ -252,10 +247,10 @@ namespace CRepublic.Magic.Logic.Manager
                     {"vobjs2", JObject2},
                     {"offer", new JObject() },
                     {"troop_req_msg", "Sup" },
-                    {"last_league_rank", 0 },
+                    {"last_league_rank", 12 },
                     {"last_alliance_level", 1 },
                     {"last_league_shuffle", 0 },
-                    {"last_season_seen", 0 },
+                    {"last_season_seen", 12 },
                     {"last_news_seen", 999999999 },
                     {"war_tutorials_seen", 0 },
                     {"war_base", true },
@@ -385,7 +380,7 @@ namespace CRepublic.Magic.Logic.Manager
             {
                 var b = (Builder_Building)go;
                 var bd = b.GetBuildingData;
-                if (bd.IsWorkerBuilding())
+                if (bd.IsWorker2Building())
                 {
                     this.Level.BuilderVillageWorkerManager.DecreaseWorkerCount();
                 }
@@ -440,7 +435,7 @@ namespace CRepublic.Magic.Logic.Manager
             {
                 var b = (Builder_Building)go;
                 var bd = b.GetBuildingData;
-                if (bd.IsWorkerBuilding())
+                if (bd.IsWorker2Building())
                     this.Level.BuilderVillageWorkerManager.DecreaseWorkerCount();
             }
             RemoveGameObjectReferences(go);

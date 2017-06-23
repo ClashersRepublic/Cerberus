@@ -16,9 +16,18 @@ namespace CRepublic.Magic.Packets.Messages.Server.Battle
 
         internal override void Encode()
         {
-            var Battle = Core.Resources.Battles.Get(this.Battle_ID, Constants.Database, false);
-            if (Battle != null)
-                this.Data.AddCompressed(Battle.Json, false);
+            if (this.Device.Player.Avatar.Variables.IsBuilderVillage)
+            {
+                var Battle = Core.Resources.Battles.Get(this.Battle_ID, Constants.Database, false);
+                if (Battle != null)
+                    this.Data.AddCompressed(Battle.Json, false);
+            }
+            else
+            {
+                var Battle = Core.Resources.Battles_V2.GetPlayer(this.Device.Player.Avatar.Battle_ID_V2, this.Device.Player.Avatar.UserId);
+                if (Battle != null)
+                    this.Data.AddCompressed(Battle.Json, false);
+            }
         }
     }
 }

@@ -40,7 +40,11 @@ namespace CRepublic.Magic.Extensions.List
         {
             _Packet.AddRange(BitConverter.GetBytes(_Value).Reverse());
         }
-        
+        public static void AddLongEndian(this List<byte> _Packet, long _Value)
+        {
+            _Packet.AddRange(BitConverter.GetBytes(_Value));
+        }
+
         public static void AddLong(this List<byte> _Packet, long _Value, int _Skip)
         {
             _Packet.AddRange(BitConverter.GetBytes(_Value).Reverse().Skip(_Skip));
@@ -64,8 +68,40 @@ namespace CRepublic.Magic.Extensions.List
                 _Packet.AddInt(_Buffer.Length);
                 _Packet.AddRange(_Buffer);
             }
+        } 
+
+        public static void AddVInt(this List<byte> _Packet, int _Value)
+        {
+            if (_Value > 63)
+            {
+                _Packet.Add((byte)(_Value & 0x3F | 0x80));
+
+                if (_Value > 8191)
+                {
+                    _Packet.Add((byte)(_Value >> 6 | 0x80));
+
+                    if (_Value > 1048575)
+                    {
+                        _Packet.Add((byte)(_Value >> 13 | 0x80));
+
+                        if (_Value > 134217727)
+                        {
+                            _Packet.Add((byte)(_Value >> 20 | 0x80));
+                            _Value >>= 27 & 0x7F;
+                        }
+                        else
+                            _Value >>= 20 & 0x7F;
+                    }
+                    else
+                        _Value >>= 13 & 0x7F;
+
+                }
+                else
+                    _Value >>= 6 & 0x7F;
+            }
+            _Packet.Add((byte)_Value);
         }
-        
+
         public static void AddUShort(this List<byte> _Packet, ushort _Value)
         {
             _Packet.AddRange(BitConverter.GetBytes(_Value).Reverse());

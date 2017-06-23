@@ -1,7 +1,6 @@
 ﻿using CRepublic.Magic.Extensions.Binary;
 using CRepublic.Magic.Logic;
 using CRepublic.Magic.Logic.Components;
-using CRepublic.Magic.Logic.Structure;
 namespace CRepublic.Magic.Packets.Commands.Client
 {
     internal class Gear_Up : Command
@@ -21,13 +20,18 @@ namespace CRepublic.Magic.Packets.Commands.Client
 
         internal override void Process()
         {
-            var go = this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(this.Building_ID)  : this.Device.Player.GameObjectManager.GetGameObjectByID(this.Building_ID);
+            var go = this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(this.Building_ID) : this.Device.Player.GameObjectManager.GetGameObjectByID(this.Building_ID);
 
             if (go?.GetComponent(1, true) == null)
                 return;
 
             var a = ((Combat_Component) go.GetComponent(1, false));
             a.GearUp = 1;
+            if (a.AltAttackMode)
+            {
+                a.AttackMode = true;
+                a.AttackModeDraft = true;
+            }
         }
     }
 }

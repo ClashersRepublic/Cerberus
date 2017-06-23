@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CRepublic.Magic.Logic.Structure.Slots
+﻿namespace CRepublic.Magic.Logic.Structure.Slots
 {
     internal class Battle_V2
     {
@@ -33,6 +27,27 @@ namespace CRepublic.Magic.Logic.Structure.Slots
             this.Battle1 = new Items.Battle_V2(_Player1, _Player2);
             this.Battle2 = new Items.Battle_V2(_Player2, _Player1);
 
+        }
+
+        internal Level GetPlayer(long UserID)
+        {
+            return this.Battle1.Attacker.UserId == UserID ? this.Player1 : this.Player2;
+        }
+
+        internal Level GetEnemy(long UserID)
+        {
+            return this.Battle1.Attacker.UserId != UserID ? this.Player1 : this.Player2;
+        }
+
+        internal Items.Battle_V2 GetPlayerBattle(long UserID)
+        {
+            return this.Battle1.Attacker.UserId == UserID ? this.Battle1 : this.Battle2;
+        }
+
+        internal Items.Battle_V2 GetEnemyBattle(long UserID)
+        {
+
+            return this.Battle2.Attacker.UserId != UserID ? this.Battle2 : this.Battle1;
         }
     }
 }

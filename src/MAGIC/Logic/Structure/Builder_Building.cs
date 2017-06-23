@@ -22,9 +22,9 @@ namespace CRepublic.Magic.Logic.Structure
             {
                 AddComponent(new Unit_Production_Component(this));
             }
-            //if (GetBuildingData.HousingSpace[0] > 0)
+            if (GetBuildingData.Village2Housing > 0)
             {
-                //AddComponent(new UnitStorageComponent(this, 0));
+                AddComponent(new Unit_Storage_V2_Componenent(this, 0));
             }
             if (GetBuildingData.BuildingClass == "Defense" || GetBuildingData.BuildingClass == "Wall")
             {

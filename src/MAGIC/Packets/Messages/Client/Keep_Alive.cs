@@ -1,7 +1,7 @@
-﻿using CRepublic.Magic.Logic;
+﻿using System;
+using CRepublic.Magic.Logic;
 using CRepublic.Magic.Core.Networking;
 using CRepublic.Magic.Extensions.Binary;
-using CRepublic.Magic.Packets.Messages.Server;
 
 namespace CRepublic.Magic.Packets.Messages.Client
 {
@@ -14,7 +14,9 @@ namespace CRepublic.Magic.Packets.Messages.Client
 
         internal override void Process()
         {
-            new Keep_Alive_OK(this.Device).Send();
+            this.Device.LastKeepAlive = DateTime.Now;
+            this.Device.NextKeepAlive = this.Device.LastKeepAlive.AddSeconds(30);
+            this.Device.KeepAlive.Send();
         }
     }
 }

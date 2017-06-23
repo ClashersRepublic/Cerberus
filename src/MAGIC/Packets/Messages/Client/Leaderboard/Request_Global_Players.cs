@@ -12,7 +12,14 @@ namespace CRepublic.Magic.Packets.Messages.Client.Leaderboard
         }
         internal override void Process()
         {
-            //new Global_Players(this.Device).Send();
+            if (this.Device.Player.Avatar.Variables.IsBuilderVillage)
+            {
+                
+            }
+            else
+            {
+                new Global_Players(this.Device).Send();
+            }
         }
     }
 }

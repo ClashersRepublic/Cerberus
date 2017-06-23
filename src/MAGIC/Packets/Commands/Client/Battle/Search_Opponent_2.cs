@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CRepublic.Magic.Core.Networking;
+﻿using CRepublic.Magic.Core.Networking;
 using CRepublic.Magic.Extensions.Binary;
 using CRepublic.Magic.Logic;
 using CRepublic.Magic.Logic.Enums;
@@ -26,12 +21,9 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
                 Resources.Battles_V2.Enqueue(this.Device.Player);
 
                 this.Device.State = State.SEARCH_BATTLE;
-                Console.WriteLine("Waiting for opponent");
             }
             else
-            {
-
-                Console.WriteLine("Starting battle");
+            {        
                 Level Enemy = Resources.Battles_V2.Dequeue();
 
                 Enemy.Avatar.Battle_ID_V2 = Resources.Battles_V2.Seed;
@@ -40,10 +32,13 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
                 Battle_V2 Battle = new Battle_V2(this.Device.Player, Enemy);
                 Resources.Battles_V2.Add(Resources.Battles_V2.Seed++, Battle);
                 
+                
+                new Pc_Battle_Data_V2(this.Device, Enemy).Send();
 
                 new V2_Battle_Info(this.Device, Enemy).Send();
+
+                new Pc_Battle_Data_V2(Enemy.Client, this.Device.Player).Send();
                 new V2_Battle_Info(Enemy.Client, this.Device.Player).Send();
-                new Pc_Battle_Data_V2(this.Device, Enemy).Send();
                 new Pc_Battle_Data_V2(Enemy.Client, this.Device.Player).Send();
             }
         }

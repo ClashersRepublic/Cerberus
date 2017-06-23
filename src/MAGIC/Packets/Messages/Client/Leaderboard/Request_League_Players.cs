@@ -17,7 +17,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Leaderboard
 
         internal override void Process()
         {
-            //new League_Players(this.Device).Send();
+            new League_Players(this.Device).Send();
         }
     }
 }

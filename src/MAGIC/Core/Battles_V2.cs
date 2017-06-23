@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CRepublic.Magic.Logic;
 using CRepublic.Magic.Logic.Structure.Slots;
 
@@ -18,6 +15,7 @@ namespace CRepublic.Magic.Core
         {
             this.Waiting = new List<Level>();
         }
+
         public new void Remove(long BattleID)
         {
             if (this.ContainsKey(BattleID))
@@ -54,11 +52,11 @@ namespace CRepublic.Magic.Core
             return _Player;
         }
 
-        public Level GetEnemy(long BattleID, long UserID)
+        public Logic.Structure.Slots.Items.Battle_V2 GetEnemy(long BattleID, long UserID)
         {
             if (this.ContainsKey(BattleID))
             {
-                return this[BattleID].Player1.Avatar.UserId == UserID ? this[BattleID].Player2 : this[BattleID].Player1;
+                return this[BattleID].Player1.Avatar.UserId != UserID ? this[BattleID].Battle1 : this[BattleID].Battle2;
             }
             return null;
         }

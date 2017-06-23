@@ -9,7 +9,6 @@ using CRepublic.Magic.Files.CSV_Logic;
 using CRepublic.Magic.Logic.Enums;
 using CRepublic.Magic.Logic.Structure.Slots;
 using CRepublic.Magic.Logic.Structure.Slots.Items;
-using CRepublic.Magic.Packets;
 using CRepublic.Magic.Packets.Messages.Server.Errors;
 using Newtonsoft.Json;
 using Npcs = CRepublic.Magic.Logic.Structure.Slots.Npcs;
@@ -141,7 +140,7 @@ namespace CRepublic.Magic.Logic
         [JsonProperty("resources_cap")] internal Resources Resources_Cap;
         [JsonProperty("npcs")] internal Npcs Npcs;
         [JsonProperty("variable")] internal Structure.Slots.Variables Variables;
-
+        [JsonProperty("debug_mode")] internal Modes Modes;
 
         [JsonProperty("login_count")] internal int Login_Count;
 
@@ -173,6 +172,7 @@ namespace CRepublic.Magic.Logic
             this.Resources_Cap = new Resources(this);
             this.Npcs = new Npcs();
             this.Variables = new Structure.Slots.Variables(this);
+            this.Modes = new Modes(this);
 
             this.Units = new Units(this);
             this.Units2 = new Units(this);
@@ -203,6 +203,7 @@ namespace CRepublic.Magic.Logic
             this.Resources_Cap = new Resources(this, false);
             this.Npcs = new Npcs();
             this.Variables = new Structure.Slots.Variables(this, true);
+            this.Modes = new Modes(this, true);
 
             this.Units = new Units(this);
             this.Units2 = new Units(this);
@@ -414,17 +415,51 @@ namespace CRepublic.Magic.Logic
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
-                _Packet.AddInt(1);
-                _Packet.AddInt(4000037);
-                _Packet.AddInt(8);
+                _Packet.AddDataSlots(this.Units2);
                 _Packet.AddInt(0);
                 return _Packet.ToArray();
             }
         }
 
-        public static int GetDataIndex(List<Slot> dsl, Data d) => dsl.FindIndex(ds => ds.Data == d.Id);
+        internal static int GetDataIndex(List<Slot> dsl, Data d) => dsl.FindIndex(ds => ds.Data == d.Id);
 
-        public static int GetDataIndex(Units dsl, Data d) => dsl.FindIndex(ds => ds.Data == d.Id);
+        internal static int GetDataIndex(Units dsl, Data d) => dsl.FindIndex(ds => ds.Data == d.Id);
+
+        internal int Get_Unit_Count_V2(Combat_Item cd)
+        {
+            var result = 0;
+            var index = GetDataIndex(this.Units2, cd);
+            if (index != -1)
+                result = this.Units2[index].Count;
+            return result;
+        }
+
+        internal void Set_Unit_Count_V2(Combat_Item cd, int count)
+        {
+
+            var index = GetDataIndex(this.Units2, cd);
+            if (index != -1)
+                this.Units2[index].Count = count;
+            else
+            {
+                var ds = new Slot(cd.GetGlobalID(), count);
+                this.Units2.Add(ds);
+            }
+        }
+
+        internal void Add_Unit2(int Data, int Count)
+        {
+            int _Index = this.Units2.FindIndex(U => U.Data == Data);
+
+            if (_Index > -1)
+            {
+                this.Units2[_Index].Count += Count;
+            }
+            else
+            {
+                this.Units2.Add(new Slot(Data, Count));
+            }
+        }
 
         internal void Add_Unit(int Data, int Count)
         {
@@ -598,6 +633,7 @@ namespace CRepublic.Magic.Logic
         public bool HasEnoughResources(Resource resource, int buildCost) => this.Resources.Get(resource) >= buildCost;
 
         public bool HasEnoughResources(int globalId, int buildCost) => this.Resources.Get(globalId) >= buildCost;
+
         internal Player Clone()
         {
             return this.MemberwiseClone() as Player;

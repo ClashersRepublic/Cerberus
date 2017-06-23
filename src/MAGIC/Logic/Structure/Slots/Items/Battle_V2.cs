@@ -15,6 +15,7 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
             Formatting = Formatting.None,
         };
 
+        internal bool Finished;
         internal double Last_Tick;
 
         internal double Preparation_Time = 60;
@@ -24,20 +25,22 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
         {
             get
             {
-                if (this.Preparation_Time > 0) return this.Preparation_Time;
-                return this.Attack_Time;
+                if (this.Preparation_Time > 0 && this.Commands.Count < 1)
+                    return this.Preparation_Time + Attack_Time;
+
+                    return this.Attack_Time;
             }
             set
             {
                 if (this.Preparation_Time >= 1 && this.Commands.Count < 1)
                 {
                     this.Preparation_Time -= (value - this.Last_Tick) / 63;
-                    Console.WriteLine($"Preparation Time for {this.Attacker.Name} : " + TimeSpan.FromSeconds(this.Preparation_Time).TotalSeconds);
+                    //Console.WriteLine($"Preparation Time for {this.Attacker.Name} : " + TimeSpan.FromSeconds(this.Preparation_Time).TotalSeconds);
                 }
                 else
                 {
                     this.Attack_Time -= (value - this.Last_Tick) / 63;
-                    Console.WriteLine($"Attack Time for {this.Attacker.Name} : " + TimeSpan.FromSeconds(this.Attack_Time).TotalSeconds);
+                    //Console.WriteLine($"Attack Time for {this.Attacker.Name} : " + TimeSpan.FromSeconds(this.Attack_Time).TotalSeconds);
                 }
                 this.Last_Tick = value;
                 this.End_Tick = (int)value;

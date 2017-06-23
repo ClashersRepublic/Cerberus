@@ -5,6 +5,7 @@ using CRepublic.Magic.Files;
 using CRepublic.Magic.Files.CSV_Logic;
 using CRepublic.Magic.Logic;
 using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
 
 namespace CRepublic.Magic.Extensions
 {
@@ -78,6 +79,30 @@ namespace CRepublic.Magic.Extensions
         }
 
         internal static double LoseTrophies(this Battle _Battle)
+        {
+            if (_Battle.Attacker.Trophies >= 1000 && _Battle.Defender.Trophies >= 1000)
+            {
+                return Math.Round(0.0531 * (_Battle.Attacker.Trophies - _Battle.Defender.Trophies) + 19.60453);
+            }
+            return Core.Resources.Random.Next(10, 15);
+
+        }
+
+        internal static double WinTrophies(this Battle_V2 _Battle)
+        {
+            double Difference = (_Battle.Attacker.Trophies - _Battle.Defender.Trophies) < 0
+                ? +(_Battle.Attacker.Trophies - _Battle.Defender.Trophies)
+                : (_Battle.Attacker.Trophies - _Battle.Defender.Trophies);
+            //double Difference = (AttackerTrophies - DefenderTrophies) < 0 ? +(DefenderTrophies - AttackerTrophies) : (AttackerTrophies - DefenderTrophies);
+            if (Difference >= 13 && Difference <= 34)
+            {
+                return Math.Round(-0.0794 * (_Battle.Attacker.Trophies - _Battle.Defender.Trophies) + 29.35838);
+            }
+            return Core.Resources.Random.Next(10, 15);
+
+        }
+
+        internal static double LoseTrophies(this Battle_V2 _Battle)
         {
             if (_Battle.Attacker.Trophies >= 1000 && _Battle.Defender.Trophies >= 1000)
             {

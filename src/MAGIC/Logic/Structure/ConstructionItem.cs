@@ -100,6 +100,16 @@ namespace CRepublic.Magic.Logic.Structure
             return null;
         }
 
+        internal Unit_Storage_V2_Componenent GetUnitStorageV2Component(bool enabled = false)
+        {
+            var comp = GetComponent(11, enabled);
+            if (comp != null && comp.Type != -1)
+            {
+                return (Unit_Storage_V2_Componenent)comp;
+            }
+            return null;
+        }
+
         internal void CancelConstruction()
         {
             if (this.IsConstructing)

@@ -12,6 +12,7 @@ using CRepublic.Magic.Logic.Enums;
 using CRepublic.Magic.Packets;
 using CRepublic.Magic.Packets.Cryptography;
 using CRepublic.Magic.Packets.Cryptography.RC4;
+using CRepublic.Magic.Packets.Messages.Server;
 
 namespace CRepublic.Magic.Logic
 {
@@ -24,6 +25,7 @@ namespace CRepublic.Magic.Logic
         internal IntPtr SocketHandle;
         internal RC4 RC4;
         internal DateTime LastKeepAlive, NextKeepAlive;
+        internal Keep_Alive_OK KeepAlive;
         internal string AndroidID, OpenUDID, Model, OSVersion, MACAddress, AdvertiseID, VendorID, IPAddress;
         internal bool Android, Advertising;
         internal volatile int Dropped;
@@ -43,6 +45,9 @@ namespace CRepublic.Magic.Logic
                 this.RC4 = new RC4();
             }
             this.SocketHandle = so.Handle;
+            this.KeepAlive = new Keep_Alive_OK(this);
+            this.LastKeepAlive = DateTime.Now;
+            this.NextKeepAlive = this.LastKeepAlive.AddSeconds(30);
         }
 
         public Device(Socket so, Token token)
@@ -55,6 +60,9 @@ namespace CRepublic.Magic.Logic
             }
             this.Token = token;
             this.SocketHandle = so.Handle;
+            this.KeepAlive = new Keep_Alive_OK(this);
+            this.LastKeepAlive = DateTime.Now;
+            this.NextKeepAlive = this.LastKeepAlive.AddSeconds(30);
         }
 
         internal State State = State.DISCONNECTED;

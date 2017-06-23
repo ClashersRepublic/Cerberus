@@ -16,7 +16,7 @@ namespace CRepublic.Magic.Logic.Structure
             this.Level = level;
             this.Data = data;
             this.Components = new List<Component>();
-            for (var i = 0; i < 11; i++)
+            for (var i = 0; i < 12; i++)
             {
                 this.Components.Add(new Component());
             }

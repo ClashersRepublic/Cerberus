@@ -15,9 +15,9 @@ namespace CRepublic.Magic
 
         internal static async Task StartAsync()
         {
-            Console.Title = $"Clashers Republic Clash Server - ©Clashers Repbulic";
-            //NativeCalls.SetWindowLong(NativeCalls.GetConsoleWindow(), -20, (int) NativeCalls.GetWindowLong(NativeCalls.GetConsoleWindow(), -20) ^ 0x80000);
-            //NativeCalls.SetLayeredWindowAttributes(NativeCalls.GetConsoleWindow(), 0, 217, 0x2);
+            Console.Title = "Clashers Republic Clash Server - ©Clashers Repbulic";
+            NativeCalls.SetWindowLong(NativeCalls.GetConsoleWindow(), -20, (int) NativeCalls.GetWindowLong(NativeCalls.GetConsoleWindow(), -20) ^ 0x80000);
+            NativeCalls.SetLayeredWindowAttributes(NativeCalls.GetConsoleWindow(), 0, 217, 0x2);
 
             Console.SetOut(new Prefixed());
 
@@ -30,16 +30,16 @@ namespace CRepublic.Magic
             Console.WriteLine(@"                                                                                        Developer Edition  ");
 
 
-            Console.WriteLine(@"Clashers Repbulic's programs are protected by our policies, available on our main website.");
-            Console.WriteLine(@"Clashers Repbulic's programs are under the 'CC Non-Commercial-NoDerivs 3.0 Unported' license.");
+            Console.WriteLine(@"Clashers Repbulic's programs are protected by our policies, available only to our partner.");
+            Console.WriteLine(@"Clashers Repbulic's programs are under the 'Proprietary' license.");
             Console.WriteLine(@"Clashers Repbulic is NOT affiliated to 'Supercell Oy'.");
             Console.WriteLine(@"Clashers Repbulic does NOT own 'Clash of Clans', 'Boom Beach', 'Clash Royale'.");
 
-            Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + System.Environment.NewLine);
+            Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
 
             Resources.Initialize();
 
-            Console.WriteLine(@"-------------------------------------" + System.Environment.NewLine);
+            Console.WriteLine(@"-------------------------------------" + Environment.NewLine);
 
             await Task.Delay(-1);
 

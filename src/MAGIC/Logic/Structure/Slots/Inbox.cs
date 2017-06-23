@@ -32,6 +32,7 @@ namespace CRepublic.Magic.Logic.Structure.Slots
             lock (this.Gate)
             {
                 Message.Message_LowID = Seed++;
+                Message.New = 2;
 
                 if (this.Slots.Count < this.Slots.Capacity)
                 {

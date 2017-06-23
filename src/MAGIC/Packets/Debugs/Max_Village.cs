@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
-using CRepublic.Magic.Core;
 using CRepublic.Magic.Core.Networking;
 using CRepublic.Magic.Files;
 using CRepublic.Magic.Files.CSV_Logic;
@@ -41,6 +37,9 @@ namespace CRepublic.Magic.Packets.Debugs
 
                                 if (building.Locked)
                                     building.Unlock();
+
+                                if (building.IsConstructing)
+                                    building.IsConstructing = false;
 
                                 if (data.IsTownHall())
                                     this.Device.Player.Avatar.TownHall_Level = data.GetUpgradeLevelCount() - 1;
@@ -92,6 +91,10 @@ namespace CRepublic.Magic.Packets.Debugs
                                             }
                                         }
                                     }
+
+                                    if (building.IsConstructing)
+                                        building.IsConstructing = false;
+
                                     if (data.IsTownHall2())
                                         this.Device.Player.Avatar.Builder_TownHall_Level =
                                             data.GetUpgradeLevelCount() - 1;
@@ -123,6 +126,9 @@ namespace CRepublic.Magic.Packets.Debugs
 
                                     if (building.Locked)
                                         building.Unlock();
+
+                                    if (building.IsConstructing)
+                                        building.IsConstructing = false;
 
                                     if (data.IsTownHall())
                                         this.Device.Player.Avatar.TownHall_Level = data.GetUpgradeLevelCount() - 1;
@@ -168,9 +174,14 @@ namespace CRepublic.Magic.Packets.Debugs
                                             }
                                         }
                                     }
+
+                                    if (building.IsConstructing)
+                                        building.IsConstructing = false;
+
                                     if (data.IsTownHall2())
                                         this.Device.Player.Avatar.Builder_TownHall_Level =
                                             data.GetUpgradeLevelCount() - 1;
+
                                     building.SetUpgradeLevel(data.GetUpgradeLevelCount() - 1);
                                 });
 

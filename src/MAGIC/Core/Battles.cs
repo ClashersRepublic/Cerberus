@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using CRepublic.Magic.Core.Database;
 using CRepublic.Magic.Extensions;
@@ -219,7 +220,7 @@ namespace CRepublic.Magic.Core
                         {
                             Database.Configuration.AutoDetectChangesEnabled = false;
                             Database.Configuration.ValidateOnSaveEnabled = false;
-                            foreach (var Battle in this.Values)
+                            foreach (var Battle in this.Values.ToList())
                             {
                                 lock (Battle)
                                 {
@@ -239,7 +240,7 @@ namespace CRepublic.Magic.Core
 
                     case DBMS.Redis:
                     {
-                        foreach (var Battle in this.Values)
+                        foreach (var Battle in this.Values.ToList())
                         {
                             await Redis.Battles.StringSetAsync(Battle.Battle_ID.ToString(),
                                 JsonConvert.SerializeObject(Battle, this.Settings), TimeSpan.FromHours(4));

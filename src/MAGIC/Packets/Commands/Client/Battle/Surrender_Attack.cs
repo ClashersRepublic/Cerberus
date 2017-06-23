@@ -33,25 +33,24 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
                     Battle_Command Command = new Battle_Command
                     {
                         Command_Type = this.Identifier,
-                        Command_Base = new Command_Base { Tick = this.Tick }
+                        Command_Base = new Command_Base {Tick = this.Tick}
                     };
                     Battle.Add_Command(Command);
-                }
-                else
-                {
-                    var Battle = Resources.Battles_V2.GetPlayer(this.Device.Player.Avatar.Battle_ID_V2, this.Device.Player.Avatar.UserId);
-                    Battle.Set_Replay_Info();
-                    new V2_Battle_Result(this.Device).Send();
-                    Battle_Command Command = new Battle_Command
-                    {
-                        Command_Type = this.Identifier,
-                        Command_Base = new Command_Base { Tick = this.Tick }
-                    };
-                    Battle.Add_Command(Command);
-
                 }
             }
+            else if (this.Device.State == State.IN_1VS1_BATTLE)
+            {
+                long UserID = this.Device.Player.Avatar.UserId;
+                long BattleID = this.Device.Player.Avatar.Battle_ID_V2;
+                var Home = Resources.Battles_V2.GetPlayer(BattleID, UserID);
 
+                Battle_Command Command = new Battle_Command
+                {
+                    Command_Type = this.Identifier,
+                    Command_Base = new Command_Base {Tick = this.Tick}
+                };
+                Home.Add_Command(Command);
+            }
         }
     }
 }

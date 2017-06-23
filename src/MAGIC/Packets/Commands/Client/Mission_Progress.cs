@@ -27,10 +27,6 @@ namespace CRepublic.Magic.Packets.Commands.Client
             {
                // Missions Mission = CSV.Tables.Get(Gamefile.Missions).GetDataWithID(Mission_ID) as Missions;
             }
-            else
-            {
-                new Out_Of_Sync(this.Device).Send();
-            }
         }
     }
 }

@@ -38,10 +38,13 @@ namespace CRepublic.Magic.Packets.Messages.Server.Battle
         {
             this.Device.Player.Avatar.Last_Attack_Enemy_ID.Add((int)this.Enemy.Avatar.UserId);
 
-            if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20)
-                this.Device.Player.Avatar.Last_Attack_Enemy_ID.RemoveAt(0);
-            
-            this.Device.State = Logic.Enums.State.IN_PC_BATTLE;
+            if (this.Device.State == State.SEARCH_BATTLE)
+            {
+                if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20)
+                    this.Device.Player.Avatar.Last_Attack_Enemy_ID.RemoveAt(0);
+            }
+
+            this.Device.State = State.IN_PC_BATTLE;
 
             if (this.Device.Player.Avatar.Battle_ID == 0)
             {

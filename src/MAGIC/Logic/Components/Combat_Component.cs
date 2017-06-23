@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CRepublic.Magic.Files;
+﻿using CRepublic.Magic.Files;
 using CRepublic.Magic.Files.CSV_Logic;
 using CRepublic.Magic.Logic.Enums;
 using CRepublic.Magic.Logic.Structure;

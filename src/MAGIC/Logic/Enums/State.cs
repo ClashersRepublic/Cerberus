@@ -11,8 +11,9 @@
         IN_PC_BATTLE = 7,
         IN_NPC_BATTLE = 8,
         IN_AMICAL_BATTLE = 9,
-        VISIT = 10,
-        WAR_EMODE = 11,
-        REPLAY = 12,
+        IN_1VS1_BATTLE = 10,
+        VISIT = 11,
+        WAR_EMODE = 12,
+        REPLAY = 13,
     }
 }

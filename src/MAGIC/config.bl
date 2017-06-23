@@ -10,7 +10,7 @@
   <add key="UpdateUrl" value="http://bfy.tw/CQAh" />
   <!-- Location to redirect outdated player-->
 
-  <add key="PatchUrl" value="http://192.168.0.5/" />
+  <add key="PatchUrl" value="http://118.100.186.164/" />
   <!-- Location of your patching server-->
   
   <add key="RedisIPAddress" value="127.0.0.1" />

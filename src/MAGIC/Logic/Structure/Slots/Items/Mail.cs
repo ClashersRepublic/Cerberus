@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Extensions.List;
 using CRepublic.Magic.Logic.Enums;
@@ -21,7 +18,7 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
         [JsonProperty("sender_league")] internal int Sender_League;
         [JsonProperty("sender_lvl")] internal int Sender_Level;
         [JsonProperty("date")] internal DateTime Sent = DateTime.UtcNow;
-
+        [JsonProperty("new")] internal byte New;
         [JsonProperty("alliance_id", DefaultValueHandling = DefaultValueHandling.Ignore)] internal long Alliance_ID;
 
         [JsonProperty("message", DefaultValueHandling = DefaultValueHandling.Ignore)] internal string Message = string.Empty;
@@ -87,7 +84,8 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
                         break;
                 }
                 _Packet.AddInt(this.GetTime);
-                _Packet.AddByte(0);
+                _Packet.AddByte(this.New);
+                this.New = 0;
 
                 switch (this.Stream_Type)
                 {
@@ -128,7 +126,7 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
                         _Packet.AddInt(Clan.Badge);
                         _Packet.AddBool(true);
                         _Packet.AddLong(this.Sender_ID);
-                        _Packet.AddInt(11);
+                        _Packet.AddInt(1);
                         _Packet.AddByte(0);
                         break;
                 }

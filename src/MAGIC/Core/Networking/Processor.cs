@@ -21,8 +21,15 @@ namespace CRepublic.Magic.Core.Networking
         {
             try
             {
-
-                Message.Encode();
+                try
+                {
+                    Message.Encode();
+                }
+                catch (Exception ex)
+                {
+                    Resources.Exceptions.Catch(ex, $"Exception while encoding message {Message.GetType()}");
+                    return;
+                }
 
 #if DEBUG
                 Loggers.Log(Message, Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15));

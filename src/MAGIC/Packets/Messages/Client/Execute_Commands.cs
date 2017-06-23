@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using CRepublic.Magic.Core;
 using CRepublic.Magic.Core.Networking;
 using CRepublic.Magic.Extensions;
@@ -43,31 +42,6 @@ namespace CRepublic.Magic.Packets.Messages.Client
 
         internal override  void Process()
         {
-           /* //Checksum check xD...Why not?
-            if (this.Device.Last_Checksum != 0 && this.Device.Last_Tick != 0)
-            {
-                Console.WriteLine(this.Checksum - this.Device.Last_Checksum);
-                Console.WriteLine(this.CTick - this.Device.Last_Tick);
-                Console.WriteLine((this.CTick - this.Device.Last_Tick) * 2);
-
-                if (((this.CTick - this.Device.Last_Tick) * 2) != this.Checksum - this.Device.Last_Checksum)
-                {
-                    new Out_Of_Sync(this.Device).Send();
-                    return;
-                }
-            }
-            else if (this.Checksum != 0 && this.CTick != 0)
-            {
-                this.Device.Last_Checksum = this.Checksum;
-                this.Device.Last_Tick = this.CTick;
-            }
-            else
-            {
-                new Out_Of_Sync(this.Device).Send();
-                return;
-            }
-            */
-
 
             if (this.Device.State == Logic.Enums.State.IN_PC_BATTLE)
                  Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database).Battle_Tick =

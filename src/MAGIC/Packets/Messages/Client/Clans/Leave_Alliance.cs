@@ -72,7 +72,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
 
                 if (Alliance.Members.Count == 0)
                 {
-                    Resources.Clans.Delete(Alliance);
+                    //Resources.Clans.Delete(Alliance);
                 }
                 else
                 {

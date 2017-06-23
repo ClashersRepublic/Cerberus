@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CRepublic.Magic.Core.Database;
 using CRepublic.Magic.Core.Networking;
@@ -22,7 +23,7 @@ namespace CRepublic.Magic.Core
         internal Timers()
         {
             this.Save();
-            this.DeadSockets();
+            this.KeepAlive();
             this.Random();
             this.Run();
         }
@@ -185,6 +186,42 @@ namespace CRepublic.Magic.Core
                     ".", true);
 
 #endif
+            };
+
+            this.LTimers.Add(2, Timer);
+        }
+
+        internal void KeepAlive()
+        {
+            Timer Timer = new Timer
+            {
+                Interval = 5000,
+                AutoReset = true
+            };
+            Timer.Elapsed += (_Sender, _Args) =>
+            {
+                var numDisc = 0;
+#if DEBUG
+                Loggers.Log(
+                    Utils.Padding(this.GetType().Name, 6) + " : KeepAlive executed at " + DateTime.Now.ToString("T") +
+                    ".", true);
+#endif
+                foreach (Device Device in Resources.Devices.Values.ToList())
+                {
+                    if (DateTime.Now > Device.NextKeepAlive)
+                    {
+                        Resources.Devices.Remove(Device);
+                        Interlocked.CompareExchange(ref Device.Dropped, 1, 0);
+                        numDisc++;
+                    }
+                }
+#if DEBUG
+                if (numDisc > 0)
+                Loggers.Log(
+                    Utils.Padding(this.GetType().Name, 6) + $" : KeepAlive dropped {numDisc} clients due to keep alive timeouts at " + DateTime.Now.ToString("T") +
+                    ".", true);
+#endif
+
             };
 
             this.LTimers.Add(2, Timer);

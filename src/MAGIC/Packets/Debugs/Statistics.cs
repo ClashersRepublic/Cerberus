@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using CRepublic.Magic.Core;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Logic;
