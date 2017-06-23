@@ -203,7 +203,7 @@ namespace CRepublic.Magic.Core.Networking
         }
 
         internal void Disconnect(SocketAsyncEventArgs AsyncEvent)
-        {Console.WriteLine("Disconnecting player");
+        {
             Token Token = (Token) AsyncEvent.UserToken;
             
             if (Token.Device.Player != null)
