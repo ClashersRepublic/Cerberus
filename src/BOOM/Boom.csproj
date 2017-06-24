@@ -2361,7 +2361,7 @@
     <None Include="Tools\patch_generator.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="config.bl">
+    <None Include="config.cr">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>

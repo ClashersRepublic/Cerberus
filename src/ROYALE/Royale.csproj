@@ -814,7 +814,7 @@
       <DependentUpon>Mysql.edmx</DependentUpon>
       <LastGenOutput>Mysql.cs</LastGenOutput>
     </None>
-    <None Include="config.bl">
+    <None Include="config.cr">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
