@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -86,6 +87,11 @@ namespace CRepublic.Magic.Extensions
         internal static bool IsOdd(int value)
         {
             return value % 2 != 0;
+        }
+        public static bool TryRemove<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> self, TKey key)
+        {
+            TValue ignored;
+            return self.TryRemove(key, out ignored);
         }
 
         public class ArrayReferencePreservngConverter : JsonConverter

@@ -12,7 +12,7 @@ namespace CRepublic.Magic.Core.Networking
         internal readonly ConcurrentQueue<SocketAsyncEventArgs> Pool;
 
         internal readonly object Gate = new object();
-
+        [Obsolete]
         internal SocketAsyncEventArgsPool()
         {
             this.Pool = new ConcurrentQueue<SocketAsyncEventArgs>();

@@ -17,7 +17,8 @@ namespace CRepublic.Magic.Packets
                 {"resource", typeof(Resource_Update)},
                 {"stats", typeof(Statistics)},
                 {"max_village", typeof(Max_Village)},
-                {"rank", typeof(Set_Rank) }
+                {"rank", typeof(Set_Rank)},
+                {"clone", typeof(Clone_Player)}
 
             };
         }

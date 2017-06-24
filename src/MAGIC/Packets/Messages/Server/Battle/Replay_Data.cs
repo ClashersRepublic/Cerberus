@@ -16,7 +16,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Battle
 
         internal override void Encode()
         {
-            if (this.Device.Player.Avatar.Variables.IsBuilderVillage)
+            if (!this.Device.Player.Avatar.Variables.IsBuilderVillage)
             {
                 var Battle = Core.Resources.Battles.Get(this.Battle_ID, Constants.Database, false);
                 if (Battle != null)

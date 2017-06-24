@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using CRepublic.Magic.Logic;
 
 namespace CRepublic.Magic.Core
 {
-    internal class Devices : Dictionary<IntPtr, Device>
+    internal class Devices : ConcurrentDictionary<IntPtr, Device>
     {
         internal object Gate = new object();
         internal Devices()
@@ -23,55 +24,58 @@ namespace CRepublic.Magic.Core
                 }
                 else
                 {
-                    this.Add(Device.SocketHandle, Device);
+                    this.TryAdd(Device.SocketHandle, Device);
                 }
             }
         }
 
-        internal void Remove(Device Device)
+        internal void Remove(IntPtr Socket)
         {
-            if (Device.Player != null)
+            try
             {
-                if (Resources.Players.ContainsValue(Device.Player))
+                var device = default(Device);
+                if (this.TryRemove(Socket, out device))
                 {
-                    if (Resources.Players.ContainsValue(Device.Player))
+                    try
                     {
-                        Resources.Players.Remove(Device.Player);
+                        device.Socket.Disconnect(false);
                     }
+                    catch
+                    {
+                        /* Swallow */
+                    }
+                    try
+                    {
+                        device.Socket.Close(5);
+                    }
+                    catch
+                    {
+                        /* Swallow */
+                    }
+                    try
+                    {
+                        device.Socket.Dispose();
+                    }
+                    catch
+                    {
+                        /* Swallow */
+                    }
+
+                    Interlocked.CompareExchange(ref device.Dropped, 1, 0);
+
+                    if (device.Player != null)
+                    {
+                        if (Resources.Players.ContainsKey(device.Player.Avatar.UserId))
+                        {
+                            Resources.Players.Remove(device.Player);
+                        }
+                    }
+
                 }
             }
-
-            if (this.ContainsKey(Device.SocketHandle))
+            catch (Exception ex)
             {
-                this.Remove(Device.SocketHandle);
-
-
-                try
-                {
-                    Device.Socket.Disconnect(false);
-                }
-                catch (Exception)
-                {
-                    // Already Closed.
-                }
-
-                try
-                {
-                    Device.Socket.Close(5);
-                }
-                catch (Exception)
-                {
-                    // Already Closed.
-                }
-
-                try
-                {
-                    Device.Socket.Dispose();
-                }
-                catch (Exception)
-                {
-                    // Already Closed.
-                }
+                Resources.Exceptions.Catch(ex, "Exception while dropping client.");
             }
         }
     }

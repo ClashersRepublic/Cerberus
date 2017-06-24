@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -13,18 +14,14 @@ using Clan = CRepublic.Magic.Logic.Clan;
 
 namespace CRepublic.Magic.Core
 {
-    internal class Clans : Dictionary<long, Clan>
+    internal class Clans : ConcurrentDictionary<long, Clan>
     {
         internal JsonSerializerSettings Settings = new JsonSerializerSettings
         {
-            TypeNameHandling = TypeNameHandling.Auto,
-            MissingMemberHandling = MissingMemberHandling.Ignore,
-            DefaultValueHandling = DefaultValueHandling.Include,
-            NullValueHandling = NullValueHandling.Ignore,
-            PreserveReferencesHandling = PreserveReferencesHandling.All,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            Formatting = Formatting.Indented,
-            Converters = { new Utils.ArrayReferencePreservngConverter() },
+            TypeNameHandling            = TypeNameHandling.Auto,            MissingMemberHandling   = MissingMemberHandling.Ignore,
+            DefaultValueHandling        = DefaultValueHandling.Include,     NullValueHandling       = NullValueHandling.Ignore,
+            PreserveReferencesHandling  = PreserveReferencesHandling.All,   ReferenceLoopHandling   = ReferenceLoopHandling.Ignore,
+            Formatting                  = Formatting.Indented,              Converters              = { new Utils.ArrayReferencePreservngConverter() },
         };
 
 
@@ -47,14 +44,14 @@ namespace CRepublic.Magic.Core
                 }
                 else
                 {
-                    this.Add(Clan.Clan_ID, Clan);
+                    this.TryAdd(Clan.Clan_ID, Clan);
                 }
             }
         }
 
         internal void Remove(Clan Clan)
         {
-            if (this.Remove(Clan.Clan_ID))
+            if (this.TryRemove(Clan.Clan_ID))
             {
                 this.Save(Clan, Constants.Database);
             }
@@ -64,7 +61,7 @@ namespace CRepublic.Magic.Core
         {
             if (this.ContainsKey(Clan.Clan_ID))
             {
-                this.Remove(Clan.Clan_ID);
+                this.TryRemove(Clan.Clan_ID);
             }
 
             while (true)

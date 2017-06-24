@@ -210,8 +210,7 @@ namespace CRepublic.Magic.Core
                 {
                     if (DateTime.Now > Device.NextKeepAlive)
                     {
-                        Resources.Devices.Remove(Device);
-                        Interlocked.CompareExchange(ref Device.Dropped, 1, 0);
+                        Resources.Devices.Remove(Device.SocketHandle);
                         numDisc++;
                     }
                 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using CRepublic.Magic.Core;
 using CRepublic.Magic.Core.Networking;
 using CRepublic.Magic.Extensions;
@@ -21,8 +23,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
 
         internal byte[] Commands;
         internal List<Command> LCommands;
-
-
+        
         public Execute_Commands(Device Device, Reader Reader) : base(Device, Reader)
         {
         }
@@ -40,7 +41,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
             this.Commands = this.Reader.ReadBytes((int)(this.Reader.BaseStream.Length - this.Reader.BaseStream.Position));
         }
 
-        internal override  void Process()
+        internal override void Process()
         {
 
             if (this.Device.State == Logic.Enums.State.IN_PC_BATTLE)

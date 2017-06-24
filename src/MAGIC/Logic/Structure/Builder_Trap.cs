@@ -9,10 +9,6 @@ namespace CRepublic.Magic.Logic.Structure
         public Builder_Trap(Data data, Level l) : base(data, l)
         {
             AddComponent(new Trigger_Component());
-            if (GetTrapData.HasAltMode)
-            {
-                AddComponent(new Combat_Component(this));
-            }
         }
 
         internal override int ClassId => 11;

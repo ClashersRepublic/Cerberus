@@ -16,8 +16,7 @@ namespace CRepublic.Magic.Core.Networking
 {
     internal class Gateway
     {
-        internal SocketAsyncEventArgsPool ReadPool;
-        internal SocketAsyncEventArgsPool WritePool;
+        internal Pool<SocketAsyncEventArgs> ArgsPool;
         internal Pool<byte[]> BufferPool;
         internal Socket Listener;
         //internal Mutex Mutex;
@@ -25,8 +24,7 @@ namespace CRepublic.Magic.Core.Networking
 
         internal Gateway()
         {
-            this.ReadPool = new SocketAsyncEventArgsPool();
-            this.WritePool = new SocketAsyncEventArgsPool();
+            this.ArgsPool = new Pool<SocketAsyncEventArgs>();
             this.BufferPool = new Pool<byte[]>();
 
             this.Initialize();
@@ -43,23 +41,17 @@ namespace CRepublic.Magic.Core.Networking
                 $" has been started on {Utils.LocalNetworkIP} in {Math.Round(Program.Stopwatch.Elapsed.TotalSeconds, 4)} Seconds!",
                 true);
 
-            SocketAsyncEventArgs AcceptEvent = new SocketAsyncEventArgs();
-            AcceptEvent.Completed += this.OnIOCompleted;
-
-            this.StartAccept(AcceptEvent);
+            var args = this.GetArgs();
+            this.StartAccept(args);
         }
 
         internal void Initialize()
         {
-            for (int Index = 0; Index < Constants.PRE_ALLOC_SEA; Index++)
+            for (int i = 0; i < Constants.PRE_ALLOC_SEA; i++)
             {
-                SocketAsyncEventArgs ReadEvent = new SocketAsyncEventArgs();
-                ReadEvent.Completed += this.OnIOCompleted;
-                this.ReadPool.Enqueue(ReadEvent);
-
-                SocketAsyncEventArgs WriterEvent = new SocketAsyncEventArgs();
-                WriterEvent.Completed += this.OnIOCompleted;
-                this.WritePool.Enqueue(WriterEvent);
+                var Event = new SocketAsyncEventArgs();
+                Event.Completed += this.OnIOCompleted;
+                this.ArgsPool.Push(Event);
             }
         }
 
@@ -131,32 +123,27 @@ namespace CRepublic.Magic.Core.Networking
                     }
                 }
 
+                
+                Loggers.Log($"New client connected -> {((IPEndPoint) Socket.RemoteEndPoint)}:", true);
 
-                Loggers.Log($"New client connected -> {((IPEndPoint) Socket.RemoteEndPoint).Address}", true);
+                var Event = GetArgs();
+                var buffer = GetBuffer;
 
-                SocketAsyncEventArgs ReadEvent = this.GetReadEvent();
+                Event.AcceptSocket = Socket;
+                Event.SetBuffer(buffer, 0, buffer.Length);
 
-                if (ReadEvent != null)
+                Device device = new Device(Socket)
                 {
-                    var buffer = GetBuffer;
-                    ReadEvent.AcceptSocket = Socket;
-                    ReadEvent.SetBuffer(buffer, 0, buffer.Length);
-                    Device device = new Device(Socket)
-                    {
-                        IPAddress = ((IPEndPoint) Socket.RemoteEndPoint).Address.ToString()
-                    };
+                    IPAddress = ((IPEndPoint) Socket.RemoteEndPoint).Address.ToString()
+                };
 
-                    Token Token = new Token(ReadEvent, device);
-                    device.Token = Token;
-                    Interlocked.Increment(ref this.ConnectedSockets);
-                    Resources.Devices.Add(device);
+                Token Token = new Token(Event, device);
+                device.Token = Token;
 
-                    this.StartReceive(ReadEvent);
-                }
-                else
-                {
-                    Resources.Exceptions.RavenClient.Capture(new SentryEvent("Read Event is null"));
-                }
+                Interlocked.Increment(ref this.ConnectedSockets);
+                Resources.Devices.Add(device);
+
+                this.StartReceive(Event);
 
             }
             else
@@ -208,47 +195,37 @@ namespace CRepublic.Magic.Core.Networking
             
             if (Token.Device.Player != null)
             {
-                if (Resources.Players.ContainsValue(Token.Device.Player))
+                if (Resources.Players.ContainsKey(Token.Device.Player.Avatar.UserId))
                 {
                     Resources.Players.Remove(Token.Device.Player);
                 }
             }
             else
             {
-                Resources.Devices.Remove(Token.Device);
+                Resources.Devices.Remove(Token.Device.SocketHandle);
             }
-            Interlocked.CompareExchange(ref Token.Device.Dropped, 1, 0);
             Interlocked.Decrement(ref ConnectedSockets);
         }
 
         internal void Send(Message Message)
         {
-            SocketAsyncEventArgs WriteEvent = this.GetWriteEvent();
-            if (WriteEvent != null)
+            var Event = GetArgs();
+
+            var buffer = default(byte[]);
+            try
             {
-                var buffer = default(byte[]);
-                try
-                {
-                    buffer = Message.ToBytes;
-                }
-                catch (Exception ex)
-                {
-                    Resources.Exceptions.Catch(ex, $"Exception while constructing message {Message.GetType()}");
-                    return;
-                }
-
-                WriteEvent.SetBuffer(buffer, 0, buffer.Length);
-
-                WriteEvent.AcceptSocket = Message.Device.Socket;
-                WriteEvent.RemoteEndPoint = Message.Device.Socket.RemoteEndPoint;
-                WriteEvent.UserToken = Message.Device.Token;
-
-                this.StartSend(WriteEvent);
+                buffer = Message.ToBytes;
             }
-            else
+            catch (Exception ex)
             {
-                Resources.Exceptions.RavenClient.Capture(new SentryEvent("Write event is null"));
+                Resources.Exceptions.Catch(ex, $"Exception while constructing message {Message.GetType()}");
+                return;
             }
+
+            Event.SetBuffer(buffer, 0, buffer.Length);
+            Event.UserToken = Message.Device.Token;
+
+            this.StartSend(Event);
         }
 
         internal void StartSend(SocketAsyncEventArgs AsyncEvent)
@@ -258,7 +235,7 @@ namespace CRepublic.Magic.Core.Networking
             
             if (Thread.VolatileRead(ref client.Device.Dropped) == 1)
             {
-                this.Recycle(AsyncEvent, false);
+                this.Recycle(AsyncEvent);
             }
             else
             {
@@ -274,7 +251,7 @@ namespace CRepublic.Magic.Core.Networking
                 }
                 catch (ObjectDisposedException)
                 {
-                    this.Recycle(AsyncEvent, false);
+                    this.Recycle(AsyncEvent);
                 }
                 catch (Exception ex)
                 {
@@ -289,7 +266,7 @@ namespace CRepublic.Magic.Core.Networking
             if (transferred == 0 || Args.SocketError != SocketError.Success)
             {
               this.Disconnect(Args);
-              this.Recycle(Args, false);
+              this.Recycle(Args);
             }
             else
             {
@@ -304,7 +281,7 @@ namespace CRepublic.Magic.Core.Networking
                     else
                     {
                         // We done with sending can recycle EventArgs.
-                        this.Recycle(Args, false);
+                        this.Recycle(Args);
                     }
                 }
                 catch (Exception ex)
@@ -350,7 +327,7 @@ namespace CRepublic.Magic.Core.Networking
             }
         }
 
-        internal void Recycle(SocketAsyncEventArgs AsyncEvent, bool read = true)
+        internal void Recycle(SocketAsyncEventArgs AsyncEvent)
         {
             if (AsyncEvent == null)
                 return;
@@ -359,11 +336,9 @@ namespace CRepublic.Magic.Core.Networking
             AsyncEvent.UserToken = null;
             AsyncEvent.SetBuffer(null, 0, 0);
             AsyncEvent.AcceptSocket = null;
+            
+            this.ArgsPool.Push(AsyncEvent);
 
-            if (read)
-                this.ReadPool.Enqueue(AsyncEvent);
-            else
-                this.WritePool.Enqueue(AsyncEvent);
             this.Recycle(buffer);
         }
 
@@ -372,6 +347,7 @@ namespace CRepublic.Magic.Core.Networking
             if (buffer?.Length == Constants.ReceiveBuffer)
                 this.BufferPool.Push(buffer);
         }
+
         internal void KillSocket(Socket socket)
         {
             if (socket == null)
@@ -385,24 +361,13 @@ namespace CRepublic.Magic.Core.Networking
             catch { /* SWallow */ }
         }
 
-        internal SocketAsyncEventArgs GetReadEvent()
+        internal SocketAsyncEventArgs GetArgs()
         {
-            var args = this.ReadPool.Dequeue();
+            var args = this.ArgsPool.Pop();
             if (args == null)
             {
                 args = new SocketAsyncEventArgs();
-                args.Completed += this.OnIOCompleted;
-            }
-            return args;
-        }
-
-        internal SocketAsyncEventArgs GetWriteEvent()
-        {
-            var args = this.WritePool.Dequeue();
-            if (args == null)
-            {
-                args = new SocketAsyncEventArgs();
-                args.Completed += this.OnIOCompleted;
+                args.Completed += OnIOCompleted;
             }
             return args;
         }

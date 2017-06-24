@@ -1,4 +1,5 @@
 ﻿using CRepublic.Magic.Core;
+using CRepublic.Magic.Extensions;
 
 namespace CRepublic.Magic.Logic.Structure.Slots.Items
 {
@@ -8,7 +9,7 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
 
         public List_Devices(Device Device)
         {
-            this.Devices.Add(Device.Socket.Handle, Device);
+            this.Devices.TryAdd(Device.Socket.Handle, Device);
         }
 
         internal void Remove(Device Device)
@@ -17,7 +18,7 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
             {
                 if (this.Devices.ContainsKey(Device.Socket.Handle))
                 {
-                    this.Devices.Remove(Device.Socket.Handle);
+                    this.Devices.TryRemove(Device.Socket.Handle);
                 }
                 //else
                     //this.Devices.Remove(Device.Socket.Handle);

@@ -18,8 +18,7 @@ namespace CRepublic.Magic.Packets.Debugs
         {
             if (this.Parameters.Length >= 1)
             {
-                this.UserID = GameUtils.GetUserID(this.Parameters[0]);
-                if (this.UserID != -1)
+                if (long.TryParse(this.Parameters[0], out this.UserID))
                 {
                     var builder = new StringBuilder();
                     var level = Resources.Players.Get(this.UserID, Constants.Database, false);
@@ -27,22 +26,44 @@ namespace CRepublic.Magic.Packets.Debugs
                     {
                         builder.AppendLine($"Statistics for user {level.Avatar.Name}: ");
                         builder.AppendLine();
-                        builder.AppendLine($"Play time: {level.Avatar.PlayTime.Hours}h {level.Avatar.PlayTime.Minutes}m {level.Avatar.PlayTime.Seconds}s");
+                        builder.AppendLine(
+                            $"Play time: {level.Avatar.PlayTime.Hours}h {level.Avatar.PlayTime.Minutes}m {level.Avatar.PlayTime.Seconds}s");
                         builder.AppendLine($"Login count: {level.Avatar.Login_Count}");
                         builder.AppendLine($"Date joined: {level.Avatar.Created}");
                         builder.AppendLine($"Date saved: {level.Avatar.LastSave}");
                         SendChatMessage(builder.ToString());
+
                     }
                     else
                         SendChatMessage("Unable to fetch stats,Player is null");
                 }
                 else
                 {
-                    this.Help = new StringBuilder();
-                    this.Help.AppendLine("Hashtags should only contain these characters:");
-                    this.Help.AppendLine("Numbers: 0, 2, 8, 9");
-                    this.Help.AppendLine("Letters: P, Y, L, Q, G, R, J, C, U, V");
-                    SendChatMessage(Help.ToString());
+                    this.UserID = GameUtils.GetUserID(this.Parameters[0]);
+                    if (this.UserID != -1)
+                    {
+                        var builder = new StringBuilder();
+                        var level = Resources.Players.Get(this.UserID, Constants.Database, false);
+                        if (level != null)
+                        {
+                            builder.AppendLine($"Statistics for user {level.Avatar.Name}: ");
+                            builder.AppendLine();
+                            builder.AppendLine(
+                                $"Play time: {level.Avatar.PlayTime.Hours}h {level.Avatar.PlayTime.Minutes}m {level.Avatar.PlayTime.Seconds}s");
+                            builder.AppendLine($"Login count: {level.Avatar.Login_Count}");
+                            builder.AppendLine($"Date joined: {level.Avatar.Created}");
+                            builder.AppendLine($"Date saved: {level.Avatar.LastSave}");
+                            SendChatMessage(builder.ToString());
+                        }
+                    }
+                    else
+                    {
+                        this.Help = new StringBuilder();
+                        this.Help.AppendLine("Hashtags should only contain these characters:");
+                        this.Help.AppendLine("Numbers: 0, 2, 8, 9");
+                        this.Help.AppendLine("Letters: P, Y, L, Q, G, R, J, C, U, V");
+                        SendChatMessage(Help.ToString());
+                    }
                 }
             }
             else

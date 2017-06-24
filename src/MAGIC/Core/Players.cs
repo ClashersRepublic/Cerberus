@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +11,7 @@ using CRepublic.Magic.Logic.Enums;
 
 namespace CRepublic.Magic.Core
 {
-    internal class Players : Dictionary<long, Level>
+    internal class Players : ConcurrentDictionary<long, Level>
     {
         internal JsonSerializerSettings Settings = new JsonSerializerSettings
         {
@@ -40,7 +40,7 @@ namespace CRepublic.Magic.Core
                 }
                 else
                 {
-                    this.Add(Player.Avatar.UserId, Player);
+                    this.TryAdd(Player.Avatar.UserId, Player);
                 }
             }
         }
@@ -49,18 +49,18 @@ namespace CRepublic.Magic.Core
         {
             if (Player != null)
             {
-                if (this.Remove(Player.Avatar.UserId))
-                {
-                    this.Save(Player, Constants.Database);
-                }
+                Player.Tick();
+                this.Save(Player, Constants.Database);
+
+                this.TryRemove(Player.Avatar.UserId);
 
                 if (Player.Client != null)
                 {
                     if (Resources.Devices.ContainsKey(Player.Client.SocketHandle))
                     {
-                        Resources.GChat.Remove(Player.Client);
-                        Resources.Devices.Remove(Player.Client);
+                        Resources.Devices.Remove(Player.Client.SocketHandle);
                     }
+                    Resources.GChat.Remove(Player.Client);
                 }
             }
         }

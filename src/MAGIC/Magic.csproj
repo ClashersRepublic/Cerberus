@@ -190,6 +190,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\API\WebApi.cs" />
     <Compile Include="Core\Battles.cs" />
     <Compile Include="Core\Battles_V2.cs" />
     <Compile Include="Core\Classes.cs" />
@@ -455,6 +456,7 @@
     <Compile Include="Packets\Cryptography\RC4\Scrambler.cs" />
     <Compile Include="Packets\Debug.cs" />
     <Compile Include="Packets\DebugFactory.cs" />
+    <Compile Include="Packets\Debugs\Clone_Player.cs" />
     <Compile Include="Packets\Debugs\Kick_Player.cs" />
     <Compile Include="Packets\Debugs\Set_Mode.cs" />
     <Compile Include="Packets\Debugs\Max_Village.cs" />
@@ -580,6 +582,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Mysql.edmx</DependentUpon>
       <LastGenOutput>Mysql.cs</LastGenOutput>
+    </None>
+    <None Include="Gamefiles\fingerprint.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Gamefiles\csv\animations.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1032,9 +1037,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\API\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>RMDIR /S /Q "$(TargetDir)Library\"

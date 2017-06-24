@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using CRepublic.Magic.Logic.Manager;
+using CRepublic.Magic.Logic.Structure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -34,6 +36,13 @@ namespace CRepublic.Magic.Logic
         {
             get => JsonConvert.SerializeObject(GameObjectManager.JSON, Formatting.Indented);
             set => this.GameObjectManager.JSON = JObject.Parse(value);
+        }
+
+        internal void Reset()
+        {
+            var gameObjects = GameObjectManager.GetAllGameObjects();
+            foreach (List<GameObject> t in gameObjects)
+                t.Clear();
         }
 
         internal void Tick()

@@ -19,6 +19,7 @@ namespace CRepublic.Magic.Logic.Components
                 var td = (Traps) ci.Data;
                 if (td.HasAltMode)
                     this.AltTrapAttackMode = true;
+
                 if (td.DirectionCount > 0)
                     this.AltDirectionMode = true;
             }

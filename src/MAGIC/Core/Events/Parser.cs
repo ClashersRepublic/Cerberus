@@ -47,14 +47,11 @@ namespace CRepublic.Magic.Core.Events
                         Console.WriteLine();
                         Console.WriteLine("#" + DateTime.Now.ToString("d") + " ---- STATS ---- " +
                                           DateTime.Now.ToString("T") + " #");
-                        Console.WriteLine("# ----------------------------------- #");
-                        Console.WriteLine("# In-Memory Players    # " +
-                                          Utils.Padding(Resources.Players.Count.ToString(), 15) + " #");
-                        Console.WriteLine("# In-Memory Battles           # " +
-                                          Utils.Padding(Resources.Battles.Seed.ToString(), 15) + " #");
-                        Console.WriteLine("# In-Memory SAEA    # " +
-                                          Utils.Padding(Resources.Gateway.ReadPool.Pool.Count + " - " +  Resources.Gateway.WritePool.Pool.Count, 25) + " #");
-                        Console.WriteLine("# ----------------------------------- #");
+                        Console.WriteLine("# -------------------------------------- #");
+                        Console.WriteLine("# In-Memory Players    # " +  Utils.Padding(Resources.Players.Count.ToString(), 15) + " #");
+                        Console.WriteLine("# In-Memory Battles    # " +  Utils.Padding(Resources.Battles.Seed.ToString(), 15) + " #");
+                        Console.WriteLine("# In-Memory SAEA       # " +   Utils.Padding(Resources.Gateway.ArgsPool._stack.Count.ToString(), 15) + " #");
+                        Console.WriteLine("# -------------------------------------- #");
                         break;
                     }
 

@@ -38,7 +38,7 @@ namespace CRepublic.Magic.Packets.Client.Authentication
         {
             if (this.UnlockCode.Length != 12 || string.IsNullOrEmpty(this.UnlockCode))
             {
-                Resources.Devices.Remove(this.Device);
+                Resources.Devices.Remove(this.Device.SocketHandle);
                 return;
             }
 

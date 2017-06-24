@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using CRepublic.Magic.Core.API;
 using CRepublic.Magic.Core.Events;
 using CRepublic.Magic.Core.Networking;
 
@@ -20,6 +21,7 @@ namespace CRepublic.Magic.Core
         internal static Player_Region PRegion;
         internal static Gateway Gateway;
         internal static Parser Parser;
+        internal static WebApi Api;
 
         internal static void Initialize()
         {
@@ -36,6 +38,7 @@ namespace CRepublic.Magic.Core
             Resources.Region = new Region();
             Resources.PRegion = new Player_Region();
             Resources.Gateway = new Gateway();
+            Resources.Api = new WebApi();
             Resources.Parser = new Parser();
         }
     }

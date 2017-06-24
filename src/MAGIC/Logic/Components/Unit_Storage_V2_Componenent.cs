@@ -45,19 +45,20 @@ namespace CRepublic.Magic.Logic.Components
         {
             //if (CanAddUnit(cd))
             {
+                var ca = GetParent.Level.Avatar;
+                var UnitInCamp = ((Characters) cd).UnitsInCamp[ca.GetUnitUpgradeLevel(cd)];
                 var unitIndex = GetUnitTypeIndex(cd);
                 if (unitIndex == -1)
                 {
-                    var us = new DataSlot(cd, 1);
+                    var us = new DataSlot(cd, UnitInCamp);
                     this.Units.Add(us);
                 }
                 else
                 {
-                    this.Units[unitIndex].Value++;
+                    this.Units[unitIndex].Value += UnitInCamp;
                 }
-                var ca = GetParent.Level.Avatar;
                 var unitCount = ca.Get_Unit_Count_V2(cd);
-                ca.Set_Unit_Count_V2(cd, unitCount + ((Characters)cd).UnitsInCamp[ca.GetUnitUpgradeLevel(cd)]);
+                ca.Set_Unit_Count_V2(cd, unitCount + UnitInCamp);
             }
         }
 

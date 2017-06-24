@@ -9,7 +9,7 @@ namespace CRepublic.Magic.Logic.Structure
         public Trap(Data data, Level l) : base(data, l)
         {
             AddComponent(new Trigger_Component());
-            if (GetTrapData.HasAltMode)
+            if (GetTrapData.HasAltMode || GetTrapData.DirectionCount > 0)
             {
                 AddComponent(new Combat_Component(this));
             }
