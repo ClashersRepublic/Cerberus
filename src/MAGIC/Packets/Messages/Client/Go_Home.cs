@@ -97,7 +97,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                             await Core.Resources.Battles.Save(Battle);
                         }
                         else
-                            Core.Resources.Battles.Remove(this.Device.Player.Avatar.Battle_ID);
+                            Core.Resources.Battles.TryRemove(this.Device.Player.Avatar.Battle_ID);
                         this.Device.Player.Avatar.Battle_ID = 0;
                         this.Device.State = Logic.Enums.State.LOGGED;
                     }

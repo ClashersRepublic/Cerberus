@@ -31,10 +31,12 @@ namespace CRepublic.Magic.Packets.Commands.Client
         internal override void Process()
         {
             var go = this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(this.BuildingID);
-
-            Builder_Building b = (Builder_Building)go;
-            Unit_Storage_V2_Componenent c = b.GetUnitStorageV2Component();
-            c.AddUnit(this.Unit);
+            if (go != null)
+            {
+                Builder_Building b = (Builder_Building) go;
+                Unit_Storage_V2_Componenent c = b.GetUnitStorageV2Component();
+                c?.AddUnit(this.Unit);
+            }
         }
     }
 }

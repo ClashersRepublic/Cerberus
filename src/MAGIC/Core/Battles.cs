@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -12,7 +13,7 @@ using Battle = CRepublic.Magic.Logic.Battle;
 
 namespace CRepublic.Magic.Core
 {
-    internal class Battles : Dictionary<long, Battle>
+    internal class Battles : ConcurrentDictionary<long, Battle>
     {
         internal JsonSerializerSettings Settings = new JsonSerializerSettings
         {
@@ -41,7 +42,7 @@ namespace CRepublic.Magic.Core
                 }
                 else
                 {
-                    this.Add(Battle.Battle_ID, Battle);
+                    this.TryAdd(Battle.Battle_ID, Battle);
                 }
             }
         }
@@ -250,8 +251,8 @@ namespace CRepublic.Magic.Core
 
                     case DBMS.Both:
                     {
-                        await this.Save();
                         DBMS = DBMS.Redis;
+                        await this.Save();
                         continue;
                     }
                 }

@@ -243,6 +243,9 @@ namespace CRepublic.Magic.Core.Networking
                 {
                     while (true)
                     {
+                        if (AsyncEvent == null)
+                            Resources.Exceptions.RavenClient.Capture(new SentryEvent("Exception while starting send"));
+                        else
                         if (!socket.SendAsync(AsyncEvent))
                             this.ProcessSend(AsyncEvent);
                         else

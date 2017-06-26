@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using CRepublic.Magic.Logic;
 using CRepublic.Magic.Logic.Structure.Slots.Items;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using CRepublic.Magic.Extensions;
 
 namespace CRepublic.Magic.Core
 {
-    internal class Player_Region : Dictionary<string, List_Regions>
+    internal class Player_Region : ConcurrentDictionary<string, List_Regions>
     {
         internal object Gate = new object();
         internal object GateAdd = new object();
@@ -44,7 +45,7 @@ namespace CRepublic.Magic.Core
 
             Timer.Elapsed += (_Sender, _Args) =>
             {
-                this.Remove("INTERNATIONAL");
+                this.TryRemove("INTERNATIONAL");
                 foreach (var _Id in MySQL_V2.GetTopPlayer())
                 {
                     this.Add("INTERNATIONAL", Resources.Players.Get(_Id, Constants.Database, true));
@@ -69,7 +70,7 @@ namespace CRepublic.Magic.Core
                     }
                     else
                     {
-                        this.Add(Region, new List_Regions(Player));
+                        this.TryAdd(Region, new List_Regions(Player));
                     }
                 }
             }
@@ -91,7 +92,7 @@ namespace CRepublic.Magic.Core
                     }
                     else
                     {
-                        this.Add(Player.Avatar.Region, new List_Regions(Player));
+                        this.TryAdd(Player.Avatar.Region, new List_Regions(Player));
                     }
                 }
             }
@@ -105,7 +106,7 @@ namespace CRepublic.Magic.Core
                 {
                     this[Player.Avatar.Region].Remove(Player);
                     if (this[Player.Avatar.Region].Level.Count < 1)
-                        this.Remove(Player.Avatar.Region);
+                        this.TryRemove(Player.Avatar.Region);
                 }
             }
         }
@@ -118,7 +119,7 @@ namespace CRepublic.Magic.Core
                 {
                     return this[Player.Avatar.Region].Level;
                 }
-                this.Add(Player.Avatar.Region, new List_Regions(Player));
+                this.TryAdd(Player.Avatar.Region, new List_Regions(Player));
                 return this[Player.Avatar.Region].Level;
             }
             return null;
@@ -132,7 +133,7 @@ namespace CRepublic.Magic.Core
                 {
                     return this[region].Level;
                 }
-                this.Add(region, new List_Regions(null));
+                this.TryAdd(region, new List_Regions(null));
                 return this[region].Level;
             }
             return null;

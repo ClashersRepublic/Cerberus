@@ -1,4 +1,6 @@
-﻿using CRepublic.Magic.Logic;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using CRepublic.Magic.Logic;
 using CRepublic.Magic.Core.Networking;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Extensions.Binary;

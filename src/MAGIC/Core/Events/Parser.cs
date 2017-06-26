@@ -48,9 +48,12 @@ namespace CRepublic.Magic.Core.Events
                         Console.WriteLine("#" + DateTime.Now.ToString("d") + " ---- STATS ---- " +
                                           DateTime.Now.ToString("T") + " #");
                         Console.WriteLine("# -------------------------------------- #");
-                        Console.WriteLine("# In-Memory Players    # " +  Utils.Padding(Resources.Players.Count.ToString(), 15) + " #");
-                        Console.WriteLine("# In-Memory Battles    # " +  Utils.Padding(Resources.Battles.Seed.ToString(), 15) + " #");
-                        Console.WriteLine("# In-Memory SAEA       # " +   Utils.Padding(Resources.Gateway.ArgsPool._stack.Count.ToString(), 15) + " #");
+                        Console.WriteLine("# In-Memory Players    # " +
+                                          Utils.Padding(Resources.Players.Count.ToString(), 15) + " #");
+                        Console.WriteLine("# In-Memory Battles    # " +
+                                          Utils.Padding(Resources.Battles.Seed.ToString(), 15) + " #");
+                        Console.WriteLine("# In-Memory SAEA       # " +
+                                          Utils.Padding(Resources.Gateway.ArgsPool._stack.Count.ToString(), 15) + " #");
                         Console.WriteLine("# -------------------------------------- #");
                         break;
                     }
@@ -66,7 +69,8 @@ namespace CRepublic.Magic.Core.Events
                             {
                                 case ConsoleKey.Y:
                                 {
-                                    Console.WriteLine("Please enter the duration of Maintenance (Enter value in int only).");
+                                    Console.WriteLine(
+                                        "Please enter the duration of Maintenance (Enter value in int only).");
                                     Console.Write("(Minute): ");
                                     if (Int32.TryParse(Console.ReadLine(), out int i))
                                     {
@@ -95,9 +99,10 @@ namespace CRepublic.Magic.Core.Events
                         {
 
                             Console.WriteLine("# " + DateTime.Now.ToString("d") +
-                                              " ---- Server is already in Maintanance Mode---- " + DateTime.Now.ToString("T") +
+                                              " ---- Server is already in Maintanance Mode---- " +
+                                              DateTime.Now.ToString("T") +
                                               " #");
-                            }
+                        }
                         break;
                     }
 
@@ -119,7 +124,7 @@ namespace CRepublic.Magic.Core.Events
                             Console.WriteLine("# " + DateTime.Now.ToString("d") +
                                               " ---- Not in Maintanance Mode---- " + DateTime.Now.ToString("T") +
                                               " #");
-                            }
+                        }
                         break;
                     }
 
@@ -136,9 +141,9 @@ namespace CRepublic.Magic.Core.Events
                         Console.WriteLine("# " + DateTime.Now.ToString("d") + " ---- HELPS ---- " +
                                           DateTime.Now.ToString("T") + " #");
                         Console.WriteLine("# ----------------------------------- #");
-                            Console.WriteLine(((IEnumerable)Process.GetCurrentProcess().Threads)
-                                    .OfType<ProcessThread>()
-                                    .Count(t => t.ThreadState == ThreadState.Running));
+                        Console.WriteLine(((IEnumerable) Process.GetCurrentProcess().Threads)
+                            .OfType<ProcessThread>()
+                            .Count(t => t.ThreadState == ThreadState.Running));
                         Console.WriteLine("# ----------------------------------- #");
                         break;
                     }
@@ -153,11 +158,6 @@ namespace CRepublic.Magic.Core.Events
                             }
                             //Resources.Gateway.Disconnect(_Device.Token.Args);
                         }
-                        break;
-                    }
-
-                    case ConsoleKey.T:
-                    {
                         break;
                     }
 

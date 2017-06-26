@@ -30,7 +30,7 @@ namespace CRepublic.Magic.Core.Networking
         internal string GetIpCountryIso(string ipAddress)
         {
             if (ipAddress == null || Reader == null)
-                return "BarbarianLand";
+                return "Project MAGIC";
 
             try
             {
@@ -38,14 +38,14 @@ namespace CRepublic.Magic.Core.Networking
             }
             catch (AddressNotFoundException)
             {
-                return "BarbarianLand";
+                return "Project MAGIC";
             }
         }
 
         internal string GetIpCountry(string ipAddress)
         {
             if (ipAddress == null || Reader == null)
-                return "BarbarianLand";
+                return "Project MAGIC";
 
             try
             {
@@ -53,7 +53,7 @@ namespace CRepublic.Magic.Core.Networking
             }
             catch (AddressNotFoundException)
             {
-                return "BarbarianLand";
+                return "Project MAGIC";
             }
         }
 
@@ -61,7 +61,7 @@ namespace CRepublic.Magic.Core.Networking
         internal string GetFullIpData(string ipAddress)
         {
             if (ipAddress == null || Reader == null)
-                return "BarbarianLand";
+                return "Project MAGIC";
 
             try
             {
@@ -85,7 +85,7 @@ namespace CRepublic.Magic.Core.Networking
             }
             catch (AddressNotFoundException)
             {
-                return "BarbarianLand";
+                return "Project MAGIC";
             }
         }
 

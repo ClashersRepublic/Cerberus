@@ -34,7 +34,7 @@ namespace CRepublic.Magic
             Console.WriteLine(@"Clashers Repbulic's programs are under the 'Proprietary' license.");
             Console.WriteLine(@"Clashers Repbulic is NOT affiliated to 'Supercell Oy'.");
             Console.WriteLine(@"Clashers Repbulic does NOT own 'Clash of Clans', 'Boom Beach', 'Clash Royale'.");
-
+            
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
 
             Resources.Initialize();

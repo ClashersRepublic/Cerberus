@@ -63,7 +63,6 @@ namespace CRepublic.Magic.Logic
             }
         }
 
-
         [JsonProperty("avatar_id_high")] internal int UserHighId;
         [JsonProperty("avatar_id_low")] internal int UserLowId;
 

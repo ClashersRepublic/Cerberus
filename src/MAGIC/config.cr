@@ -10,7 +10,7 @@
   <add key="UpdateUrl" value="http://bfy.tw/CQAh" />
   <!-- Location to redirect outdated player-->
 
-  <add key="PatchUrl" value="https://www.clashersrepublic.com/game-content/projectmagic/" />
+  <add key="PatchUrl" value="http://192.168.0.5/" />
   <!-- Location of your patching server-->
   
   <add key="RedisIPAddress" value="127.0.0.1" />

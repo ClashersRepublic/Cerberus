@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using CRepublic.Magic.Core.Database;
 using CRepublic.Magic.Extensions;
-using CRepublic.Magic.Logic;
 using Newtonsoft.Json;
 using CRepublic.Magic.Logic.Enums;
 using Clan = CRepublic.Magic.Logic.Clan;

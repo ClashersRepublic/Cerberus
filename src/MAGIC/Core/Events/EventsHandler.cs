@@ -2,6 +2,7 @@
 using CRepublic.Magic.Logic.Enums;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace CRepublic.Magic.Core.Events
 {
@@ -18,35 +19,11 @@ namespace CRepublic.Magic.Core.Events
         [DllImport("Kernel32")]
         private static extern bool SetConsoleCtrlHandler(EventHandler Handler, bool Enabled);
 
-        internal void ExitHandler()
+        internal async void ExitHandler()
         {
             try
             {
-                if (Resources.Players.Count > 0)
-                {
-                    lock (Resources.Players.Gate)
-                    {
-                        Resources.Players.Save(Constants.Database).Wait();
-                    }
-                }
-
-                if (Resources.Clans.Count > 0)
-                {
-                    lock (Resources.Clans.Gate)
-                    {
-                        Resources.Clans.Save(Constants.Database).Wait();
-                    }
-                }
-
-
-                if (Resources.Battles.Count > 0)
-                {
-                    lock (Resources.Battles.Gate)
-                    {
-                        Resources.Battles.Save(Constants.Database).Wait();
-                    }
-                }
-
+                 await Task.WhenAll(Resources.Players.Save(Constants.Database), Resources.Clans.Save(Constants.Database), Resources.Battles.Save(Constants.Database)).ConfigureAwait(false);
             }
             catch (Exception)
             {

@@ -2,6 +2,7 @@
 {
     using System;
 
+    [Serializable]
     public class CsvException : Exception
     {
         public CsvException() : base()

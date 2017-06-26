@@ -25,7 +25,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Authentication
 
 
         internal Reason Reason = Reason.Default;
-        internal string PatchingHost => Fingerprint.Custom ? Constants.PatchServer : "http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/";
+        internal string PatchingHost => Fingerprint.Custom ? Constants.PatchServer : "https://www.clashersrepublic.com/game-content/projectmagic/";
 
         internal string Message;
         internal string RedirectDomain;

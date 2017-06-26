@@ -40,6 +40,35 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
 
         internal override void Process()
         {
+            if (this.Device.Player.Avatar.Variables.IsBuilderVillage)
+            {
+                List<Component> components = this.Device.Player.GetComponentManager.GetComponents(11);
+
+                foreach (Component t in components)
+                {
+                    Unit_Storage_V2_Componenent c = (Unit_Storage_V2_Componenent) t;
+                    if (c.GetUnitTypeIndex(this.Troop) != -1)
+                    {
+                        var storageCount = c.GetUnitCountByData(this.Troop);
+                        if (storageCount >= 1)
+                        {
+                            c.RemoveUnits(this.Troop, 1);
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                List<Slot> _PlayerUnits = this.Device.Player.Avatar.Units;
+
+                Slot _DataSlot = _PlayerUnits.Find(t => t.Data == GlobalId);
+                if (_DataSlot != null)
+                {
+                    _DataSlot.Count -= 1;
+                }
+            }
+
             if (this.Device.State == State.IN_PC_BATTLE)
             {
                 if (!this.Device.Player.Avatar.Variables.IsBuilderVillage)
@@ -68,14 +97,6 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
                         Battle.Replay_Info.Units.Add(new[] {this.GlobalId, 1});
 
                     Battle.Attacker.Add_Unit(GlobalId, 1);
-
-                    List<Slot> _PlayerUnits = this.Device.Player.Avatar.Units;
-
-                    Slot _DataSlot = _PlayerUnits.Find(t => t.Data == GlobalId);
-                    if (_DataSlot != null)
-                    {
-                        _DataSlot.Count -= 1;
-                    }
                 }
             }
             else if (this.Device.State == State.IN_1VS1_BATTLE)
@@ -102,22 +123,6 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
                 else
                     Battle.Replay_Info.Units.Add(new[] {this.GlobalId, 1});
                 Battle.Add_Command(Command);
-
-                List<Component> components = this.Device.Player.GetComponentManager.GetComponents(11);
-
-                foreach (Component t in components)
-                {
-                    Unit_Storage_V2_Componenent c = (Unit_Storage_V2_Componenent) t;
-                    if (c.GetUnitTypeIndex(this.Troop) != -1)
-                    {
-                        var storageCount = c.GetUnitCountByData(this.Troop);
-                        if (storageCount >= 1)
-                        {
-                            c.RemoveUnits(this.Troop, 1);
-                            break;
-                        }
-                    }
-                }
             }
         }
     }

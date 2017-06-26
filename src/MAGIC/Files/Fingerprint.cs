@@ -27,7 +27,6 @@ namespace CRepublic.Magic.Files
                         Fingerprint.Sha = _Json["sha"].ToObject<string>();
                         Fingerprint.Version = _Json["version"].ToObject<string>().Split('.');
                         Console.WriteLine("Default patch detected, with version " + string.Join(".", Fingerprint.Version) + "." + Environment.NewLine);
-                        Fingerprint.Custom = true;
                     }
                     else
                     {

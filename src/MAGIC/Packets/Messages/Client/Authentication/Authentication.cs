@@ -119,7 +119,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
                 return;
             }
 
-            if (Fingerprint.Custom && !string.Equals(this.MasterHash, Fingerprint.Sha))
+            if (!string.IsNullOrEmpty(Fingerprint.Json) && !string.Equals(this.MasterHash, Fingerprint.Sha))
             {
                 new Authentication_Failed(this.Device, Logic.Enums.Reason.Patch).Send();
                 return;
@@ -128,6 +128,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
             if (this.UserId == 0)
             {
                 this.Device.Player = Resources.Players.New(0, Constants.Database);
+                this.Device.Player.Avatar.Region = Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress = this.Device.IPAddress);
 
                 if (this.Device.Player != null)
                 {
@@ -200,8 +201,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
         internal void Login()
         {
             this.Device.Player.Client = this.Device;
-            this.Device.Player.Avatar.Region = Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress = this.Device.IPAddress);
-
+   
             Resources.GChat.Add(this.Device);
             Resources.PRegion.Add(this.Device.Player);
 

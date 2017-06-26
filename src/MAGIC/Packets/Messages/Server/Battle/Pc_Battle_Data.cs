@@ -53,7 +53,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Battle
             else
             {
                 await Core.Resources.Battles.Save(Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database, false));
-                Core.Resources.Battles.Remove(this.Device.Player.Avatar.Battle_ID);
+                Core.Resources.Battles.TryRemove(this.Device.Player.Avatar.Battle_ID);
 
                 Core.Resources.Battles.New(this.Device.Player, Core.Resources.Players.Get(this.Device.Player.Avatar.Last_Attack_Enemy_ID[this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count - 1], Constants.Database), Constants.Database);
             }

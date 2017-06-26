@@ -8,6 +8,9 @@
 
     using Decoder = SevenZip.Compression.LZMA.Decoder;
     using Encoder = SevenZip.Compression.LZMA.Encoder;
+    using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
+
     internal class Lzma
     {
         private const int Dictionary = 1 << 24;
@@ -23,6 +26,13 @@
         {
             File.Copy(file, file += ".clone");
 
+            byte[] hash;
+            using (var md5 = MD5.Create())
+            {
+                hash = md5.ComputeHash(File.ReadAllBytes(file));
+            }
+
+
             var encoder = new Encoder();
             using (var input = new FileStream(file, FileMode.Open))
             {
@@ -36,9 +46,10 @@
                         CoderPropID.LitPosBits,
                         CoderPropID.Algorithm,
                         CoderPropID.NumFastBytes,
-                        CoderPropID.MatchFinder,
+                        CoderPropID.MatchFinder,    
                         CoderPropID.EndMarker
                     };
+                    Console.WriteLine(propIDs.ToArray());
 
                     object[] properties =
                     {
@@ -53,8 +64,12 @@
                         Eos
                     };
 
+                    output.Write(Encoding.UTF8.GetBytes("SC"), 0, 2);
+                    output.Write(BitConverter.GetBytes(1).Reverse().ToArray(), 0, 4);
+                    output.Write(BitConverter.GetBytes(hash.Length).Reverse().ToArray(), 0, 4);
+                    output.Write(hash, 0, hash.Length);
                     encoder.SetCoderProperties(propIDs, properties);
-                    encoder.WriteCoderProperties(output);
+                    output.Write(HexaToBytes("5D 00 00 04 00"), 0, 5);
                     output.Write(BitConverter.GetBytes(input.Length), 0, 4);
 
                     encoder.Code(input, output, input.Length, -1, null);
@@ -64,6 +79,11 @@
                 input.Dispose();
             }
             File.Delete(file);
+        }
+        public static byte[] HexaToBytes(string _Value)
+        {
+            string _Tmp = _Value.Contains("-") ? _Value.Replace("-", string.Empty) : _Value.Replace(" ", string.Empty);
+            return Enumerable.Range(0, _Tmp.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(_Tmp.Substring(x, 2), 16)).ToArray();
         }
 
         internal static void CompressCR(string file, string outputlocation)
@@ -105,12 +125,14 @@
                     };
 
                     output.Write(Encoding.UTF8.GetBytes("SC"), 0, 2);
-                    output.Write(BitConverter.GetBytes(1), 0, 4);
-                    output.Write(BitConverter.GetBytes(hash.Length), 0, 4);
+                    output.Write(BitConverter.GetBytes(1).Reverse().ToArray(), 0, 4);
+                    output.Write(BitConverter.GetBytes(hash.Length).Reverse().ToArray(), 0, 4);
                     output.Write(hash, 0, hash.Length);
+                    
                     encoder.SetCoderProperties(propIDs, properties);
+
                     encoder.WriteCoderProperties(output);
-                    output.Write(BitConverter.GetBytes(input.Length), 0, 4);
+                    output.Write(BitConverter.GetBytes(input.Length).Reverse().ToArray(), 0, 4);
 
                     encoder.Code(input, output, input.Length, -1, null);
                     output.Flush();

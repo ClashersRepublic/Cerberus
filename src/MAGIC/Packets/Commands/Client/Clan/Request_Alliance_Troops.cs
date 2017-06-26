@@ -50,8 +50,8 @@ namespace CRepublic.Magic.Packets.Commands.Client.Clan
                     Max_Spells = (CSV.Tables.Get(Gamefile.Buildings).GetDataWithID(1000014) as Files.CSV_Logic.Buildings).HousingSpaceAlt[this.Device.Player.Avatar.Castle_Level],
                     Used_Space_Troops = this.Device.Player.Avatar.Castle_Used,
                     Used_Space_Spells = this.Device.Player.Avatar.Castle_Used_SP,
-                    Units = this.Device.Player.Avatar.Castle_Units,
-                    Spells = this.Device.Player.Avatar.Castle_Spells,
+                    Units = this.Device.Player.Avatar.Castle_Units.Clone(),
+                    Spells = this.Device.Player.Avatar.Castle_Spells.Clone(),
 
                 });
         }

@@ -6,6 +6,7 @@ namespace CRepublic.Magic.External.LZMA
     /// <summary>
     /// The exception that is thrown when an error in input stream occurs during decoding.
     /// </summary>
+    [Serializable]
     internal class DataErrorException : ApplicationException
     {
         public DataErrorException() : base("Data Error")
@@ -16,6 +17,7 @@ namespace CRepublic.Magic.External.LZMA
     /// <summary>
     /// The exception that is thrown when the value of an argument is outside the allowable range.
     /// </summary>
+    [Serializable]
     internal class InvalidParamException : ApplicationException
     {
         public InvalidParamException() : base("Invalid Parameter")

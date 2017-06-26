@@ -26,9 +26,9 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
         [JsonProperty("space_troops", DefaultValueHandling = DefaultValueHandling.Ignore)] internal int Used_Space_Troops = 0;
         [JsonProperty("space_spells", DefaultValueHandling = DefaultValueHandling.Ignore)] internal int Used_Space_Spells = 0;
 
-        [JsonProperty("units", DefaultValueHandling = DefaultValueHandling.Ignore)] internal List<Alliance_Unit> Units = new List<Alliance_Unit>();
+        [JsonProperty("units", DefaultValueHandling = DefaultValueHandling.Ignore)] internal Castle_Units Units = new Castle_Units();
 
-        [JsonProperty("spells", DefaultValueHandling = DefaultValueHandling.Ignore)] internal List<Alliance_Unit> Spells = new List<Alliance_Unit>();
+        [JsonProperty("spells", DefaultValueHandling = DefaultValueHandling.Ignore)] internal Castle_Units Spells = new Castle_Units();
 
         [JsonProperty("have_message", DefaultValueHandling = DefaultValueHandling.Ignore)] internal bool Have_Message = false;
 
