@@ -1,22 +1,22 @@
-## Clashers Repbulic - Project
+## Clashers Republic - Project
 
 ***Cerberus*** is a _3 Dimension Project_.
 It has been **written by Vicky** from **Clashers Repbulic**.  
 The goal of this project is to ensure a clean, easy-to-die code environment.
-All programs developed by the Republic Of Clashers Development Team are licensed by a license
+All programs are developed by the Clashers Republic Development Team are licensed by a license.
 
 ## Project Codenames:
-* Eris - Boom Beach Server
-* Europa - Hash Generator
-* Galileo - Clash of Clans Server
-* Lyra - Supercell Proxy
-* Nebula - SC Editor
-* Nibiru - LZMA Manager
-* Proserpina - Clash Royale Server
-* Xena - Library Patcher
+* BOOM - Boom Beach Server
+* EUROPA - Hash Generator
+* MAGIC - Clash of Clans Server
+* LYRA - Supercell Proxy
+* NEBULA - SC Editor
+* NIBIRU - LZMA Manager
+* ROYALE - Clash Royale Server
+* XENA - Library Patcher
 
 ## Disclaimer
-**Clashers Repbulic**'s resources and programs are protected under the license and our policies available on our website.
-**Clashers Repbulic**'s resources and programs are created by the (**Clashers Repbulic**) team.  
-**Clashers Repbulic** is **NOT** affiliated with '_Supercell, Oy_'.  
-**Clashers Repbulic** does **NOT** own '_Clash of Clans_', '_Boom Beach_', '_Clash Royale_', and/or '_Hay Day_'.
+**Clashers Republic**'s resources and programs are protected under the license and our policies available on our website.
+**Clashers Republic**'s resources and programs are created by the (**Clashers Republic**) team.  
+**Clashers Republic** is **NOT** affiliated with '_Supercell, Oy_'.  
+**Clashers Republic** does **NOT** own '_Clash of Clans_', '_Boom Beach_', '_Clash Royale_', '_Brawl Stars', and/or '_Hay Day_'.
