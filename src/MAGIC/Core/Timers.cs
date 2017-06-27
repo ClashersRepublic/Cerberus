@@ -10,8 +10,6 @@ using CRepublic.Magic.Logic;
 using CRepublic.Magic.Logic.Enums;
 using CRepublic.Magic.Logic.Structure;
 using CRepublic.Magic.Packets.Messages.Server.Errors;
-using Battle = CRepublic.Magic.Logic.Battle;
-using Clan = CRepublic.Magic.Logic.Clan;
 using Timer = System.Timers.Timer;
 
 namespace CRepublic.Magic.Core
@@ -112,20 +110,7 @@ namespace CRepublic.Magic.Core
 #endif
                 try
                 {
-
-                    if (Resources.Players.Count > 0)
-                    {
-                        await Resources.Players.Save(Constants.Database);
-                    }
-                    if (Resources.Clans.Count > 0)
-                    {
-                        await Resources.Clans.Save(Constants.Database);
-                    }
-
-                    if (Resources.Battles.Count > 0)
-                    {
-                        await Resources.Battles.Save(Constants.Database);
-                    }
+                    await Task.WhenAll(Resources.Players.Save(Constants.Database), Resources.Clans.Save(Constants.Database), Resources.Battles.Save(Constants.Database)).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {

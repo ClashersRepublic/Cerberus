@@ -28,7 +28,6 @@ namespace CRepublic.Magic.Core
 
         internal Clans()
         {
-            this.Seed = MySQL_V2.GetClanSeed() + 1;
         }
 
         internal void Add(Clan Clan)
@@ -50,7 +49,7 @@ namespace CRepublic.Magic.Core
         {
             if (this.TryRemove(Clan.Clan_ID))
             {
-                this.Save(Clan, Constants.Database);
+                this.Save(Clan, Constants.Database).Wait();
             }
         }
 
@@ -190,7 +189,7 @@ namespace CRepublic.Magic.Core
 
                     case DBMS.Redis:
                         {
-                            this.Save(Clan, DBMS);
+                            this.Save(Clan, DBMS.Redis).Wait();
 
                             if (Store)
                             {
@@ -201,8 +200,8 @@ namespace CRepublic.Magic.Core
 
                     case DBMS.Both:
                         {
-                            this.Save(Clan, DBMS);
-                            DBMS = DBMS.Mysql;
+                            this.Save(Clan, DBMS.Mysql).Wait();
+                            DBMS = DBMS.Redis;
 
                             if (Store)
                             {

@@ -53,8 +53,7 @@ namespace CRepublic.Magic.Logic
             while (!found)
             {
                 var league = (Leagues) table.Datas[i];
-                if (this.Trophies <= league.BucketPlacementRangeHigh[league.BucketPlacementRangeHigh.Length - 1] &&
-                    this.Trophies >= league.BucketPlacementRangeLow[0])
+                if (this.Trophies <= league.BucketPlacementRangeHigh[league.BucketPlacementRangeHigh.Length - 1] && this.Trophies >= league.BucketPlacementRangeLow[0])
                 {
                     found = true;
                     this.League = i;
@@ -223,7 +222,7 @@ namespace CRepublic.Magic.Logic
         {
             get
             {
-                this.Refresh();
+                //this.Refresh();
 
                 List<byte> _Packet = new List<byte>();
 

@@ -109,6 +109,7 @@ namespace CRepublic.Magic.Logic.Manager
                     }
             return result;
         }
+
         public int GetTotalMaxHousingV2()
         {
             var result = 0;

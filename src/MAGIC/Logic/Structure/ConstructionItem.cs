@@ -278,10 +278,11 @@ namespace CRepublic.Magic.Logic.Structure
             }
             this.UpgradeLevel = jsonObject["lvl"].ToObject<int>();
 
-            if (Builder_Village)
-                this.Level.BuilderVillageWorkerManager.DeallocateWorker(this);
-            else
-                this.Level.VillageWorkerManager.DeallocateWorker(this);
+            //TODO: Figure if this is required
+            //if (Builder_Village)
+              //  this.Level.BuilderVillageWorkerManager.DeallocateWorker(this);
+            //else
+              //  this.Level.VillageWorkerManager.DeallocateWorker(this);
 
             var gearingToken = jsonObject["gearing"];
             var gearingTimeToken = jsonObject["const_t"];
@@ -319,10 +320,7 @@ namespace CRepublic.Magic.Logic.Structure
                 var startTime = (int)TimeUtils.ToUnixTimestamp(this.Level.Avatar.LastTick);
                 var duration = remainingConstructionEndTime - startTime;
 
-                if (duration < 0)
-                    duration = 0;
-
-                this.Timer.StartTimer(this.Level.Avatar.LastTick, duration);
+                this.Timer.StartTimer(this.Level.Avatar.LastTick, duration > 0 ? duration : 0);
 
                 if (Builder_Village)
                     this.Level.BuilderVillageWorkerManager.AllocateWorker(this);

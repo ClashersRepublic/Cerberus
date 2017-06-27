@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using CRepublic.Magic.Logic;
 using CRepublic.Magic.Logic.Structure.Slots;
+using System.Collections.Concurrent;
 
 namespace CRepublic.Magic.Core
 {
-    internal class Battles_V2 : Dictionary<long, Battle_V2>
+    internal class Battles_V2 : ConcurrentDictionary<long, Battle_V2>
     {
         internal int Seed = 1;
 
@@ -16,7 +17,7 @@ namespace CRepublic.Magic.Core
             this.Waiting = new List<Level>();
         }
 
-        public new void Remove(long BattleID)
+        public void Remove(long BattleID)
         {
             if (this.ContainsKey(BattleID))
             {

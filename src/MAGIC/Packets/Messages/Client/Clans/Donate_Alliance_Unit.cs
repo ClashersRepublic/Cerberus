@@ -66,8 +66,12 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
                         var Spell_Level = this.Device.Player.Avatar.GetUnitUpgradeLevel(this.Spell);
                         Stream.AddSpell(this.Device.Player.Avatar.UserId, this.GlobalId, 1, Spell_Level);
                         Stream.Used_Space_Spells += this.Spell.HousingSpace[0];
+
                         Receiver.Avatar.Castle_Used_SP += this.Spell.HousingSpace[0];
+                        Receiver.Avatar.Received++;
                         Receiver.Avatar.AddCastleSpell(this.GlobalId, 1, Spell_Level);
+
+                        this.Device.Player.Avatar.Donations++;
 
                         new Server_Commands(this.Device) { Command = new Donate_Troop_Callback(this.Device) { SteamHighId = this.StreamHighId, StreamLowId = this.StreamLowId, TroopGlobalId = this.Spell.GetGlobalID() }.Handle() }.Send();
 
@@ -95,7 +99,10 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
                         Stream.Used_Space_Troops += this.Troop.HousingSpace;
 
                         Receiver.Avatar.Castle_Used += this.Troop.HousingSpace;
+                        Receiver.Avatar.Received++;
                         Receiver.Avatar.AddCastleTroop(this.GlobalId, 1, Unit_Level);
+
+                        this.Device.Player.Avatar.Donations++;
 
                         new Server_Commands(this.Device) { Command = new Donate_Troop_Callback(this.Device) { SteamHighId = this.StreamHighId, StreamLowId = this.StreamLowId, TroopGlobalId = this.Troop.GetGlobalID() }.Handle() }.Send();
 

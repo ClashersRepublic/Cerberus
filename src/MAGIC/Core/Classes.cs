@@ -49,6 +49,8 @@ namespace CRepublic.Magic.Core
             this.Timers = new Timers();
             
             this.Test = new Test();
+        
+            MySQL_V2.GetAllSeed();
         }
 
         void IDisposable.Dispose()

@@ -29,7 +29,6 @@ namespace CRepublic.Magic.Core
 
         internal Battles()
         {
-            this.Seed = MySQL_V2.GetBattleSeed() + 1;
         }
 
         internal void Add(Battle Battle)
@@ -92,7 +91,7 @@ namespace CRepublic.Magic.Core
                         {
                             _Battle = this.Get(_BattleID, DBMS.Mysql, Store);
                             if (_Battle != null)
-                                this.Save(_Battle, DBMS.Redis);
+                                this.Save(_Battle, DBMS.Redis).Wait();
 
                         }
                         break;
@@ -138,7 +137,7 @@ namespace CRepublic.Magic.Core
 
                     case DBMS.Redis:
                     {
-                        this.Save(_Battle, DBMS);
+                        this.Save(_Battle, DBMS.Redis).Wait();
 
                         if (Store)
                         {
@@ -149,8 +148,8 @@ namespace CRepublic.Magic.Core
 
                     case DBMS.Both:
                     {
-                        this.Save(_Battle, DBMS);
-                        DBMS = DBMS.Mysql;
+                        this.Save(_Battle, DBMS.Mysql).Wait();
+                        DBMS = DBMS.Redis;
 
                         if (Store)
                         {
@@ -215,50 +214,49 @@ namespace CRepublic.Magic.Core
                 switch (DBMS)
                 {
                     case DBMS.Mysql:
-                    {
-
-                        using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.Configuration.AutoDetectChangesEnabled = false;
-                            Database.Configuration.ValidateOnSaveEnabled = false;
-                            foreach (var Battle in this.Values.ToList())
-                            {
-                                lock (Battle)
-                                {
-                                    var Data = Database.Battle.Find(Battle.Battle_ID);
 
-                                    if (Data != null)
+                            using (MysqlEntities Database = new MysqlEntities())
+                            {
+                                Database.Configuration.AutoDetectChangesEnabled = false;
+                                Database.Configuration.ValidateOnSaveEnabled = false;
+                                foreach (var Battle in this.Values.ToList())
+                                {
+                                    lock (Battle)
                                     {
-                                        Data.Data = JsonConvert.SerializeObject(Battle, this.Settings);
-                                        Database.Entry(Data).State = EntityState.Modified;
+                                        var Data = Database.Battle.Find(Battle.Battle_ID);
+
+                                        if (Data != null)
+                                        {
+                                            Data.Data = JsonConvert.SerializeObject(Battle, this.Settings);
+                                            Database.Entry(Data).State = EntityState.Modified;
+                                        }
                                     }
                                 }
+                                await Database.SaveChangesAsync();
                             }
-                            await Database.SaveChangesAsync();
+                            break;
                         }
-                        break;
-                    }
 
                     case DBMS.Redis:
-                    {
-                        foreach (var Battle in this.Values.ToList())
                         {
-                            await Redis.Battles.StringSetAsync(Battle.Battle_ID.ToString(),
-                                JsonConvert.SerializeObject(Battle, this.Settings), TimeSpan.FromHours(4));
+                            foreach (var Battle in this.Values.ToList())
+                            {
+                                await Redis.Battles.StringSetAsync(Battle.Battle_ID.ToString(),
+                                    JsonConvert.SerializeObject(Battle, this.Settings), TimeSpan.FromHours(4));
+                            }
+                            break;
                         }
-                        break;
-                    }
 
                     case DBMS.Both:
-                    {
-                        DBMS = DBMS.Redis;
-                        await this.Save();
-                        continue;
-                    }
+                        {
+                            await this.Save();
+                            DBMS = DBMS.Redis;
+                            continue;
+                        }
                 }
                 break;
             }
         }
-
     }
 }

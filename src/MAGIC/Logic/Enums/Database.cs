@@ -5,5 +5,6 @@
         Players = 0,
         Clans = 1,
         Battles = 2,
+        ClanWars = 3
     }
 }

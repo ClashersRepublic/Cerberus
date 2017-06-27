@@ -45,6 +45,59 @@ namespace CRepublic.Magic.Core.Database
             return Level;
         }
 
+        internal static void GetAllSeed()
+        {
+            try
+            {
+                MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder()
+                {
+                    Server = Utils.ParseConfigString("MysqlIPAddress"),
+                    UserID = Utils.ParseConfigString("MysqlUsername"),
+                    Port = (uint)Utils.ParseConfigInt("MysqlPort"),
+                    Pooling = false,
+                    Database = Utils.ParseConfigString("MysqlDatabase"),
+                    MinimumPoolSize = 1
+                };
+
+                if (!string.IsNullOrWhiteSpace(Utils.ParseConfigString("MysqlPassword")))
+                {
+                    builder.Password = Utils.ParseConfigString("MysqlPassword");
+                }
+
+                Credentials = builder.ToString();
+
+                using (MySqlConnection Conn = new MySqlConnection(Credentials))
+                {
+                    Conn.Open();
+
+                    using (MySqlCommand CMD = new MySqlCommand("SELECT coalesce(MAX(ID), 0) FROM player", Conn))
+                    {
+                        CMD.Prepare();
+                        Resources.Players.Seed = Convert.ToInt64(CMD.ExecuteScalar()) + 1;
+                    }
+
+                    using (MySqlCommand CMD = new MySqlCommand("SELECT coalesce(MAX(ID), 0) FROM clan", Conn))
+                    {
+                        CMD.Prepare();
+                        Resources.Clans.Seed = Convert.ToInt64(CMD.ExecuteScalar()) + 1;
+                    }
+
+                    using (MySqlCommand CMD = new MySqlCommand("SELECT coalesce(MAX(ID), 0) FROM battle", Conn))
+                    {
+                        CMD.Prepare();
+                        Resources.Battles.Seed = Convert.ToInt64(CMD.ExecuteScalar()) + 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Loggers.Log("An exception occured when reconnecting to the MySQL Server.", true, Defcon.ERROR);
+                Loggers.Log("Please check your database configuration!", true, Defcon.ERROR);
+                Loggers.Log(ex.Message, true, Defcon.ERROR);
+                Console.ReadKey();
+            }
+        }
+
         internal static long GetClanSeed()
         {
             const string SQL = "SELECT coalesce(MAX(ID), 0) FROM clan";
@@ -116,22 +169,6 @@ namespace CRepublic.Magic.Core.Database
                 const string SQL = "SELECT coalesce(MAX(ID), 0) FROM player";
                 long Seed = -1;
 
-                MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder()
-                {
-                    Server = Utils.ParseConfigString("MysqlIPAddress"),
-                    UserID = Utils.ParseConfigString("MysqlUsername"),
-                    Port = (uint)Utils.ParseConfigInt("MysqlPort"),
-                    Pooling = false,
-                    Database = Utils.ParseConfigString("MysqlDatabase"),
-                    MinimumPoolSize = 1
-                };
-
-                if (!string.IsNullOrWhiteSpace(Utils.ParseConfigString("MysqlPassword")))
-                {
-                    builder.Password = Utils.ParseConfigString("MysqlPassword");
-                }
-
-                Credentials = builder.ToString();   
                 using (MySqlConnection Connections = new MySqlConnection(Credentials))  
                 {
                     Connections.Open();

@@ -183,7 +183,6 @@ namespace CRepublic.Magic.Core.Networking
                     Resources.Exceptions.Catch(ex, "Exception while processing receive");
                 }
 
-
                 if (startNew)
                     this.StartReceive(AsyncEvent);
             }
@@ -243,9 +242,6 @@ namespace CRepublic.Magic.Core.Networking
                 {
                     while (true)
                     {
-                        if (AsyncEvent == null)
-                            Resources.Exceptions.RavenClient.Capture(new SentryEvent("Exception while starting send"));
-                        else
                         if (!socket.SendAsync(AsyncEvent))
                             this.ProcessSend(AsyncEvent);
                         else
@@ -314,6 +310,7 @@ namespace CRepublic.Magic.Core.Networking
 
         internal void OnIOCompleted(object sender, SocketAsyncEventArgs AsyncEvent)
         {
+
             switch (AsyncEvent.LastOperation)
             {
                 case SocketAsyncOperation.Accept:

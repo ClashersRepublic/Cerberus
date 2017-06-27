@@ -30,14 +30,12 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
                 this.Device.Player.Avatar.Battle_ID_V2 = Resources.Battles_V2.Seed;
 
                 Battle_V2 Battle = new Battle_V2(this.Device.Player, Enemy);
-                Resources.Battles_V2.Add(Resources.Battles_V2.Seed++, Battle);
-
-
-                new Pc_Battle_Data_V2(this.Device, Enemy).Send();
+                Resources.Battles_V2.TryAdd(Resources.Battles_V2.Seed++, Battle);
 
                 new V2_Battle_Info(this.Device, Enemy).Send();
 
-                new Pc_Battle_Data_V2(Enemy.Client, this.Device.Player).Send();
+                new Pc_Battle_Data_V2(this.Device, Enemy).Send();
+
                 new V2_Battle_Info(Enemy.Client, this.Device.Player).Send();
                 new Pc_Battle_Data_V2(Enemy.Client, this.Device.Player).Send();
             }

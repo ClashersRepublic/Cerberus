@@ -24,6 +24,7 @@ namespace CRepublic.Magic.Logic
 
         [JsonProperty("level")] internal int Level = 1;
         [JsonProperty("experience")] internal int Experience;
+        [JsonProperty("hide")] internal bool Hide_From_Public;
 
         [JsonProperty("win")] internal int Won_War;
         [JsonProperty("lost")] internal int Lost_War;

@@ -51,6 +51,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Battle
             this.Data.AddInt(0); //Win or lost?
             this.Data.AddInt(0); //Win or lost?
             this.Data.AddInt(0); //Win or lost trophies
+
             this.Data.AddByte(this.Enemy.Finished ? 3 : 2);
             this.Data.AddInt(2); //Replay Low ID
             this.Data.AddInt(0);

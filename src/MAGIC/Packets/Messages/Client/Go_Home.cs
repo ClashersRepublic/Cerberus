@@ -75,6 +75,8 @@ namespace CRepublic.Magic.Packets.Messages.Client
                                 if (Battle.Replay_Info.Stats.Destruction_Percentage == 100)
                                     Battle.Replay_Info.Stats.TownHall_Destroyed = true;
                             }
+                            this.Device.Player.Avatar.Refresh();
+                            Player.Avatar.Refresh();
 
                             Battle.Set_Replay_Info();
                             this.Device.Player.Avatar.Inbox.Add(
@@ -118,7 +120,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                     {
                         if (this.Device.Player.Avatar.Battle_ID_V2 != 0)
                             this.Device.Player.Avatar.Battle_ID_V2 = 0;
-                        else
+
                             Resources.Battles_V2.Dequeue(this.Device.Player);
                     }
 
@@ -152,7 +154,10 @@ namespace CRepublic.Magic.Packets.Messages.Client
                     }
 
                     if (Enemy.Finished)
-                    new V2_Battle_Result(Battle.GetEnemy(UserID).Client, Battle).Send();
+                    {
+                        new V2_Battle_Result(Battle.GetEnemy(UserID).Client, Battle).Send();
+                    }
+
                     new V2_Battle_Result(this.Device, Battle).Send();
 
 

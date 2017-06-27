@@ -27,7 +27,6 @@ namespace CRepublic.Magic.Core
 
         internal Players()
         {
-            this.Seed = MySQL_V2.GetPlayerSeed() + 1;
         }
 
         internal void Add(Level Player)
@@ -50,7 +49,7 @@ namespace CRepublic.Magic.Core
             if (Player != null)
             {
                 Player.Tick();
-                this.Save(Player, Constants.Database);
+                this.Save(Player, Constants.Database).Wait();
 
                 this.TryRemove(Player.Avatar.UserId);
 

@@ -49,6 +49,8 @@ namespace CRepublic.Magic.Logic.Structure
         public Component GetComponent(int index, bool test)
         {
             Component result = null;
+            //if (test || this.Components[index].IsEnable)
+            //TODO: Test this
             if (!test || this.Components[index].IsEnable)
             {
                 result = this.Components[index];
@@ -66,7 +68,7 @@ namespace CRepublic.Magic.Logic.Structure
         {
             X = jsonObject["x"].ToObject<int>();
             Y = jsonObject["y"].ToObject<int>();
-
+        
             /* if (TownHallLevel() >= 4)
              {
                  L1X = jsonObject["l1x"].ToObject<int>();

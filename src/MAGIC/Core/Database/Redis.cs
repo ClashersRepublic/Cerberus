@@ -9,7 +9,7 @@ namespace CRepublic.Magic.Core.Database
         internal static IDatabase Players;
         internal static IDatabase Clans;
         internal static IDatabase Battles;
-
+        internal static IDatabase ClanWars;
         internal Redis()
         {
             ConfigurationOptions Configuration = new ConfigurationOptions();
@@ -26,6 +26,7 @@ namespace CRepublic.Magic.Core.Database
             Redis.Players = Connection.GetDatabase((int)Logic.Enums.Database.Players);
             Redis.Clans = Connection.GetDatabase((int)Logic.Enums.Database.Clans);
             Redis.Battles = Connection.GetDatabase((int)Logic.Enums.Database.Battles);
+            Redis.ClanWars = Connection.GetDatabase((int)Logic.Enums.Database.ClanWars);
 
             Loggers.Log("Redis Database has been succesfully loaded.", true);
         }
