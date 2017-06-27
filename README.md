@@ -19,4 +19,4 @@ All programs are developed by the Clashers Republic Development Team are license
 **Clashers Republic**'s resources and programs are protected under the license and our policies available on our website.
 **Clashers Republic**'s resources and programs are created by the (**Clashers Republic**) team.  
 **Clashers Republic** is **NOT** affiliated with '_Supercell, Oy_'.  
-**Clashers Republic** does **NOT** own '_Clash of Clans_', '_Boom Beach_', '_Clash Royale_', '_Brawl Stars', and/or '_Hay Day_'.
+**Clashers Republic** does **NOT** own '_Clash of Clans_', '_Boom Beach_', '_Clash Royale_', '_Brawl Stars_', and/or '_Hay Day_'.
