@@ -55,7 +55,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Authentication
             this.Data.AddString(avatar.Region);
             this.Data.AddString(null);
             this.Data.AddInt(1); //Unknown
-            this.Data.AddString("https://event-assets.clashofclans.com");
+            this.Data.AddString("https://www.clashersrepublic.com/events/");
             this.Data.AddString("http://b46f744d64acd2191eda-3720c0374d47e9a0dd52be4d281c260f.r11.cf2.rackcdn.com/"); //Patch server?
             this.Data.AddString(null);
 
@@ -69,7 +69,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Authentication
             blake.Update(this.Device.Keys.PublicKey);
             blake.Update(Key.PublicKey);
 
-            byte[] Nonce = blake.Finish();
+            byte[] Nonce = blake.Finish();  
             byte[] encrypted = this.Device.Keys.RNonce.Concat(this.Device.Keys.PublicKey).Concat(this.Data).ToArray();
 
             this.Data = new List<byte>(Sodium.Encrypt(encrypted, Nonce, Key.PrivateKey, this.Device.Keys.PublicKey));

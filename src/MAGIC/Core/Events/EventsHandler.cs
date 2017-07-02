@@ -23,7 +23,7 @@ namespace CRepublic.Magic.Core.Events
         {
             try
             {
-                 await Task.WhenAll(Resources.Players.Save(Constants.Database), Resources.Clans.Save(Constants.Database), Resources.Battles.Save(Constants.Database)).ConfigureAwait(false);
+                Task.WaitAll(Resources.Players.Save(Constants.Database), Resources.Clans.Save(Constants.Database), Resources.Battles.Save(Constants.Database));
             }
             catch (Exception)
             {

@@ -67,7 +67,7 @@ namespace CRepublic.Magic.Logic.Components
 
             if (ca.HasEnoughResources(rd.GetGlobalID(), bd.AmmoCost[0]))
             {
-                ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), bd.AmmoCost[0]);
+                ca.Resources.Minus(rd.GetGlobalID(), bd.AmmoCost[0]);
                 this.Ammo = bd.AmmoCount;
             }
         }

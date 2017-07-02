@@ -37,7 +37,7 @@ namespace CRepublic.Magic.Packets.Commands.Client
 
                 if (ca.HasEnoughResources(bd.GetBuildResource().GetGlobalID(), bd.GetBuildCost()))
                 {
-                    ca.Resources.ResourceChangeHelper(bd.GetGlobalID(), -bd.GetBuildCost());
+                    ca.Resources.Minus(bd.GetGlobalID(), bd.GetBuildCost());
                     b.SetPositionXY(this.Vector);
                     this.Device.Player.GameObjectManager.AddGameObject(b);
                 }
@@ -47,7 +47,7 @@ namespace CRepublic.Magic.Packets.Commands.Client
                 var b = new Builder_Deco(bd, this.Device.Player);
                 if (ca.HasEnoughResources(bd.GetBuildResource().GetGlobalID(), bd.GetBuildCost()))
                 {
-                    ca.Resources.ResourceChangeHelper(bd.GetGlobalID(), -bd.GetBuildCost());
+                    ca.Resources.Minus(bd.GetGlobalID(), bd.GetBuildCost());
                     b.SetPositionXY(this.Vector);
                     this.Device.Player.GameObjectManager.AddGameObject(b);
                 }

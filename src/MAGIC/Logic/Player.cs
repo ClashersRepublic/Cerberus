@@ -23,6 +23,10 @@ namespace CRepublic.Magic.Logic
         [JsonIgnore] internal int Amical_ID;
         [JsonIgnore] internal int ObstacleClearCount;
 
+
+        [JsonIgnore]
+        internal DateTime LoginTime = DateTime.UtcNow;
+
         [JsonIgnore]
         internal long UserId
         {
@@ -50,7 +54,7 @@ namespace CRepublic.Magic.Logic
             DataTable table = CSV.Tables.Get(Gamefile.Leagues);
             int i = 0;
             bool found = false;
-            while (!found)
+            while (!found && i < table.Datas.Count)
             {
                 var league = (Leagues) table.Datas[i];
                 if (this.Trophies <= league.BucketPlacementRangeHigh[league.BucketPlacementRangeHigh.Length - 1] && this.Trophies >= league.BucketPlacementRangeLow[0])
@@ -414,6 +418,7 @@ namespace CRepublic.Magic.Logic
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
                 _Packet.AddDataSlots(this.Units2);
+                _Packet.AddInt(0);
                 _Packet.AddInt(0);
                 return _Packet.ToArray();
             }

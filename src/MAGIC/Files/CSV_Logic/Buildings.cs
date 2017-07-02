@@ -205,6 +205,7 @@ namespace CRepublic.Magic.Files.CSV_Logic
         public int[] GearUpCost { get; set; }
         public int[] GearUpTime { get; set; }
 
+        public override int GetBuildCost(int level) => BuildCost[level];
 
         public override int GetRequiredTownHallLevel(int level) => TownHallLevel[level] - 1;
 

@@ -301,6 +301,7 @@
     <Compile Include="Files\CSV_Reader\RowCollection.cs" />
     <Compile Include="Files\CSV_Reader\Table.cs" />
     <Compile Include="Files\Fingerprint.cs" />
+    <Compile Include="Files\Game_Events.cs" />
     <Compile Include="Files\Home.cs" />
     <Compile Include="Files\NPC.cs" />
     <Compile Include="Logic\Enums\Mode.cs" />
@@ -518,6 +519,7 @@
     <Compile Include="Packets\Messages\Server\Avatar_Stream_Entry.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Battle_Failed.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Live_Battle.cs" />
+    <Compile Include="Packets\Messages\Server\Battle\Live_Battle_Data.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Live_Battle_Stats.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Pc_Battle_Data_V2.cs" />
     <Compile Include="Packets\Messages\Server\Battle\Npc_Data.cs" />
@@ -582,6 +584,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Mysql.edmx</DependentUpon>
       <LastGenOutput>Mysql.cs</LastGenOutput>
+    </None>
+    <None Include="Gamefiles\events.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Gamefiles\fingerprint.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

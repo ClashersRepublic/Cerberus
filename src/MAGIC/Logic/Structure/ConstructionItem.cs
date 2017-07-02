@@ -126,7 +126,7 @@ namespace CRepublic.Magic.Logic.Structure
                 int multiplier = (CSV.Tables.Get(Gamefile.Globals).GetData("BUILD_CANCEL_MULTIPLIER") as Globals).NumberValue;
                 int resourceCount = (int)((cost * multiplier * (long)1374389535) >> 32);
                 resourceCount = Math.Max((resourceCount >> 5) + (resourceCount >> 31), 0);
-                this.Level.Avatar.Resources.ResourceChangeHelper(rd.GetGlobalID(), resourceCount);
+                this.Level.Avatar.Resources.Plus(rd.GetGlobalID(), resourceCount);
 
                 if (Builder_Village)
                     this.Level.BuilderVillageWorkerManager.DeallocateWorker(this);

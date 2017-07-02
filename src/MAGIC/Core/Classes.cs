@@ -19,6 +19,7 @@ namespace CRepublic.Magic.Core
         internal CSV CSV;
         internal Home Home;
         internal NPC Npc;
+        internal Game_Events Game_Events;
         internal Timers Timers;
         internal Redis Redis;
         internal Fingerprint Fingerprint;
@@ -33,6 +34,7 @@ namespace CRepublic.Magic.Core
             this.CSV = new CSV();
             this.Home = new Home();
             this.Npc = new NPC();
+            this.Game_Events = new Game_Events();
             this.Fingerprint = new Fingerprint();
             switch (Constants.Database)
             {

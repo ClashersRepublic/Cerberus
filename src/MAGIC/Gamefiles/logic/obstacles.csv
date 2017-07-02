@@ -38,7 +38,7 @@ Npc Plant 1,TID_OBSTACLE_STONE,TID_OBSTACLE_STONE,sc/buildings.sc,env_npc_plant1
 Npc Plant 2,TID_OBSTACLE_STONE,TID_OBSTACLE_STONE,sc/buildings.sc,env_npc_plant2,,10,3,3,true,Gold,0,,,,Stone Pickup,0,false,,1,,,,,,,,,,,,,,,,,,,,,,,
 Halloween2015,TID_OBSTACLE_HALLOWEEN2015,TID_OBSTACLE_HALLOWEEN2015,sc/env.sc,env_cauldron,env_sharpstone_2_base,30,2,2,false,Elixir,25000,Elixir,75000,,Cauldron Pickup,0,false,,1,96,0,,,,,,,,,,,,,,,,,,,,,
 Xmas tree2015,TID_OBSTACLE_XMASTREE,TID_OBSTACLE_XMASTREE,sc/buildings.sc,env_xmastree_4,pine_tree2_base,30,2,2,false,Gold,25000,Gold,75000,,Xmas Tree Pickup,0,false,,1,120,0,,,,,,,,,,,,,,,,,,,,,
-LootCart,TID_LOOT_CART,TID_LOOT_CART_INFO,sc/buildings.sc,mega_tombstone,,0,2,2,true,Gold,0,Elixir,0,,Gold Storage Pickup,0,false,,1,,,,,,,,,20,,,,,,,,,,,,,25,mega_tombstone2
+LootCart,TID_LOOT_CART,TID_LOOT_CART_INFO,sc/buildings.sc,mega_tombstone,,0,2,2,true,Gold,0,Elixir,0,,Gold Storage Pickup,0,false,,1,,,,,,,,,20,,,,,,,,,,,,,33,mega_tombstone2
 Halloween2016,TID_OBSTACLE_HALLOWEEN2016,TID_OBSTACLE_HALLOWEEN2016,sc/buildings.sc,env_halloween2016_maw,env_sharpstone_2_base,30,2,2,false,Elixir,25000,Elixir,75000,,Pumpkin Pickup,0,false,,1,96,0,,,,,,,,,,,,,,,,,,,,,
 Xmas tree2016,TID_OBSTACLE_XMASTREE,TID_OBSTACLE_XMASTREE,sc/buildings.sc,env_xmastree_5,pine_tree2_base,30,2,2,false,Gold,25000,Gold,75000,,Xmas Tree Pickup,0,false,,1,120,0,,,,,,,,,,,,,,,,,,,,,
 Pine Tree_village2,TID_OBSTACLE_TREE,TID_OBSTACLE_TREE,sc/buildings.sc,env_pinetree_1,pine_tree2_base,10,2,2,false,Elixir2,2000,Diamonds,1,,Tree Pickup,30,false,,2,,,,,,,,,,230,230,255,0,0,10,,1,3,,,,,
@@ -65,3 +65,5 @@ Small Stone 2 new,TID_OBSTACLE_STONE,TID_OBSTACLE_STONE,sc/buildings2.sc,env2_sm
 Small Pillar 1 new,TID_OBSTACLE_STONE,TID_OBSTACLE_STONE,sc/buildings2.sc,env2_rock_pillar_1x1,small_stone_c_base,10,2,2,false,Gold2,500,Diamonds,1,,Stone Pickup,0,false,,2,,,,,,,,,,,,,,,,,1,1,,,,,
 Tall grass 1,TID_GRASS,TID_GRASS,sc/buildings2.sc,TallGrass_01_1,,0,1,1,true,Elixir2,50,Elixir2,0,,Stone Pickup,3,false,,2,,,,,,,,,,,,,,,,,1,,3,true,true,,
 Tall grass 2,TID_GRASS,TID_GRASS,sc/buildings2.sc,TallGrass_02_1,,0,1,1,true,Elixir2,50,Elixir2,0,,Stone Pickup,3,false,,2,,,,,,,,,,,,,,,,,1,,3,true,true,,
+Birthday2017,TID_OBSTACLE_BIRTHDAY2017,TID_OBSTACLE_BIRTHDAY2017,sc/buildings.sc,deco_birthday_cake,,30,2,2,false,Elixir,25000,Elixir,75000,,Cake Pickup,0,false,,1,96,0,,,,,,,,,,,,,,,,,,,,,
+Birthday TombStone,TID_OBSTACLE_XMASPRESENT,TID_OBSTACLE_XMASPRESENT,sc/buildings.sc,tombstone_birthday,,0,1,1,true,Gold,0,Elixir,5000,Clear Tombstone,Stone Pickup,0,true,1,1,,,,,,,,,,,,,,,,,,,,,,,

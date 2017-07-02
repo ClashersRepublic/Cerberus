@@ -27,10 +27,10 @@ namespace CRepublic.Magic.Packets.Messages.Client.API
         {
             if (!string.IsNullOrEmpty(this.GoogleID) && !string.IsNullOrEmpty(this.Token))
             {
-                this.Device.Player.Avatar.Google.Identifier = this.GoogleID;
-                this.Device.Player.Avatar.Google.Token = this.Token;
+            //    this.Device.Player.Avatar.Google.Identifier = this.GoogleID;
+          //      this.Device.Player.Avatar.Google.Token = this.Token;
 
-                this.Device.Player.Avatar.Google.Connect();
+        //        this.Device.Player.Avatar.Google.Connect();
             }
         }
     }

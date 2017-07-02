@@ -55,8 +55,8 @@ namespace CRepublic.Magic.Packets.Debugs
                             this.Help.AppendLine("\t 1 = Gold");
                             this.Help.AppendLine("\t 2 = Elixir");
                             this.Help.AppendLine("\t 3 = DarkElixir");
-                            this.Help.AppendLine("\t 7 = BuilderElixir");
-                            this.Help.AppendLine("\t 8 = BuilderGold");
+                            this.Help.AppendLine("\t 7 = BuilderGold");
+                            this.Help.AppendLine("\t 8 = BuilderElixir");
                             this.Help.AppendLine("\t 9 = All");
                             this.Help.AppendLine();
                             this.Help.AppendLine("Command:");
@@ -73,8 +73,8 @@ namespace CRepublic.Magic.Packets.Debugs
                     this.Help.AppendLine("\t 1 = Gold");
                     this.Help.AppendLine("\t 2 = Elixir");
                     this.Help.AppendLine("\t 3 = DarkElixir");
-                    this.Help.AppendLine("\t 7 = BuilderElixir");
-                    this.Help.AppendLine("\t 8 = BuilderGold");
+                    this.Help.AppendLine("\t 7 = BuilderGold");
+                    this.Help.AppendLine("\t 8 = BuilderElixir");
                     this.Help.AppendLine("\t 9 = All");
                     this.Help.AppendLine();
                     this.Help.AppendLine("Command:");
@@ -90,8 +90,8 @@ namespace CRepublic.Magic.Packets.Debugs
                 this.Help.AppendLine("\t 1 = Gold");
                 this.Help.AppendLine("\t 2 = Elixir");
                 this.Help.AppendLine("\t 3 = DarkElixir");
-                this.Help.AppendLine("\t 7 = BuilderElixir");
-                this.Help.AppendLine("\t 8 = BuilderGold");
+                this.Help.AppendLine("\t 7 = BuilderGold");
+                this.Help.AppendLine("\t 8 = BuilderElixir");
                 this.Help.AppendLine("\t 9 = All");
                 this.Help.AppendLine();
                 this.Help.AppendLine("Command:");

@@ -102,7 +102,7 @@ namespace CRepublic.Magic.Logic.Structure.Slots
 
                     //_Packet.AddInt(Member.Connected ? 1 : 0);
                     _Packet.AddInt(Member.New ? 1 : 0);
-                    _Packet.AddInt(785097); //War Cooldown
+                    _Packet.AddInt(0); //War Cooldown
                     _Packet.AddInt(_Player.Avatar.WarState ? 1 : 0);
                     _Packet.AddByte(1);
                     _Packet.AddLong(_Player.Avatar.UserId);

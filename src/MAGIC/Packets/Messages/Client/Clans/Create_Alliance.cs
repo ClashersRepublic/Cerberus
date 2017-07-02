@@ -9,6 +9,7 @@ using CRepublic.Magic.Logic.Enums;
 using CRepublic.Magic.Logic.Structure.Slots.Items;
 using CRepublic.Magic.Packets.Commands.Server;
 using CRepublic.Magic.Packets.Messages.Server;
+using CRepublic.Magic.Packets.Messages.Server.Clans;
 using CRepublic.Magic.Packets.Messages.Server.Errors;
 
 namespace CRepublic.Magic.Packets.Messages.Client.Clans
@@ -63,8 +64,22 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
                     Event_Player_Name = this.Device.Player.Avatar.Name
                 });
 
+                this.Clan.Chats.Add(new Entry
+                {
+                    Stream_Type = Alliance_Stream.GIFT,
+                    Sender_ID = this.Device.Player.Avatar.UserId,
+                    Sender_Name = this.Device.Player.Avatar.Name,
+                    Sender_Level = this.Device.Player.Avatar.Level,
+                    Sender_League = this.Device.Player.Avatar.League,
+                    Sender_Role = Role.Leader,
+                    Event_ID = Events.JOIN_ALLIANCE,
+                    Event_Player_ID = this.Device.Player.Avatar.UserId,
+                    Event_Player_Name = this.Device.Player.Avatar.Name
+                });
+
                 await Resources.Clans.Save(this.Clan);
-                
+
+                new Alliance_Full_Entry(this.Device) { Clan = this.Clan }.Send();
                 new Server_Commands(this.Device) { Command = new Joined_Alliance(this.Device) { Clan = this.Clan }.Handle() }.Send();
                 new Server_Commands(this.Device) { Command = new Role_Update(this.Device) { Clan = this.Clan, Role = (int)Role.Leader }.Handle() }.Send();
             }

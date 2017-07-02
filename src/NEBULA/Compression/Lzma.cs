@@ -24,15 +24,6 @@
 
         internal static void CompressCoC(string file, string outputlocation)
         {
-            File.Copy(file, file += ".clone");
-
-            byte[] hash;
-            using (var md5 = MD5.Create())
-            {
-                hash = md5.ComputeHash(File.ReadAllBytes(file));
-            }
-
-
             var encoder = new Encoder();
             using (var input = new FileStream(file, FileMode.Open))
             {
@@ -49,7 +40,6 @@
                         CoderPropID.MatchFinder,    
                         CoderPropID.EndMarker
                     };
-                    Console.WriteLine(propIDs.ToArray());
 
                     object[] properties =
                     {
@@ -63,13 +53,8 @@
                         Mf,
                         Eos
                     };
-
-                    output.Write(Encoding.UTF8.GetBytes("SC"), 0, 2);
-                    output.Write(BitConverter.GetBytes(1).Reverse().ToArray(), 0, 4);
-                    output.Write(BitConverter.GetBytes(hash.Length).Reverse().ToArray(), 0, 4);
-                    output.Write(hash, 0, hash.Length);
                     encoder.SetCoderProperties(propIDs, properties);
-                    output.Write(HexaToBytes("5D 00 00 04 00"), 0, 5);
+                    encoder.WriteCoderProperties(output);
                     output.Write(BitConverter.GetBytes(input.Length), 0, 4);
 
                     encoder.Code(input, output, input.Length, -1, null);

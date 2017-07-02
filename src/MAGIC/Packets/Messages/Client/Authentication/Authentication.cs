@@ -201,14 +201,15 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
         internal void Login()
         {
             this.Device.Player.Client = this.Device;
-   
+            this.Device.Player.Avatar.LoginTime = DateTime.UtcNow;
             Resources.GChat.Add(this.Device);
             Resources.PRegion.Add(this.Device.Player);
 
             //new Authentication_Failed(this.Device,(Reason)19).Send();
             new Authentication_OK(this.Device).Send();
-
             new Own_Home_Data(this.Device).Send();
+
+            // new Own_Home_Data(this.Device).Send();
 
             new Server.Avatar_Stream(this.Device).Send();
             //new Game_News(this.Device).Send();

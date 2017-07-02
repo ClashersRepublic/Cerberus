@@ -35,6 +35,7 @@ namespace CRepublic.Magic.Files.CSV_Logic
         public int GreenAdd { get; set; }
         public int BlueAdd { get; set; }
         public bool LightsOn { get; set; }
+
         public int GetBuildCost() => BuildCost;
 
         public Resource GetBuildResource() => CSV.Tables.Get(Gamefile.Resources).GetData(BuildResource) as Resource;

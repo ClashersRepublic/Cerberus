@@ -169,6 +169,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
 
                 if (this.Device.Player.Avatar.ClanId > 0)
                 {
+                    
                 }
             }
         }

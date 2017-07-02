@@ -41,6 +41,33 @@ namespace CRepublic.Magic.Packets.Commands.Client
                 {
                     if (bd.IsWorkerBuilding())
                     {
+                        if (this.Device.Player.VillageWorkerManager.WorkerCount > 0)
+                        {
+                            int Cost = 0;
+                            var row = CSV.Tables.Get(Gamefile.Globals);
+                            if (this.Device.Player.VillageWorkerManager.WorkerCount == 1)
+                            {
+                                Cost = ((Globals)row.GetData("WORKER_COST_2ND")).NumberValue;
+
+                            }
+                            else if (this.Device.Player.VillageWorkerManager.WorkerCount == 2)
+                            {
+                                Cost = ((Globals)row.GetData("WORKER_COST_3RD")).NumberValue;
+                            }
+                            else if (this.Device.Player.VillageWorkerManager.WorkerCount == 3)
+                            {
+                                Cost = ((Globals)row.GetData("WORKER_COST_4TH")).NumberValue;
+                            }
+                            else if (this.Device.Player.VillageWorkerManager.WorkerCount >= 4)
+                            {
+                                Cost = ((Globals)row.GetData("WORKER_COST_5TH")).NumberValue;
+                            }
+
+                            var rd = bd.GetBuildResource(0);
+                            ca.Resources.Minus(rd.GetGlobalID(), Cost);
+                            Console.WriteLine(rd.GetGlobalID());
+                            Console.WriteLine(Cost);
+                        }
                         b.StartConstructing(this.Vector, false);
                         this.Device.Player.GameObjectManager.AddGameObject(b);
                         return;
@@ -49,7 +76,10 @@ namespace CRepublic.Magic.Packets.Commands.Client
                     if (this.Device.Player.HasFreeVillageWorkers)
                     {
                         var rd = bd.GetBuildResource(0);
-                        ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
+                        Console.WriteLine($"Build Resource {rd.GetGlobalID()}");
+                        Console.WriteLine($"Resource Count {   ca.Resources.Get(rd.GetGlobalID())}");
+                        ca.Resources.Minus(rd.GetGlobalID(), bd.GetBuildCost(0));
+                        Console.WriteLine($"Resource Count {   ca.Resources.Get(rd.GetGlobalID())}");
 
                         b.StartConstructing(this.Vector, this.Device.Player.Avatar.Variables.IsBuilderVillage);
                         this.Device.Player.GameObjectManager.AddGameObject(b);
@@ -67,10 +97,11 @@ namespace CRepublic.Magic.Packets.Commands.Client
                         this.Device.Player.GameObjectManager.AddGameObject(b);
                         return;
                     }
+
                     if (this.Device.Player.HasFreeBuilderVillageWorkers)
                     {
                         var rd = bd.GetBuildResource(0);
-                        ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
+                        ca.Resources.Minus(rd.GetGlobalID(), bd.GetBuildCost(0));
 
                         b.StartConstructing(this.Vector, true);
                         this.Device.Player.GameObjectManager.AddGameObject(b);

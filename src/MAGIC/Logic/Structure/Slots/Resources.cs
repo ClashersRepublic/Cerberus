@@ -112,10 +112,11 @@ namespace CRepublic.Magic.Logic.Structure.Slots
             }
         }
 
+       /* [Obsolete]
         internal void ResourceChangeHelper(int GlobalID, int count)
         {
             int current = this.Get(GlobalID);
-            /*int newResourceValue = Math.Max(current + count, 0);
+            int newResourceValue = Math.Max(current + count, 0);
             if (count >= 1)
             {
                 int resourceCap = this.Player.Resources_Cap.Get(GlobalID);
@@ -126,38 +127,40 @@ namespace CRepublic.Magic.Logic.Structure.Slots
                         newResourceValue = resourceCap;
                     }
                 }
-            }*/
+            }
             this.Plus(GlobalID, count);
         }
 
+
+        [Obsolete]
         internal void ResourceChangeHelper(Enums.Resource resource, int count)
         {
             int current = this.Get(resource);
-           /* int newResourceValue = Math.Max(current + count, 0);
-           *if (count >= 1)
+            int newResourceValue = Math.Max(current + count, 0);
+           if (count >= 1)
             {
                 int resourceCap = this.Player.Resources_Cap.Get(resource);
-                if (current < resourceCap)
+                if (resourceCap > current)
                 {
                     if (newResourceValue > resourceCap)
                     {
                         newResourceValue = resourceCap;
                     }
                 }
-            }*/
+            }
             this.Plus(resource, count);
-        }
+        }*/
 
         internal void Initialize()
         {
 #if DEBUG
-            this.Set(Enums.Resource.Diamonds, 200000000);
+            this.Set(Enums.Resource.Diamonds, 2000000000);
 
-            this.Set(Enums.Resource.Gold, 200000000);
-            this.Set(Enums.Resource.Elixir, 200000000);
-            this.Set(Enums.Resource.DarkElixir, 200000000);
-            this.Set(Enums.Resource.Builder_Elixir, 200000000);
-            this.Set(Enums.Resource.Builder_Gold, 200000000);
+            this.Set(Enums.Resource.Gold, 2000000000);
+            this.Set(Enums.Resource.Elixir, 2000000000);
+            this.Set(Enums.Resource.DarkElixir, 2000000000);
+            this.Set(Enums.Resource.Builder_Elixir, 2000000000);
+            this.Set(Enums.Resource.Builder_Gold, 2000000000);
 #else
             this.Set(Enums.Resource.Diamonds, (CSV.Tables.Get(Enums.Gamefile.Globals).GetData("STARTING_DIAMONDS") as Globals).NumberValue);
             this.Set(Enums.Resource.Gold, (CSV.Tables.Get(Enums.Gamefile.Globals).GetData("STARTING_GOLD") as Globals).NumberValue);

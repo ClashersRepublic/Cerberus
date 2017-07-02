@@ -26,7 +26,6 @@ namespace CRepublic.Magic.Packets.Messages.Client
 
         internal override void Process()
         {
-            ShowValues();
             new Avatar_Profile_Data(this.Device) {UserID = this.UserID}.Send();
         }
     }

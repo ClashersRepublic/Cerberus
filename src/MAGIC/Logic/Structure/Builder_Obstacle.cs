@@ -30,7 +30,7 @@ namespace CRepublic.Magic.Logic.Structure
             this.IsClearing = false;
             this.Timer = null;
             var od = GetObstacleData;
-            this.Level.Avatar.Resources.ResourceChangeHelper(od.GetClearingResource().GetGlobalID(), od.ClearCost);
+            this.Level.Avatar.Resources.Plus(od.GetClearingResource().GetGlobalID(), od.ClearCost);
         }
 
         internal void StartClearing()
@@ -99,7 +99,7 @@ namespace CRepublic.Magic.Logic.Structure
 
             var rd = CSV.Tables.Get(Gamefile.Resources).GetData(GetObstacleData.LootResource);
 
-            this.Level.Avatar.Resources.ResourceChangeHelper(rd.GetGlobalID(), GetObstacleData.LootCount);
+            this.Level.Avatar.Resources.Plus(rd.GetGlobalID(), GetObstacleData.LootCount);
 
             this.Level.GameObjectManager.RemoveGameObject(this);
         }

@@ -85,7 +85,7 @@ namespace CRepublic.Magic.Logic.Components
 #if DEBUG
                     Loggers.Log($"Resource System : Collecting {currentResources} of {this.ProductionResourceData.Name}", true, Defcon.INFO);
 #endif
-                    ca.Resources.ResourceChangeHelper(this.ProductionResourceData.GetGlobalID(), (int)currentResources);
+                    ca.Resources.Plus(this.ProductionResourceData.GetGlobalID(), (int)currentResources);
                 }
             }
         }

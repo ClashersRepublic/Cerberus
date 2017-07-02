@@ -41,6 +41,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Clans
                 this.Data.AddByte(0);
                 this.Data.AddRange(Clan.Members.ToBytes);
                 this.Data.AddInt(0);
+                this.Data.AddInt(0);
                 this.Data.AddInt(32);
             }
             else

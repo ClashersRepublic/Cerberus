@@ -95,6 +95,7 @@ namespace CRepublic.Magic.Files.CSV_Logic
             var calculation = (int)(((long)BuildCost[level] * 2 * 1717986919) >> 32);
             return (calculation >> 2) + (calculation >> 31);
         }
+
         public override int GetRequiredTownHallLevel(int level) => TownHallLevel[level] - 1;
         public override int GetUpgradeLevelCount() => BuildCost.Length;
         public override Resource GetBuildResource(int level) => CSV.Tables.Get(Gamefile.Resources).GetData(BuildResource) as Resource;

@@ -6,6 +6,6 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
     {
         [JsonProperty("name")] internal string Name = string.Empty;
 
-        [JsonProperty("parameters")] internal int[] Parameters;
+        [JsonProperty("parameters")] internal string[] Parameters;
     }
 }

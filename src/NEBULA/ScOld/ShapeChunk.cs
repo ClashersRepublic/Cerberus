@@ -111,6 +111,7 @@ namespace BL.Assets.Editor.ScOld
 
             _offset = br.BaseStream.Position;
             _textureId = br.ReadByte(); // 00
+            Console.WriteLine(_textureId);
             var texture = (Texture) _scFile.GetTextures()[_textureId];
             if (texture == null)
                 throw new InvalidOperationException($"Texture {_textureId} wasn't loaded yet.");

@@ -22,7 +22,7 @@
 
   <add key="MysqlIPAddress" value="127.0.0.1" />
   <!-- MySql IP Address -->
-  <add key="MysqlPort" value="3307" />
+  <add key="MysqlPort" value="3306" />
   <!-- MySql Username -->
   <add key="MysqlUsername" value="root" />
   <!-- MySql Username -->

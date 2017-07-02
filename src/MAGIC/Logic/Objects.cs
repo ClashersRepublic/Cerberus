@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
+using Newtonsoft.Json;
+using CRepublic.Magic.Logic.Structure.Slots;
+using CRepublic.Magic.Files;
 
 namespace CRepublic.Magic.Logic
 {
@@ -31,11 +35,11 @@ namespace CRepublic.Magic.Logic
                 _Packet.AddInt(this.Player.Avatar.Shield);
                 _Packet.AddInt(this.Player.Avatar.Guard);
 
-                _Packet.AddInt((int) TimeSpan.FromDays(365).TotalSeconds); //Personal break
+                _Packet.AddInt((int)TimeSpan.FromDays(365).TotalSeconds); //Personal break
 
                 _Packet.AddCompressed(this.Json);
                 //_Packet.AddCompressed(File.ReadAllText(@"starting_home.json"));
-                _Packet.AddCompressed("{\"event\":[]}");
+                _Packet.AddCompressed(Game_Events.Events_Json);
                 _Packet.AddCompressed("{\"Village2\":{\"TownHallMaxLevel\":8}}");
                 return _Packet.ToArray();
             }

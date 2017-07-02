@@ -142,6 +142,9 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
                     _Packet.AddString(this.Message);
                     _Packet.AddInt((int)this.Amical_State);
                     break;
+                case Alliance_Stream.GIFT:
+                    break;
+
             }
             return _Packet.ToArray();
         }

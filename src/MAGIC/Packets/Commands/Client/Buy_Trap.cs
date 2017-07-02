@@ -45,7 +45,7 @@ namespace CRepublic.Magic.Packets.Commands.Client
                     if (this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.HasFreeBuilderVillageWorkers : this.Device.Player.HasFreeVillageWorkers)
                     {
                         var rd = td.GetBuildResource(0);
-                        ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -td.GetBuildCost(0));
+                        ca.Resources.Minus(rd.GetGlobalID(), td.GetBuildCost(0));
 
                         b.StartConstructing(this.Vector, false);
                         this.Device.Player.GameObjectManager.AddGameObject(b);
@@ -60,7 +60,7 @@ namespace CRepublic.Magic.Packets.Commands.Client
                     if (this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.HasFreeBuilderVillageWorkers : this.Device.Player.HasFreeVillageWorkers)
                     {
                         var rd = td.GetBuildResource(0);
-                        ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), -td.GetBuildCost(0));
+                        ca.Resources.Minus(rd.GetGlobalID(), td.GetBuildCost(0));
 
                         b.StartConstructing(this.Vector, true, true);
                         this.Device.Player.GameObjectManager.AddGameObject(b);

@@ -47,7 +47,7 @@ namespace CRepublic.Magic.Packets.Commands.Client
                         if (this.Device.Player.HasFreeVillageWorkers)
                         {
                             var rd = bd.GetBuildResource(0);
-                            this.Device.Player.Avatar.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
+                            this.Device.Player.Avatar.Resources.Minus(rd.GetGlobalID(), bd.GetBuildCost(0));
 
                             var a = (Combat_Component) b.GetComponent(1, false);
                             a.WallI = this.Device.Player.Avatar.Wall_Group_ID;
@@ -64,7 +64,7 @@ namespace CRepublic.Magic.Packets.Commands.Client
                         if (this.Device.Player.HasFreeBuilderVillageWorkers)
                         {
                             var rd = bd.GetBuildResource(0);
-                            this.Device.Player.Avatar.Resources.ResourceChangeHelper(rd.GetGlobalID(), -bd.GetBuildCost(0));
+                            this.Device.Player.Avatar.Resources.Minus(rd.GetGlobalID(), bd.GetBuildCost(0));
                             var a = (Combat_Component)b.GetComponent(1, false);
                             a.WallI = this.Device.Player.Avatar.Wall_Group_ID;
                             b.StartConstructing(WallXY, this.Device.Player.Avatar.Variables.IsBuilderVillage);

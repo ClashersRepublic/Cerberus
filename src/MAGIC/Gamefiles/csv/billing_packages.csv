@@ -32,3 +32,5 @@
 "com.supercell.magic.holiday1","TID_DIAMOND_PACK_1","TRUE","TRUE","TRUE",500,499,"sc/shop.sc","icon_gem_small","shop_item_diamond_pack_normal","special_offer_item_gem_1",2,,3000,,111926,"GD2017010415312801282256","true",
 "com.supercell.magic.holiday2","TID_DIAMOND_PACK_2","TRUE","TRUE","TRUE",1200,999,"sc/shop.sc","icon_gem_normal","shop_item_diamond_pack_normal","special_offer_item_gem_2",3,,6800,,111927,"GD2017010415322601262358","true",
 "com.supercell.magic.holiday3","TID_DIAMOND_PACK_3","TRUE","TRUE","TRUE",2500,1999,"sc/shop.sc","icon_gem_medium","shop_item_diamond_pack_medium","special_offer_item_gem_3",4,,12800,,111928,"GD2017010415332001206320","true",
+"com.supercell.magic.deco1","TID_DIAMOND_PACK_1","TRUE","TRUE","TRUE",500,499,"sc/shop.sc","icon_gem_small","shop_item_diamond_pack_normal","special_offer_item_gem_1",0,,3000,,145998,"GD2017061515321206128563","TRUE",
+"com.supercell.magic.deco3","TID_DIAMOND_PACK_1","TRUE","TRUE","TRUE",2500,1999,"sc/shop.sc","icon_gem_medium","shop_item_diamond_pack_medium","special_offer_item_gem_1",0,,12800,,145999,"GD2017061515351306134273","TRUE",

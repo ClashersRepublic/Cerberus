@@ -8,6 +8,8 @@ using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Logic.Structure;
 using CRepublic.Magic.Packets.Messages.Server.Errors;
 using ThreadState = System.Diagnostics.ThreadState;
+using CRepublic.Magic.Packets.Messages.Server.Authentication;
+using CRepublic.Magic.Logic.Enums;
 
 namespace CRepublic.Magic.Core.Events
 {
@@ -154,7 +156,7 @@ namespace CRepublic.Magic.Core.Events
                         {
                             if (_Device.Player != null)
                             {
-                                new Out_Of_Sync(_Device).Send();
+                                new Authentication_Failed(_Device) { Reason = (Reason)14 }.Send();
                             }
                             //Resources.Gateway.Disconnect(_Device.Token.Args);
                         }

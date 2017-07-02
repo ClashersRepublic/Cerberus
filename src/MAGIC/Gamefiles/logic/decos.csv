@@ -46,3 +46,4 @@
 "Archer Queen Statue","TID_DECORATION_ARCHER_QUEEN_STATUE",,"sc/buildings.sc","deco_archer_queen_statue","generic_construction_state1","Diamonds",500,50,1,2,2,,1,"statue_base",,,1,,,,,,,,
 "Target","TID_TARGET",,"sc/buildings2.sc","deco_target",,"Gold2",20000,40,3,2,2,,,"deco_flowerbox1_base",,,1,,,,,,,,
 "Fireplace","TID_FIREPLACE",,"sc/buildings2.sc","Fireplace_01",,"Gold2",20000,40,2,2,2,,,"deco_flowerbox1_base",,,1,,,,,,,"true",
+"Builder Statue","TID_DECORATION_BUILDER_STATUE",,"sc/buildings.sc","deco_builder_statue","generic_construction_state1","Diamonds",500,,1,2,2,,1,"statue_base",,"TRUE",,,,,,,,,

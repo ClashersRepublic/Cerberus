@@ -1,0 +1,182 @@
+﻿{
+  "events": [
+    {
+      "id": 0,
+      "name": "",
+      "boomboxEntry": "CustomSCLoading",
+      "eventEntryName": "CustomSCLoading",
+      "inboxEntryId": 1,
+      "sc": "2d195cf64ca08c4b787b1d79a280b37a_giant_builder.sc",
+      "image": "",
+      "localization": "7f196996a857b2e8e6fc1f6558ffaa47_builder_away_giant.csv",
+      "notification": "",
+      "visibleTime": "20170528T070000.000Z",
+      "startTime": "20170601T070000.000Z",
+      "endTime": "20170803T070000.000Z",
+      "showUpcoming": 0,
+      "functions": [
+        {
+          "name": "BuildingDestroyedSpawnUnit",
+          "parameters": [
+            "1000015",
+            "4000003",
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "",
+      "boomboxEntry": "",
+      "eventEntryName": "",
+      "inboxEntryId": 1,
+      "sc": "",
+      "image": "",
+      "localization": "7bebe3d631a5e2a2005a12d2524e145d_builder_sign_back.csv",
+      "notification": "",
+      "visibleTime": "20170628T070000.000Z",
+      "startTime": "20170601T070000.000Z",
+      "endTime": "20170803T070000.000Z",
+      "showUpcoming": 0,
+      "functions": [
+        {
+          "name": "BuildingSign",
+          "parameters": [
+            "1000015"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "",
+      "boomboxEntry": "",
+      "eventEntryName": "",
+      "inboxEntryId": 1,
+      "sc": "",
+      "image": "",
+      "localization": "",
+      "notification": "",
+      "visibleTime": "20170628T070000.000Z",
+      "startTime": "20170601T070000.000Z",
+      "endTime": "20170803T070000.000Z",
+      "showUpcoming": 0,
+      "functions": [
+        {
+          "name": "ChangeWorkerLook",
+          "parameters": [
+            "1",
+            "worker_building2",
+            "icon_builder_giant"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "",
+      "boomboxEntry": "DynamicArmy",
+      "eventEntryName": "DynamicArmy",
+      "inboxEntryId": 1,
+      "sc": "d29f9d0585010701030091a4629fc70d_battleram.sc",
+      "image": "",
+      "localization": "44d243a652314359a7ab34afeff3d11e_builder_away_barbarian.csv",
+      "notification": "",
+      "visibleTime": "20170628T070000.000Z",
+      "startTime": "20170601T070000.000Z",
+      "endTime": "20170803T070000.000Z",
+      "showUpcoming": 0,
+      "functions": [
+        {
+          "name": "EnableTroop",
+          "parameters": [
+            "4000045"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "",
+      "boomboxEntry": "DynamicArmy",
+      "eventEntryName": "DynamicArmy",
+      "inboxEntryId": 1,
+      "sc": "cd3d53e1d680d4b44c899ad558e4df8b_gift_spell.sc",
+      "image": "",
+      "localization": "7e83367f90886f3d1ae5a175b659516a_builder_away_wizard.csv",
+      "notification": "",
+      "visibleTime": "20170628T070000.000Z",
+      "startTime": "20170601T070000.000Z",
+      "endTime": "20170803T070000.000Z",
+      "showUpcoming": 0,
+      "functions": [
+        {
+          "name": "EnableSpell",
+          "parameters": [
+            "26000022"
+          ]
+        },
+        {
+          "name": "EnableSpell",
+          "parameters": [
+            "26000006"
+          ]
+        },
+        {
+          "name": "EnableTroop",
+          "parameters": [
+            "4000030"
+          ]
+        },
+        {
+          "name": "EnableTrap",
+          "parameters": [
+            "12000009"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "",
+      "boomboxEntry": "CustomSCLoading",
+      "eventEntryName": "CustomSCLoading",
+      "inboxEntryId": 1,
+      "sc": "b91de596d0083d1d20ebf0585623957c_shrink_spell.sc",
+      "image": "",
+      "localization": "8999ba40c994dcc35bdd49e4fa70253e_builder_away_witch.csv",
+      "notification": "",
+      "visibleTime": "20170628T070000.000Z",
+      "startTime": "20170601T070000.000Z",
+      "endTime": "20170803T070000.000Z",
+      "showUpcoming": 0,
+      "functions": [
+        {
+          "name": "EnableTrap",
+          "parameters": [
+            "12000015"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "",
+      "boomboxEntry": "DynamicArmy",
+      "eventEntryName": "DynamicArmy",
+      "inboxEntryId": 1,
+      "sc": "",
+      "image": "321_FIGHT_6_burned.png",
+      "localization": "",
+      "notification": "",
+      "visibleTime": "20170628T070000.000Z",
+      "startTime": "20170601T070000.000Z",
+      "endTime": "20170803T070000.000Z",
+      "showUpcoming": 0,
+      "functions": [
+
+      ]
+    }
+  ]
+} 

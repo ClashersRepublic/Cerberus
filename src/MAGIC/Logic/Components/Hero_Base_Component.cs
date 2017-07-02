@@ -35,7 +35,7 @@ namespace CRepublic.Magic.Logic.Components
                     .NumberValue;
                 var resourceCount = (int)((cost * multiplier * (long)1374389535) >> 32);
                 resourceCount = Math.Max((resourceCount >> 5) + (resourceCount >> 31), 0);
-                ca.Resources.ResourceChangeHelper(rd.GetGlobalID(), resourceCount);
+                ca.Resources.Plus(rd.GetGlobalID(), resourceCount);
                 if (Builder_Village)
                     GetParent.Level.BuilderVillageWorkerManager.DeallocateWorker(GetParent);
                 else
