@@ -25,7 +25,7 @@ namespace CRepublic.Magic.Core
             }
             this.RavenClient =
                 new RavenClient(
-                    "https://4b2650dcbbed430eac450a5eb400aaa0:c9ce7df40227445c8bd027d77b88b9f3@sentry.io/180208")
+                    "https://c011a726734a4b5baf17f2d1a7519374:534d376264934c7084a24079726b8e99@sentry.io/187787")
                 {
                     Environment = Enviroment,
                     Release = Assembly.GetExecutingAssembly().GetName().Version.ToString(),
