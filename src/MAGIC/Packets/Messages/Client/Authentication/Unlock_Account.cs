@@ -42,41 +42,42 @@ namespace CRepublic.Magic.Packets.Client.Authentication
                 return;
             }
 
-             if (this.UnlockCode[0] == '/')
-              {
-                  if (int.TryParse(this.UnlockCode.Substring(1), out int n))
-                  {
-                      if (n == 0)
-                      {
-                          new Unlock_Account_OK(this.Device) {Account = Resources.Players.New().Avatar}.Send();
-                          return;
-                      }
+            if (this.UnlockCode[0] == '/')
+            {
+                int n = 0;
+                if (int.TryParse(this.UnlockCode.Substring(1), out n))
+                {
+                    if (n == 0)
+                    {
+                        new Unlock_Account_OK(this.Device) { Account = Resources.Players.New().Avatar }.Send();
+                        return;
+                    }
 
-                      var account = Resources.Players.Get(n);
-                      if (account != null)
-                      {
-                          account.Avatar.Locked = true;
-                          new Unlock_Account_OK(this.Device) {Account = account.Avatar}.Send();
-                      }
-                      else
-                      {
-                          new Unlock_Account_Failed(this.Device) {Reason = UnlockReason.UnlockError}.Send();
-                      }
+                    var account = Resources.Players.Get(n);
+                    if (account != null)
+                    {
+                        account.Avatar.Locked = true;
+                        new Unlock_Account_OK(this.Device) { Account = account.Avatar }.Send();
+                    }
+                    else
+                    {
+                        new Unlock_Account_Failed(this.Device) { Reason = UnlockReason.UnlockError }.Send();
+                    }
 
-                  }
-                  else
-                  {
-                      new Unlock_Account_Failed(this.Device) {Reason = UnlockReason.UnlockError}.Send();
-                  }
-              }
+                }
+                else
+                {
+                    new Unlock_Account_Failed(this.Device) { Reason = UnlockReason.UnlockError }.Send();
+                }
+            }
             if (string.Equals(this.UnlockCode, this.UserPassword))
             {
                 this.Device.Player.Avatar.Locked = false;
-                new Unlock_Account_OK(this.Device) {Account = this.Device.Player.Avatar}.Send();
+                new Unlock_Account_OK(this.Device) { Account = this.Device.Player.Avatar }.Send();
             }
             else
             {
-                new Unlock_Account_Failed(this.Device) {Reason = UnlockReason.Default}.Send();
+                new Unlock_Account_Failed(this.Device) { Reason = UnlockReason.Default }.Send();
 
             }
         }
@@ -93,7 +94,7 @@ namespace CRepublic.Magic.Packets.Client.Authentication
             }
 
             this.Reader = new Reader(Decrypted);
-            this.Length = (ushort) this.Reader.BaseStream.Length;
+            this.Length = (ushort)this.Reader.BaseStream.Length;
         }
     }
 }

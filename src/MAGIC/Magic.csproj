@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>CRepublic.Magic</RootNamespace>
     <AssemblyName>Clashers Republic Clash Server</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -37,7 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7</LangVersion>
+    <LangVersion>6</LangVersion>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -218,7 +218,6 @@
     <Compile Include="Core\Networking\Gateway.cs" />
     <Compile Include="Core\Networking\Pool.cs" />
     <Compile Include="Core\Networking\Processor.cs" />
-    <Compile Include="Core\Networking\SocketAsyncEventArgsPool.cs" />
     <Compile Include="Core\Networking\Token.cs" />
     <Compile Include="Core\Clans.cs" />
     <Compile Include="Core\Players.cs" />

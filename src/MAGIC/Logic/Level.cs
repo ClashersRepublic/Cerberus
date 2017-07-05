@@ -34,8 +34,8 @@ namespace CRepublic.Magic.Logic
 
         internal string JSON
         {
-            get => JsonConvert.SerializeObject(GameObjectManager.JSON, Formatting.Indented);
-            set => this.GameObjectManager.JSON = JObject.Parse(value);
+            get { return JsonConvert.SerializeObject(GameObjectManager.JSON, Formatting.Indented); }
+            set { this.GameObjectManager.JSON = JObject.Parse(value); }
         }
 
         internal void Reset()

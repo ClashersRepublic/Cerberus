@@ -1,35 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Packets;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using CRepublic.Magic.Packets;
-using CRepublic.Magic.Extensions;
-using CRepublic.Magic.Logic;
-using CRepublic.Magic.Logic.Enums;
-using SharpRaven.Data;
 
 namespace CRepublic.Magic.Core.Networking
 {
     internal class Gateway
     {
-        internal Pool<SocketAsyncEventArgs> ArgsPool;
-        internal Pool<byte[]> BufferPool;
-        internal Socket Listener;
-        //internal Mutex Mutex;
-        internal int ConnectedSockets;
+        public Pool<SocketAsyncEventArgs> ArgsPool;
+        public Pool<byte[]> BufferPool;
+        public Socket Listener;
+        public int ConnectedSockets;
 
-        internal Gateway()
+        public Gateway()
         {
             this.ArgsPool = new Pool<SocketAsyncEventArgs>();
             this.BufferPool = new Pool<byte[]>();
 
             this.Initialize();
 
-            this.Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);    
+            this.Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
             this.Listener.Bind(new IPEndPoint(IPAddress.Any, 9339));
             this.Listener.Listen(100);
@@ -39,7 +35,8 @@ namespace CRepublic.Magic.Core.Networking
             Loggers.Log(
                 Assembly.GetExecutingAssembly().GetName().Name +
                 $" has been started on {Utils.LocalNetworkIP} in {Math.Round(Program.Stopwatch.Elapsed.TotalSeconds, 4)} Seconds!",
-                true);
+                true
+            );
 
             var args = this.GetArgs();
             this.StartAccept(args);
@@ -123,8 +120,7 @@ namespace CRepublic.Magic.Core.Networking
                     }
                 }
 
-                
-                Loggers.Log($"New client connected -> {((IPEndPoint) Socket.RemoteEndPoint)}:", true);
+                Loggers.Log($"New client connected -> {((IPEndPoint)Socket.RemoteEndPoint)}:", true);
 
                 var Event = GetArgs();
                 var buffer = GetBuffer;
@@ -134,7 +130,7 @@ namespace CRepublic.Magic.Core.Networking
 
                 Device device = new Device(Socket)
                 {
-                    IPAddress = ((IPEndPoint) Socket.RemoteEndPoint).Address.ToString()
+                    IPAddress = ((IPEndPoint)Socket.RemoteEndPoint).Address.ToString()
                 };
 
                 Token Token = new Token(Event, device);
@@ -190,8 +186,8 @@ namespace CRepublic.Magic.Core.Networking
 
         internal void Disconnect(SocketAsyncEventArgs AsyncEvent)
         {
-            Token Token = (Token) AsyncEvent.UserToken;
-            
+            Token Token = (Token)AsyncEvent.UserToken;
+
             if (Token.Device.Player != null)
             {
                 if (Resources.Players.ContainsKey(Token.Device.Player.Avatar.UserId))
@@ -231,7 +227,7 @@ namespace CRepublic.Magic.Core.Networking
         {
             var client = (Token)AsyncEvent.UserToken;
             var socket = client.Device.Socket;
-            
+
             if (Thread.VolatileRead(ref client.Device.Dropped) == 1)
             {
                 this.Recycle(AsyncEvent);
@@ -264,8 +260,8 @@ namespace CRepublic.Magic.Core.Networking
             var transferred = Args.BytesTransferred;
             if (transferred == 0 || Args.SocketError != SocketError.Success)
             {
-              this.Disconnect(Args);
-              this.Recycle(Args);
+                this.Disconnect(Args);
+                this.Recycle(Args);
             }
             else
             {
@@ -336,7 +332,7 @@ namespace CRepublic.Magic.Core.Networking
             AsyncEvent.UserToken = null;
             AsyncEvent.SetBuffer(null, 0, 0);
             AsyncEvent.AcceptSocket = null;
-            
+
             this.ArgsPool.Push(AsyncEvent);
 
             this.Recycle(buffer);

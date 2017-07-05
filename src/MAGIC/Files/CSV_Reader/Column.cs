@@ -13,8 +13,10 @@ namespace CRepublic.Magic.Files.CSV_Reader
     {
         public Column(Table table, string name)
         {
+            if (table == null) throw new ArgumentNullException(nameof(table));
+
             _name = name;
-            _table = table ?? throw new ArgumentNullException(nameof(table));
+            _table = table;
             _table._columns.Add(this);
 
             _data = new List<string>();

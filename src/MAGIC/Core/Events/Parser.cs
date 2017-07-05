@@ -74,7 +74,8 @@ namespace CRepublic.Magic.Core.Events
                                     Console.WriteLine(
                                         "Please enter the duration of Maintenance (Enter value in int only).");
                                     Console.Write("(Minute): ");
-                                    if (Int32.TryParse(Console.ReadLine(), out int i))
+                                    int i = 0;
+                                    if (Int32.TryParse(Console.ReadLine(), out i))
                                     {
                                         Resources.Classes.Timers.Maintenance(i);
                                         Resources.Classes.Timers.LTimers[4].Start();

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CRepublic.Magic.Core.Networking;
+﻿using CRepublic.Magic.Core.Networking;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Extensions.List;
 using CRepublic.Magic.Files;
@@ -11,6 +9,9 @@ using CRepublic.Magic.Logic.Structure.Slots;
 using CRepublic.Magic.Logic.Structure.Slots.Items;
 using CRepublic.Magic.Packets.Messages.Server.Errors;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+
 using Npcs = CRepublic.Magic.Logic.Structure.Slots.Npcs;
 using Resource = CRepublic.Magic.Logic.Enums.Resource;
 
@@ -30,7 +31,7 @@ namespace CRepublic.Magic.Logic
         [JsonIgnore]
         internal long UserId
         {
-            get => (((long) this.UserHighId << 32) | (this.UserLowId & 0xFFFFFFFFL));
+            get { return (((long)this.UserHighId << 32) | (this.UserLowId & 0xFFFFFFFFL)); }
             set
             {
                 this.UserHighId = Convert.ToInt32(value >> 32);
@@ -41,7 +42,7 @@ namespace CRepublic.Magic.Logic
         [JsonIgnore]
         internal long ClanId
         {
-            get => (((long) this.ClanHighID << 32) | (this.ClanLowID & 0xFFFFFFFFL));
+            get { return (((long)this.ClanHighID << 32) | (this.ClanLowID & 0xFFFFFFFFL)); }
             set
             {
                 this.ClanHighID = Convert.ToInt32(value >> 32);
