@@ -9,6 +9,7 @@ namespace CRepublic.Magic.Logic
 {
     internal class Level
     {
+        // Why not rename this to Device, so you avoid some confusion.
         internal Device Client;
         internal Player Avatar;
 

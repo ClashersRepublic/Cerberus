@@ -20,15 +20,14 @@ namespace CRepublic.Magic.Core.Networking
 
         public Gateway()
         {
-            this.ArgsPool = new Pool<SocketAsyncEventArgs>();
-            this.BufferPool = new Pool<byte[]>();
+            ArgsPool = new Pool<SocketAsyncEventArgs>();
+            BufferPool = new Pool<byte[]>();
 
-            this.Initialize();
+            Initialize();
 
-            this.Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-            this.Listener.Bind(new IPEndPoint(IPAddress.Any, 9339));
-            this.Listener.Listen(100);
+            Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            Listener.Bind(new IPEndPoint(IPAddress.Any, 9339));
+            Listener.Listen(100);
 
             Program.Stopwatch.Stop();
 
@@ -38,17 +37,18 @@ namespace CRepublic.Magic.Core.Networking
                 true
             );
 
-            var args = this.GetArgs();
-            this.StartAccept(args);
+            var args = GetArgs();
+            StartAccept(args);
         }
 
         internal void Initialize()
         {
             for (int i = 0; i < Constants.PRE_ALLOC_SEA; i++)
             {
-                var Event = new SocketAsyncEventArgs();
-                Event.Completed += this.OnIOCompleted;
-                this.ArgsPool.Push(Event);
+                var args = new SocketAsyncEventArgs();
+                args.Completed += OnIOCompleted;
+
+                ArgsPool.Push(args);
             }
         }
 
@@ -58,8 +58,8 @@ namespace CRepublic.Magic.Core.Networking
             {
                 while (true)
                 {
-                    if (!this.Listener.AcceptAsync(e))
-                        this.ProcessAccept(e, false);
+                    if (!Listener.AcceptAsync(e))
+                        ProcessAccept(e, false);
                     else
                         break;
                 }
@@ -70,14 +70,14 @@ namespace CRepublic.Magic.Core.Networking
             }
         }
 
-        internal void StartReceive(SocketAsyncEventArgs AsyncEvent)
+        internal void StartReceive(SocketAsyncEventArgs e)
         {
-            var client = (Token)AsyncEvent.UserToken;
-            var socket = client.Device.Socket;
+            var token = (Token)e.UserToken;
+            var socket = token.Device.Socket;
 
-            if (Thread.VolatileRead(ref client.Device.Dropped) == 1)
+            if (Thread.VolatileRead(ref token.Device.Dropped) == 1)
             {
-                this.Recycle(AsyncEvent);
+                Recycle(e);
             }
             else
             {
@@ -85,15 +85,15 @@ namespace CRepublic.Magic.Core.Networking
                 {
                     while (true)
                     {
-                        if (!socket.ReceiveAsync(AsyncEvent))
-                            this.ProcessReceive(AsyncEvent, false);
+                        if (!socket.ReceiveAsync(e))
+                            ProcessReceive(e, false);
                         else
                             break;
                     }
                 }
                 catch (ObjectDisposedException)
                 {
-                    this.Recycle(AsyncEvent);
+                    Recycle(e);
                 }
                 catch (Exception ex)
                 {
@@ -102,77 +102,77 @@ namespace CRepublic.Magic.Core.Networking
             }
         }
 
-        internal void ProcessAccept(SocketAsyncEventArgs AsyncEvent, bool startNew)
+        internal void ProcessAccept(SocketAsyncEventArgs e, bool startNew)
         {
-            Socket Socket = AsyncEvent.AcceptSocket;
+            var socket = e.AcceptSocket;
 
-            if (AsyncEvent.SocketError == SocketError.Success)
+            if (e.SocketError == SocketError.Success)
             {
                 if (Constants.Local)
                 {
-                    if (!Constants.AuthorizedIP.Contains(Socket.RemoteEndPoint.ToString().Split(':')[0]))
+                    if (!Constants.AuthorizedIP.Contains(socket.RemoteEndPoint.ToString().Split(':')[0]))
                     {
-                        Socket.Close();
-                        AsyncEvent.AcceptSocket = null;
+                        socket.Close();
+                        e.AcceptSocket = null;
                         if (startNew)
-                            StartAccept(AsyncEvent);
+                            StartAccept(e);
                         return;
                     }
                 }
 
-                Loggers.Log($"New client connected -> {((IPEndPoint)Socket.RemoteEndPoint)}:", true);
+                Loggers.Log($"New client connected -> {((IPEndPoint)socket.RemoteEndPoint)}:", true);
 
-                var Event = GetArgs();
+                var args = GetArgs();
                 var buffer = GetBuffer;
 
-                Event.AcceptSocket = Socket;
-                Event.SetBuffer(buffer, 0, buffer.Length);
+                args.SetBuffer(buffer, 0, buffer.Length);
 
-                Device device = new Device(Socket)
+                var device = new Device(socket)
                 {
-                    IPAddress = ((IPEndPoint)Socket.RemoteEndPoint).Address.ToString()
+                    IPAddress = ((IPEndPoint)socket.RemoteEndPoint).Address.ToString() // You can do that in the constructor of Device.
                 };
 
-                Token Token = new Token(Event, device);
-                device.Token = Token;
+                var token = new Token(args, device);
+                device.Token = token; // Not really needed, since its already set by the constructor of Token.
 
-                Interlocked.Increment(ref this.ConnectedSockets);
+                Interlocked.Increment(ref ConnectedSockets);
                 Resources.Devices.Add(device);
 
-                this.StartReceive(Event);
-
+                StartReceive(args);
             }
             else
             {
                 Loggers.Log("Not connected or error at ProcessAccept.", false, Defcon.ERROR);
-                this.KillSocket(Socket);
+                KillSocket(socket);
             }
 
-            AsyncEvent.AcceptSocket = null;
+            // Clean shit up for reuse.
+            e.AcceptSocket = null;
+
             if (startNew)
-                StartAccept(AsyncEvent);
+                StartAccept(e);
         }
 
-        internal void ProcessReceive(SocketAsyncEventArgs AsyncEvent, bool startNew)
+        internal void ProcessReceive(SocketAsyncEventArgs e, bool startNew)
         {
-            var transferred = AsyncEvent.BytesTransferred;
-            if (transferred == 0 || AsyncEvent.SocketError != SocketError.Success)
+            var transferred = e.BytesTransferred;
+            if (transferred == 0 || e.SocketError != SocketError.Success)
             {
-                this.Disconnect(AsyncEvent);
-                this.Recycle(AsyncEvent);
+                Disconnect(e);
+                Recycle(e);
             }
             else
             {
-                Token Token = (Token)AsyncEvent.UserToken;
+                Token token = (Token)e.UserToken;
 
-                var buffer = AsyncEvent.Buffer;
-                var offset = AsyncEvent.Offset;
-                for (int i = 0; i < AsyncEvent.BytesTransferred; i++)
-                    Token.Packet.Add(buffer[offset + i]);
+                var buffer = e.Buffer;
+                var offset = e.Offset;
+                for (int i = 0; i < transferred; i++)
+                    token.Packet.Add(buffer[offset + i]);
 
                 try
                 {
-                    Token.Process();
+                    token.Process();
                 }
                 catch (Exception ex)
                 {
@@ -180,57 +180,56 @@ namespace CRepublic.Magic.Core.Networking
                 }
 
                 if (startNew)
-                    this.StartReceive(AsyncEvent);
+                    StartReceive(e);
             }
         }
 
-        internal void Disconnect(SocketAsyncEventArgs AsyncEvent)
+        internal void Disconnect(SocketAsyncEventArgs e)
         {
-            Token Token = (Token)AsyncEvent.UserToken;
+            var token = (Token)e.UserToken;
 
-            if (Token.Device.Player != null)
+            if (token.Device.Player != null)
             {
-                if (Resources.Players.ContainsKey(Token.Device.Player.Avatar.UserId))
-                {
-                    Resources.Players.Remove(Token.Device.Player);
-                }
+                if (Resources.Players.ContainsKey(token.Device.Player.Avatar.UserId))
+                    Resources.Players.Remove(token.Device.Player);
             }
             else
             {
-                Resources.Devices.Remove(Token.Device.SocketHandle);
+                Resources.Devices.Remove(token.Device.SocketHandle);
             }
+
             Interlocked.Decrement(ref ConnectedSockets);
         }
 
-        internal void Send(Message Message)
+        internal void Send(Message message)
         {
-            var Event = GetArgs();
-
+            var args = GetArgs();
             var buffer = default(byte[]);
+
             try
             {
-                buffer = Message.ToBytes;
+                buffer = message.ToBytes;
             }
             catch (Exception ex)
             {
-                Resources.Exceptions.Catch(ex, $"Exception while constructing message {Message.GetType()}");
+                Resources.Exceptions.Catch(ex, $"Exception while constructing message {message.GetType()}");
                 return;
             }
 
-            Event.SetBuffer(buffer, 0, buffer.Length);
-            Event.UserToken = Message.Device.Token;
+            args.SetBuffer(buffer, 0, buffer.Length);
+            args.UserToken = message.Device.Token;
 
-            this.StartSend(Event);
+            StartSend(args);
         }
 
-        internal void StartSend(SocketAsyncEventArgs AsyncEvent)
+        internal void StartSend(SocketAsyncEventArgs e)
         {
-            var client = (Token)AsyncEvent.UserToken;
-            var socket = client.Device.Socket;
+            var token = (Token)e.UserToken;
+            var socket = token.Device.Socket;
 
-            if (Thread.VolatileRead(ref client.Device.Dropped) == 1)
+            if (Thread.VolatileRead(ref token.Device.Dropped) == 1)
             {
-                this.Recycle(AsyncEvent);
+                Recycle(e);
             }
             else
             {
@@ -238,15 +237,15 @@ namespace CRepublic.Magic.Core.Networking
                 {
                     while (true)
                     {
-                        if (!socket.SendAsync(AsyncEvent))
-                            this.ProcessSend(AsyncEvent);
+                        if (!socket.SendAsync(e))
+                            ProcessSend(e);
                         else
                             break;
                     }
                 }
                 catch (ObjectDisposedException)
                 {
-                    this.Recycle(AsyncEvent);
+                    Recycle(e);
                 }
                 catch (Exception ex)
                 {
@@ -255,28 +254,28 @@ namespace CRepublic.Magic.Core.Networking
             }
         }
 
-        internal void ProcessSend(SocketAsyncEventArgs Args)
+        internal void ProcessSend(SocketAsyncEventArgs e)
         {
-            var transferred = Args.BytesTransferred;
-            if (transferred == 0 || Args.SocketError != SocketError.Success)
+            var transferred = e.BytesTransferred;
+            if (transferred == 0 || e.SocketError != SocketError.Success)
             {
-                this.Disconnect(Args);
-                this.Recycle(Args);
+                Disconnect(e);
+                Recycle(e);
             }
             else
             {
                 try
                 {
-                    var count = Args.Count;
+                    var count = e.Count;
                     if (transferred < count)
                     {
-                        Args.SetBuffer(transferred, count - transferred);
-                        this.StartSend(Args);
+                        e.SetBuffer(e.Offset + transferred, count - transferred);
+                        StartSend(e);
                     }
                     else
                     {
                         // We done with sending can recycle EventArgs.
-                        this.Recycle(Args);
+                        Recycle(e);
                     }
                 }
                 catch (Exception ex)
@@ -284,64 +283,47 @@ namespace CRepublic.Magic.Core.Networking
                     Resources.Exceptions.Catch(ex, "Exception while processing send");
                 }
             }
-            /*while (true)
-            {
-                Message.Offset += Args.BytesTransferred;
-
-                if (Message.Length + 7 > Message.Offset)
-                {
-                    if (Message.Device.Connected())
-                    {
-                        Args.SetBuffer(Message.Offset, Message.Length + 7 - Message.Offset);
-
-                        if (!Message.Device.Socket.SendAsync(Args))
-                        {
-                            continue;
-                        }
-                    }
-                }
-                break;
-            }*/
         }
 
-        internal void OnIOCompleted(object sender, SocketAsyncEventArgs AsyncEvent)
+        internal void OnIOCompleted(object sender, SocketAsyncEventArgs e)
         {
 
-            switch (AsyncEvent.LastOperation)
+            switch (e.LastOperation)
             {
                 case SocketAsyncOperation.Accept:
-                    this.ProcessAccept(AsyncEvent, true);
+                    ProcessAccept(e, true);
                     break;
                 case SocketAsyncOperation.Receive:
-                    this.ProcessReceive(AsyncEvent, true);
+                    ProcessReceive(e, true);
                     break;
                 case SocketAsyncOperation.Send:
-                    this.ProcessSend(AsyncEvent);
+                    ProcessSend(e);
                     break;
+
                 default:
-                    throw new ArgumentException("The last operation completed on the socket was not a receive or send");
+                    throw new ArgumentException("The last operation completed on the socket was not a receive, send or accept");
             }
         }
 
-        internal void Recycle(SocketAsyncEventArgs AsyncEvent)
+        internal void Recycle(SocketAsyncEventArgs e)
         {
-            if (AsyncEvent == null)
+            if (e == null)
                 return;
 
-            var buffer = AsyncEvent.Buffer;
-            AsyncEvent.UserToken = null;
-            AsyncEvent.SetBuffer(null, 0, 0);
-            AsyncEvent.AcceptSocket = null;
+            var buffer = e.Buffer;
+            e.UserToken = null;
+            e.SetBuffer(null, 0, 0);
+            e.AcceptSocket = null;
 
-            this.ArgsPool.Push(AsyncEvent);
+            ArgsPool.Push(e);
 
-            this.Recycle(buffer);
+            Recycle(buffer);
         }
 
         internal void Recycle(byte[] buffer)
         {
             if (buffer?.Length == Constants.ReceiveBuffer)
-                this.BufferPool.Push(buffer);
+                BufferPool.Push(buffer);
         }
 
         internal void KillSocket(Socket socket)
@@ -359,7 +341,7 @@ namespace CRepublic.Magic.Core.Networking
 
         internal SocketAsyncEventArgs GetArgs()
         {
-            var args = this.ArgsPool.Pop();
+            var args = ArgsPool.Pop();
             if (args == null)
             {
                 args = new SocketAsyncEventArgs();
@@ -368,6 +350,6 @@ namespace CRepublic.Magic.Core.Networking
             return args;
         }
 
-        internal byte[] GetBuffer => this.BufferPool.Pop() ?? new byte[Constants.ReceiveBuffer];
+        internal byte[] GetBuffer => BufferPool.Pop() ?? new byte[Constants.ReceiveBuffer];
     }
 }

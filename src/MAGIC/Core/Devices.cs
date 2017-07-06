@@ -15,7 +15,7 @@ namespace CRepublic.Magic.Core
 
         internal void Add(Device Device)
         {
-            lock (Gate)
+            lock (Gate) // You probably dont need a lock since you're using a ConcurrentDictionary.
             {
                 if (this.ContainsKey(Device.SocketHandle))
                 {
@@ -43,14 +43,17 @@ namespace CRepublic.Magic.Core
                     {
                         /* Swallow */
                     }
+
                     try
                     {
-                        device.Socket.Close(5);
+                        device.Socket.Close();
                     }
+
                     catch
                     {
                         /* Swallow */
                     }
+
                     try
                     {
                         device.Socket.Dispose();

@@ -26,7 +26,7 @@ namespace CRepublic.Magic.Logic
         internal Keep_Alive_OK KeepAlive;
         internal string AndroidID, OpenUDID, Model, OSVersion, MACAddress, AdvertiseID, VendorID, IPAddress;
         internal bool Android, Advertising;
-        internal volatile int Dropped;
+        internal int Dropped;
         internal int Last_Checksum;
         internal int Last_Tick;
         internal int Depth;
