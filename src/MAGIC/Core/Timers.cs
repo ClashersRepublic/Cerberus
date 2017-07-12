@@ -110,7 +110,7 @@ namespace CRepublic.Magic.Core
 #endif
                 try
                 {
-                    await Task.WhenAll(Resources.Players.Save(Constants.Database), Resources.Clans.Save(Constants.Database), Resources.Battles.Save(Constants.Database)).ConfigureAwait(false);
+                    await Task.WhenAll(Resources.Players.Save(), Resources.Clans.Save(), Resources.Battles.Save()).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {

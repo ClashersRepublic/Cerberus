@@ -38,7 +38,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                     {
 
                         var Battle =
-                            Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
+                            Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID);
                         if (Battle.Commands.Count > 0)
                         {
                             Level Player =

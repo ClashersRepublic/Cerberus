@@ -128,7 +128,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 
             if (this.UserId == 0)
             {
-                this.Device.Player = Resources.Players.New(0, Constants.Database);
+                this.Device.Player = Resources.Players.New();
                 this.Device.Player.Avatar.Region = Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress = this.Device.IPAddress);
 
                 if (this.Device.Player != null)

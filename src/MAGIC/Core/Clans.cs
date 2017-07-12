@@ -45,12 +45,12 @@ namespace CRepublic.Magic.Core
         {
             if (this.TryRemove(Clan.Clan_ID))
             {
-                this.Save(Clan, Constants.Database);
+                this.Save(Clan);
             }
         }
 
         [Obsolete]
-        internal void Delete(Clan Clan, DBMS DBMS = DBMS.Mysql)
+        internal void Delete(Clan Clan, DBMS DBMS = Constants.Database)
         {
             if (this.ContainsKey(Clan.Clan_ID))
             {
@@ -81,7 +81,7 @@ namespace CRepublic.Magic.Core
             }
         }
 
-        internal Clan Get(long ClanID, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal Clan Get(long ClanID, DBMS DBMS = Constants.Database, bool Store = true)
         {
             if (!this.ContainsKey(ClanID))
             {
@@ -139,7 +139,7 @@ namespace CRepublic.Magic.Core
             return this[ClanID];
         }
 
-        internal Clan New(long ClanId = 0, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal Clan New(long ClanId = 0, DBMS DBMS = Constants.Database, bool Store = true)
         {
             var Clan = ClanId == 0 ? new Clan(this.Seed++) : new Clan(ClanId);
 
@@ -197,7 +197,7 @@ namespace CRepublic.Magic.Core
             return Clan;
         }
 
-        internal void Save(Clan Clan, DBMS DBMS = DBMS.Mysql)
+        internal void Save(Clan Clan, DBMS DBMS = Constants.Database)
         {
             while (true)
             {
@@ -241,7 +241,7 @@ namespace CRepublic.Magic.Core
             }
         }
 
-        internal async Task Save(DBMS DBMS = DBMS.Mysql)
+        internal async Task Save(DBMS DBMS = Constants.Database)
         {
             while (true)
             {

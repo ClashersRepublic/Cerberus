@@ -1,9 +1,5 @@
 ﻿<appSettings>
   <!-- ____________________________________ Database SETTINGS ____________________________________ -->
-
-  <add key="RC4" value="true" />
-  <!-- Use RC4-->
-  
   <add key="DatabaseMode" value="0" />
   <!-- 0 for Mysql, 1 for Mysql + Redis-->
 

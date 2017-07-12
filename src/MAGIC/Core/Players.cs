@@ -49,7 +49,7 @@ namespace CRepublic.Magic.Core
             if (Player != null)
             {
                 Player.Tick();
-                this.Save(Player, Constants.Database);
+                this.Save(Player);
 
                 this.TryRemove(Player.Avatar.UserId);
 
@@ -64,7 +64,7 @@ namespace CRepublic.Magic.Core
             }
         }
 
-        internal Level Get(long UserId, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal Level Get(long UserId, DBMS DBMS = Constants.Database, bool Store = true)
         {
             if (!this.ContainsKey(UserId))
             {
@@ -138,7 +138,7 @@ namespace CRepublic.Magic.Core
             return this[UserId];
         }
 
-        internal Level New(long UserId = 0, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal Level New(long UserId = 0, DBMS DBMS = Constants.Database, bool Store = true)
         {
             var Player = UserId == 0 ? new Level(this.Seed++) : new Level(UserId);
 
@@ -224,7 +224,7 @@ namespace CRepublic.Magic.Core
             return Player;
         }
 
-        internal void Save(Level Player, DBMS DBMS = DBMS.Mysql)
+        internal void Save(Level Player, DBMS DBMS = Constants.Database)
         {
             Player.Avatar.LastSave = DateTime.UtcNow;
             while (true)
@@ -272,7 +272,7 @@ namespace CRepublic.Magic.Core
             }
         }
 
-        internal async Task Save(DBMS DBMS = DBMS.Mysql)
+        internal async Task Save(DBMS DBMS = Constants.Database)
         {
             while (true)
             {

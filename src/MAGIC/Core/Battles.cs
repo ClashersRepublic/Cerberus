@@ -41,7 +41,7 @@ namespace CRepublic.Magic.Core
             }
         }
 
-        internal Battle Get(long _BattleID, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal Battle Get(long _BattleID, DBMS DBMS = Constants.Database, bool Store = true)
         {
             if (!this.ContainsKey(_BattleID))
             {
@@ -80,11 +80,11 @@ namespace CRepublic.Magic.Core
                         }
                         break;
                     case DBMS.Both:
-                        _Battle = this.Get(_BattleID, DBMS.Redis, Store);
+                        _Battle = this.Get(_BattleID);
 
                         if (_Battle == null)
                         {
-                            _Battle = this.Get(_BattleID, DBMS.Mysql, Store);
+                            _Battle = this.Get(_BattleID);
                             if (_Battle != null)
                                 this.Save(_Battle, DBMS.Redis);
 
@@ -96,7 +96,7 @@ namespace CRepublic.Magic.Core
             return this[_BattleID];
         }
 
-        internal Battle New(Level _Attacker, Level _Defender, DBMS DBMS = DBMS.Mysql, bool Store = true)
+        internal Battle New(Level _Attacker, Level _Defender, DBMS DBMS = Constants.Database, bool Store = true)
         {
 
             var _Battle = new Battle(this.Seed++, _Attacker, _Defender);
@@ -157,7 +157,7 @@ namespace CRepublic.Magic.Core
             return _Battle;
         }
 
-        internal void Save(Battle _Battle, DBMS DBMS = DBMS.Mysql)
+        internal void Save(Battle _Battle, DBMS DBMS = Constants.Database)
         {
             while (true)
             {
@@ -199,7 +199,7 @@ namespace CRepublic.Magic.Core
             }
         }
 
-        internal async Task Save(DBMS DBMS = DBMS.Mysql)
+        internal async Task Save(DBMS DBMS = Constants.Database)
         {
             while (true)
             {

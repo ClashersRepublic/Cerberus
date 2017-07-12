@@ -31,7 +31,7 @@ namespace CRepublic.Magic.Core
         {
             foreach (var _Id in MySQL_V2.GetTopPlayer())
             {
-                this.Add("INTERNATIONAL", Resources.Players.Get(_Id, Constants.Database, true));
+                this.Add("INTERNATIONAL", Resources.Players.Get(_Id));
             }
 
             Timer Timer = new Timer
@@ -46,7 +46,7 @@ namespace CRepublic.Magic.Core
                 this.TryRemove("INTERNATIONAL");
                 foreach (var _Id in MySQL_V2.GetTopPlayer())
                 {
-                    this.Add("INTERNATIONAL", Resources.Players.Get(_Id, Constants.Database, true));
+                    this.Add("INTERNATIONAL", Resources.Players.Get(_Id));
                 }
             };
 

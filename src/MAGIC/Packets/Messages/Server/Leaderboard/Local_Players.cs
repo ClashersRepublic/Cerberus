@@ -53,7 +53,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Leaderboard
 
                 if (_Player.Avatar.ClanId > 0)
                 {
-                    var _Clan = Resources.Clans.Get(_Player.Avatar.ClanId, Constants.Database, true);
+                    var _Clan = Resources.Clans.Get(_Player.Avatar.ClanId);
                     this.Data.AddLong(_Player.Avatar.ClanId);
                     this.Data.AddString(_Clan.Name);
                     this.Data.AddInt(_Clan.Badge);

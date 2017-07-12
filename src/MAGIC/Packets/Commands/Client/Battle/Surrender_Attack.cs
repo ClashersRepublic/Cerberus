@@ -29,7 +29,7 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
             {
                 if (!this.Device.Player.Avatar.Variables.IsBuilderVillage)
                 {
-                    var Battle = Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database);
+                    var Battle = Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID);
                     Battle_Command Command = new Battle_Command
                     {
                         Command_Type = this.Identifier,
