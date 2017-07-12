@@ -6,7 +6,7 @@ namespace CRepublic.Magic.Extensions
     internal class Constants
     {
         internal const int ID = 0;
-        internal const int MaxCommand  = 500;
+        internal const int MaxCommand  = 0;
         internal const int SendBuffer = 4096;
         internal const int ReceiveBuffer = 4096;
         internal const int PRE_ALLOC_SEA = 4096;
