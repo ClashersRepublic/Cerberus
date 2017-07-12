@@ -1,8 +1,5 @@
 ﻿<appSettings>
-  <!-- ____________________________________ Database SETTINGS ____________________________________ -->
-  <add key="DatabaseMode" value="0" />
-  <!-- 0 for Mysql, 1 for Mysql + Redis-->
-
+  <!-- ____________________________________ Server SETTINGS ____________________________________ -->
   <add key="UpdateUrl" value="http://bfy.tw/CQAh" />
   <!-- Location to redirect outdated player-->
 
