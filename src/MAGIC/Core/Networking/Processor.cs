@@ -6,12 +6,16 @@ namespace CRepublic.Magic.Core.Networking
 {
     internal static class Processor
     {
-       /* internal static void Recept(this Message Message)
+        internal static void Recept(this Message Message)
         {
-            Message.Decryptpe();
+            if (Constants.RC4)
+                Message.EncryptRC4();
+            else
+                Message.EncryptPepper();
             Message.Decode();
             Message.Process();
-        }*/
+        }
+
 
         internal static void Send(this Message Message)
         {

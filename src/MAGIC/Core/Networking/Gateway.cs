@@ -120,20 +120,15 @@ namespace CRepublic.Magic.Core.Networking
                     }
                 }
 
-                Loggers.Log($"New client connected -> {((IPEndPoint)socket.RemoteEndPoint)}:", true);
+                Loggers.Log($"New client connected -> {socket.RemoteEndPoint}", true);
 
                 var args = GetArgs();
                 var buffer = GetBuffer;
 
                 args.SetBuffer(buffer, 0, buffer.Length);
 
-                var device = new Device(socket)
-                {
-                    IPAddress = ((IPEndPoint)socket.RemoteEndPoint).Address.ToString() // You can do that in the constructor of Device.
-                };
-
+                var device = new Device(socket);
                 var token = new Token(args, device);
-                device.Token = token; // Not really needed, since its already set by the constructor of Token.
 
                 Interlocked.Increment(ref ConnectedSockets);
                 Resources.Devices.Add(device);
@@ -287,7 +282,6 @@ namespace CRepublic.Magic.Core.Networking
 
         internal void OnIOCompleted(object sender, SocketAsyncEventArgs e)
         {
-
             switch (e.LastOperation)
             {
                 case SocketAsyncOperation.Accept:

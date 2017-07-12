@@ -7,7 +7,6 @@ namespace CRepublic.Magic.Core
 {
     internal class Devices : ConcurrentDictionary<IntPtr, Device>
     {
-        internal object Gate = new object();
         internal Devices()
         {
             // Devices.
@@ -15,16 +14,13 @@ namespace CRepublic.Magic.Core
 
         internal void Add(Device Device)
         {
-            lock (Gate) // You probably dont need a lock since you're using a ConcurrentDictionary.
+            if (this.ContainsKey(Device.SocketHandle))
             {
-                if (this.ContainsKey(Device.SocketHandle))
-                {
-                    this[Device.SocketHandle] = Device;
-                }
-                else
-                {
-                    this.TryAdd(Device.SocketHandle, Device);
-                }
+                this[Device.SocketHandle] = Device;
+            }
+            else
+            {
+                this.TryAdd(Device.SocketHandle, Device);
             }
         }
 

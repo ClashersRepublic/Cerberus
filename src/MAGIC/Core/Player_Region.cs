@@ -11,8 +11,6 @@ namespace CRepublic.Magic.Core
 {
     internal class Player_Region : ConcurrentDictionary<string, List_Regions>
     {
-        internal object Gate = new object();
-        internal object GateAdd = new object();
         internal readonly List<Timer> LTimers = new List<Timer>();
 
         internal Player_Region()
@@ -35,7 +33,7 @@ namespace CRepublic.Magic.Core
             {
                 this.Add("INTERNATIONAL", Resources.Players.Get(_Id, Constants.Database, true));
             }
-            
+
             Timer Timer = new Timer
             {
                 Interval = TimeSpan.FromMinutes(0.5).TotalMilliseconds,
@@ -56,44 +54,39 @@ namespace CRepublic.Magic.Core
         }
         internal void Add(string Region, Level Player)
         {
-            lock (this.GateAdd)
+
+            if (!string.IsNullOrEmpty(Region))
             {
-                if (!string.IsNullOrEmpty(Region))
+                if (this.ContainsKey(Region))
                 {
-                    if (this.ContainsKey(Region))
-                    {
-                        int Index = this[Region].Level.FindIndex(ds => ds.Avatar.UserId == Player.Avatar.UserId);
-                        if (Index > -1)
-                            this[Region].Level[Index] = Player;
-                        else
-                            this[Region].Level.Add(Player);
-                    }
+                    int Index = this[Region].Level.FindIndex(ds => ds.Avatar.UserId == Player.Avatar.UserId);
+                    if (Index > -1)
+                        this[Region].Level[Index] = Player;
                     else
-                    {
-                        this.TryAdd(Region, new List_Regions(Player));
-                    }
+                        this[Region].Level.Add(Player);
+                }
+                else
+                {
+                    this.TryAdd(Region, new List_Regions(Player));
                 }
             }
         }
 
         internal void Add(Level Player)
         {
-            lock (this.GateAdd)
+            if (!string.IsNullOrEmpty(Player.Avatar.Region))
             {
-                if (!string.IsNullOrEmpty(Player.Avatar.Region))
+                if (this.ContainsKey(Player.Avatar.Region))
                 {
-                    if (this.ContainsKey(Player.Avatar.Region))
-                    {
-                        int Index = this[Player.Avatar.Region].Level.FindIndex(ds => ds.Avatar.UserId == Player.Avatar.UserId);
-                        if (Index > -1)
-                            this[Player.Avatar.Region].Level[Index] = Player;
-                        else
-                            this[Player.Avatar.Region].Level.Add(Player);
-                    }
+                    int Index = this[Player.Avatar.Region].Level.FindIndex(ds => ds.Avatar.UserId == Player.Avatar.UserId);
+                    if (Index > -1)
+                        this[Player.Avatar.Region].Level[Index] = Player;
                     else
-                    {
-                        this.TryAdd(Player.Avatar.Region, new List_Regions(Player));
-                    }
+                        this[Player.Avatar.Region].Level.Add(Player);
+                }
+                else
+                {
+                    this.TryAdd(Player.Avatar.Region, new List_Regions(Player));
                 }
             }
         }

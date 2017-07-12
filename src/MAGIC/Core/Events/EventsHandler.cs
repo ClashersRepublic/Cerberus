@@ -19,7 +19,7 @@ namespace CRepublic.Magic.Core.Events
         [DllImport("Kernel32")]
         private static extern bool SetConsoleCtrlHandler(EventHandler Handler, bool Enabled);
 
-        internal async void ExitHandler()
+        internal void ExitHandler()
         {
             try
             {

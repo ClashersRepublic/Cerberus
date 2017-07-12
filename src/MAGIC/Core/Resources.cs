@@ -24,16 +24,15 @@ namespace CRepublic.Magic.Core
         internal static WebApi Api;
 
         internal static void Initialize()
-        {
-           
+        {          
             Resources.Exceptions = new Exceptions();
+            Resources.Devices = new Devices();
             Resources.Players = new Players();
             Resources.Clans = new Clans();
             Resources.GChat = new Global_Chat();
             Resources.Battles = new Battles();
             Resources.Battles_V2 = new Battles_V2();
             Resources.Classes = new Classes();
-            Resources.Devices = new Devices();
             Resources.Random = new Random(DateTime.Now.ToString().GetHashCode());
             Resources.Region = new Region();
             Resources.PRegion = new Player_Region();

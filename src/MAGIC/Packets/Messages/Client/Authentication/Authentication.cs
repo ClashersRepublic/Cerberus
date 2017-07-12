@@ -16,6 +16,7 @@ using CRepublic.Magic.Packets.Messages.Server.Clans;
 using CRepublic.Magic.Packets.Messages.Server.Clans.War;
 using CRepublic.Magic.Packets.Cryptography;
 using CRepublic.Magic.Packets.Messages.Server.Battle;
+using CRepublic.Magic.External.TweetNaCl;
 
 namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 {
@@ -51,7 +52,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
             Blake.Update(Key.PublicKey);
 
             this.Device.Keys.RNonce = Blake.Finish();
-            
+
             Buffer = Sodium.Decrypt(Buffer.Skip(68).ToArray(), this.Device.Keys.RNonce, Key.PrivateKey, this.Device.Keys.PublicKey);
 
             this.Device.Keys.SNonce = Buffer.Skip(24).Take(24).ToArray();

@@ -4,7 +4,7 @@
   <add key="RC4" value="true" />
   <!-- Use RC4-->
   
-  <add key="DatabaseMode" value="1" />
+  <add key="DatabaseMode" value="0" />
   <!-- 0 for Mysql, 1 for Mysql + Redis-->
 
   <add key="UpdateUrl" value="http://bfy.tw/CQAh" />
@@ -17,7 +17,7 @@
   <!-- Redis server IP address-->
   <add key="RedisPort" value="6379" />
   <!--  Redis server port-->
-  <add key="RedisPassword" value="aididlwq0115" />
+  <add key="RedisPassword" value="" />
   <!--  Redis server password-->
 
   <add key="MysqlIPAddress" value="127.0.0.1" />

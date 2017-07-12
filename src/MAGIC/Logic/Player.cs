@@ -234,40 +234,25 @@ namespace CRepublic.Magic.Logic
                 _Packet.AddLong(this.UserId);
                 _Packet.AddLong(this.UserId);
 
-                _Packet.AddBool(this.ClanId > 0);
+
                 if (this.ClanId > 0)
                 {
                     Clan clan = Core.Resources.Clans.Get(ClanId, Constants.Database);
 
+                    _Packet.AddBool(clan != null);
                     if (clan != null)
                     {
-                        if (!string.IsNullOrEmpty(clan.Name))
-                        {
-                            _Packet.AddLong(this.ClanId);
-                            _Packet.AddString(clan.Name);
-                            _Packet.AddInt(clan.Badge); // Badge
-                            _Packet.AddInt((int) clan.Members[UserId].Role); // Role
-                            _Packet.AddInt(clan.Level); // Level
+                        _Packet.AddLong(this.ClanId);
+                        _Packet.AddString(clan.Name);
+                        _Packet.AddInt(clan.Badge); // Badge
+                        _Packet.AddInt((int)clan.Members[UserId].Role); // Role
+                        _Packet.AddInt(clan.Level); // Level
 
-                            _Packet.AddBool(false); // Alliance War
-                            {
-                                // _Packet.AddLong(1); // War ID
-                            }
-                        }
-                        else
+                        _Packet.AddBool(false); // Alliance War
                         {
-                            foreach (var userid in clan?.Members.Keys)
-                            {
-                                var player = Core.Resources.Players.Get(userid, Constants.Database, false);
-                                player.Avatar.ClanId = 0;
-                                player.Avatar.Alliance_Role = -1;
-                                player.Avatar.Alliance_Level = -1;
-                                player.Avatar.Alliance_Name = string.Empty;
-                                player.Avatar.Badge_ID = -1;
-
-                            }
-                            Core.Resources.Clans.Delete(clan);
+                            // _Packet.AddLong(1); // War ID
                         }
+
                     }
                     else
                     {
@@ -277,9 +262,10 @@ namespace CRepublic.Magic.Logic
                         this.Alliance_Level = -1;
                         this.Alliance_Name = string.Empty;
                         this.Badge_ID = -1;
-                        new Out_Of_Sync(Core.Resources.Players.Get(this.UserId, Constants.Database).Client).Send();
                     }
                 }
+                else
+                    _Packet.AddBool(false);
 
                 _Packet.AddInt(this.Legendary_Trophies);
                 _Packet.AddInt(0);
@@ -301,14 +287,14 @@ namespace CRepublic.Magic.Logic
                 _Packet.AddInt(0);
                 _Packet.AddInt(0);
 
-                _Packet.AddInt(10000);
-                _Packet.AddInt(9999);
-                _Packet.AddInt(8888);
-                _Packet.AddInt(7777);
-                _Packet.AddInt(6666);
-                _Packet.AddInt(5555); //Builder base Versus Battle Win
-                _Packet.AddInt(4444); //5
-                _Packet.AddInt(3333); //8
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0);
+                _Packet.AddInt(0); //Builder base Versus Battle Win
+                _Packet.AddInt(0); //5
+                _Packet.AddInt(0); //8
 
                 _Packet.AddInt(this.League);
                 _Packet.AddInt(this.Castle_Level);

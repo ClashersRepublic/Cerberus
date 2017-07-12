@@ -23,8 +23,6 @@ namespace CRepublic.Magic.Core
 
 
         internal long Seed;
-        internal object Gate = new object();
-        internal object GateAdd = new object();
 
         internal Clans()
         {
@@ -32,16 +30,14 @@ namespace CRepublic.Magic.Core
 
         internal void Add(Clan Clan)
         {
-            lock (this.GateAdd)
+            if (this.ContainsKey(Clan.Clan_ID))
             {
-                if (this.ContainsKey(Clan.Clan_ID))
-                {
-                    this[Clan.Clan_ID] = Clan;
-                }
-                else
-                {
-                    this.TryAdd(Clan.Clan_ID, Clan);
-                }
+                this[Clan.Clan_ID] = Clan;
+            }
+            else
+            {
+                this.TryAdd(Clan.Clan_ID, Clan);
+
             }
         }
 
@@ -49,10 +45,11 @@ namespace CRepublic.Magic.Core
         {
             if (this.TryRemove(Clan.Clan_ID))
             {
-                this.Save(Clan, Constants.Database).Wait();
+                this.Save(Clan, Constants.Database);
             }
         }
 
+        [Obsolete]
         internal void Delete(Clan Clan, DBMS DBMS = DBMS.Mysql)
         {
             if (this.ContainsKey(Clan.Clan_ID))
@@ -99,10 +96,7 @@ namespace CRepublic.Magic.Core
 
                             if (!string.IsNullOrEmpty(Data?.Data))
                             {
-
-                                Clan = new Clan(ClanID);
-
-                                JsonConvert.PopulateObject(Data.Data, Clan, this.Settings);
+                                Clan = JsonConvert.DeserializeObject<Clan>(Data.Data, this.Settings);
 
                                 if (Store)
                                 {
@@ -117,10 +111,8 @@ namespace CRepublic.Magic.Core
                         string Property = Redis.Clans.StringGet(ClanID.ToString());
 
                         if (!string.IsNullOrEmpty(Property))
-                        {
-                            Clan = new Clan(ClanID);
-
-                            JsonConvert.PopulateObject(Property, Clan, this.Settings);
+                        {   
+                            Clan = JsonConvert.DeserializeObject<Clan>(Property, this.Settings);
 
                             if (Store)
                             {
@@ -149,19 +141,7 @@ namespace CRepublic.Magic.Core
 
         internal Clan New(long ClanId = 0, DBMS DBMS = DBMS.Mysql, bool Store = true)
         {
-            Clan Clan = null;
-
-            if (ClanId == 0)
-            {
-                lock (this.Gate)
-                {
-                    Clan = new Clan(this.Seed++);
-                }
-            }
-            else
-            {
-                Clan = new Clan(ClanId);
-            }
+            var Clan = ClanId == 0 ? new Clan(this.Seed++) : new Clan(ClanId);
 
             while (true)
             {
@@ -189,7 +169,7 @@ namespace CRepublic.Magic.Core
 
                     case DBMS.Redis:
                         {
-                            this.Save(Clan, DBMS.Redis).Wait();
+                            this.Save(Clan, DBMS.Redis);
 
                             if (Store)
                             {
@@ -200,7 +180,7 @@ namespace CRepublic.Magic.Core
 
                     case DBMS.Both:
                         {
-                            this.Save(Clan, DBMS.Mysql).Wait();
+                            this.Save(Clan, DBMS.Mysql);
                             DBMS = DBMS.Redis;
 
                             if (Store)
@@ -217,7 +197,7 @@ namespace CRepublic.Magic.Core
             return Clan;
         }
 
-        internal async Task Save(Clan Clan, DBMS DBMS = DBMS.Mysql)
+        internal void Save(Clan Clan, DBMS DBMS = DBMS.Mysql)
         {
             while (true)
             {
@@ -231,7 +211,7 @@ namespace CRepublic.Magic.Core
                             {
                                 Database.Configuration.AutoDetectChangesEnabled = false;
                                 Database.Configuration.ValidateOnSaveEnabled = false;
-                                var Data = await Database.Clan.FindAsync(Clan.Clan_ID);
+                                var Data = Database.Clan.Find(Clan.Clan_ID);
 
                                 if (Data != null)
                                 {
@@ -239,20 +219,20 @@ namespace CRepublic.Magic.Core
                                     Database.Entry(Data).State = EntityState.Modified;
                                 }
 
-                                await Database.SaveChangesAsync();
+                                Database.SaveChanges();
                             }
                             break;
                         }
 
                     case DBMS.Redis:
                         {
-                            await Redis.Clans.StringSetAsync(Clan.Clan_ID.ToString(), JsonConvert.SerializeObject(Clan, this.Settings), TimeSpan.FromHours(4));
+                            Redis.Clans.StringSet(Clan.Clan_ID.ToString(), JsonConvert.SerializeObject(Clan, this.Settings), TimeSpan.FromHours(4));
                             break;
                         }
 
                     case DBMS.Both:
                         {
-                            await this.Save(Clan);
+                            this.Save(Clan);
                             DBMS = DBMS.Redis;
                             continue;
                         }
@@ -295,14 +275,14 @@ namespace CRepublic.Magic.Core
                     }
 
                     case DBMS.Redis:
-                    {
-                        foreach (var Clan in this.Values.ToList())
                         {
-                            await Redis.Clans.StringSetAsync(Clan.Clan_ID.ToString(),
-                                JsonConvert.SerializeObject(Clan, this.Settings), TimeSpan.FromHours(4));
+                            foreach (var Clan in this.Values.ToList())
+                            {
+                                Redis.Clans.StringSet(Clan.Clan_ID.ToString(),
+                                    JsonConvert.SerializeObject(Clan, this.Settings), TimeSpan.FromHours(4));
+                            }
+                            break;
                         }
-                        break;
-                    }
 
                     case DBMS.Both:
                     {

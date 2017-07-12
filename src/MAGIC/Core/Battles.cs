@@ -24,8 +24,6 @@ namespace CRepublic.Magic.Core
         };
 
         internal long Seed;
-        internal object Gate = new object();
-        internal object GateAdd = new object();
 
         internal Battles()
         {
@@ -33,16 +31,13 @@ namespace CRepublic.Magic.Core
 
         internal void Add(Battle Battle)
         {
-            lock (this.GateAdd)
+            if (this.ContainsKey(Battle.Battle_ID))
             {
-                if (this.ContainsKey(Battle.Battle_ID))
-                {
-                    this[Battle.Battle_ID] = Battle;
-                }
-                else
-                {
-                    this.TryAdd(Battle.Battle_ID, Battle);
-                }
+                this[Battle.Battle_ID] = Battle;
+            }
+            else
+            {
+                this.TryAdd(Battle.Battle_ID, Battle);
             }
         }
 
@@ -91,7 +86,7 @@ namespace CRepublic.Magic.Core
                         {
                             _Battle = this.Get(_BattleID, DBMS.Mysql, Store);
                             if (_Battle != null)
-                                this.Save(_Battle, DBMS.Redis).Wait();
+                                this.Save(_Battle, DBMS.Redis);
 
                         }
                         break;
@@ -103,12 +98,9 @@ namespace CRepublic.Magic.Core
 
         internal Battle New(Level _Attacker, Level _Defender, DBMS DBMS = DBMS.Mysql, bool Store = true)
         {
-            Battle _Battle = null;
 
-            lock (this.Gate)
-            {
-                _Battle = new Battle(this.Seed++, _Attacker, _Defender);
-            }
+            var _Battle = new Battle(this.Seed++, _Attacker, _Defender);
+
             _Attacker.Avatar.Battle_ID = _Battle.Battle_ID;
 
             while (true)
@@ -116,48 +108,48 @@ namespace CRepublic.Magic.Core
                 switch (DBMS)
                 {
                     case DBMS.Mysql:
-                    {
-                        using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.Battle.Add(new Database.Battle
+                            using (MysqlEntities Database = new MysqlEntities())
                             {
-                                ID = _Battle.Battle_ID,
-                                Data = JsonConvert.SerializeObject(_Battle, this.Settings)
-                            });
+                                Database.Battle.Add(new Database.Battle
+                                {
+                                    ID = _Battle.Battle_ID,
+                                    Data = JsonConvert.SerializeObject(_Battle, this.Settings)
+                                });
 
-                            Database.SaveChanges();
-                        }
+                                Database.SaveChanges();
+                            }
 
-                        if (Store)
-                        {
-                            this.Add(_Battle);
+                            if (Store)
+                            {
+                                this.Add(_Battle);
+                            }
+                            break;
                         }
-                        break;
-                    }
 
                     case DBMS.Redis:
-                    {
-                        this.Save(_Battle, DBMS.Redis).Wait();
-
-                        if (Store)
                         {
-                            this.Add(_Battle);
+                            this.Save(_Battle, DBMS.Redis);
+
+                            if (Store)
+                            {
+                                this.Add(_Battle);
+                            }
+                            break;
                         }
-                        break;
-                    }
 
                     case DBMS.Both:
-                    {
-                        this.Save(_Battle, DBMS.Mysql).Wait();
-                        DBMS = DBMS.Redis;
-
-                        if (Store)
                         {
-                            this.Add(_Battle);
-                        }
+                            this.Save(_Battle, DBMS.Mysql);
+                            DBMS = DBMS.Redis;
 
-                        continue;
-                    }
+                            if (Store)
+                            {
+                                this.Add(_Battle);
+                            }
+
+                            continue;
+                        }
                 }
                 break;
             }
@@ -165,43 +157,43 @@ namespace CRepublic.Magic.Core
             return _Battle;
         }
 
-        internal async Task Save(Battle _Battle, DBMS DBMS = DBMS.Mysql)
+        internal void Save(Battle _Battle, DBMS DBMS = DBMS.Mysql)
         {
             while (true)
             {
                 switch (DBMS)
                 {
                     case DBMS.Mysql:
-                    {
-
-                        using (MysqlEntities Database = new MysqlEntities())
                         {
-                            Database.Configuration.AutoDetectChangesEnabled = false;
-                            Database.Configuration.ValidateOnSaveEnabled = false;
-                            var Data = Database.Battle.Find(_Battle.Battle_ID);
 
-                            if (Data != null)
+                            using (MysqlEntities Database = new MysqlEntities())
                             {
-                                Data.Data = JsonConvert.SerializeObject(_Battle, this.Settings);
-                                Database.Entry(Data).State = EntityState.Modified;
+                                Database.Configuration.AutoDetectChangesEnabled = false;
+                                Database.Configuration.ValidateOnSaveEnabled = false;
+                                var Data = Database.Battle.Find(_Battle.Battle_ID);
+
+                                if (Data != null)
+                                {
+                                    Data.Data = JsonConvert.SerializeObject(_Battle, this.Settings);
+                                    Database.Entry(Data).State = EntityState.Modified;
                                 }
-                            await Database.SaveChangesAsync();
+                                Database.SaveChangesAsync();
+                            }
+                            break;
                         }
-                        break;
-                    }
 
                     case DBMS.Redis:
-                    {
-                        await Redis.Battles.StringSetAsync(_Battle.Battle_ID.ToString(), JsonConvert.SerializeObject(_Battle, this.Settings), TimeSpan.FromHours(4));
-                        break;
-                    }
+                        {
+                            Redis.Battles.StringSet(_Battle.Battle_ID.ToString(), JsonConvert.SerializeObject(_Battle, this.Settings), TimeSpan.FromHours(4));
+                            break;
+                        }
 
                     case DBMS.Both:
-                    {
-                        await this.Save(_Battle);
-                        DBMS = DBMS.Redis;
-                        continue;
-                    }
+                        {
+                            this.Save(_Battle);
+                            DBMS = DBMS.Redis;
+                            continue;
+                        }
                 }
                 break;
             }
@@ -242,7 +234,7 @@ namespace CRepublic.Magic.Core
                         {
                             foreach (var Battle in this.Values.ToList())
                             {
-                                await Redis.Battles.StringSetAsync(Battle.Battle_ID.ToString(),
+                                Redis.Battles.StringSet(Battle.Battle_ID.ToString(),
                                     JsonConvert.SerializeObject(Battle, this.Settings), TimeSpan.FromHours(4));
                             }
                             break;
