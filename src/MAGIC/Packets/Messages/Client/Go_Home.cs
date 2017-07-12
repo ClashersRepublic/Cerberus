@@ -24,7 +24,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
             this.Reader.ReadByte();
         }
 
-        internal override async void Process()
+        internal override void Process()
         {
             if (State == 1)
             {
@@ -96,7 +96,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                                         Battle_ID = this.Device.Player.Avatar.Battle_ID
                                     });
                             }
-                            await Core.Resources.Battles.Save(Battle);
+                            Core.Resources.Battles.Save(Battle);
                         }
                         else
                             Core.Resources.Battles.TryRemove(this.Device.Player.Avatar.Battle_ID);

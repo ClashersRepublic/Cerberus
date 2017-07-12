@@ -35,7 +35,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
             this.Clan.War_Amical = this.Reader.ReadByte() > 0;
         }
 
-        internal override async void Process()
+        internal override void Process()
         {
             int ResourceID = (CSV.Tables.Get(Gamefile.Resources).GetData((CSV.Tables.Get(Gamefile.Globals).GetData("ALLIANCE_CREATE_RESOURCE") as Globals).TextValue) as Files.CSV_Logic.Resource).GetGlobalID();
             int Cost = (CSV.Tables.Get(Gamefile.Globals).GetData("ALLIANCE_CREATE_COST") as Globals).NumberValue;
@@ -77,7 +77,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
                     Event_Player_Name = this.Device.Player.Avatar.Name
                 });
 
-                await Resources.Clans.Save(this.Clan);
+                Resources.Clans.Save(this.Clan);
 
                 new Alliance_Full_Entry(this.Device) { Clan = this.Clan }.Send();
                 new Server_Commands(this.Device) { Command = new Joined_Alliance(this.Device) { Clan = this.Clan }.Handle() }.Send();
