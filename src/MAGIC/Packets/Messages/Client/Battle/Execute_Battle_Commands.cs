@@ -4,6 +4,7 @@ using System.Linq;
 using CRepublic.Magic.Core;
 using CRepublic.Magic.Extensions.Binary;
 using CRepublic.Magic.Logic;
+using CRepublic.Magic.Extensions;
 
 namespace CRepublic.Magic.Packets.Messages.Client.Battle
 {
@@ -37,8 +38,8 @@ namespace CRepublic.Magic.Packets.Messages.Client.Battle
             {
                 Resources.Battles_V2.GetPlayer(this.Device.Player.Avatar.Battle_ID_V2, this.Device.Player.Avatar.UserId).Battle_Tick = CTick;
             }
-            
-            if (this.Count > -1 && this.Count <= 400)
+
+            if (this.Count > -1 && Constants.MaxCommand == 0 || this.Count > -1 && this.Count <= Constants.MaxCommand)
             {
                 this.Device.Player.Tick();
                 using (Reader Reader = new Reader(this.Commands))

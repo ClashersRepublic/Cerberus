@@ -48,7 +48,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                  Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID).Battle_Tick =
                     (int) this.CTick;
         
-            if (this.Count > -1 && Constants.MaxCommand > 0 && this.Count <= Constants.MaxCommand)
+            if (this.Count > -1 && Constants.MaxCommand == 0 || this.Count > -1 && this.Count <= Constants.MaxCommand)
             {
                 this.Device.Player.Tick();
                 using (Reader Reader = new Reader(this.Commands))
