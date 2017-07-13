@@ -64,19 +64,6 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
                     Event_Player_Name = this.Device.Player.Avatar.Name
                 });
 
-                this.Clan.Chats.Add(new Entry
-                {
-                    Stream_Type = Alliance_Stream.GIFT,
-                    Sender_ID = this.Device.Player.Avatar.UserId,
-                    Sender_Name = this.Device.Player.Avatar.Name,
-                    Sender_Level = this.Device.Player.Avatar.Level,
-                    Sender_League = this.Device.Player.Avatar.League,
-                    Sender_Role = Role.Leader,
-                    Event_ID = Events.JOIN_ALLIANCE,
-                    Event_Player_ID = this.Device.Player.Avatar.UserId,
-                    Event_Player_Name = this.Device.Player.Avatar.Name
-                });
-
                 Resources.Clans.Save(this.Clan);
 
                 new Alliance_Full_Entry(this.Device) { Clan = this.Clan }.Send();
