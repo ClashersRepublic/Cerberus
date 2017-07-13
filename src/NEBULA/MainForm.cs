@@ -126,9 +126,10 @@ namespace BL.Assets.Editor
             addTextureToolStripMenuItem.Visible = true;
 
             RefreshMenu();
+
+            treeView1.Populate(_scFile.GetTextures());
             treeView1.Populate(_scFile.GetExports());
             treeView1.Populate(_scFile.GetShapes());
-            treeView1.Populate(_scFile.GetTextures());
             treeView1.Populate(_scFile.GetMovieClips());
         }
 
@@ -344,9 +345,9 @@ namespace BL.Assets.Editor
             reloadToolStripMenuItem.Visible = true;
 
             RefreshMenu();
+            treeView1.Populate(_scFile.GetTextures());
             treeView1.Populate(_scFile.GetExports());
             treeView1.Populate(_scFile.GetShapes());
-            treeView1.Populate(_scFile.GetTextures());
             treeView1.Populate(_scFile.GetMovieClips());
         }
 

@@ -190,7 +190,7 @@ namespace CRepublic.Magic.Core
 
                     case DBMS.Both:
                         {
-                            this.Save(_Battle);
+                            this.Save(_Battle, DBMS.Mysql);
                             DBMS = DBMS.Redis;
                             continue;
                         }
@@ -242,7 +242,7 @@ namespace CRepublic.Magic.Core
 
                     case DBMS.Both:
                         {
-                            await this.Save();
+                            await this.Save(DBMS.Mysql);
                             DBMS = DBMS.Redis;
                             continue;
                         }
