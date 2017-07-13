@@ -141,6 +141,7 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
                 case Alliance_Stream.AMICAL_BATTLE:
                     _Packet.AddString(this.Message);
                     _Packet.AddInt((int)this.Amical_State);
+                    _Packet.AddVInt(1800);
                     break;
             }
             return _Packet.ToArray();

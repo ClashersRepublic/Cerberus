@@ -37,7 +37,6 @@ namespace CRepublic.Magic
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
 
             Resources.Initialize();
-
             Console.WriteLine(@"-------------------------------------" + Environment.NewLine);
 
             Thread.Sleep(Timeout.Infinite);

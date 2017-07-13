@@ -56,7 +56,7 @@ namespace CRepublic.Magic.Packets.Commands.Client
                             {
                                 var name = go.GetData().Row.Name;
 #if DEBUG
-                                Loggers.Log(b.ClassId == 0 ? "Building" : "Builder Building" + $" : Upgrading {name} with ID {BuildingId}", true);
+                                Loggers.Log(b.ClassId == 0 ? "Building" + $" : Upgrading {name} with ID {BuildingId}" : "Builder Building" + $" : Upgrading {name} with ID {BuildingId}", true);
 #endif
 
                                 if (bd.IsTownHall2())
