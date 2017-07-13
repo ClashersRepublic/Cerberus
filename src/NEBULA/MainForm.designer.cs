@@ -342,8 +342,8 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(198, 171);
             this.label1.TabIndex = 8;
-            this.label1.Text = "Barbarianland Magic Editor\r\nVersion: 1.2.1\r\n\r\nGet help at: \r\nhttps://barbarianlan" +
-    "d.com\r\n\r\n";
+            this.label1.Text = "Clashers Republic Royale Editor\r\nVersion: 1.2.1\r\n\r\nGet help at: \r\nhttps://clasher" +
+    "srepbulic.com\r\n\r\n";
             // 
             // treeView1
             // 
@@ -394,7 +394,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
-            this.Text = "BarbarianLand Magic Editor";
+            this.Text = "Clashers Republic Royale Editor";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);

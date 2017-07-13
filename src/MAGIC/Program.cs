@@ -26,7 +26,7 @@ namespace CRepublic.Magic
             Console.WriteLine(@"\     \___|  |__/ __ \_\___ \|   Y  \  ___/|  | \/\___ \   |    |   \  ___/|  |_> >  |  / \_\ \  |_|  \  \___ ");
             Console.WriteLine(@" \______  /____(____  /____  >___|  /\___  >__|  /____  >  |____|_  /\___  >   __/|____/|___  /____/__|\___  >");
             Console.WriteLine(@"        \/          \/     \/     \/     \/           \/          \/     \/|__|             \/             \/ ");
-            Console.WriteLine(@"                                                                                        Developer Edition  ");
+            Console.WriteLine(@"                                                                                        Development Edition  ");
 
 
             Console.WriteLine(@"Clashers Repbulic's programs are protected by our policies, available only to our partner.");

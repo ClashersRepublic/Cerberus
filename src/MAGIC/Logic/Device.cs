@@ -27,10 +27,7 @@ namespace CRepublic.Magic.Logic
         internal Keep_Alive_OK KeepAlive;
         internal string AndroidID, OpenUDID, Model, OSVersion, MACAddress, AdvertiseID, VendorID, IPAddress;
         internal bool Android, Advertising;
-        internal int Dropped;
-        internal int Last_Checksum;
-        internal int Last_Tick;
-        internal int Depth;
+        internal int Dropped, Last_Checksum, Last_Tick, Depth;
         internal uint ClientSeed;
 
 
@@ -140,7 +137,7 @@ namespace CRepublic.Magic.Logic
 #endif
                             if (Constants.RC4)
                             {
-                                var buffer = Reader.ReadFully();
+                                var buffer = Reader.ReadBytes((int)Length);
                                 this.RC4.Decrypt(ref buffer);
                                 buffer = null;
                             }

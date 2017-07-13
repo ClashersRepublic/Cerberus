@@ -10,7 +10,7 @@ namespace CRepublic.Magic.Files
     internal class Game_Events
     {
         internal static string Events_Json = string.Empty;
-        internal static Calendar Events_Calender = new Calendar();
+        internal static Calendar Events_Calendar = new Calendar();
         internal string JsonPath = "Gamefiles/events.json";
 
         internal Game_Events()
@@ -22,7 +22,7 @@ namespace CRepublic.Magic.Files
                 throw new Exception($"{JsonPath} does not exist in current directory!");
 
             Game_Events.Events_Json = Regex.Replace(File.ReadAllText(JsonPath, Encoding.UTF8), "(\"(?:[^\"\\\\]|\\\\.)*\")|\\s+", "$1");
-            JsonConvert.PopulateObject(Game_Events.Events_Json, Game_Events.Events_Calender);
+            JsonConvert.PopulateObject(Game_Events.Events_Json, Game_Events.Events_Calendar);
         }
     }
 }

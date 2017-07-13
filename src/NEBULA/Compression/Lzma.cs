@@ -63,8 +63,8 @@
                 }
                 input.Dispose();
             }
-            File.Delete(file);
         }
+            
         public static byte[] HexaToBytes(string _Value)
         {
             string _Tmp = _Value.Contains("-") ? _Value.Replace("-", string.Empty) : _Value.Replace(" ", string.Empty);

@@ -4,6 +4,7 @@ using CRepublic.Magic.Logic.Structure.Slots;
 using Newtonsoft.Json;
 using CRepublic.Magic.Logic.Structure.Slots.Items;
 using Newtonsoft.Json.Linq;
+using CRepublic.Magic.Files;
 
 namespace CRepublic.Magic.Logic
 {
@@ -60,7 +61,7 @@ namespace CRepublic.Magic.Logic
 
         [JsonProperty("cmd")] internal Battle_Commands Commands = new Battle_Commands();
 
-        [JsonProperty("calendar")] internal Calendar Calendar = new Calendar();
+        [JsonProperty("calendar")] internal Calendar Calendar = Game_Events.Events_Calendar;
 
         [JsonProperty("globals")] internal Globals_Replay Globals = new Globals_Replay();
 
