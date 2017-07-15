@@ -19,8 +19,8 @@ namespace CRepublic.Magic.Logic
         [JsonProperty("origin")] internal int Origin;
         [JsonProperty("badge")] internal int Badge;
 
-        [JsonProperty("name")] internal string Name;
-        [JsonProperty("desc")] internal string Description;
+        [JsonProperty("name")] internal string Name = string.Empty;
+        [JsonProperty("desc")] internal string Description = string.Empty;
 
         [JsonProperty("level")] internal int Level = 1;
         [JsonProperty("experience")] internal int Experience;
@@ -44,6 +44,14 @@ namespace CRepublic.Magic.Logic
             get
             {
                 return this.Members.Values.ToList().Sum(Member => Member.Donations);
+            }
+        }
+
+        internal int BuilderTrophies
+        {
+            get
+            {
+                return this.Members.Values.ToList().Sum(Member => (Member.Player.Avatar.Builder_Trophies / 2));
             }
         }
 
@@ -81,7 +89,7 @@ namespace CRepublic.Magic.Logic
                 _Packet.AddInt(this.Members.Values.Count);
 
                 _Packet.AddInt(this.Trophies);
-                _Packet.AddInt(1); //Builder base Trophies
+                _Packet.AddInt(this.BuilderTrophies); 
                 _Packet.AddInt(this.Required_Trophies);
 
                 _Packet.AddInt(this.Won_War);

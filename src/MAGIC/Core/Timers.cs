@@ -30,9 +30,9 @@ namespace CRepublic.Magic.Core
         {
             foreach (var _Device in Resources.Players.Values.ToList())
             {
-                if (_Device.Client != null)
+                if (_Device.Device != null)
                 {
-                    new Server_Shutdown(_Device.Client).Send();
+                    new Server_Shutdown(_Device.Device).Send();
                 }
             }
 

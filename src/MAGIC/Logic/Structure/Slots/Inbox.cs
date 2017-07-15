@@ -46,9 +46,9 @@ namespace CRepublic.Magic.Logic.Structure.Slots
             }
 
             var Avatar = Core.Resources.Players.Get(Player.UserId, Constants.Database, false);
-            if (Avatar?.Client != null)
+            if (Avatar?.Device != null)
             {
-                new Avatar_Stream_Entry(Avatar.Client, Message).Send();
+                new Avatar_Stream_Entry(Avatar.Device, Message).Send();
             }
         }
 

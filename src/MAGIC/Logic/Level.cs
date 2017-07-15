@@ -9,8 +9,7 @@ namespace CRepublic.Magic.Logic
 {
     internal class Level
     {
-        // Why not rename this to Device, so you avoid some confusion.
-        internal Device Client;
+        internal Device Device;
         internal Player Avatar;
 
         internal GameObjectManager GameObjectManager;
@@ -35,8 +34,8 @@ namespace CRepublic.Magic.Logic
 
         internal string JSON
         {
-            get { return JsonConvert.SerializeObject(GameObjectManager.JSON, Formatting.Indented); }
-            set { this.GameObjectManager.JSON = JObject.Parse(value); }
+            get => JsonConvert.SerializeObject(GameObjectManager.JSON, Formatting.Indented);
+            set => this.GameObjectManager.JSON = JObject.Parse(value);
         }
 
         internal void Reset()

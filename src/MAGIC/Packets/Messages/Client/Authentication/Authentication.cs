@@ -201,7 +201,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 
         internal void Login()
         {
-            this.Device.Player.Client = this.Device;
+            this.Device.Player.Device = this.Device;
             this.Device.Player.Avatar.LoginTime = DateTime.UtcNow;
             Resources.GChat.Add(this.Device);
             Resources.PRegion.Add(this.Device.Player);
@@ -216,7 +216,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
             //new Game_News(this.Device).Send();
             if (this.Device.Player.Avatar.ClanId > 0)
             {
-                Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
+                Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId);
 
                 if (Alliance != null)
                 {

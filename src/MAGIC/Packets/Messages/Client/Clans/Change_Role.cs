@@ -73,10 +73,10 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
 
                                 });
 
-                            if (Player.Client != null)
-                                new Server_Commands(Player.Client)
+                            if (Player.Device != null)
+                                new Server_Commands(Player.Device)
                                 {
-                                    Command = new Role_Update(Player.Client)
+                                    Command = new Role_Update(Player.Device)
                                         {
                                             Clan = Alliance,
                                             Role = (int) Role.Leader
@@ -111,10 +111,10 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
                     else
                     {
                         Alliance.Members[Player.Avatar.UserId].Role = this.Role;
-                        if (Player.Client != null)
-                            new Server_Commands(Player.Client)
+                        if (Player.Device != null)
+                            new Server_Commands(Player.Device)
                             {
-                                Command = new Role_Update(Player.Client)
+                                Command = new Role_Update(Player.Device)
                                 {
                                     Clan = Alliance,
                                     Role = (int)this.Role

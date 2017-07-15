@@ -36,8 +36,8 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
 
                 new Pc_Battle_Data_V2(this.Device, Enemy).Send();
 
-                new V2_Battle_Info(Enemy.Client, this.Device.Player).Send();
-                new Pc_Battle_Data_V2(Enemy.Client, this.Device.Player).Send();
+                new V2_Battle_Info(Enemy.Device, this.Device.Player).Send();
+                new Pc_Battle_Data_V2(Enemy.Device, this.Device.Player).Send();
             }
         }
     }

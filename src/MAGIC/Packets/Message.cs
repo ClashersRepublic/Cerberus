@@ -91,15 +91,11 @@ namespace CRepublic.Magic.Packets
             byte[] Decrypted = this.Reader.ReadBytes((int)this.Length).ToArray();
             if (this.Identifier != 10100)
             {
-                //Console.WriteLine($"Raw {BitConverter.ToString(Decrypted.ToArray()).Replace("-", "")}");
-                //Console.WriteLine($"Buffer Lenght {Decrypted.ToArray().Length}");
                 this.Device.RC4.Decrypt(ref Decrypted);
             }
             
             this.Reader = new Reader(Decrypted);
             this.Length = (ushort) this.Reader.BaseStream.Length;
-            //Console.WriteLine($"Decrypted {BitConverter.ToString(Decrypted.ToArray()).Replace("-", "")}");
-            //Console.WriteLine(this.Length);
         }
 
         internal virtual void EncryptPepper()
@@ -148,20 +144,13 @@ namespace CRepublic.Magic.Packets
 
         internal void ShowValues()
         {
-            Console.WriteLine(Environment.NewLine);
+            //Console.WriteLine(Environment.NewLine);
 
-            foreach (FieldInfo Field in this.GetType()
-                .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+            foreach (FieldInfo Field in this.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 if (Field != null)
                 {
-                    Console.WriteLine(Utils.Padding(this.GetType().Name) + " - " + Utils.Padding(Field.Name) + " : " +
-                                      Utils.Padding(
-                                          !string.IsNullOrEmpty(Field.Name)
-                                              ? (Field.GetValue(this) != null
-                                                  ? Field.GetValue(this).ToString()
-                                                  : "(null)")
-                                              : "(null)", 40));
+                    Console.WriteLine(Utils.Padding(this.GetType().Name) + " - " + Utils.Padding(Field.Name) + " : " + Utils.Padding(string.IsNullOrEmpty(Field.Name) ? (Field.GetValue(this) != null ? Field.GetValue(this).ToString() : "(null)") : "(null)", 40));
                 }
             }
         }

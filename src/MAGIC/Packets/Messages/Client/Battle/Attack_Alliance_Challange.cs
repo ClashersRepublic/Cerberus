@@ -51,7 +51,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Battle
                     {
                         if (Member.Connected)
                         {
-                            new Alliance_Stream_Entry(Member.Player.Client, Stream).Send();
+                            new Alliance_Stream_Entry(Member.Player.Device, Stream).Send();
                         }
                     }
                 }

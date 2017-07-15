@@ -49,14 +49,14 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
 
                             Alliance.Members.Add(Player.Avatar);
 
-                            if (Player.Client != null)
+                            if (Player.Device != null)
                             {
-                                new Server_Commands(Player.Client)
+                                new Server_Commands(Player.Device)
                                 {
-                                    Command = new Joined_Alliance(Player.Client) { Clan = Alliance}
+                                    Command = new Joined_Alliance(Player.Device) { Clan = Alliance}
                                 }.Send();
 
-                                new Alliance_All_Stream_Entry(Player.Client).Send();
+                                new Alliance_All_Stream_Entry(Player.Device).Send();
                             }
 
                             Alliance.Chats.Add(new Entry
@@ -81,7 +81,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
                     {
                         if (Member.Connected)
                         {
-                            new Alliance_Stream_Entry(Member.Player.Client, Stream).Send();
+                            new Alliance_Stream_Entry(Member.Player.Device, Stream).Send();
                         }
                     }
                 }

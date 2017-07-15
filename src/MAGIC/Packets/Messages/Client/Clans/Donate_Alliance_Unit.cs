@@ -75,16 +75,16 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
 
                         new Server_Commands(this.Device) { Command = new Donate_Troop_Callback(this.Device) { SteamHighId = this.StreamHighId, StreamLowId = this.StreamLowId, TroopGlobalId = this.Spell.GetGlobalID() }.Handle() }.Send();
 
-                        if (Receiver.Client != null)
+                        if (Receiver.Device != null)
                         {
-                            new Server_Commands(Receiver.Client) { Command = new Receive_Troop_Callback(Receiver.Client) { TroopGlobalId = this.Spell.GetGlobalID(), TroopLevel = Spell_Level, DonatorName = this.Device.Player.Avatar.Name }.Handle() }.Send();
+                            new Server_Commands(Receiver.Device) { Command = new Receive_Troop_Callback(Receiver.Device) { TroopGlobalId = this.Spell.GetGlobalID(), TroopLevel = Spell_Level, DonatorName = this.Device.Player.Avatar.Name }.Handle() }.Send();
                         }
 
                         foreach (Member Member in Alliance.Members.Values)
                         {
                             if (Member.Connected)
                             {
-                                new Alliance_Stream_Entry(Member.Player.Client, Stream).Send();
+                                new Alliance_Stream_Entry(Member.Player.Device, Stream).Send();
                             }
                         }
                     }
@@ -106,16 +106,16 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
 
                         new Server_Commands(this.Device) { Command = new Donate_Troop_Callback(this.Device) { SteamHighId = this.StreamHighId, StreamLowId = this.StreamLowId, TroopGlobalId = this.Troop.GetGlobalID() }.Handle() }.Send();
 
-                        if (Receiver.Client != null)
+                        if (Receiver.Device != null)
                         {
-                            new Server_Commands(Receiver.Client) { Command = new Receive_Troop_Callback(Receiver.Client) { TroopGlobalId = this.Troop.GetGlobalID(), TroopLevel = Unit_Level, DonatorName = this.Device.Player.Avatar.Name }.Handle() }.Send();
+                            new Server_Commands(Receiver.Device) { Command = new Receive_Troop_Callback(Receiver.Device) { TroopGlobalId = this.Troop.GetGlobalID(), TroopLevel = Unit_Level, DonatorName = this.Device.Player.Avatar.Name }.Handle() }.Send();
                         }
 
                         foreach (Member Member in Alliance.Members.Values)
                         {
                             if (Member.Connected)
                             {
-                                new Alliance_Stream_Entry(Member.Player.Client, Stream).Send();
+                                new Alliance_Stream_Entry(Member.Player.Device, Stream).Send();
                             }
                         }
                     }

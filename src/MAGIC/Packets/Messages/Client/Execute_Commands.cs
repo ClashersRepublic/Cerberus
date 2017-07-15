@@ -44,7 +44,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
         internal override void Process()
         {
 
-            if (this.Device.State == Logic.Enums.State.IN_PC_BATTLE)
+            if (!this.Device.Player.Avatar.Modes.IsAttackingOwnBase && this.Device.State == Logic.Enums.State.IN_PC_BATTLE)
                  Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID).Battle_Tick =
                     (int) this.CTick;
         

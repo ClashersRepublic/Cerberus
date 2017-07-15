@@ -35,9 +35,9 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
                     {
                         player.Role = Role.Leader;
 
-                        if (player.Player.Client != null)
+                        if (player.Player.Device != null)
                         {
-                            new Server_Commands(player.Player.Client) { Command = new Role_Update(player.Player.Client) { Clan = Alliance, Role = (int)Role.Leader }.Handle() }.Send();
+                            new Server_Commands(player.Player.Device) { Command = new Role_Update(player.Player.Device) { Clan = Alliance, Role = (int)Role.Leader }.Handle() }.Send();
                         }
                         done = true;
                         break;
@@ -54,9 +54,9 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
                         }
                         var lucky = Alliance.Members[UserID[0]];
                         lucky.Role = Role.Leader;
-                        if (lucky.Player.Client != null)
+                        if (lucky.Player.Device != null)
                         {
-                            new Server_Commands(lucky.Player.Client) { Command = new Role_Update(lucky.Player.Client) { Clan = Alliance, Role = (int)Role.Leader }.Handle() }.Send();
+                            new Server_Commands(lucky.Player.Device) { Command = new Role_Update(lucky.Player.Device) { Clan = Alliance, Role = (int)Role.Leader }.Handle() }.Send();
                         }
                     }
                 }

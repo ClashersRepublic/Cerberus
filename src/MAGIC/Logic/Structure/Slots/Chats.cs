@@ -48,7 +48,7 @@ namespace CRepublic.Magic.Logic.Structure.Slots
             {
                 if (Member.Connected)
                 {
-                    new Alliance_Stream_Entry(Member.Player.Client, Message).Send();
+                    new Alliance_Stream_Entry(Member.Player.Device, Message).Send();
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace CRepublic.Magic.Logic.Structure.Slots
                     {
                         if (Member.Connected)
                         {
-                            new Alliance_Remove_Stream(Member.Player.Client) { Message_ID = MessageID }.Send();
+                            new Alliance_Remove_Stream(Member.Player.Device) { Message_ID = MessageID }.Send();
                         }
                     }
                 }

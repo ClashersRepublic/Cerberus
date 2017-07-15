@@ -21,7 +21,7 @@ namespace CRepublic.Magic.Packets.Commands.Client
         {
             var Object = this.Device.Player.Avatar.Variables.IsBuilderVillage ? this.Device.Player.GameObjectManager.GetBuilderVillageGameObjectByID(this.BuildingID) : this.Device.Player.GameObjectManager.GetGameObjectByID(this.BuildingID);
 
-            ((ConstructionItem) Object)?.GetResourceProductionComponent(false).CollectResources();
+            ((ConstructionItem) Object)?.GetResourceProductionComponent(false)?.CollectResources();
         }
     }
 }

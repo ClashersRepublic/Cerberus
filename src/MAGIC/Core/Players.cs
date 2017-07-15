@@ -53,13 +53,13 @@ namespace CRepublic.Magic.Core
 
                 this.TryRemove(Player.Avatar.UserId);
 
-                if (Player.Client != null)
+                if (Player.Device != null)
                 {
-                    if (Resources.Devices.ContainsKey(Player.Client.SocketHandle))
+                    if (Resources.Devices.ContainsKey(Player.Device.SocketHandle))
                     {
-                        Resources.Devices.Remove(Player.Client.SocketHandle);
+                        Resources.Devices.Remove(Player.Device.SocketHandle);
                     }
-                    Resources.GChat.Remove(Player.Client);
+                    Resources.GChat.Remove(Player.Device);
                 }
             }
         }

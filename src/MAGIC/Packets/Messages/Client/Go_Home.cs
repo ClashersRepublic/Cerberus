@@ -3,6 +3,7 @@ using CRepublic.Magic.Core.Networking;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Extensions.Binary;
 using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
 using CRepublic.Magic.Logic.Structure.Slots.Items;
 using CRepublic.Magic.Packets.Messages.Server;
 using CRepublic.Magic.Packets.Messages.Server.Battle;
@@ -118,13 +119,19 @@ namespace CRepublic.Magic.Packets.Messages.Client
                 {
                     if (this.Device.Player.Avatar.Variables.IsBuilderVillage)
                     {
-                        if (this.Device.Player.Avatar.Battle_ID_V2 != 0)
-                            this.Device.Player.Avatar.Battle_ID_V2 = 0;
-
-                            Resources.Battles_V2.Dequeue(this.Device.Player);
+                        this.Device.Player.Avatar.Battle_ID_V2 = 0;
+                        Resources.Battles_V2.Dequeue(this.Device.Player);
                     }
 
                     this.Device.State = Logic.Enums.State.LOGGED;
+                }
+                else if (this.Device.State == Logic.Enums.State.IN_AMICAL_BATTLE)
+                {
+                    var Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
+                    foreach (var Old_Entry in Alliance.Chats.Slots.FindAll(M => M.Sender_ID == this.Device.Player.Avatar.UserId && M.Stream_Type == Alliance_Stream.AMICAL_BATTLE))
+                    {
+                        Alliance.Chats.Remove(Old_Entry);
+                    }
                 }
                 else if (this.Device.State == Logic.Enums.State.IN_1VS1_BATTLE)
                 {
@@ -155,7 +162,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
 
                     if (Enemy.Finished)
                     {
-                        new V2_Battle_Result(Battle.GetEnemy(UserID).Client, Battle).Send();
+                        new V2_Battle_Result(Battle.GetEnemy(UserID).Device, Battle).Send();
                     }
 
                     new V2_Battle_Result(this.Device, Battle).Send();
