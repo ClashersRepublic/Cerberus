@@ -108,10 +108,9 @@ namespace CRepublic.Magic.Packets.Messages.Client
                 else if (this.Device.State == Logic.Enums.State.IN_AMICAL_BATTLE)
                 {
                     var Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
-                    Entry Stream = Alliance.Chats.Get(this.Device.Player.Avatar.Amical_ID);
-                    if (Stream != null)
+                    foreach (var Old_Entry in Alliance.Chats.Slots.FindAll(M => M.Sender_ID == this.Device.Player.Avatar.UserId && M.Stream_Type == Alliance_Stream.AMICAL_BATTLE))
                     {
-                        Alliance.Chats.Remove(Stream);
+                        Alliance.Chats.Remove(Old_Entry);
                     }
                     this.Device.State = Logic.Enums.State.LOGGED;
                 }
@@ -124,14 +123,6 @@ namespace CRepublic.Magic.Packets.Messages.Client
                     }
 
                     this.Device.State = Logic.Enums.State.LOGGED;
-                }
-                else if (this.Device.State == Logic.Enums.State.IN_AMICAL_BATTLE)
-                {
-                    var Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
-                    foreach (var Old_Entry in Alliance.Chats.Slots.FindAll(M => M.Sender_ID == this.Device.Player.Avatar.UserId && M.Stream_Type == Alliance_Stream.AMICAL_BATTLE))
-                    {
-                        Alliance.Chats.Remove(Old_Entry);
-                    }
                 }
                 else if (this.Device.State == Logic.Enums.State.IN_1VS1_BATTLE)
                 {
