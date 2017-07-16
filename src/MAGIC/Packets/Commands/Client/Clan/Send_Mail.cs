@@ -30,7 +30,7 @@ namespace CRepublic.Magic.Packets.Commands.Client.Clan
 
             if (AllianceID > 0)
             {
-                var Clan = Resources.Clans.Get(AllianceID, Constants.Database, false);
+                var Clan = Resources.Clans.Get(AllianceID, false);
                 if (Clan != null)
                 {
                     var Mail = new Mail

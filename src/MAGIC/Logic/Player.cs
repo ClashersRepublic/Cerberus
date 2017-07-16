@@ -237,7 +237,7 @@ namespace CRepublic.Magic.Logic
 
                 if (this.ClanId > 0)
                 {
-                    Clan clan = Core.Resources.Clans.Get(ClanId, Constants.Database);
+                    Clan clan = Core.Resources.Clans.Get(ClanId);
 
                     _Packet.AddBool(clan != null);
                     if (clan != null)

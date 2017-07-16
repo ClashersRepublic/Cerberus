@@ -25,7 +25,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
         {
             if (AllianceID > 0)
             {
-                var clan = Resources.Clans.Get(AllianceID, Constants.Database, false);
+                var clan = Resources.Clans.Get(AllianceID, false);
                 clan?.Chats.Add(
                     new Entry
                     {

@@ -64,12 +64,39 @@ namespace CRepublic.Magic.Core
             }
         }
 
-        internal Level Get(long UserId, DBMS DBMS = Constants.Database, bool Store = true)
+        internal Level Get(long UserId, bool Store = true)
         {
             if (!this.ContainsKey(UserId))
             {
-                Level Player = null;
+                Level Player = default(Level);
 
+                using (MysqlEntities Database = new MysqlEntities())
+                {
+                    var Data = Database.Player.Find(UserId);
+
+                    if (!string.IsNullOrEmpty(Data?.Data))
+                    {
+                        string[] _Datas = Data.Data.Split(new string[1] {"#:#:#:#"}, StringSplitOptions.None);
+
+                        if (!string.IsNullOrEmpty(_Datas[0]) && !string.IsNullOrEmpty(_Datas[1]))
+                        {
+                            Player = new Level
+                            {
+                                Avatar = JsonConvert.DeserializeObject<Logic.Player>(_Datas[0], this.Settings),
+                                JSON = _Datas[1],
+                            };
+
+                            if (Store)
+                            {
+                                this.Add(Player);
+                            }
+                        }
+                    }
+                }
+
+                #region Old
+
+                /*
                 switch (DBMS)
                 {
                     case DBMS.Mysql:
@@ -132,13 +159,16 @@ namespace CRepublic.Magic.Core
                                     TimeSpan.FromHours(4));
                         }
                         break;
-                }
+                }*/
+
+                #endregion
+
                 return Player;
             }
             return this[UserId];
         }
 
-        internal Level New(long UserId = 0, DBMS DBMS = Constants.Database, bool Store = true)
+        internal Level New(long UserId = 0, bool Store = true)
         {
             var Player = UserId == 0 ? new Level(this.Seed++) : new Level(UserId);
 
@@ -146,7 +176,7 @@ namespace CRepublic.Magic.Core
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    char Letter = (char)Resources.Random.Next('A', 'Z');
+                    char Letter = (char) Resources.Random.Next('A', 'Z');
                     Player.Avatar.Token += Letter;
                 }
             }
@@ -154,8 +184,8 @@ namespace CRepublic.Magic.Core
             {
                 for (int i = 0; i < 6; i++)
                 {
-                    char Letter = (char)Resources.Random.Next('A', 'Z');
-                    char Number = (char)Resources.Random.Next('1', '9');
+                    char Letter = (char) Resources.Random.Next('A', 'Z');
+                    char Number = (char) Resources.Random.Next('1', '9');
                     Player.Avatar.Password += Letter;
                     Player.Avatar.Password += Number;
                 }
@@ -163,6 +193,27 @@ namespace CRepublic.Magic.Core
 
             Player.JSON = Files.Home.Starting_Home;
 
+            using (MysqlEntities Database = new MysqlEntities())
+            {
+                Database.Player.Add(new Database.Player
+                {
+                    ID = Player.Avatar.UserId,
+                    Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" +
+                           Player.JSON,
+                    FacebookID = "#:#:#:#",
+                });
+
+                Database.SaveChanges();
+            }
+
+            if (Store)
+            {
+                this.Add(Player);
+            }
+
+            #region Old
+
+            /*
             while (true)
             {
                 switch (DBMS)
@@ -219,14 +270,37 @@ namespace CRepublic.Magic.Core
                         }
                 }
                 break;
-            }
+            }*/
+
+            #endregion
 
             return Player;
         }
 
-        internal void Save(Level Player, DBMS DBMS = Constants.Database)
+        internal void Save(Level Player)
         {
             Player.Avatar.LastSave = DateTime.UtcNow;
+
+            using (MysqlEntities Database = new MysqlEntities())
+            {
+                Database.Configuration.AutoDetectChangesEnabled = false;
+                Database.Configuration.ValidateOnSaveEnabled = false;
+                var Data = Database.Player.Find(Player.Avatar.UserId);
+
+                if (Data != null)
+                {
+                    Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" +
+                                Player.JSON;
+                    Data.Trophies = Player.Avatar.Trophies;
+                    Data.FacebookID = Player.Avatar.Facebook.Identifier ?? "#:#:#:#";
+                    Database.Entry(Data).State = EntityState.Modified;
+                }
+                Database.SaveChanges();
+            }
+
+            #region Old
+
+            /*
             while (true)
             {
                 switch (DBMS)
@@ -269,11 +343,41 @@ namespace CRepublic.Magic.Core
                         }
                 }
                 break;
-            }
+            }*/
+
+            #endregion
         }
 
-        internal async Task Save(DBMS DBMS = Constants.Database)
+        internal async Task Save()
         {
+            using (MysqlEntities Database = new MysqlEntities())
+            {
+                Database.Configuration.AutoDetectChangesEnabled = false;
+                Database.Configuration.ValidateOnSaveEnabled = false;
+                foreach (var Player in this.Values.ToList())
+                {
+                    lock (Player)
+                    {
+                        Player.Avatar.LastSave = DateTime.UtcNow;
+                        var Data = Database.Player.Find(Player.Avatar.UserId);
+
+                        if (Data != null)
+                        {
+                            Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" +
+                                        Player.JSON;
+                            Data.Trophies = Player.Avatar.Trophies;
+                            Data.FacebookID = Player.Avatar.Facebook.Identifier ?? "#:#:#:#";
+                            Database.Entry(Data).State = EntityState.Modified;
+                        }
+                    }
+                }
+
+                await Database.SaveChangesAsync();
+            }
+
+            #region Old
+
+            /*
             while (true)
             {
                 switch (DBMS)
@@ -333,7 +437,9 @@ namespace CRepublic.Magic.Core
                         }
                 }
                 break;
-            }
+            }*/
+
+            #endregion
         }
     }
 }

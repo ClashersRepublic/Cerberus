@@ -4,6 +4,7 @@ using StackExchange.Redis;
 
 namespace CRepublic.Magic.Core.Database
 {
+    [Obsolete]
     internal class Redis
     {
         internal static IDatabase Players;

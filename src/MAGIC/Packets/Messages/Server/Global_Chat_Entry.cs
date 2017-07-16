@@ -38,7 +38,7 @@ namespace CRepublic.Magic.Packets.Messages.Server
             this.Data.AddBool(this.Message_Sender.ClanId > 0);
             if (this.Message_Sender.ClanId > 0)
             {
-                var _Clan = Resources.Clans.Get(this.Message_Sender.ClanId, Constants.Database);
+                var _Clan = Resources.Clans.Get(this.Message_Sender.ClanId);
 
                 this.Data.AddLong(_Clan.Clan_ID);
                 this.Data.AddString(_Clan.Name);

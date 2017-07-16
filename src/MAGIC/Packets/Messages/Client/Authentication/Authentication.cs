@@ -149,7 +149,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
             }
             else if (this.UserId > 0)
             {
-                this.Device.Player = Resources.Players.Get(this.UserId, Constants.Database);
+                this.Device.Player = Resources.Players.Get(this.UserId);
                 if (this.Device.Player != null)
                 {
                     if (string.Equals(this.Token, this.Device.Player.Avatar.Token))

@@ -49,7 +49,7 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
                     {
                         if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.FindIndex(P => P == this.Enemy_ID) < 0)
                         {
-                            this.Enemy_Player = Core.Resources.Players.Get(this.Enemy_ID, Constants.Database, false);
+                            this.Enemy_Player = Core.Resources.Players.Get(this.Enemy_ID, false);
 
                             if (this.Enemy_Player == null)
                             {

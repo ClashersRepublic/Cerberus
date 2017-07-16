@@ -18,7 +18,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Battle
         {
             if (!this.Device.Player.Avatar.Variables.IsBuilderVillage)
             {
-                var Battle = Core.Resources.Battles.Get(this.Battle_ID, Constants.Database, false);
+                var Battle = Core.Resources.Battles.Get(this.Battle_ID, false);
                 if (Battle != null)
                     this.Data.AddCompressed(Battle.Json, false);
             }

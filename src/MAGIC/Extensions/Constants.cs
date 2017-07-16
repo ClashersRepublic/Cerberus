@@ -13,7 +13,7 @@ namespace CRepublic.Magic.Extensions
         internal const bool Local = false;
         internal const bool PacketCompression = true;
         internal const bool RC4 = true;
-        internal const DBMS Database = DBMS.Mysql;
+        //internal const DBMS Database = DBMS.Mysql;
 
         internal static int MaintenanceDuration = 0;
         internal static Maintenance_Timer Maintenance = null;

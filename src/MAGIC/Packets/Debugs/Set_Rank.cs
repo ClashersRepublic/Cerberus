@@ -32,7 +32,7 @@ namespace CRepublic.Magic.Packets.Debugs
                         {
                             if (long.TryParse(this.Parameters[0], out this.UserID))
                             {
-                                var target = Resources.Players.Get(this.UserID, Constants.Database);
+                                var target = Resources.Players.Get(this.UserID);
                                 if (this.Rank > this.Device.Player.Avatar.Rank)
                                 {
                                     SendChatMessage(
@@ -55,7 +55,7 @@ namespace CRepublic.Magic.Packets.Debugs
                                 this.UserID = GameUtils.GetUserID(this.Parameters[0]);
                                 if (this.UserID != -1)
                                 {
-                                    var target = Resources.Players.Get(this.UserID, Constants.Database);
+                                    var target = Resources.Players.Get(this.UserID);
                                     if (this.Rank > this.Device.Player.Avatar.Rank)
                                     {
                                         SendChatMessage(

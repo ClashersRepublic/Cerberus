@@ -28,7 +28,7 @@ namespace CRepublic.Magic.Packets.Commands.Client.Clan
 
         internal override  void Process()
         {
-            var Clan = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
+            var Clan = Resources.Clans.Get(this.Device.Player.Avatar.ClanId);
             foreach (var Old_Entry in Clan.Chats.Slots.FindAll(M => M.Sender_ID == this.Device.Player.Avatar.UserId && M.Stream_Type == Alliance_Stream.TROOP_REQUEST))
             {
                 Clan.Chats.Remove(Old_Entry);

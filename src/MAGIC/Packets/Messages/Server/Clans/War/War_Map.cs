@@ -19,7 +19,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Clans.War
             this.Data.AddInt((int) WarState.BATTLE_DAY);
             this.Data.AddInt((int) TimeSpan.FromHours(900).TotalSeconds);
             this.Data.AddLong(this.Device.Player.Avatar.ClanId);
-            var clan = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database);
+            var clan = Resources.Clans.Get(this.Device.Player.Avatar.ClanId);
 
             this.Data.AddString(clan.Name);
             this.Data.AddInt(clan.Badge);

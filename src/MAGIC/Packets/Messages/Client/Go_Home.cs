@@ -3,7 +3,6 @@ using CRepublic.Magic.Core.Networking;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Extensions.Binary;
 using CRepublic.Magic.Logic;
-using CRepublic.Magic.Logic.Enums;
 using CRepublic.Magic.Logic.Structure.Slots.Items;
 using CRepublic.Magic.Packets.Messages.Server;
 using CRepublic.Magic.Packets.Messages.Server.Battle;
@@ -43,7 +42,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                         if (Battle.Commands.Count > 0)
                         {
                             Level Player =
-                                Core.Resources.Players.Get(Battle.Defender.UserId, Constants.Database, false);
+                                Core.Resources.Players.Get(Battle.Defender.UserId, false);
 
                             if (Utils.IsOdd(Resources.Random.Next(1, 1000)))
                             {
@@ -107,10 +106,11 @@ namespace CRepublic.Magic.Packets.Messages.Client
                 }
                 else if (this.Device.State == Logic.Enums.State.IN_AMICAL_BATTLE)
                 {
-                    var Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
-                    foreach (var Old_Entry in Alliance.Chats.Slots.FindAll(M => M.Sender_ID == this.Device.Player.Avatar.UserId && M.Stream_Type == Alliance_Stream.AMICAL_BATTLE))
+                    var Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, false);
+                    Entry Stream = Alliance.Chats.Get(this.Device.Player.Avatar.Amical_ID);
+                    if (Stream != null)
                     {
-                        Alliance.Chats.Remove(Old_Entry);
+                        Alliance.Chats.Remove(Stream);
                     }
                     this.Device.State = Logic.Enums.State.LOGGED;
                 }
@@ -119,6 +119,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                     if (this.Device.Player.Avatar.Variables.IsBuilderVillage)
                     {
                         this.Device.Player.Avatar.Battle_ID_V2 = 0;
+
                         Resources.Battles_V2.Dequeue(this.Device.Player);
                     }
 

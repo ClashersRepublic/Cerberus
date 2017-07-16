@@ -36,26 +36,43 @@ namespace CRepublic.Magic.Packets.Messages.Server.Battle
 
         internal override void Process()
         {
-            this.Device.Player.Avatar.Last_Attack_Enemy_ID.Add((int)this.Enemy.Avatar.UserId);
-
-            if (this.Device.State == State.SEARCH_BATTLE)
+            if (this.BattleMode == Battle_Mode.PVP)
             {
-                if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20)
-                    this.Device.Player.Avatar.Last_Attack_Enemy_ID.RemoveAt(0);
+                this.Device.Player.Avatar.Last_Attack_Enemy_ID.Add((int) this.Enemy.Avatar.UserId);
+
+                if (this.Device.State == State.SEARCH_BATTLE)
+                {
+                    if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20)
+                        this.Device.Player.Avatar.Last_Attack_Enemy_ID.RemoveAt(0);
+                }
+
+                this.Device.State = State.IN_PC_BATTLE;
+
+                if (this.Device.Player.Avatar.Battle_ID == 0)
+                {
+                    Core.Resources.Battles.New(this.Device.Player,
+                        Core.Resources.Players.Get(
+                            this.Device.Player.Avatar.Last_Attack_Enemy_ID[
+                                this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count - 1]));
+                }
+                else
+                {
+                    Core.Resources.Battles.Save(Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, false));
+                    Core.Resources.Battles.TryRemove(this.Device.Player.Avatar.Battle_ID);
+
+                    Core.Resources.Battles.New(this.Device.Player,
+                        Core.Resources.Players.Get(
+                            this.Device.Player.Avatar.Last_Attack_Enemy_ID[
+                                this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count - 1]));
+                }
             }
-
-            this.Device.State = State.IN_PC_BATTLE;
-
-            if (this.Device.Player.Avatar.Battle_ID == 0)
+            else if (this.BattleMode == Battle_Mode.AMICAL)
             {
-                Core.Resources.Battles.New(this.Device.Player, Core.Resources.Players.Get(this.Device.Player.Avatar.Last_Attack_Enemy_ID[this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count - 1]));
+                this.Device.State = State.IN_AMICAL_BATTLE;               
             }
-            else
+            else if(this.BattleMode == Battle_Mode.NEXT_BUTTON_DISABLE)
             {
-                Core.Resources.Battles.Save(Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID, Constants.Database, false));
-                Core.Resources.Battles.TryRemove(this.Device.Player.Avatar.Battle_ID);
-
-                Core.Resources.Battles.New(this.Device.Player, Core.Resources.Players.Get(this.Device.Player.Avatar.Last_Attack_Enemy_ID[this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count - 1]));
+                this.Device.State = State.IN_PC_BATTLE;          
             }
         }
 

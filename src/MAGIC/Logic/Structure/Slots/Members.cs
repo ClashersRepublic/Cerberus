@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Extensions.List;
 using CRepublic.Magic.Logic.Enums;
@@ -82,9 +83,9 @@ namespace CRepublic.Magic.Logic.Structure.Slots
 
                 _Packet.AddInt(this.Values.Count);
                     
-                foreach (Member Member in this.Values)
+                foreach (Member Member in this.Values.ToList())
                 {
-                    Level _Player = Core.Resources.Players.Get(Member.UserID, Constants.Database, false);
+                    Level _Player = Core.Resources.Players.Get(Member.UserID, false);
 
                     _Packet.AddLong(_Player.Avatar.UserId);
                     _Packet.AddString(_Player.Avatar.Name);

@@ -41,12 +41,27 @@ namespace CRepublic.Magic.Core
             }
         }
 
-        internal Battle Get(long _BattleID, DBMS DBMS = Constants.Database, bool Store = true)
+        internal Battle Get(long _BattleID, bool Store = true)
         {
             if (!this.ContainsKey(_BattleID))
             {
-                Battle _Battle = null;
+                Battle _Battle = default(Battle);
 
+                using (MysqlEntities Database = new MysqlEntities())
+                {
+                    Database.Battle Data = Database.Battle.Find(_BattleID);
+
+                    if (!string.IsNullOrEmpty(Data?.Data))
+                    {
+                        _Battle = JsonConvert.DeserializeObject<Battle>(Data.Data, this.Settings);
+
+                        if (Store)
+                        {
+                            this.Add(_Battle);
+                        }
+                    }
+                }
+                /*
                 switch (DBMS)
                 {
                     case DBMS.Mysql:
@@ -90,19 +105,35 @@ namespace CRepublic.Magic.Core
 
                         }
                         break;
-                }
+                }*/
                 return _Battle;
             }
             return this[_BattleID];
         }
 
-        internal Battle New(Level _Attacker, Level _Defender, DBMS DBMS = Constants.Database, bool Store = true)
+        internal Battle New(Level _Attacker, Level _Defender, bool Store = true)
         {
 
             var _Battle = new Battle(this.Seed++, _Attacker, _Defender);
 
             _Attacker.Avatar.Battle_ID = _Battle.Battle_ID;
 
+            using (MysqlEntities Database = new MysqlEntities())
+            {
+                Database.Battle.Add(new Database.Battle
+                {
+                    ID = _Battle.Battle_ID,
+                    Data = JsonConvert.SerializeObject(_Battle, this.Settings)
+                });
+
+                Database.SaveChanges();
+            }
+
+            if (Store)
+            {
+                this.Add(_Battle);
+            }
+            /*
             while (true)
             {
                 switch (DBMS)
@@ -152,13 +183,27 @@ namespace CRepublic.Magic.Core
                         }
                 }
                 break;
-            }
+            }*/
 
             return _Battle;
         }
 
-        internal void Save(Battle _Battle, DBMS DBMS = Constants.Database)
+        internal void Save(Battle _Battle)
         {
+            using (MysqlEntities Database = new MysqlEntities())
+            {
+                Database.Configuration.AutoDetectChangesEnabled = false;
+                Database.Configuration.ValidateOnSaveEnabled = false;
+                var Data = Database.Battle.Find(_Battle.Battle_ID);
+
+                if (Data != null)
+                {
+                    Data.Data = JsonConvert.SerializeObject(_Battle, this.Settings);
+                    Database.Entry(Data).State = EntityState.Modified;
+                }
+                Database.SaveChanges();
+            }
+            /*
             while (true)
             {
                 switch (DBMS)
@@ -196,11 +241,31 @@ namespace CRepublic.Magic.Core
                         }
                 }
                 break;
-            }
+            }*/
         }
 
-        internal async Task Save(DBMS DBMS = Constants.Database)
+        internal async Task Save()
         {
+            using (MysqlEntities Database = new MysqlEntities())
+            {
+                Database.Configuration.AutoDetectChangesEnabled = false;
+                Database.Configuration.ValidateOnSaveEnabled = false;
+                foreach (var Battle in this.Values.ToList())
+                {
+                    lock (Battle)
+                    {
+                        var Data = Database.Battle.Find(Battle.Battle_ID);
+
+                        if (Data != null)
+                        {
+                            Data.Data = JsonConvert.SerializeObject(Battle, this.Settings);
+                            Database.Entry(Data).State = EntityState.Modified;
+                        }
+                    }
+                }
+                await Database.SaveChangesAsync();
+            }
+            /*
             while (true)
             {
                 switch (DBMS)
@@ -248,7 +313,7 @@ namespace CRepublic.Magic.Core
                         }
                 }
                 break;
-            }
+            }*/
         }
     }
 }

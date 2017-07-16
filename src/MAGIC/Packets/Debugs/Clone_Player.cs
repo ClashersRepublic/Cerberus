@@ -26,7 +26,7 @@ namespace CRepublic.Magic.Packets.Debugs
             {
                 if (long.TryParse(this.Parameters[0], out this.UserID))
                 {
-                    var level = Resources.Players.Get(this.UserID, Constants.Database, false);
+                    var level = Resources.Players.Get(this.UserID, false);
                     if (level != null)
                     {
                         this.Device.Player.Avatar.Heroes_Health = level.Avatar.Heroes_Health.Clone();
@@ -55,7 +55,7 @@ namespace CRepublic.Magic.Packets.Debugs
                     this.UserID = GameUtils.GetUserID(this.Parameters[0]);
                     if (this.UserID != -1)
                     {
-                        var level = Resources.Players.Get(this.UserID, Constants.Database, false);
+                        var level = Resources.Players.Get(this.UserID, false);
                         if (level != null)
                         {
                             this.Device.Player.Avatar.Heroes_Health = level.Avatar.Heroes_Health.Clone();

@@ -53,11 +53,11 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
 
         internal override void Process()
         {
-            Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
+            Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, false);
             Entry Stream = Alliance.Chats.Get(this.StreamLowId);
             if (Stream != null)
             {
-                Level Receiver = Resources.Players.Get(Stream.Sender_ID, Constants.Database, false);
+                Level Receiver = Resources.Players.Get(Stream.Sender_ID, false);
 
                 if (IsSpell)
                 {

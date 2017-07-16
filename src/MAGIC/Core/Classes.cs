@@ -21,7 +21,7 @@ namespace CRepublic.Magic.Core
         internal NPC Npc;
         internal Game_Events Game_Events;
         internal Timers Timers;
-        internal Redis Redis;
+        //internal Redis Redis;
         internal Fingerprint Fingerprint;
         internal EventsHandler Events;
         internal Test Test;
@@ -36,13 +36,14 @@ namespace CRepublic.Magic.Core
             this.Npc = new NPC();
             this.Game_Events = new Game_Events();
             this.Fingerprint = new Fingerprint();
-            switch (Constants.Database)
+           /* switch (Constants.Database)
             {
                 case DBMS.Redis:
                 case DBMS.Both:
                     this.Redis = new Redis();
                     break;
             }
+            */
             this.Events = new EventsHandler();
 #if DEBUG
             Console.WriteLine("We loaded " + MessageFactory.Messages.Count + " messages, " + CommandFactory.Commands.Count + " commands, and " + DebugFactory.Debugs.Count + " debug commands.\n");

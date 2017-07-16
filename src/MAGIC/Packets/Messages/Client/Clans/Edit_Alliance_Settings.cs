@@ -22,7 +22,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
 
         internal override void Decode()
         {
-            this.Clan = Core.Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
+            this.Clan = Core.Resources.Clans.Get(this.Device.Player.Avatar.ClanId, false);
 
             this.Clan.Description = this.Reader.ReadString();
             this.Reader.ReadInt32();

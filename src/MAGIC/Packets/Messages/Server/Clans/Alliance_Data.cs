@@ -27,7 +27,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Clans
         internal override void Encode()
         {
             if (Clan == null)
-                Clan = Resources.Clans.Get(this.ClanID == 0 ? this.Device.Player.Avatar.ClanId : this.ClanID , Constants.Database, false);
+                Clan = Resources.Clans.Get(this.ClanID == 0 ? this.Device.Player.Avatar.ClanId : this.ClanID, false);
 
 
             if (Clan != null)

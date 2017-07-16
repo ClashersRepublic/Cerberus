@@ -21,7 +21,7 @@ namespace CRepublic.Magic.Packets.Debugs
                 if (long.TryParse(this.Parameters[0], out this.UserID))
                 {
                     var builder = new StringBuilder();
-                    var level = Resources.Players.Get(this.UserID, Constants.Database, false);
+                    var level = Resources.Players.Get(this.UserID, false);
                     if (level != null)
                     {
                         builder.AppendLine($"Statistics for user {level.Avatar.Name}: ");
@@ -43,7 +43,7 @@ namespace CRepublic.Magic.Packets.Debugs
                     if (this.UserID != -1)
                     {
                         var builder = new StringBuilder();
-                        var level = Resources.Players.Get(this.UserID, Constants.Database, false);
+                        var level = Resources.Players.Get(this.UserID, false);
                         if (level != null)
                         {
                             builder.AppendLine($"Statistics for user {level.Avatar.Name}: ");

@@ -33,14 +33,13 @@ namespace CRepublic.Magic.Packets.Messages.Client.Battle
 
         internal override void Process()
         {
-            var Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, Constants.Database, false);
+            var Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, false);
             Entry Stream = Alliance.Chats.Get(this.Stream_Low_ID);
             if (Stream != null)
             {
-                var Player = Resources.Players.Get(Stream.Sender_ID, Constants.Database, false);
+                var Player = Resources.Players.Get(Stream.Sender_ID, false);
                 if (Player != null)
                 {
-                    this.Device.State = State.IN_AMICAL_BATTLE;
                     this.Device.Player.Avatar.Amical_ID = this.Stream_Low_ID;
 
                     new Pc_Battle_Data(this.Device){Enemy = Player, BattleMode = Battle_Mode.AMICAL}.Send();

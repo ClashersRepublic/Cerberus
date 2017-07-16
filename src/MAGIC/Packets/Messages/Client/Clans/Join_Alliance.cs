@@ -27,7 +27,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
 
         internal override void Process()
         {
-            Clan Alliance = Resources.Clans.Get(this.ClanID, Constants.Database, false);
+            Clan Alliance = Resources.Clans.Get(this.ClanID, false);
 
             if (Alliance != null)
             {
