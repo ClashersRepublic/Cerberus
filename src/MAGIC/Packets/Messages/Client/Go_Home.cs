@@ -101,8 +101,9 @@ namespace CRepublic.Magic.Packets.Messages.Client
                         else
                             Core.Resources.Battles.TryRemove(this.Device.Player.Avatar.Battle_ID);
                         this.Device.Player.Avatar.Battle_ID = 0;
-                        this.Device.State = Logic.Enums.State.LOGGED;
                     }
+
+                    this.Device.State = Logic.Enums.State.LOGGED;
                 }
                 else if (this.Device.State == Logic.Enums.State.IN_AMICAL_BATTLE)
                 {

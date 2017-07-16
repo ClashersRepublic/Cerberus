@@ -31,7 +31,7 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
         {
             if (this.Device.State == State.IN_PC_BATTLE)
             {
-                if (!this.Device.Player.Avatar.Variables.IsBuilderVillage)
+                if (!this.Device.Player.Avatar.Variables.IsBuilderVillage && !this.Device.Player.Avatar.Modes.IsAttackingOwnBase)
                 {
                     var Battle = Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID);
                     Battle_Command Command = new Battle_Command
