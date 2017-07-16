@@ -114,6 +114,12 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
             if (Constants.RC4)
                 new Session_Key(this.Device).Send();
 
+            if (ClientVersion[0] != Constants.ClientVersion[0] || ClientVersion[1] != Constants.ClientVersion[1])
+            {
+                new Authentication_Failed(this.Device, Logic.Enums.Reason.Update).Send();
+                return;
+            }
+
             if (Constants.Maintenance != null)
             {
                 new Authentication_Failed(this.Device, Logic.Enums.Reason.Maintenance).Send();
@@ -128,58 +134,17 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 
             if (this.UserId == 0)
             {
-                this.Device.Player = Resources.Players.New();
-                this.Device.Player.Avatar.Region = Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress = this.Device.IPAddress);
+                if (Token == null)
+                {
+                    this.Device.Player = Resources.Players.New();
+                    this.Device.Player.Avatar.Region =
+                        Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress = this.Device.IPAddress);
 
-                if (this.Device.Player != null)
-                {
-                    if (this.Device.Player.Avatar.Locked)
-                    {
-                        new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
-                    }
-                    else
-                    {
-                        this.Login();
-                    }
-                }
-                else
-                {
-                    new Authentication_Failed(this.Device, Logic.Enums.Reason.Pause).Send();
-                }
-            }
-            else if (this.UserId > 0)
-            {
-                this.Device.Player = Resources.Players.Get(this.UserId);
-                if (this.Device.Player != null)
-                {
-                    if (string.Equals(this.Token, this.Device.Player.Avatar.Token))
+                    if (this.Device.Player != null)
                     {
                         if (this.Device.Player.Avatar.Locked)
                         {
                             new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
-                        }
-                        else if (this.Device.Player.Avatar.Banned)
-                        {
-                            this.Reason = new StringBuilder();
-                            this.Reason.AppendLine(
-                                "Your account has been banned from our servers, please contact one of the server staff members with these following information:");
-                            this.Reason.AppendLine();
-                            this.Reason.AppendLine("Your Account Name: " + this.Device.Player.Avatar.Name);
-                            this.Reason.AppendLine("Your Account ID: " + this.Device.Player.Avatar.UserId);
-                            this.Reason.AppendLine("Your Account Tag: " +
-                                                   GameUtils.GetHashtag(this.Device.Player.Avatar.UserId));
-                            this.Reason.AppendLine("Your Account Ban Duration: " +
-                                                   Math.Round(
-                                                       (this.Device.Player.Avatar.BanTime.AddDays(3) -
-                                                        DateTime.UtcNow).TotalDays, 3) + " Day");
-                            this.Reason.AppendLine("Your Account Unlock Date : " +
-                                                   this.Device.Player.Avatar.BanTime.AddDays(3));
-                            this.Reason.AppendLine();
-
-                            new Authentication_Failed(this.Device, Logic.Enums.Reason.Banned)
-                            {
-                                Message = Reason.ToString()
-                            }.Send();
                         }
                         else
                         {
@@ -188,15 +153,75 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
                     }
                     else
                     {
-                        new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
+                        new Authentication_Failed(this.Device, Logic.Enums.Reason.Pause).Send();
                     }
                 }
                 else
                 {
-                    new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
+                    new Authentication_Failed(this.Device, (Reason) 2).Send();
                 }
             }
+            else if (this.UserId > 0)
+            {
+                if (Token == null)
+                {
+                    new Authentication_Failed(this.Device, (Reason) 2).Send();
+                    return;
+                }
+                else
+                {
+                    this.Device.Player = Resources.Players.Get(this.UserId);
+                    if (this.Device.Player != null)
+                    {
+                        if (string.Equals(this.Token, this.Device.Player.Avatar.Token))
+                        {
+                            if (this.Device.Player.Avatar.Locked)
+                            {
+                                new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
+                            }
+                            else if (this.Device.Player.Avatar.Banned)
+                            {
+                                this.Reason = new StringBuilder();
+                                this.Reason.AppendLine(
+                                    "Your account has been banned from our servers, please contact one of the server staff members with these following information:");
+                                this.Reason.AppendLine();
+                                this.Reason.AppendLine("Your Account Name: " + this.Device.Player.Avatar.Name);
+                                this.Reason.AppendLine("Your Account ID: " + this.Device.Player.Avatar.UserId);
+                                this.Reason.AppendLine("Your Account Tag: " +
+                                                       GameUtils.GetHashtag(this.Device.Player.Avatar.UserId));
+                                this.Reason.AppendLine("Your Account Ban Duration: " +
+                                                       Math.Round(
+                                                           (this.Device.Player.Avatar.BanTime.AddDays(3) -
+                                                            DateTime.UtcNow).TotalDays, 3) + " Day");
+                                this.Reason.AppendLine("Your Account Unlock Date : " +
+                                                       this.Device.Player.Avatar.BanTime.AddDays(3));
+                                this.Reason.AppendLine();
 
+                                new Authentication_Failed(this.Device, Logic.Enums.Reason.Banned)
+                                {
+                                    Message = Reason.ToString()
+                                }.Send();
+                            }
+                            else
+                            {
+                                this.Login();
+                            }
+                        }
+                        else
+                        {
+                            new Authentication_Failed(this.Device, Logic.Enums.Reason.Locked).Send();
+                        }
+                    }
+                    else
+                    {
+                        this.Device.Player = Resources.Players.New(this.UserId, this.Token);
+                        this.Device.Player.Avatar.Region =
+                            Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress =
+                                this.Device.IPAddress);
+                        this.Login();
+                    }
+                }
+            }
         }
 
         internal void Login()

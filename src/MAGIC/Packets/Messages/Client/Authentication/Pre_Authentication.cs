@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using CRepublic.Magic.Logic;
 using CRepublic.Magic.Core.Networking;
@@ -41,25 +42,24 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 
         internal override void Process()
         {
-            // if (this.Major == (int)CVersion.Major && this.Minor == (int)CVersion.Minor)
-            //  {
-            if (Constants.Maintenance == null)
+            if (this.Major == Convert.ToInt32(Constants.ClientVersion[0]) &&  this.Minor == Convert.ToInt32(Constants.ClientVersion[1]))
             {
-                if (string.Equals(this.Hash, Fingerprint.Sha))
+                if (Constants.Maintenance == null)
                 {
-                    new Pre_Authentication_OK(this.Device).Send();
+                    if (string.Equals(this.Hash, Fingerprint.Sha))
+                    {
+                        new Pre_Authentication_OK(this.Device).Send();
+                    }
+                    else
+                    {
+                        new Authentication_Failed(this.Device, Reason.Patch).Send();
+                    }
                 }
                 else
-                {
-                    new Authentication_Failed(this.Device, Reason.Patch).Send();
-                }
+                    new Authentication_Failed(this.Device, Reason.Maintenance).Send();
             }
             else
-                new Authentication_Failed(this.Device, Reason.Maintenance).Send();
-            //   }
-            //  else
-            //    new Authentification_Failed(this.Device, Reason.Update).Send();
-            //  }
+                new Authentication_Failed(this.Device, Reason.Update).Send();
         }
     }
 }

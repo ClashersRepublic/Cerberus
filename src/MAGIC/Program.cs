@@ -37,10 +37,6 @@ namespace CRepublic.Magic
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
 
             Resources.Initialize();
-            for (int i = 0; i < 100; i++)
-            {
-                Resources.Clans.New();
-            }
             Console.WriteLine(@"-------------------------------------" + Environment.NewLine);
 
             Thread.Sleep(Timeout.Infinite);

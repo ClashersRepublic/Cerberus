@@ -45,12 +45,11 @@ namespace CRepublic.Magic.Packets.Messages.Client
         {
 
             if (!this.Device.Player.Avatar.Modes.IsAttackingOwnBase && this.Device.State == Logic.Enums.State.IN_PC_BATTLE)
-                 Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID).Battle_Tick =
-                    (int) this.CTick;
+                 Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID).Battle_Tick = (int) this.CTick;
         
             if (this.Count > -1 && Constants.MaxCommand == 0 || this.Count > -1 && this.Count <= Constants.MaxCommand)
             {
-                this.Device.Player.Tick();
+                //this.Device.Player.Tick();
                 using (Reader Reader = new Reader(this.Commands))
                 {
                     for (int _Index = 0; _Index < this.Count; _Index++)

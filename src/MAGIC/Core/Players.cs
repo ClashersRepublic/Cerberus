@@ -168,18 +168,27 @@ namespace CRepublic.Magic.Core
             return this[UserId];
         }
 
-        internal Level New(long UserId = 0, bool Store = true)
+        internal Level New(long UserId = 0, string token = "", bool Store = true)
         {
             var Player = UserId == 0 ? new Level(this.Seed++) : new Level(UserId);
 
-            if (string.IsNullOrEmpty(Player.Avatar.Token))
+
+            if (string.IsNullOrEmpty(token))
             {
-                for (int i = 0; i < 20; i++)
+                if (string.IsNullOrEmpty(Player.Avatar.Token))
                 {
-                    char Letter = (char) Resources.Random.Next('A', 'Z');
-                    Player.Avatar.Token += Letter;
+                    for (int i = 0; i < 20; i++)
+                    {
+                        char Letter = (char) Resources.Random.Next('A', 'Z');
+                        Player.Avatar.Token += Letter;
+                    }
                 }
             }
+            else
+            {
+                Player.Avatar.Token = token;
+            }
+
             if (string.IsNullOrEmpty(Player.Avatar.Password))
             {
                 for (int i = 0; i < 6; i++)

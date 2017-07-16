@@ -19,6 +19,7 @@ namespace CRepublic.Magic.Extensions
         internal static Maintenance_Timer Maintenance = null;
         internal static readonly string PatchServer = Utils.ParseConfigString("PatchUrl");
         internal static readonly string UpdateServer = Utils.ParseConfigString("UpdateUrl");
+        internal static readonly string[] ClientVersion = Utils.ParseConfigString("ClientVersion").Split('.');
 
         internal static string[] AuthorizedIP =
         {

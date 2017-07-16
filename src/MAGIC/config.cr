@@ -1,5 +1,7 @@
 ﻿<appSettings>
   <!-- ____________________________________ Server SETTINGS ____________________________________ -->
+  <add key="ClientVersion" value="9.105" />
+  <!-- Client version that will be able to access the server-->
   <add key="UpdateUrl" value="http://bfy.tw/CQAh" />
   <!-- Location to redirect outdated player-->
 
