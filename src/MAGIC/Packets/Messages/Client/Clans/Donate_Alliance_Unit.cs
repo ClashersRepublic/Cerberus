@@ -36,7 +36,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
         {
             this.Reader.ReadInt32();
             this.GlobalId = this.Reader.ReadInt32();
-            if (GlobalId < 4000000)
+            if (this.GlobalId >= 26000000)
             {
                 this.IsSpell = true;
                 this.Spell = CSV.Tables.Get(Gamefile.Spells).GetDataWithID(GlobalId) as Spells;

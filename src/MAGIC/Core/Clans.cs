@@ -103,7 +103,7 @@ namespace CRepublic.Magic.Core
         {
             if (!this.ContainsKey(ClanID))
             {
-                Clan Clan = default(Clan);
+                Clan Clan = null;
 
                 using (MysqlEntities Database = new MysqlEntities())
                 {

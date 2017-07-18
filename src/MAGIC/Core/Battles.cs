@@ -45,7 +45,7 @@ namespace CRepublic.Magic.Core
         {
             if (!this.ContainsKey(_BattleID))
             {
-                Battle _Battle = default(Battle);
+                Battle _Battle = null;
 
                 using (MysqlEntities Database = new MysqlEntities())
                 {

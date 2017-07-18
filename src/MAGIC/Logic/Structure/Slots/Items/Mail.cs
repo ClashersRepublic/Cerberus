@@ -94,8 +94,8 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
                         _Packet.AddString(Battle.Replay_Info.Json);
                         _Packet.AddInt(0);
                         _Packet.AddBool(true);
-                        _Packet.AddInt(9);
-                        _Packet.AddInt(24);
+                        _Packet.AddInt(Convert.ToInt32(Constants.ClientVersion[0]));
+                        _Packet.AddInt(Convert.ToInt32(Constants.ClientVersion[1]));
                         _Packet.AddInt(0);
 
                         _Packet.AddBool(true);

@@ -37,12 +37,10 @@ namespace CRepublic.Magic.Packets.Messages.Client
                     if (this.Device.Player.Avatar.Battle_ID > 0)
                     {
 
-                        var Battle =
-                            Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID);
+                        var Battle = Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID);
                         if (Battle.Commands.Count > 0)
                         {
-                            Level Player =
-                                Core.Resources.Players.Get(Battle.Defender.UserId, false);
+                            Level Player = Core.Resources.Players.Get(Battle.Defender.UserId, false);
 
                             if (Utils.IsOdd(Resources.Random.Next(1, 1000)))
                             {

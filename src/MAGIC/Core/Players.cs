@@ -68,7 +68,7 @@ namespace CRepublic.Magic.Core
         {
             if (!this.ContainsKey(UserId))
             {
-                Level Player = default(Level);
+                Level Player = null;
 
                 using (MysqlEntities Database = new MysqlEntities())
                 {
