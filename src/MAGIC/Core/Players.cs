@@ -93,76 +93,6 @@ namespace CRepublic.Magic.Core
                         }
                     }
                 }
-
-                #region Old
-
-                /*
-                switch (DBMS)
-                {
-                    case DBMS.Mysql:
-                        using (MysqlEntities Database = new MysqlEntities())
-                        {
-                            var Data = Database.Player.Find(UserId);
-
-                            if (!string.IsNullOrEmpty(Data?.Data))
-                            {
-                                string[] _Datas =
-                                    Data.Data.Split(new string[1] { "#:#:#:#" }, StringSplitOptions.None);
-
-                                if (!string.IsNullOrEmpty(_Datas[0]) && !string.IsNullOrEmpty(_Datas[1]))
-                                {
-                                    Player = new Level
-                                    {
-                                        Avatar = JsonConvert.DeserializeObject<Logic.Player>(_Datas[0], this.Settings),
-                                        JSON = _Datas[1],
-                                    };
-
-                                    if (Store)
-                                    {
-                                        this.Add(Player);
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                    case DBMS.Redis:
-                        string Property = Redis.Players.StringGet(UserId.ToString()).ToString();
-
-                        if (!string.IsNullOrEmpty(Property))
-                        {
-                            string[] _Datas = Property.Split(new string[1] { "#:#:#:#" }, StringSplitOptions.None);
-
-                            if (!string.IsNullOrEmpty(_Datas[0]) && !string.IsNullOrEmpty(_Datas[1]))
-                            {
-                                Player = new Level
-                                {
-                                    Avatar = JsonConvert.DeserializeObject<Logic.Player>(_Datas[0], this.Settings),
-                                    JSON = _Datas[1],
-                                };
-
-                                if (Store)
-                                {
-                                    this.Add(Player);
-                                }
-                            }
-                        }
-                        break;
-                    case DBMS.Both:
-                        Player = this.Get(UserId, DBMS.Redis, Store);
-
-                        if (Player == null)
-                        {
-                            Player = this.Get(UserId, DBMS.Mysql, Store);
-                            if (Player != null)
-                                Redis.Players.StringSet(Player.Avatar.UserId.ToString(),
-                                    JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,
-                                    TimeSpan.FromHours(4));
-                        }
-                        break;
-                }*/
-
-                #endregion
-
                 return Player;
             }
             return this[UserId];
@@ -202,6 +132,11 @@ namespace CRepublic.Magic.Core
 
             Player.JSON = Files.Home.Starting_Home;
 
+            if (Store)
+            {
+                this.Add(Player);
+            }
+
             using (MysqlEntities Database = new MysqlEntities())
             {
                 Database.Player.Add(new Database.Player
@@ -214,75 +149,6 @@ namespace CRepublic.Magic.Core
 
                 Database.SaveChanges();
             }
-
-            if (Store)
-            {
-                this.Add(Player);
-            }
-
-            #region Old
-
-            /*
-            while (true)
-            {
-                switch (DBMS)
-                {
-                    case DBMS.Mysql:
-                        {
-                            using (MysqlEntities Database = new MysqlEntities())
-                            {
-                                Database.Player.Add(new Database.Player
-                                {
-                                    ID = Player.Avatar.UserId,
-                                    Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" +
-                                           Player.JSON,
-                                    FacebookID = "#:#:#:#",
-                                });
-
-                                Database.SaveChanges();
-                            }
-
-                            if (Store)
-                            {
-                                this.Add(Player);
-                            }
-                            break;
-                        }
-
-                    case DBMS.Redis:
-                        {
-                            Redis.Players.StringSet(Player.Avatar.UserId.ToString(),
-                                JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,
-                                TimeSpan.FromHours(4));
-
-
-                            if (Store)
-                            {
-                                this.Add(Player);
-                            }
-                            break;
-                        }
-
-                    case DBMS.Both:
-                        {
-                            Redis.Players.StringSet(Player.Avatar.UserId.ToString(),
-                                JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,
-                                TimeSpan.FromHours(4));
-                            DBMS = DBMS.Mysql;
-
-                            if (Store)
-                            {
-                                this.Add(Player);
-                            }
-
-                            continue;
-                        }
-                }
-                break;
-            }*/
-
-            #endregion
-
             return Player;
         }
 
@@ -306,55 +172,6 @@ namespace CRepublic.Magic.Core
                 }
                 Database.SaveChanges();
             }
-
-            #region Old
-
-            /*
-            while (true)
-            {
-                switch (DBMS)
-                {
-                    case DBMS.Mysql:
-                        {
-
-                            using (MysqlEntities Database = new MysqlEntities())
-                            {
-                                Database.Configuration.AutoDetectChangesEnabled = false;
-                                Database.Configuration.ValidateOnSaveEnabled = false;
-                                var Data = Database.Player.Find(Player.Avatar.UserId);
-
-                                if (Data != null)
-                                {
-                                    Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" +
-                                                Player.JSON;
-                                    Data.Trophies = Player.Avatar.Trophies;
-                                    Data.FacebookID = Player.Avatar.Facebook.Identifier ?? "#:#:#:#";
-                                    Database.Entry(Data).State = EntityState.Modified;
-                                }
-                                Database.SaveChanges();
-                            }
-                            break;
-                        }
-
-                    case DBMS.Redis:
-                        {
-                            Redis.Players.StringSet(Player.Avatar.UserId.ToString(),
-                                JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,
-                                TimeSpan.FromHours(4));
-                            break;
-                        }
-
-                    case DBMS.Both:
-                        {
-                            this.Save(Player, DBMS.Mysql);
-                            DBMS = DBMS.Redis;
-                            continue;
-                        }
-                }
-                break;
-            }*/
-
-            #endregion
         }
 
         internal async Task Save()
@@ -383,72 +200,6 @@ namespace CRepublic.Magic.Core
 
                 await Database.SaveChangesAsync();
             }
-
-            #region Old
-
-            /*
-            while (true)
-            {
-                switch (DBMS)
-                {
-                    case DBMS.Mysql:
-                        {
-
-                            try
-                            {
-                                using (MysqlEntities Database = new MysqlEntities())
-                                {
-                                    Database.Configuration.AutoDetectChangesEnabled = false;
-                                    Database.Configuration.ValidateOnSaveEnabled = false;
-                                    foreach (var Player in this.Values.ToList())
-                                    {
-                                        lock (Player)
-                                        {
-                                            Player.Avatar.LastSave = DateTime.UtcNow;
-                                            var Data = Database.Player.Find(Player.Avatar.UserId);
-
-                                            if (Data != null)
-                                            {
-                                                Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON;
-                                                Data.Trophies = Player.Avatar.Trophies;
-                                                Data.FacebookID = Player.Avatar.Facebook.Identifier ?? "#:#:#:#";
-                                                Database.Entry(Data).State = EntityState.Modified;
-                                            }
-                                        }
-                                    }
-
-                                    await Database.SaveChangesAsync();
-                                }
-                            }
-                            catch
-                            {
-                                //RIP
-                            }
-                            break;
-                        }
-
-                    case DBMS.Redis:
-                        {
-                            foreach (var Player in this.Values.ToList())
-                            {
-                                Redis.Players.StringSet(Player.Avatar.UserId.ToString(),
-                                   JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" + Player.JSON,
-                                   TimeSpan.FromHours(4));
-                            }
-                            break;
-                        }
-
-                    case DBMS.Both:
-                        {
-                            await this.Save(DBMS.Mysql);
-                            DBMS = DBMS.Redis;
-                            continue;
-                        }
-                }
-                break;
-            }*/
-
-            #endregion
         }
     }
 }

@@ -43,8 +43,7 @@ namespace CRepublic.Magic.Core.Networking
 #if DEBUG
                 if (Message.Device.Connected())
                 {
-                    Loggers.Log(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " +
-                                      Message.GetType().Name, true);
+                    Loggers.Log(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " + Message.GetType().Name, true);
                 }
 #endif
                 Message.Process();

@@ -1,4 +1,5 @@
-﻿using CRepublic.Magic.Core;
+﻿using System;
+using CRepublic.Magic.Core;
 using CRepublic.Magic.Core.Networking;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Extensions.Binary;
@@ -36,68 +37,70 @@ namespace CRepublic.Magic.Packets.Messages.Client
                 {
                     if (this.Device.Player.Avatar.Battle_ID > 0)
                     {
-
-                        var Battle = Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID);
-                        if (Battle.Commands.Count > 0)
+                        var Battle = Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID);
+                        if (Battle != null)
                         {
-                            Level Player = Core.Resources.Players.Get(Battle.Defender.UserId, false);
-
-                            if (Utils.IsOdd(Resources.Random.Next(1, 1000)))
+                            if (Battle.Commands.Count > 0)
                             {
-                                int lost = (int) Battle.LoseTrophies();
-                                Player.Avatar.Trophies += (int) Battle.WinTrophies();
+                                Level Player = Core.Resources.Players.Get(Battle.Defender.UserId, false);
 
-                                if (this.Device.Player.Avatar.Trophies >= lost)
-                                    this.Device.Player.Avatar.Trophies -= (int) Battle.LoseTrophies();
-                                else
-                                    this.Device.Player.Avatar.Trophies = 0;
-
-                                Battle.Replay_Info.Stats.Defender_Score = (int) Battle.WinTrophies();
-                                Battle.Replay_Info.Stats.Attacker_Score = lost > 0 ? -lost : 0;
-                                Battle.Replay_Info.Stats.Destruction_Percentage = Resources.Random.Next(49);
-                            }
-                            else
-                            {
-
-                                int lost = (int) Battle.LoseTrophies();
-                                if (Player.Avatar.Trophies >= lost)
-                                    Player.Avatar.Trophies -= (int) Battle.LoseTrophies();
-                                else
-                                    Player.Avatar.Trophies = 0;
-
-                                this.Device.Player.Avatar.Trophies += (int) Battle.WinTrophies();
-                                Battle.Replay_Info.Stats.Attacker_Score = (int) Battle.WinTrophies();
-                                Battle.Replay_Info.Stats.Defender_Score = lost > 0 ? -lost : 0;
-
-                                Battle.Replay_Info.Stats.Destruction_Percentage = Resources.Random.Next(50, 100);
-                                if (Battle.Replay_Info.Stats.Destruction_Percentage == 100)
-                                    Battle.Replay_Info.Stats.TownHall_Destroyed = true;
-                            }
-                            this.Device.Player.Avatar.Refresh();
-                            Player.Avatar.Refresh();
-
-                            Battle.Set_Replay_Info();
-                            this.Device.Player.Avatar.Inbox.Add(
-                                new Mail
+                                if (Utils.IsOdd(Resources.Random.Next(1, 1000)))
                                 {
-                                    Stream_Type = Logic.Enums.Avatar_Stream.ATTACK,
-                                    Battle_ID = this.Device.Player.Avatar.Battle_ID
-                                });
+                                    int lost = (int) Battle.LoseTrophies();
+                                    Player.Avatar.Trophies += (int) Battle.WinTrophies();
 
-                            //if (Core.Resources.Players.Get(Battle.Defender.UserId, Constants.Database) == null)
-                            {
-                                //if (Player.Avatar.Guard < 1)
-                                Player.Avatar.Inbox.Add(
+                                    if (this.Device.Player.Avatar.Trophies >= lost)
+                                        this.Device.Player.Avatar.Trophies -= (int) Battle.LoseTrophies();
+                                    else
+                                        this.Device.Player.Avatar.Trophies = 0;
+
+                                    Battle.Replay_Info.Stats.Defender_Score = (int) Battle.WinTrophies();
+                                    Battle.Replay_Info.Stats.Attacker_Score = lost > 0 ? -lost : 0;
+                                    Battle.Replay_Info.Stats.Destruction_Percentage = Resources.Random.Next(49);
+                                }
+                                else
+                                {
+
+                                    int lost = (int) Battle.LoseTrophies();
+                                    if (Player.Avatar.Trophies >= lost)
+                                        Player.Avatar.Trophies -= (int) Battle.LoseTrophies();
+                                    else
+                                        Player.Avatar.Trophies = 0;
+
+                                    this.Device.Player.Avatar.Trophies += (int) Battle.WinTrophies();
+                                    Battle.Replay_Info.Stats.Attacker_Score = (int) Battle.WinTrophies();
+                                    Battle.Replay_Info.Stats.Defender_Score = lost > 0 ? -lost : 0;
+
+                                    Battle.Replay_Info.Stats.Destruction_Percentage = Resources.Random.Next(50, 100);
+                                    if (Battle.Replay_Info.Stats.Destruction_Percentage == 100)
+                                        Battle.Replay_Info.Stats.TownHall_Destroyed = true;
+                                }
+                                this.Device.Player.Avatar.Refresh();
+                                Player.Avatar.Refresh();
+
+                                Battle.Set_Replay_Info();
+                                this.Device.Player.Avatar.Inbox.Add(
                                     new Mail
                                     {
-                                        Stream_Type = Logic.Enums.Avatar_Stream.DEFENSE,
+                                        Stream_Type = Logic.Enums.Avatar_Stream.ATTACK,
                                         Battle_ID = this.Device.Player.Avatar.Battle_ID
                                     });
+
+                                //if (Core.Resources.Players.Get(Battle.Defender.UserId, Constants.Database) == null)
+                                {
+                                    //if (Player.Avatar.Guard < 1)
+                                    Player.Avatar.Inbox.Add(
+                                        new Mail
+                                        {
+                                            Stream_Type = Logic.Enums.Avatar_Stream.DEFENSE,
+                                            Battle_ID = this.Device.Player.Avatar.Battle_ID
+                                        });
+                                }
+                                Core.Resources.Battles.Save(Battle);
                             }
-                            Core.Resources.Battles.Save(Battle);
+                            else
+                                Core.Resources.Battles.TryRemove(this.Device.Player.Avatar.Battle_ID);
                         }
-                        else
-                            Core.Resources.Battles.TryRemove(this.Device.Player.Avatar.Battle_ID);
                         this.Device.Player.Avatar.Battle_ID = 0;
                     }
 

@@ -181,6 +181,11 @@ namespace CRepublic.Magic.Core
         {
             var Clan = ClanId == 0 ? new Clan(this.Seed++) : new Clan(ClanId);
 
+            if (Store)
+            {
+                this.Add(Clan);
+            }
+
             using (MysqlEntities Database = new MysqlEntities())
             {
                 Database.Clan.Add(new Database.Clan
@@ -190,11 +195,6 @@ namespace CRepublic.Magic.Core
                 });
 
                 Database.SaveChanges();
-            }
-
-            if (Store)
-            {
-                this.Add(Clan);
             }
 
             /*

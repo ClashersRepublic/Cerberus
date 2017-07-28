@@ -94,7 +94,7 @@ namespace CRepublic.Magic.Core
                Console.WriteLine(message);
         }
 
-        internal static void Log(Message Message, string prefix = null)
+        internal static void Log(Message Message, string prefix = null, Defcon defcon = Defcon.DEBUG)
         {
             StringBuilder packet = new StringBuilder();
             packet.Append($"{DateTime.Now:yyyy/MM/dd/HH/mm/ss};");
@@ -103,13 +103,35 @@ namespace CRepublic.Magic.Core
                 packet.Append($"{prefix};");
             }
             packet.Append($"{Message.Identifier}({Message.Version});{Message.Length};");
-            if (Message.Data != null)
+            if (Message.Reader != null)
+            {
+                var data = Message.Reader.ReadFully();
+                Message.Reader.BaseStream.Position = 0;
+                packet.AppendLine(BitConverter.ToString(data.ToArray()).Replace("-", String.Empty));
+                packet.AppendLine(Regex.Replace(Encoding.UTF8.GetString(data.ToArray()),
+                    @"[^\u0020-\u007F]", "."));
+            }
+            else if (Message.Data != null)
             {
                 packet.AppendLine(BitConverter.ToString(Message.Data.ToArray()).Replace("-", String.Empty));
                 packet.AppendLine(Regex.Replace(Encoding.UTF8.GetString(Message.Data.ToArray()),
                     @"[^\u0020-\u007F]", "."));
             }
-            _logger.Debug(packet.ToString);
+
+            switch (defcon)
+            {
+                case Defcon.TRACE:
+                {
+                    _logger.Trace(packet.ToString);
+                    break;
+                }
+
+                default:
+                {
+                    _logger.Debug(packet.ToString);
+                    break;
+                }
+            }
         }
 
         public void Dispose()

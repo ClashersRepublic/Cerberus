@@ -118,8 +118,7 @@ namespace CRepublic.Magic.Logic
                                     Exception.Message + Environment.NewLine + Exception.StackTrace +
                                     Environment.NewLine + Exception.Data, this.Model, this.OSVersion,
                                     this.Player.Avatar.Token, Player?.Avatar.UserId ?? 0);
-                                Loggers.Log(
-                                    Utils.Padding(Exception.GetType().Name, 15) + " : " + Exception.Message + ". [" +
+                                Loggers.Log(Utils.Padding(Exception.GetType().Name, 15) + " : " + Exception.Message + ". [" +
                                     (this.Player != null
                                         ? this.Player.Avatar.UserId + ":" +
                                           GameUtils.GetHashtag(this.Player.Avatar.UserId)

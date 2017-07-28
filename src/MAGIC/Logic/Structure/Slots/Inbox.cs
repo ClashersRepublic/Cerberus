@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CRepublic.Magic.Core.Networking;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Extensions.List;

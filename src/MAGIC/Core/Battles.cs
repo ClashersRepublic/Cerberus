@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
 using CRepublic.Magic.Core.Database;
@@ -9,6 +10,7 @@ using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Logic;
 using CRepublic.Magic.Logic.Enums;
 using Newtonsoft.Json;
+using NLog;
 using Battle = CRepublic.Magic.Logic.Battle;
 
 namespace CRepublic.Magic.Core
@@ -54,58 +56,12 @@ namespace CRepublic.Magic.Core
                     if (!string.IsNullOrEmpty(Data?.Data))
                     {
                         _Battle = JsonConvert.DeserializeObject<Battle>(Data.Data, this.Settings);
-
                         if (Store)
                         {
                             this.Add(_Battle);
                         }
                     }
                 }
-                /*
-                switch (DBMS)
-                {
-                    case DBMS.Mysql:
-                        using (MysqlEntities Database = new MysqlEntities())
-                        {
-                            Database.Battle Data = Database.Battle.Find(_BattleID);
-
-                            if (!string.IsNullOrEmpty(Data?.Data))
-                            {
-                                _Battle = JsonConvert.DeserializeObject<Battle>(Data.Data, this.Settings);
-
-                                if (Store)
-                                    {
-                                        this.Add(_Battle);
-                                    }
-                                }
-                            }
-                        break;
-                    case DBMS.Redis:
-                        string Property = Redis.Battles.StringGet(_BattleID.ToString());
-
-                        if (!string.IsNullOrEmpty(Property))
-                        {
-
-                            _Battle = JsonConvert.DeserializeObject<Battle>(Property, this.Settings);
-
-                            if (Store)
-                            {
-                                this.Add(_Battle);
-                            }
-                        }
-                        break;
-                    case DBMS.Both:
-                        _Battle = this.Get(_BattleID);
-
-                        if (_Battle == null)
-                        {
-                            _Battle = this.Get(_BattleID);
-                            if (_Battle != null)
-                                this.Save(_Battle, DBMS.Redis);
-
-                        }
-                        break;
-                }*/
                 return _Battle;
             }
             return this[_BattleID];
@@ -113,10 +69,13 @@ namespace CRepublic.Magic.Core
 
         internal Battle New(Level _Attacker, Level _Defender, bool Store = true)
         {
-
+            _Attacker.Avatar.Battle_ID = this.Seed;
             var _Battle = new Battle(this.Seed++, _Attacker, _Defender);
 
-            _Attacker.Avatar.Battle_ID = _Battle.Battle_ID;
+            if (Store)
+            {
+                this.Add(_Battle);
+            }
 
             using (MysqlEntities Database = new MysqlEntities())
             {
@@ -128,120 +87,45 @@ namespace CRepublic.Magic.Core
 
                 Database.SaveChanges();
             }
-
-            if (Store)
-            {
-                this.Add(_Battle);
-            }
-            /*
-            while (true)
-            {
-                switch (DBMS)
-                {
-                    case DBMS.Mysql:
-                        {
-                            using (MysqlEntities Database = new MysqlEntities())
-                            {
-                                Database.Battle.Add(new Database.Battle
-                                {
-                                    ID = _Battle.Battle_ID,
-                                    Data = JsonConvert.SerializeObject(_Battle, this.Settings)
-                                });
-
-                                Database.SaveChanges();
-                            }
-
-                            if (Store)
-                            {
-                                this.Add(_Battle);
-                            }
-                            break;
-                        }
-
-                    case DBMS.Redis:
-                        {
-                            this.Save(_Battle, DBMS.Redis);
-
-                            if (Store)
-                            {
-                                this.Add(_Battle);
-                            }
-                            break;
-                        }
-
-                    case DBMS.Both:
-                        {
-                            this.Save(_Battle, DBMS.Mysql);
-                            DBMS = DBMS.Redis;
-
-                            if (Store)
-                            {
-                                this.Add(_Battle);
-                            }
-
-                            continue;
-                        }
-                }
-                break;
-            }*/
-
+           
             return _Battle;
         }
 
         internal void Save(Battle _Battle)
         {
-            using (MysqlEntities Database = new MysqlEntities())
+            try
             {
-                Database.Configuration.AutoDetectChangesEnabled = false;
-                Database.Configuration.ValidateOnSaveEnabled = false;
-                var Data = Database.Battle.Find(_Battle.Battle_ID);
-
-                if (Data != null)
+                using (MysqlEntities Database = new MysqlEntities())
                 {
-                    Data.Data = JsonConvert.SerializeObject(_Battle, this.Settings);
-                    Database.Entry(Data).State = EntityState.Modified;
+                    Database.Configuration.AutoDetectChangesEnabled = false;
+                    Database.Configuration.ValidateOnSaveEnabled = false;
+                    var Data = Database.Battle.Find(_Battle.Battle_ID);
+
+                    if (Data != null)
+                    {
+                        Data.Data = JsonConvert.SerializeObject(_Battle, this.Settings);
+                        Database.Entry(Data).State = EntityState.Modified;
+                    }
+                    Database.SaveChanges();
                 }
-                Database.SaveChanges();
             }
-            /*
-            while (true)
+            catch (DbEntityValidationException ex)
             {
-                switch (DBMS)
+                Loggers.Log(
+                    ex +
+                    $" Exception while trying to save a battle {_Battle.Battle_ID} to the database. Check error for more information.");
+                foreach (var entry in ex.EntityValidationErrors)
                 {
-                    case DBMS.Mysql:
-                        {
-
-                            using (MysqlEntities Database = new MysqlEntities())
-                            {
-                                Database.Configuration.AutoDetectChangesEnabled = false;
-                                Database.Configuration.ValidateOnSaveEnabled = false;
-                                var Data = Database.Battle.Find(_Battle.Battle_ID);
-
-                                if (Data != null)
-                                {
-                                    Data.Data = JsonConvert.SerializeObject(_Battle, this.Settings);
-                                    Database.Entry(Data).State = EntityState.Modified;
-                                }
-                                Database.SaveChangesAsync();
-                            }
-                            break;
-                        }
-
-                    case DBMS.Redis:
-                        {
-                            Redis.Battles.StringSet(_Battle.Battle_ID.ToString(), JsonConvert.SerializeObject(_Battle, this.Settings), TimeSpan.FromHours(4));
-                            break;
-                        }
-
-                    case DBMS.Both:
-                        {
-                            this.Save(_Battle, DBMS.Mysql);
-                            DBMS = DBMS.Redis;
-                            continue;
-                        }
+                    foreach (var errs in entry.ValidationErrors)
+                        Loggers.Log($"{errs.PropertyName}:{errs.ErrorMessage}");
                 }
-                break;
-            }*/
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Loggers.Log(ex + $" Exception while trying to save a battle {_Battle.Battle_ID} to the database.");
+                throw;
+            }
         }
 
         internal async Task Save()

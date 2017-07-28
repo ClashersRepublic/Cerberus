@@ -74,7 +74,6 @@ namespace CRepublic.Magic
                 {
 
                     found = true;
-                    Console.WriteLine($"League {i}");
                 }
                 i++;
             }

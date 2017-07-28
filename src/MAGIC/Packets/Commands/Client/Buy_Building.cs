@@ -65,8 +65,6 @@ namespace CRepublic.Magic.Packets.Commands.Client
 
                             var rd = bd.GetBuildResource(0);
                             ca.Resources.Minus(rd.GetGlobalID(), Cost);
-                            Console.WriteLine(rd.GetGlobalID());
-                            Console.WriteLine(Cost);
                         }
                         b.StartConstructing(this.Vector, false);
                         this.Device.Player.GameObjectManager.AddGameObject(b);
@@ -76,10 +74,7 @@ namespace CRepublic.Magic.Packets.Commands.Client
                     if (this.Device.Player.HasFreeVillageWorkers)
                     {
                         var rd = bd.GetBuildResource(0);
-                        Console.WriteLine($"Build Resource {rd.GetGlobalID()}");
-                        Console.WriteLine($"Resource Count {   ca.Resources.Get(rd.GetGlobalID())}");
                         ca.Resources.Minus(rd.GetGlobalID(), bd.GetBuildCost(0));
-                        Console.WriteLine($"Resource Count {   ca.Resources.Get(rd.GetGlobalID())}");
 
                         b.StartConstructing(this.Vector, this.Device.Player.Avatar.Variables.IsBuilderVillage);
                         this.Device.Player.GameObjectManager.AddGameObject(b);
