@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BL.Assets.Editor
+namespace CR.Assets.Editor
 {
     public partial class CloneExport : Form
     {

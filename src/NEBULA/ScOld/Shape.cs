@@ -7,9 +7,9 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using MathNet.Numerics.LinearAlgebra;
-using BL.Assets.Editor.Helpers;
+using CR.Assets.Editor.Helpers;
 
-namespace BL.Assets.Editor.ScOld
+namespace CR.Assets.Editor.ScOld
 {
     public class Shape : ScObject
     {
@@ -181,7 +181,7 @@ namespace BL.Assets.Editor.ScOld
 
 
             // Calculate et initialize the final shape size
-            Point[] pointsXY = _chunks.SelectMany(chunk => ((ShapeChunk) chunk).XY).ToArray();
+            PointF[] pointsXY = _chunks.SelectMany(chunk => ((ShapeChunk) chunk).XY).ToArray();
             using (var xyPath = new GraphicsPath())
             {
                 xyPath.AddPolygon(pointsXY.ToArray());
@@ -206,12 +206,9 @@ namespace BL.Assets.Editor.ScOld
                     var texture = (Texture) _scFile.GetTextures()[chunk.GetTextureId()];
                     Bitmap bitmap = texture.Bitmap;
 
-                    var polygonUv = chunk.UV;
-                    var polygonXy = chunk.XY;
-
                     using (var gpuv = new GraphicsPath())
                     {
-                        gpuv.AddPolygon(polygonUv);
+                        gpuv.AddPolygon(chunk.UV.ToArray());
 
                         var gxyBound = Rectangle.Round(gpuv.GetBounds());
 
@@ -253,22 +250,21 @@ namespace BL.Assets.Editor.ScOld
                         double[,] matrixArrayXY =
                         {
                             {
-                                polygonXy[0].X, polygonXy[1].X, polygonXy[2].X
+                                chunk.XY[0].X, chunk.XY[1].X, chunk.XY[2].X
                             },
                             {
-                                polygonXy[0].Y, polygonXy[1].Y, polygonXy[2].Y
+                                chunk.XY[0].Y, chunk.XY[1].Y, chunk.XY[2].Y
                             },
                             {
                                 1, 1, 1
                             }
                         };
+
                         var matrixUV = Matrix<double>.Build.DenseOfArray(matrixArrayUV);
                         var matrixXY = Matrix<double>.Build.DenseOfArray(matrixArrayXY);
                         var inverseMatrixUV = matrixUV.Inverse();
                         var transformMatrix = matrixXY * inverseMatrixUV;
-                        var m = new Matrix((float) transformMatrix[0, 0], (float) transformMatrix[1, 0],
-                            (float) transformMatrix[0, 1], (float) transformMatrix[1, 1], (float) transformMatrix[0, 2],
-                            (float) transformMatrix[1, 2]);
+                        var m = new Matrix((float) transformMatrix[0, 0], (float) transformMatrix[1, 0], (float) transformMatrix[0, 1], (float) transformMatrix[1, 1], (float) transformMatrix[0, 2], (float) transformMatrix[1, 2]);
                         //m = new Matrix((float)transformMatrix[0, 0], (float)transformMatrix[1, 0], (float)transformMatrix[0, 1], (float)transformMatrix[1, 1], (float)Math.Round(transformMatrix[0, 2]), (float)Math.Round(transformMatrix[1, 2]));
 
                         //Perform transformations
@@ -276,9 +272,6 @@ namespace BL.Assets.Editor.ScOld
 
                         using (Graphics g = Graphics.FromImage(finalShape))
                         {
-                            //g.InterpolationMode = InterpolationMode.NearestNeighbor;
-                            //g.PixelOffsetMode = PixelOffsetMode.None;
-
                             //Set origin
                             Matrix originTransform = new Matrix();
                             originTransform.Translate(-x, -y);
@@ -291,6 +284,7 @@ namespace BL.Assets.Editor.ScOld
                                 gpuv.Transform(m);
                                 g.DrawPath(new Pen(Color.DeepSkyBlue, 1), gpuv);
                             }
+                            g.Flush();
                         }
                     }
 
@@ -304,9 +298,7 @@ namespace BL.Assets.Editor.ScOld
         {
             if (_offset < 0) //new
             {
-                using (
-                    FileStream readInput = new FileStream(_scFile.GetInfoFileName(), FileMode.Open, FileAccess.Read,
-                        FileShare.ReadWrite))
+                using (FileStream readInput = new FileStream(_scFile.GetInfoFileName(), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
                     //Positionnement des curseurs
                     readInput.Seek(Math.Abs(_offset), SeekOrigin.Begin);
@@ -348,8 +340,9 @@ namespace BL.Assets.Editor.ScOld
                             readInput.Read(length, 0, 4); //32000000
                             input.Write(length, 0, 4);
 
-                            if (shapeType == 17)
+                            if (shapeType == 17 || shapeType == 22)
                             {
+                                Console.WriteLine("Managed shape type " + shapeType);
                                 _chunks[chunkCounter].Write(input);
                                 chunkCounter++;
                                 readInput.Seek(BitConverter.ToInt32(length, 0), SeekOrigin.Current);

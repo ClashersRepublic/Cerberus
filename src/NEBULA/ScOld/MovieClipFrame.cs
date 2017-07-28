@@ -1,4 +1,4 @@
-﻿namespace BL.Assets.Editor.ScOld
+﻿namespace CR.Assets.Editor.ScOld
 {
     class MovieClipFrame
     {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BL.Assets.Editor.Properties {
+namespace CR.Assets.Editor.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace BL.Assets.Editor.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BL.Assets.Editor.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CR.Assets.Editor.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,9 +63,9 @@ namespace BL.Assets.Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Logo_Red_512_40_ {
+        internal static System.Drawing.Bitmap Icon_Entry_5_2_2_2_2_2_2_3 {
             get {
-                object obj = ResourceManager.GetObject("Logo-Red-512-40%", resourceCulture);
+                object obj = ResourceManager.GetObject("Icon_Entry_5_2_2_2_2_2_2_3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

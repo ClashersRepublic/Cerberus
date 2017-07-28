@@ -5,11 +5,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using BL.Assets.Editor.Helpers;
+using CR.Assets.Editor.Helpers;
 using Point = System.Drawing.Point;
 using System.Linq;
 
-namespace BL.Assets.Editor.ScOld
+namespace CR.Assets.Editor.ScOld
 {
     public class ShapeChunk : ScObject, IDisposable
     {
@@ -30,16 +30,16 @@ namespace BL.Assets.Editor.ScOld
         private ushort _shapeId;
         private byte _textureId;
         private byte _chunkType;
-        private Point[] _xy;
-        private Point[] _uv;
+        private PointF[] _xy;
+        private PointF[] _uv;
 
 
         private bool _disposed;
         private GraphicsPath _path;
 
-        public Point[] XY => _xy;
+        public PointF[] XY => _xy;
 
-        public Point[] UV => _uv;
+        public PointF[] UV => _uv;
 
         // private List<PointF> _pointsXY;
         // private List<PointF> _pointsUV;
@@ -64,7 +64,7 @@ namespace BL.Assets.Editor.ScOld
         public override string GetDataTypeName()
         {
             return "ShapeChunks";
-        }
+        } 
 
         public override string GetName()
         {
@@ -111,21 +111,20 @@ namespace BL.Assets.Editor.ScOld
 
             _offset = br.BaseStream.Position;
             _textureId = br.ReadByte(); // 00
-            Console.WriteLine(_textureId);
             var texture = (Texture) _scFile.GetTextures()[_textureId];
             if (texture == null)
                 throw new InvalidOperationException($"Texture {_textureId} wasn't loaded yet.");
 
             byte shapePointCount = br.ReadByte(); // 04
 
-            _xy = new Point[shapePointCount];
-            _uv = new Point[shapePointCount];
+            _xy = new PointF[shapePointCount];
+            _uv = new PointF[shapePointCount];
 
             for (int i = 0; i < shapePointCount; i++)
             {
-                var x = Utils.Round(br.ReadInt32() * 0.10f);
-                var y = Utils.Round(br.ReadInt32() * 0.10f);
-                _xy[i] = new Point(x, y);
+                var x = (float)((float)br.ReadInt32() * 0.05f);
+                var y = (float)((float)br.ReadInt32() * 0.05f);
+                _xy[i] = new PointF(x, y);
                 //Console.WriteLine("x: " + x + ", y: " + y);
             }
 
@@ -133,9 +132,9 @@ namespace BL.Assets.Editor.ScOld
             {
                 for (int i = 0; i < shapePointCount; i++)
                 {
-                    var u = Utils.Round((br.ReadUInt16() / 65535f) * texture.GetImage().GetWidth());
-                    var v = Utils.Round((br.ReadUInt16() / 65535f) * texture.GetImage().GetHeight());
-                    _uv[i] = new Point(u, v);
+                    var u = (float)((float)br.ReadUInt16() / 65535f) * texture.GetImage().GetWidth();
+                    var v = (float)((float)br.ReadUInt16() / 65535f) * texture.GetImage().GetHeight();
+                    _uv[i] = new PointF(u, v);
 
                     //Console.WriteLine("u: " + u + ", v: " + v);
                 }
@@ -144,11 +143,11 @@ namespace BL.Assets.Editor.ScOld
             {
                 for (int i = 0; i < shapePointCount; i++)
                 {
-                    ushort u = br.ReadUInt16(); // image.Width);
-                    ushort v = br.ReadUInt16(); // image.Height);//(short) (65535 * br.ReadInt16() / image.Height);
+                    float u = (float)((float)br.ReadUInt16()); // image.Width);
+                    float v = (float)((float)br.ReadUInt16()); // image.Height);//(short) (65535 * br.ReadInt16() / image.Height);
 
                     //Console.WriteLine("u: " + u + ", v: " + v);
-                    _uv[i] = new Point(u, v);
+                    _uv[i] = new PointF(u, v);
                 }
             }
         }
@@ -173,7 +172,7 @@ namespace BL.Assets.Editor.ScOld
 
                 using (var gpuv = new GraphicsPath())
                 {
-                    gpuv.AddPolygon(_uv);
+                    gpuv.AddPolygon(_uv.ToArray());
 
                     var uvBounds = Rectangle.Round(gpuv.GetBounds());
 
@@ -202,6 +201,7 @@ namespace BL.Assets.Editor.ScOld
 
                             if (options.ViewPolygons)
                                 g.DrawPath(new Pen(Color.DeepSkyBlue, 1), gpuv);
+                            g.Flush();
                         }
                     }
 
@@ -236,6 +236,7 @@ namespace BL.Assets.Editor.ScOld
                     g.SetClip(gpuv);
                     g.Clear(Color.Transparent);
                     g.DrawImage(chunk, x, y);
+                    g.Flush();
                 }
             }
         }
@@ -259,8 +260,8 @@ namespace BL.Assets.Editor.ScOld
                 {
                     foreach (var pointUV in _uv)
                     {
-                        input.Write(BitConverter.GetBytes((ushort)((pointUV.X / texture.GetImage().GetWidth()) * 65535)), 0, 2);
-                        input.Write(BitConverter.GetBytes((ushort)((pointUV.Y / texture.GetImage().GetHeight()) * 65535)), 0, 2);
+                        input.Write(BitConverter.GetBytes((ushort)((pointUV.X / texture.GetImage().GetWidth()) * 65535f)), 0, 2);
+                        input.Write(BitConverter.GetBytes((ushort)((pointUV.Y / texture.GetImage().GetHeight()) * 65535f)), 0, 2);
                     }
                 }
                 else

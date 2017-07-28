@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using BL.Assets.Editor.ScOld;
+using CR.Assets.Editor.ScOld;
 
-namespace BL.Assets.Editor
+namespace CR.Assets.Editor
 {
     internal static class ExtensionMethods
     {

@@ -3,9 +3,9 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Diagnostics;
-using BL.Assets.Editor.Helpers;
+using CR.Assets.Editor.Helpers;
 
-namespace BL.Assets.Editor.ScOld
+namespace CR.Assets.Editor.ScOld
 {
     internal class ImageRgba8888 : ScImage
     {

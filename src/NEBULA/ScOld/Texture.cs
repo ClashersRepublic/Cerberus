@@ -5,9 +5,9 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Windows;
-using BL.Assets.Editor.ScOld.ImageFormats;
+using CR.Assets.Editor.ScOld.ImageFormats;
 
-namespace BL.Assets.Editor.ScOld
+namespace CR.Assets.Editor.ScOld
 {
     public class Texture : ScObject, IDisposable
     {
@@ -26,6 +26,7 @@ namespace BL.Assets.Editor.ScOld
                 {0, typeof(ImageRgba8888)},
                 {1, typeof(ImageRgba8888)},
                 {2, typeof(ImageRgba4444)},
+                {3, typeof(ImageRgba5551 )},
                 {4, typeof(ImageRgb565)},
                 {6, typeof(ImageLuminance8Alpha8)},
                 {10, typeof(ImageLuminance8)}
@@ -129,7 +130,7 @@ namespace BL.Assets.Editor.ScOld
             return true;
         }
 
-        public void Dispose()
+        public new void Dispose()
         {
             Dispose(true);
         }
@@ -174,6 +175,10 @@ namespace BL.Assets.Editor.ScOld
                 case 6:
                     bytesForPXFormat = 2;
                     break;
+                case 3:
+                    _imageType = 2;
+                    bytesForPXFormat = 2;
+                    break;
                 case 10:
                     bytesForPXFormat = 1;
                     break;
@@ -183,7 +188,7 @@ namespace BL.Assets.Editor.ScOld
             UInt32 packetSize = (uint) ((_image.GetWidth()) * (_image.GetHeight()) * bytesForPXFormat) + 5;
 
             if (_offset < 0) // New
-            {
+            { 
                 input.Seek(_scFile.GetEofTexOffset(), SeekOrigin.Begin);
                 input.WriteByte(1);
                 input.Write(BitConverter.GetBytes(packetSize), 0, 4);
@@ -194,8 +199,6 @@ namespace BL.Assets.Editor.ScOld
                 _scFile.SetEofTexOffset(input.Position);
 
                 input.Write(new byte[] {0, 0, 0, 0, 0}, 0, 5);
-
-
             }
             else // Existing
             {

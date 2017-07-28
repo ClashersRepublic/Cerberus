@@ -4,11 +4,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using System.Threading;
-using BL.Assets.Editor.Compression;
-using BL.Assets.Editor.ScOld;
+using CR.Assets.Editor.Compression;
+using CR.Assets.Editor.ScOld;
 using static System.IO.Path;
 
-namespace BL.Assets.Editor
+namespace CR.Assets.Editor
 {
     public partial class MainForm : Form
     {
@@ -283,6 +283,7 @@ namespace BL.Assets.Editor
             foreach (Texture texture in _scFile.GetTextures())
                 textureIds.Add(texture.GetTextureId());
             ((ComboBox) form.Controls["comboBox1"]).DataSource = textureIds;
+
             if (form.ShowDialog() == DialogResult.OK)
             {
                 if (treeView1.SelectedNode?.Tag != null)
@@ -525,6 +526,11 @@ namespace BL.Assets.Editor
                     }
                 }
             }
+        }
+
+        private void exportToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Export();
         }
     }
 }

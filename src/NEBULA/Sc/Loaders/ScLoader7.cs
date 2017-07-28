@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace BL.Assets.Editor.Sc.Loaders
+namespace CR.Assets.Editor.Sc.Loaders
 {
     // Loader to load .sc version 7.x.x.
     internal class ScLoader7 : ScLoader

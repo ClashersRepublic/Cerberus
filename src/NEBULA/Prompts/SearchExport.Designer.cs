@@ -1,4 +1,4 @@
-﻿namespace BL.Assets.Editor
+﻿namespace CR.Assets.Editor
 {
     partial class SearchExport
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BL.Assets.Editor.Sc
+namespace CR.Assets.Editor.Sc
 {
     /// <summary>
     /// Represents a piece of data inside of <see cref="ScFile"/>.

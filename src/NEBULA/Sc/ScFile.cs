@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace BL.Assets.Editor.Sc
+namespace CR.Assets.Editor.Sc
 {
     /// <summary>
     /// Represents a .sc file.

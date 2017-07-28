@@ -36,8 +36,8 @@ namespace CRepublic.Magic.Core
             {
                 this[Index].Remove(Device);
 
-                //if (this[Index].Devices.Count < 1)
-                  //  this.RemoveAt(Index);
+                if (this[Index].Devices.Count == 0)
+                    this.RemoveAt(Index);
             }
         }
 

@@ -7,16 +7,16 @@ using CR.Assets.Editor.Helpers;
 
 namespace CR.Assets.Editor.ScOld
 {
-    internal class ImageRgb565 : ScImage
+    internal class ImageRgba5551 : ScImage
     {
-        public ImageRgb565()
+        public ImageRgba5551()
         {
             // Space
         }
 
         public override string GetImageTypeName()
         {
-            return "RGB565";
+            return "RGBA5551";
         }
 
         public override void ReadImage(uint packetID, uint packetSize, BinaryReader br)
@@ -50,10 +50,11 @@ namespace CR.Assets.Editor.ScOld
                 for (int col = 0; col < pixelArray.GetLength(1); col++)
                 {
                     ushort color = br.ReadUInt16();
-                    int red = (int) ((color >> 11) & 0x1F) << 3;
-                    int green = (int) ((color >> 5) & 0x3F) << 2;
-                    int blue = (int) (color & 0X1F) << 3;
-                    pixelArray[row, col] = Color.FromArgb(red, green, blue);
+                    int red = Utils.ConvertMap[(color >> 11) & 0x1F];
+                    int green = Utils.ConvertMap[(color >> 6) & 0x1F];
+                    int blue = Utils.ConvertMap[(color >> 1) & 0x1F];
+                    int alpha = (int)(color & 0x0001) == 1 ? 0xFF : 0x00;
+                    pixelArray[row, col] = Color.FromArgb(alpha, red, green, blue); ;
                 }
 
             }
@@ -71,42 +72,12 @@ namespace CR.Assets.Editor.ScOld
             }
 
             sw.Stop();
-            Console.WriteLine("ImageRgba565.ReadImage finished in {0}ms", sw.Elapsed.TotalMilliseconds);
+            Console.WriteLine("ImageRgba5551.ReadImage finished in {0}ms", sw.Elapsed.TotalMilliseconds);
         }
 
         public override void Print()
         {
             base.Print();
-        }
-
-        public override void WriteImage(FileStream input)
-        {
-            base.WriteImage(input);
-            for (int column = 0; column < _bitmap.Height; column++)
-            {
-                for (int row = 0; row < _bitmap.Width; row++)
-                {
-
-                    Color c = _bitmap.GetPixel(row, column);
-                    var r = c.R;
-                    var g = c.G;
-                    var b = c.B;
-                    var a = c.A;
-
-                    if (a == 0)
-                    {
-                        r = 0;
-                        g = 0;
-                        b = 0;
-                    }
-
-                    int val = 0;
-                    val += (((r & 0xF8) << 8) | ((g & 0xFC) << 3) | ((b & 0xF8) >> 3));
-                    UInt16 cc565 = (ushort)val;
-
-                    input.Write(BitConverter.GetBytes(cc565), 0, 2);
-                }
-            }
         }
     }
 }

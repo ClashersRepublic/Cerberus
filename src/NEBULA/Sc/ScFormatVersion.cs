@@ -1,4 +1,4 @@
-﻿namespace BL.Assets.Editor.Sc
+﻿namespace CR.Assets.Editor.Sc
 {
     /// <summary>
     /// Format version of .sc(<see cref="ScFile"/>).

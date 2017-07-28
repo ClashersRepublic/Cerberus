@@ -4,8 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
-namespace BL.Assets.Editor.ScOld
+namespace CR.Assets.Editor.ScOld
 {
     public sealed class MovieClip : ScObject
     {
@@ -185,16 +186,16 @@ namespace BL.Assets.Editor.ScOld
                     br.ReadBytes(stringLength);
             }
 
-            byte v26;
             while (true)
             {
+                byte v26;
                 while (true)
                 {
+                    int lenght;
                     while (true)
                     {
                         v26 = br.ReadByte();
-                        br.ReadInt32();
-                        //Console.WriteLine(v26);
+                        lenght = br.ReadInt32();
                         if (v26 != 5)
                             break;
                     }
@@ -205,15 +206,23 @@ namespace BL.Assets.Editor.ScOld
                         if (frameNameLength < 255)
                         {
                             var unk2 = Encoding.UTF8.GetString(br.ReadBytes(frameNameLength));
-                           // Console.WriteLine("\t frameid : "+ frameId + " -> unk2: " + unk2);
+                            //Console.WriteLine("\t frameid : "+ frameId + " -> unk2: " + unk2);
                         }
+                    }
+                    else if (v26 == 31)
+                    {
+                        var type31 = br.ReadBytes(lenght);
+                        //Console.WriteLine("Type 31 " + BitConverter.ToString(type31));
                     }
                     else
                         break;
                 }
                 if (v26 == 0)
                     break;
+
+               // Console.WriteLine("Left " + BitConverter.ToString(br.ReadBytes((int)(br.BaseStream.Length - br.BaseStream.Position))));
                 Console.WriteLine("Unknown tag " + v26.ToString());
+                //break;
             }
         }
 
@@ -305,9 +314,10 @@ namespace BL.Assets.Editor.ScOld
                         }
                     }
 
-                    byte v26;
+                    byte[] lenght = new byte[4];
                     while (true)
                     {
+                        byte v26;
                         while (true)
                         {
                             while (true)
@@ -316,9 +326,8 @@ namespace BL.Assets.Editor.ScOld
                                 input.WriteByte(v26);
 
                                 //br.ReadInt32();
-                                byte[] uk4 = new byte[4];
-                                readInput.Read(uk4, 0, 4);
-                                input.Write(uk4, 0, 4);
+                                readInput.Read(lenght, 0, 4);
+                                input.Write(lenght, 0, 4);
 
                                 if (v26 != 5)
                                     break;
@@ -341,12 +350,19 @@ namespace BL.Assets.Editor.ScOld
                                     }
                                 }
                             }
+                            else if (v26 == 31)
+                            {
+                                int l = Convert.ToInt32(lenght);
+                                byte[] data = new byte[l];
+                                readInput.Read(data, 0, l);
+                                input.Write(data, 0, l);
+                            }
                             else
                                 break;
                         }
                         if (v26 == 0)
                             break;
-                        Console.WriteLine("Unknown tag " + v26.ToString());
+                        Console.WriteLine("Unknown tag " + v26);
                     }
                 }
                 _offset = _scFile.GetEofOffset();

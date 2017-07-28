@@ -17,7 +17,6 @@ namespace CRepublic.Magic.Packets.Messages.Client
     internal class Execute_Commands : Message
     {
         internal int CTick;
-        internal int STick;
         internal int Checksum;
         internal int Count;
 
@@ -34,11 +33,11 @@ namespace CRepublic.Magic.Packets.Messages.Client
             this.Checksum = this.Reader.ReadInt32();
             this.Count = this.Reader.ReadInt32();
 
-            this.STick += (int)Math.Floor(DateTime.UtcNow.Subtract(this.Device.Player.Avatar.LastTick).TotalSeconds * 20);
+            this.Commands = this.Reader.ReadBytes((int)(this.Reader.BaseStream.Length - this.Reader.BaseStream.Position));
+
 #if DEBUG
             this.LCommands = new List<Command>((int)this.Count);
 #endif
-            this.Commands = this.Reader.ReadBytes((int)(this.Reader.BaseStream.Length - this.Reader.BaseStream.Position));
         }
 
         internal override void Process()
@@ -57,7 +56,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                         int CommandID = Reader.ReadInt32();
                         if (CommandFactory.Commands.ContainsKey(CommandID))
                         {
-                            Command Command = Activator.CreateInstance(CommandFactory.Commands[CommandID], Reader, this.Device, CommandID) as Command;
+                            var Command = Activator.CreateInstance(CommandFactory.Commands[CommandID], Reader, this.Device, CommandID) as Command;
 
                             if (Command != null)
                             {

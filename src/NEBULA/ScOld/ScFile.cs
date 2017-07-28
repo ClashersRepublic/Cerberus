@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
-using BL.Assets.Editor.Compression;
+using CR.Assets.Editor.Compression;
 
-namespace BL.Assets.Editor.ScOld
+namespace CR.Assets.Editor.ScOld
 {
     public class ScFile
     {
@@ -22,6 +23,7 @@ namespace BL.Assets.Editor.ScOld
             _movieClips = new List<ScObject>();
             _pendingChanges = new List<ScObject>();
             _matrixs = new List<Matrix>();
+            _colors = new List<Tuple<Color, byte, Color>>();
             _infoFile = infoFile;
             _textureFile = textureFile;
         }
@@ -35,6 +37,7 @@ namespace BL.Assets.Editor.ScOld
         private readonly List<ScObject> _shapes;
         private readonly List<ScObject> _exports;
         private readonly List<Matrix> _matrixs;
+        private readonly List<Tuple<Color, byte, Color>> _colors;
         private readonly List<ScObject> _movieClips;
         private readonly List<ScObject> _pendingChanges;
 
@@ -284,6 +287,8 @@ namespace BL.Assets.Editor.ScOld
                     var matrixCount = reader.ReadUInt16(); // a1 + 28
                     var colorTransformCount = reader.ReadUInt16(); // a1 + 32
 
+                    int colorTransfromID = 0;
+
 #if DEBUG
                     Console.WriteLine(@"ShapeCount: " + shapeCount);
                     Console.WriteLine(@"MovieClipCount: " + movieClipCount);
@@ -332,10 +337,11 @@ namespace BL.Assets.Editor.ScOld
                         switch (tag)
                         {
                             default:
-                                //Console.WriteLine("dataBlockTag: " + tag);
-                                //Console.WriteLine("dataBlockSize: " + tagSize);
-                                var defaultDataBlockContent = reader.ReadBytes(Convert.ToInt32(tagSize));
-                                break;
+                               //Console.WriteLine("dataBlockTag: " + tag);
+                               //Console.WriteLine("dataBlockSize: " + tagSize);
+                               var defaultDataBlockContent = reader.ReadBytes(Convert.ToInt32(tagSize));
+                                defaultDataBlockContent = null;
+                               break;
                             case "00":
                                 _eofOffset = offset;
                                 foreach (ScObject t in _exports)
@@ -392,11 +398,23 @@ namespace BL.Assets.Editor.ScOld
                                 this._matrixs.Add(_Matrix);
                                 //Console.WriteLine("\t matrixVal: " + Points[0] / 1024 + "\n\t matrixVal: " + Points[1] / 1024 + "\n\t matrixVal: " + Points[2] / 1024 + "\n\t matrixVal: " + Points[3] / 1024 + "\n\t matrixVal: " + Points[4] / -20 + "\n\t matrixVal: " + Points[5] / -20);
                                 break;
+                            case "09":
+                                var ra = reader.ReadByte();
+                                var ga = reader.ReadByte();
+                                var ba = reader.ReadByte();
+                                var am = reader.ReadByte();
+                                var rm = reader.ReadByte();
+                                var gm = reader.ReadByte();
+                                var bm = reader.ReadByte();
+                                this._colors.Add(new Tuple<Color, byte, Color>(Color.FromArgb(ra, ga, ba), am, Color.FromArgb(rm, gm, bm)));
+                                //int id = this._colors.Count - 1;
+                                //Console.WriteLine("\t -ct-" + id + "--ColorA: rgb(" + this._colors[id].Item1.R + "," + this._colors[id].Item1.G + "," + this._colors[id].Item1.B + ") & " + this._colors[id].Item2 + " & rgb(" + this._colors[id].Item3.R + "," + this._colors[id].Item3.G + "," + this._colors[id].Item3.B + ")");
+                                break;
                         }
                     }
 
                     sw.Stop();
-                    Program.Interface.Text = @"Magic Editor : " + Path.GetFileNameWithoutExtension(_textureFile);
+                    Program.Interface.Text = $@"Royale Editor :  {Path.GetFileNameWithoutExtension(_textureFile)}";
                     Program.Interface.Update();
                     Console.WriteLine(@"SC File loading finished in {0}ms", sw.Elapsed.TotalMilliseconds);
                 }

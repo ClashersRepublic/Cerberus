@@ -7,7 +7,7 @@
     <ProjectGuid>{B508A4AB-A5CA-4680-9C10-DFA10CECE7BC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BL.Assets.Editor</RootNamespace>
+    <RootNamespace>CR.Assets.Editor</RootNamespace>
     <AssemblyName>Clashers Republic Assets Editor</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -90,6 +90,12 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Helpers\Prefixed.cs" />
     <Compile Include="Helpers\Utils.cs" />
+    <Compile Include="Interface.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface.Designer.cs">
+      <DependentUpon>Interface.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,8 +128,14 @@
       <DependentUpon>CloneExport.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ScOld\ImageFormats\ImageLuminance8.cs" />
     <Compile Include="ScOld\ImageFormats\ImageLuminance8Alpha8.cs" />
+    <Compile Include="ScOld\ImageFormats\ImageRgba5551.cs" />
     <Compile Include="ScOld\ImageFormats\ImageRgba4444.cs" />
     <Compile Include="ScOld\ImageFormats\ImageRgb565.cs" />
     <Compile Include="ScOld\ScFile.cs" />
@@ -143,6 +155,9 @@
     <Compile Include="Sc\ScFormatVersion.cs" />
     <Compile Include="Sc\ScLoader.cs" />
     <Compile Include="Sc\ScData.cs" />
+    <EmbeddedResource Include="Interface.resx">
+      <DependentUpon>Interface.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -160,14 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -186,7 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Server.ico" />
-    <None Include="Resources\Logo-Red-512-40%25.png" />
+    <None Include="Resources\Icon_Entry_5_2_2_2_2_2_2_3.png" />
     <Content Include="SupercellUtil.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

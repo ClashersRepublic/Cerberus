@@ -1,4 +1,4 @@
-﻿namespace BL.Assets.Editor
+﻿namespace CR.Assets.Editor
 {
     partial class MainForm
     {
@@ -54,6 +54,7 @@
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.objectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.duplicateToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.shapeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,6 +74,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.imageToolStripMenuItem,
@@ -284,16 +286,24 @@
             // objectToolStripMenuItem
             // 
             this.objectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportToolStripMenuItem,
             this.duplicateToolStripMenuItem1});
             this.objectToolStripMenuItem.Name = "objectToolStripMenuItem";
             this.objectToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.objectToolStripMenuItem.Text = "Export";
             this.objectToolStripMenuItem.Visible = false;
             // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.exportToolStripMenuItem.Text = "Export";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click_1);
+            // 
             // duplicateToolStripMenuItem1
             // 
             this.duplicateToolStripMenuItem1.Name = "duplicateToolStripMenuItem1";
-            this.duplicateToolStripMenuItem1.Size = new System.Drawing.Size(105, 22);
+            this.duplicateToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.duplicateToolStripMenuItem1.Text = "Clone";
             this.duplicateToolStripMenuItem1.Click += new System.EventHandler(this.duplicateToolStripMenuItem1_Click);
             // 
@@ -340,10 +350,10 @@
             this.label1.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(3, 356);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(198, 171);
+            this.label1.Size = new System.Drawing.Size(202, 171);
             this.label1.TabIndex = 8;
-            this.label1.Text = "Clashers Republic Royale Editor\r\nVersion: 1.2.1\r\n\r\nGet help at: \r\nhttps://clasher" +
-    "srepbulic.com\r\n\r\n";
+            this.label1.Text = "Clashers Republic Royale Editor\r\nVersion: 1.3.0\r\n\r\nGet help at: https://www.clash" +
+    "ersrepublic.com\r\n\r\n";
             // 
             // treeView1
             // 
@@ -373,12 +383,12 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::BL.Assets.Editor.Properties.Resources.Logo_Red_512_40_;
+            this.pictureBox1.Image = global::CR.Assets.Editor.Properties.Resources.Icon_Entry_5_2_2_2_2_2_2_3;
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(2, 2);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(410, 410);
+            this.pictureBox1.Size = new System.Drawing.Size(256, 256);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
@@ -444,6 +454,7 @@
         private System.Windows.Forms.ToolStripMenuItem exportAllChunkToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportAllAnimationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem LZMACoCToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
     }
 }
 

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Drawing;
 
-namespace BL.Assets.Editor.ScOld
+namespace CR.Assets.Editor.ScOld
 {
     internal class ScImage : IDisposable
     {

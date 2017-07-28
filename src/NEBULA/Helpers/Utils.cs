@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace BL.Assets.Editor.Helpers
+namespace CR.Assets.Editor.Helpers
 {
     public static class Utils
     {
+        internal static readonly int[] ConvertMap = { 0x00,0x08,0x10,0x18,0x20,0x29,0x31,0x39,
+
+                                                0x41,0x4A,0x52,0x5A,0x62,0x6A,0x73,0x7B,
+
+                                                0x83,0x8B,0x94,0x9C,0xA4,0xAC,0xB4,0xBD,
+
+                                                0xC5,0xCD,0xD5,0xDE,0xE6,0xEE,0xF6,0xFF };
+
         public static Color[,] Solve32X32Blocks(int width, int height, Color[,] pixelArrayOld)
         {
             var modWidth = width % 32;
@@ -87,9 +95,9 @@ namespace BL.Assets.Editor.Helpers
 
             return new Rectangle(xmin, ymin, xmax - xmin, ymax - ymin);
         }
-        public static int Round(float value)
+        /*public static int Round(float value)
         {
             return (int)Math.Round(value);
-        }
+        }*/
     }
 }

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using BL.Assets.Editor.Helpers;
+using CR.Assets.Editor.Helpers;
 
-namespace BL.Assets.Editor
+namespace CR.Assets.Editor
 {
     internal static class Program
     {
@@ -32,17 +33,18 @@ namespace BL.Assets.Editor
 
 
             Console.ForegroundColor = ConsoleColor.Red;
-            
-            Console.WriteLine(@" ___________                   _________                      _________                      ");
-            Console.WriteLine(@" \__    ___/___ _____    _____ \_   ___ \____________  ___.__.\_   ___ \____________  ___.__.");
-            Console.WriteLine(@"   |    |_/ __ \\__  \  /     \/    \  \/\_  __ \__  \<   |  |/    \  \/\_  __ \__  \<   |  |");
-            Console.WriteLine(@"   |    |\  ___/ / __ \|  Y Y  \     \____|  | \// __ \\___  |\     \____|  | \// __ \\___  |");
-            Console.WriteLine(@"   |____| \___  >____  /__|_|  /\______  /|__|  (____  / ____| \______  /|__|  (____  / ____|");
-            Console.WriteLine(@"              \/     \/      \/        \/            \/\/             \/            \/\/     ");
-            Console.WriteLine(@"                                                                        V1.1.B2  ");
+
+            Console.WriteLine(@"_________ .__                .__                          __________                   ___.   .__  .__        ");
+            Console.WriteLine(@"\_   ___ \|  | _____    _____|  |__   ___________  ______ \______   \ ____ ______  __ _\_ |__ |  | |__| ____  ");
+            Console.WriteLine(@"/    \  \/|  | \__  \  /  ___/  |  \_/ __ \_  __ \/  ___/  |       _// __ \\____ \|  |  \ __ \|  | |  |/ ___\ ");
+            Console.WriteLine(@"\     \___|  |__/ __ \_\___ \|   Y  \  ___/|  | \/\___ \   |    |   \  ___/|  |_> >  |  / \_\ \  |_|  \  \___ ");
+            Console.WriteLine(@" \______  /____(____  /____  >___|  /\___  >__|  /____  >  |____|_  /\___  >   __/|____/|___  /____/__|\___  >");
+            Console.WriteLine(@"        \/          \/     \/     \/     \/           \/          \/     \/|__|             \/             \/ ");
+            Console.WriteLine(@"                                                                                        Development Edition  ");
+
             Console.WriteLine(@"+-------------------------------------------------------------+");
             Console.WriteLine(@"|             This program is development version             |");
-            Console.WriteLine(@"|                     Of TCC Magic Editor                     |");
+            Console.WriteLine(@"|                     Of CR Royale Editor                     |");
             Console.WriteLine(@"+-------------------------------------------------------------+");
             #endif
             #endregion

@@ -1,4 +1,4 @@
-﻿namespace BL.Assets.Editor.Helpers
+﻿namespace CR.Assets.Editor.Helpers
 {
     using System;
     using System.IO;
@@ -20,7 +20,7 @@
 
         public override void Write(string Message)
         {
-            this.Original.Write("[Magic Editor]    {0}", Message);
+            this.Original.Write("[Royale Editor]    {0}", Message);
         }
 
         public override void WriteLine(string Message)

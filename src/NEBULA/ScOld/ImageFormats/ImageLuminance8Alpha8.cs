@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
-using BL.Assets.Editor.Helpers;
+using CR.Assets.Editor.Helpers;
 
-namespace BL.Assets.Editor.ScOld.ImageFormats
+namespace CR.Assets.Editor.ScOld.ImageFormats
 {
     internal class ImageLuminance8Alpha8 : ScImage
     {

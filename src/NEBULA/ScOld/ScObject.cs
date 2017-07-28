@@ -3,7 +3,7 @@ using System.IO;
 using System.Drawing;
 using System;
 
-namespace BL.Assets.Editor.ScOld
+namespace CR.Assets.Editor.ScOld
 {
     public class ScObject : IDisposable
     {

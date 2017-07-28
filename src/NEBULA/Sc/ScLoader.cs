@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using BL.Assets.Editor.Sc.Loaders;
+using CR.Assets.Editor.Sc.Loaders;
 
-namespace BL.Assets.Editor.Sc
+namespace CR.Assets.Editor.Sc
 {
     internal abstract class ScLoader
     {

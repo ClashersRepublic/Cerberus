@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using MathNet.Numerics.LinearAlgebra;
 
-namespace BL.Assets.Editor.ScOld
+namespace CR.Assets.Editor.ScOld
 {
     public class Export : ScObject
     {
@@ -47,7 +47,11 @@ namespace BL.Assets.Editor.ScOld
         public override string GetInfo()
         {
             StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("/!\\ Experimental Rendering");
+            sb.AppendLine("");
             sb.AppendLine("ExportId: " + _exportId);
+            sb.AppendLine("Polygons: " + Children.Count);   
             return sb.ToString();
         }
 
@@ -153,24 +157,138 @@ namespace BL.Assets.Editor.ScOld
         }
         public override Bitmap Render(RenderingOptions options)
         {
-            Console.WriteLine("XY:");
-            foreach (Shape chunk in _scFile.GetShapes())
+            if (Children != null && Children.Count > 0)
             {
-            }
-
-            foreach (Shape chunk in _scFile.GetShapes())
-            {
-                foreach (ShapeChunk a in chunk.Children)
+                List<PointF> A = new List<PointF>();
+                foreach (Shape s in Children)
                 {
-                    foreach (var p in a.UV)
-                    {
-                        Console.WriteLine("u: " + p.X + ", u: " + p.Y);
-                    }
+                    PointF[] pointsXY = s.Children.SelectMany(chunk => ((ShapeChunk)chunk).XY).ToArray();
+                    A.AddRange(pointsXY.ToArray());
                 }
-                Console.WriteLine("");
+                foreach (PointF p in  A)
+                {
+                    Console.WriteLine("x: " + p.X + ", y: " + p.Y);
+                }
+
+                using (var xyPath = new GraphicsPath())
+                {
+                    xyPath.AddPolygon(A.ToArray());
+
+                    var xyBound = Rectangle.Round(xyPath.GetBounds());
+
+                    var width = xyBound.Width;
+                    width = width > 0 ? width : 1;
+
+                    var height = xyBound.Height;
+                    height = height > 0 ? height : 1;
+
+                    var x = xyBound.X;
+                    var y = xyBound.Y;
+
+                    var finalShape = new Bitmap(width, height);
+                    Console.WriteLine($"Rendering export: W:{finalShape.Width} H:{finalShape.Height}\n");
+
+                    foreach (Shape shape in Children)
+                    {
+                        foreach (ShapeChunk chunk in shape.Children)
+                        {
+                            var texture = (Texture)_scFile.GetTextures()[chunk.GetTextureId()];
+                            if (texture != null)
+                            {
+                                Bitmap bitmap = texture.Bitmap;
+                                using (var gpuv = new GraphicsPath())
+                                {
+                                    gpuv.AddPolygon(chunk.UV.ToArray());
+
+                                    var gxyBound = Rectangle.Round(gpuv.GetBounds());
+
+                                    int gpuvWidth = gxyBound.Width;
+                                    gpuvWidth = gpuvWidth > 0 ? gpuvWidth : 1;
+
+                                    int gpuvHeight = gxyBound.Height;
+                                    gpuvHeight = gpuvHeight > 0 ? gpuvHeight : 1;
+
+                                    var shapeChunk = new Bitmap(gpuvWidth, gpuvHeight);
+
+                                    var chunkX = gxyBound.X;
+                                    var chunkY = gxyBound.Y;
+
+                                    using (var g = Graphics.FromImage(shapeChunk))
+                                    {
+                                        gpuv.Transform(new Matrix(1, 0, 0, 1, -chunkX, -chunkY));
+                                        g.SetClip(gpuv);
+                                        g.DrawImage(bitmap, -chunkX, -chunkY);
+                                    }
+
+                                    GraphicsPath gp = new GraphicsPath();
+                                    gp.AddPolygon(new[] { new Point(0, 0), new Point(gpuvWidth, 0), new Point(0, gpuvHeight) });
+
+                                    //Calculate transformation Matrix of UV
+                                    //double[,] matrixArrayUV = { { polygonUV[0].X, polygonUV[1].X, polygonUV[2].X }, { polygonUV[0].Y, polygonUV[1].Y, polygonUV[2].Y }, { 1, 1, 1 } };
+                                    double[,] matrixArrayUV =
+                                    {
+                            {
+                                gpuv.PathPoints[0].X, gpuv.PathPoints[1].X, gpuv.PathPoints[2].X
+                            },
+                            {
+                                gpuv.PathPoints[0].Y, gpuv.PathPoints[1].Y, gpuv.PathPoints[2].Y
+                            },
+                            {
+                                1, 1, 1
+                            }
+                        };
+                                    double[,] matrixArrayXY =
+                                    {
+                            {
+                                chunk.XY[0].X, chunk.XY[1].X, chunk.XY[2].X
+                            },
+                            {
+                                chunk.XY[0].Y, chunk.XY[1].Y, chunk.XY[2].Y
+                            },
+                            {
+                                1, 1, 1
+                            }
+                        };
+
+                                    var matrixUV = Matrix<double>.Build.DenseOfArray(matrixArrayUV);
+                                    var matrixXY = Matrix<double>.Build.DenseOfArray(matrixArrayXY);
+                                    var inverseMatrixUV = matrixUV.Inverse();
+                                    var transformMatrix = matrixXY * inverseMatrixUV;
+                                    var m = new Matrix((float)transformMatrix[0, 0], (float)transformMatrix[1, 0], (float)transformMatrix[0, 1], (float)transformMatrix[1, 1], (float)transformMatrix[0, 2], (float)transformMatrix[1, 2]);
+                                    //m = new Matrix((float)transformMatrix[0, 0], (float)transformMatrix[1, 0], (float)transformMatrix[0, 1], (float)transformMatrix[1, 1], (float)Math.Round(transformMatrix[0, 2]), (float)Math.Round(transformMatrix[1, 2]));
+
+                                    //Perform transformations
+                                    gp.Transform(m);
+
+                                    using (Graphics g = Graphics.FromImage(finalShape))
+                                    {
+                                        //g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                                        //g.PixelOffsetMode = PixelOffsetMode.None;
+
+                                        //Set origin
+                                        Matrix originTransform = new Matrix();
+                                        originTransform.Translate(-x, -y);
+                                        g.Transform = originTransform;
+
+                                        g.DrawImage(shapeChunk, gp.PathPoints, gpuv.GetBounds(), GraphicsUnit.Pixel);
+
+                                        if (options.ViewPolygons)
+                                        {
+                                            gpuv.Transform(m);
+                                            g.DrawPath(new Pen(Color.DeepSkyBlue, 1), gpuv);
+                                        }
+                                        g.Flush();
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    return finalShape;
+                }
             }
             return null;
         }
-        #endregion
     }
+    #endregion
 }

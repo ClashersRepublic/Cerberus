@@ -1,4 +1,4 @@
-﻿namespace BL.Assets.Editor.Compression
+﻿namespace CR.Assets.Editor.Compression
 {
 
     using System.IO;
