@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using CRepublic.Magic.Core;
 using CRepublic.Magic.Extensions;
 using System.Threading;
+using CRepublic.Magic.Extensions.List;
 
 namespace CRepublic.Magic
 {
