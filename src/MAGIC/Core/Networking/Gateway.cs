@@ -13,10 +13,12 @@ namespace CRepublic.Magic.Core.Networking
 {
     internal class Gateway
     {
-        public Pool<SocketAsyncEventArgs> ArgsPool;
-        public Pool<byte[]> BufferPool;
-        public Socket Listener;
-        public int ConnectedSockets;
+        internal Pool<SocketAsyncEventArgs> ArgsPool;
+        internal Pool<byte[]> BufferPool;
+        internal Socket Listener;
+        internal int ConnectedSockets;
+        internal int NumberOfBuffers => BufferPool.Count;
+        internal int NumberOfArgs => ArgsPool.Count;
 
         public Gateway()
         {
@@ -72,33 +74,25 @@ namespace CRepublic.Magic.Core.Networking
 
         internal void StartReceive(SocketAsyncEventArgs e)
         {
-            var token = (Token)e.UserToken;
+            var token = (Token) e.UserToken;
             var socket = token.Device.Socket;
-
-            if (Thread.VolatileRead(ref token.Device.Dropped) == 1)
+            try
+            {
+                while (true)
+                {
+                    if (!socket.ReceiveAsync(e))
+                        ProcessReceive(e, false);
+                    else
+                        break;
+                }
+            }
+            catch (ObjectDisposedException)
             {
                 Recycle(e);
             }
-            else
+            catch (Exception ex)
             {
-                try
-                {
-                    while (true)
-                    {
-                        if (!socket.ReceiveAsync(e))
-                            ProcessReceive(e, false);
-                        else
-                            break;
-                    }
-                }
-                catch (ObjectDisposedException)
-                {
-                    Recycle(e);
-                }
-                catch (Exception ex)
-                {
-                    Resources.Exceptions.Catch(ex, "Exception while start receive: ");
-                }
+                Resources.Exceptions.Catch(ex, "Exception while start receive: ");
             }
         }
 
@@ -125,7 +119,7 @@ namespace CRepublic.Magic.Core.Networking
                 var args = GetArgs();
                 var buffer = GetBuffer;
 
-                args.SetBuffer(buffer, 0, buffer.Length);
+                DefensiveSetBuffer(ref args, buffer);
 
                 var device = new Device(socket);
                 var token = new Token(args, device);
@@ -211,7 +205,7 @@ namespace CRepublic.Magic.Core.Networking
                 return;
             }
 
-            args.SetBuffer(buffer, 0, buffer.Length);
+            DefensiveSetBuffer(ref args, buffer);
             args.UserToken = message.Device.Token;
 
             StartSend(args);
@@ -221,31 +215,23 @@ namespace CRepublic.Magic.Core.Networking
         {
             var token = (Token)e.UserToken;
             var socket = token.Device.Socket;
-
-            if (Thread.VolatileRead(ref token.Device.Dropped) == 1)
+            try
+            {
+                while (true)
+                {
+                    if (!socket.SendAsync(e))
+                        ProcessSend(e);
+                    else
+                        break;
+                }
+            }
+            catch (ObjectDisposedException)
             {
                 Recycle(e);
             }
-            else
+            catch (Exception ex)
             {
-                try
-                {
-                    while (true)
-                    {
-                        if (!socket.SendAsync(e))
-                            ProcessSend(e);
-                        else
-                            break;
-                    }
-                }
-                catch (ObjectDisposedException)
-                {
-                    Recycle(e);
-                }
-                catch (Exception ex)
-                {
-                    Resources.Exceptions.Catch(ex, "Exception while starting send");
-                }
+                Resources.Exceptions.Catch(ex, "Exception while starting send");
             }
         }
 
@@ -261,6 +247,7 @@ namespace CRepublic.Magic.Core.Networking
             {
                 try
                 {
+                    var offset = e.Offset;
                     var count = e.Count;
                     if (transferred < count)
                     {
@@ -333,11 +320,28 @@ namespace CRepublic.Magic.Core.Networking
             catch { /* SWallow */ }
         }
 
+        internal void DefensiveSetBuffer(ref SocketAsyncEventArgs args, byte[] buffer)
+        {
+            try
+            {
+                args.SetBuffer(buffer, 0, buffer.Length);
+            }
+            catch (InvalidOperationException)
+            {
+                //Logger.SayInfo($"A SocketAsynceEvenArgs object was already in use. Last Op => {args.LastOperation}.");
+
+                args = new SocketAsyncEventArgs();
+                args.Completed += OnIOCompleted;
+                args.SetBuffer(buffer, 0, buffer.Length);
+            }
+        }
+
         internal SocketAsyncEventArgs GetArgs()
         {
             var args = ArgsPool.Pop();
             if (args == null)
             {
+                //Logger.SayInfo("Creating new SocketAsyncEventArgs object since pool was empty(returned null).");
                 args = new SocketAsyncEventArgs();
                 args.Completed += OnIOCompleted;
             }

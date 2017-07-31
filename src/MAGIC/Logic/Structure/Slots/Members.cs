@@ -85,7 +85,7 @@ namespace CRepublic.Magic.Logic.Structure.Slots
                     
                 foreach (Member Member in this.Values.ToList())
                 {
-                    Level _Player = Core.Resources.Players.Get(Member.UserID, false);
+                    Level _Player = Core.Resources.Players.Get(Member.UserID, false, true);
 
                     _Packet.AddLong(_Player.Avatar.UserId);
                     _Packet.AddString(_Player.Avatar.Name);

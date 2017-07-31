@@ -210,6 +210,7 @@ namespace CRepublic.Magic.Packets.Debugs
                             this.Help.AppendLine("Command:");
                             this.Help.AppendLine("\t/max_village {village-id}");
                             SendChatMessage(Help.ToString());
+                            this.Help = null;
                             return;
                     }
                 }
@@ -224,6 +225,7 @@ namespace CRepublic.Magic.Packets.Debugs
                     this.Help.AppendLine("Command:");
                     this.Help.AppendLine("\t/max_village {village-id}");
                     SendChatMessage(Help.ToString());
+                    this.Help = null;
                 }
             }
             else
@@ -237,6 +239,7 @@ namespace CRepublic.Magic.Packets.Debugs
                 this.Help.AppendLine("Command:");
                 this.Help.AppendLine("\t/max_village {village-id}");
                 SendChatMessage(Help.ToString());
+                this.Help = null;
             }
         }
     }

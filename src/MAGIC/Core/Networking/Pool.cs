@@ -4,26 +4,24 @@ namespace CRepublic.Magic.Core.Networking
 {
     internal class Pool<T>
     {
-        internal readonly object _sync = new object();
-        internal readonly ConcurrentQueue<T> _stack;
+        internal readonly ConcurrentBag<T> _stack;
+        internal int Count => _stack.Count;
+
 
         internal Pool()
         {
-            this._stack = new ConcurrentQueue<T>();
+            this._stack = new ConcurrentBag<T>();
         }
 
         internal T Pop()
         {
             var ret = default(T);
-            if (this._stack.Count > 0)
-                this._stack.TryDequeue(out ret);
-
-            return ret;
+            return !_stack.TryTake(out ret) ? default(T) : ret;
         }
 
         internal void Push(T item)
         {
-            this._stack.Enqueue(item);
+            this._stack.Add(item);
         }
     }
 }

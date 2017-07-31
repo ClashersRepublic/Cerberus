@@ -180,9 +180,10 @@ namespace CRepublic.Magic.Core
         {
             Timer Timer = new Timer
             {
-                Interval = 5000,
+                Interval = 60000,
                 AutoReset = true
             };
+
             Timer.Elapsed += (_Sender, _Args) =>
             {
                 var numDisc = 0;
@@ -205,6 +206,7 @@ namespace CRepublic.Magic.Core
                     Utils.Padding(this.GetType().Name, 6) + $" : KeepAlive dropped {numDisc} clients due to keep alive timeouts at " + DateTime.Now.ToString("T") +
                     ".", true);
 #endif
+                Loggers.Log($" Pools: Args => {Resources.Gateway.NumberOfArgs} Buffers => {Resources.Gateway.NumberOfBuffers} at {DateTime.Now:T}.", true);
 
             };
 

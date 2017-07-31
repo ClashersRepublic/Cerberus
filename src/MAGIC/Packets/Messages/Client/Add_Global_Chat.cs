@@ -33,7 +33,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                     if (DebugFactory.Debugs.ContainsKey(commandName))
                     {
                         var args = commands.Skip(1).ToArray();
-                        Debug Debug = Activator.CreateInstance(DebugFactory.Debugs[commandName], this.Device, args) as Debug;
+                        var Debug = Activator.CreateInstance(DebugFactory.Debugs[commandName], this.Device, args) as Debug;
 
                         if (Debug != null)
                         {

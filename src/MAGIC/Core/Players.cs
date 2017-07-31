@@ -64,7 +64,7 @@ namespace CRepublic.Magic.Core
             }
         }
 
-        internal Level Get(long UserId, bool Store = true)
+        internal Level Get(long UserId, bool Store = true, bool AvatarOnly = false)
         {
             if (!this.ContainsKey(UserId))
             {
@@ -82,9 +82,10 @@ namespace CRepublic.Magic.Core
                         {
                             Player = new Level
                             {
-                                Avatar = JsonConvert.DeserializeObject<Logic.Player>(_Datas[0], this.Settings),
-                                JSON = _Datas[1],
+                                Avatar = JsonConvert.DeserializeObject<Logic.Player>(_Datas[0], this.Settings)
                             };
+                            if (!AvatarOnly)
+                                Player.JSON = _Datas[1];
 
                             if (Store)
                             {

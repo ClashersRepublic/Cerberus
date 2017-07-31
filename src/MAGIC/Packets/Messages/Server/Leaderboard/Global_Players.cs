@@ -16,12 +16,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Leaderboard
         public Global_Players(Device client) : base(client)
         {
             this.Identifier = 24403;
-            this.Players = Resources.PRegion.Get_Region("INTERNATIONAL").OrderByDescending(t => t.Avatar.Trophies).ToList();
-
-            if (this.Players == null)
-            {
-                this.Players = new List<Level>();
-            }
+            this.Players = Resources.PRegion.Get_Region("INTERNATIONAL")?.Take(200).OrderByDescending(t => t.Avatar.Trophies).ToList() ?? new List<Level>();
         }
 
         internal override void Encode()

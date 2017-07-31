@@ -15,7 +15,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Leaderboard
         public Local_Players(Device client) : base(client)
         {
             this.Identifier = 24404;
-            this.Players = Resources.PRegion.Get_Region(this.Device.Player.Avatar.Region).Take(100).OrderByDescending(t => t.Avatar.Trophies).ToList();
+            this.Players = Resources.PRegion.Get_Region(this.Device.Player.Avatar.Region)?.Take(100).OrderByDescending(t => t.Avatar.Trophies).ToList();
 
             if (this.Players == null)
             {
