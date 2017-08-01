@@ -36,7 +36,7 @@ namespace CRepublic.Magic.Core.Database
                         CMD.Parameters.AddWithValue("@FacebookID", _ID);
                         CMD.Prepare();
                         long UserID = Convert.ToInt64(CMD.ExecuteScalar());
-                        Level User = Resources.Players.Get(UserID);
+                        Level User = Players.Get(UserID);
                         if (User != null)
                             Level.Add(User);
                     }
@@ -73,7 +73,7 @@ namespace CRepublic.Magic.Core.Database
                     using (MySqlCommand CMD = new MySqlCommand("SELECT coalesce(MAX(ID), 0) FROM player", Conn))
                     {
                         CMD.Prepare();
-                        Resources.Players.Seed = Convert.ToInt64(CMD.ExecuteScalar()) + 1;
+                        Players.Seed = Convert.ToInt64(CMD.ExecuteScalar()) + 1;
                     }
 
                     using (MySqlCommand CMD = new MySqlCommand("SELECT coalesce(MAX(ID), 0) FROM clan", Conn))

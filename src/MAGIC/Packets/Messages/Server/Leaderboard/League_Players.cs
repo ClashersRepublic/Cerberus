@@ -11,16 +11,12 @@ namespace CRepublic.Magic.Packets.Messages.Server.Leaderboard
 
     internal class League_Players : Message
     {
-        internal List<Level> Players;
+        internal List<Level> Players_List;
         public League_Players(Device client) : base(client)
         {
             this.Identifier = 24503;
-            this.Players = Resources.Players.Values.Where(t => t.Avatar.League == this.Device.Player.Avatar.League).OrderByDescending(t => t.Avatar.Trophies).Take(100).ToList();
-
-            if (this.Players == null)
-            {
-                this.Players = new List<Level>();
-            }
+            this.Players_List = Players.Levels.Values.Where(t => t.Avatar.League == this.Device.Player.Avatar.League).OrderByDescending(t => t.Avatar.Trophies).Take(100).ToList() ??
+                           new List<Level>();
         }
 
         internal override void Encode()
@@ -28,9 +24,9 @@ namespace CRepublic.Magic.Packets.Messages.Server.Leaderboard
             var i = 1;
 
             this.Data.AddInt((int)(DateTime.UtcNow.LastDayOfMonth() - DateTime.UtcNow).TotalSeconds);
-            this.Data.AddInt(this.Players.Count);
+            this.Data.AddInt(this.Players_List.Count);
 
-            foreach (var Player in this.Players)
+            foreach (var Player in this.Players_List)
             {
                 this.Data.AddLong(Player.Avatar.UserId);
                 this.Data.AddString(Player.Avatar.Name);

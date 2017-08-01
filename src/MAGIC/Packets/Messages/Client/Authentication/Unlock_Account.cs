@@ -38,7 +38,7 @@ namespace CRepublic.Magic.Packets.Client.Authentication
         {
             if (this.UnlockCode.Length != 12 || string.IsNullOrEmpty(this.UnlockCode))
             {
-                Resources.Devices.Remove(this.Device.SocketHandle);
+                Devices.Remove(this.Device.SocketHandle);
                 return;
             }
 
@@ -49,11 +49,11 @@ namespace CRepublic.Magic.Packets.Client.Authentication
                 {
                     if (n == 0)
                     {
-                        new Unlock_Account_OK(this.Device) { Account = Resources.Players.New().Avatar }.Send();
+                        new Unlock_Account_OK(this.Device) { Account = Players.New().Avatar }.Send();
                         return;
                     }
 
-                    var account = Resources.Players.Get(n);
+                    var account = Players.Get(n);
                     if (account != null)
                     {
                         account.Avatar.Locked = true;

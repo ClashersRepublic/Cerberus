@@ -57,7 +57,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
             Entry Stream = Alliance.Chats.Get(this.StreamLowId);
             if (Stream != null)
             {
-                Level Receiver = Resources.Players.Get(Stream.Sender_ID, false);
+                Level Receiver = Players.Get(Stream.Sender_ID, false);
 
                 if (IsSpell)
                 {

@@ -34,7 +34,7 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
             {
                 this.Device.State = Logic.Enums.State.SEARCH_BATTLE;
                 if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20 ||
-                    this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count == (Core.Resources.Players.Seed - 2))
+                    this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count == (Core.Players.Seed - 2))
                 {
                     if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count != 0)
                     {
@@ -42,14 +42,14 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
                     }
                 }
                 while (this.Enemy_Player == null && this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count <
-                       Core.Resources.Players.Seed - 2)
+                       Core.Players.Seed - 2)
                 {
 
                     if (this.Enemy_ID != this.Device.Player.Avatar.UserId && this.Enemy_ID > 0)
                     {
                         if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.FindIndex(P => P == this.Enemy_ID) < 0)
                         {
-                            this.Enemy_Player = Core.Resources.Players.Get(this.Enemy_ID, false);
+                            this.Enemy_Player = Core.Players.Get(this.Enemy_ID, false);
 
                             if (this.Enemy_Player == null)
                             {
@@ -57,13 +57,13 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
 
                                 if (this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count > 20 ||
                                     this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count >
-                                    Core.Resources.Players.Seed - 2)
+                                    Core.Players.Seed - 2)
                                     this.Device.Player.Avatar.Last_Attack_Enemy_ID.RemoveAt(0);
                             }
                         }
                         else
                         {
-                            if (this.Enemy_ID < Core.Resources.Players.Seed - 1 && !this.Max_Seed_Achieved)
+                            if (this.Enemy_ID < Core.Players.Seed - 1 && !this.Max_Seed_Achieved)
                             {
                                 this.Enemy_ID++;
                             }
@@ -77,7 +77,7 @@ namespace CRepublic.Magic.Packets.Commands.Client.Battle
                     }
                     else
                     {
-                        if (this.Enemy_ID < Core.Resources.Players.Seed - 1 && !this.Max_Seed_Achieved)
+                        if (this.Enemy_ID < Core.Players.Seed - 1 && !this.Max_Seed_Achieved)
                         {
                             this.Enemy_ID++;
                         }

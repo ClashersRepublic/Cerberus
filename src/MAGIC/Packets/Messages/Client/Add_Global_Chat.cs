@@ -49,7 +49,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                             }
                             catch (Exception ex)
                             {
-                                Resources.Exceptions.Catch(ex,
+                                Exceptions.Log(ex,
                                     $"Unable to process debug command with ID: {commandName}" + Environment.NewLine +
                                     ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine +
                                     ex.Data, this.Device.Model, this.Device.OSVersion, this.Device.Player.Avatar.Token,

@@ -42,7 +42,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                         {
                             if (Battle.Commands.Count > 0)
                             {
-                                Level Player = Core.Resources.Players.Get(Battle.Defender.UserId, false);
+                                Level Player = Core.Players.Get(Battle.Defender.UserId, false);
 
                                 if (Utils.IsOdd(Resources.Random.Next(1, 1000)))
                                 {
@@ -86,7 +86,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                                         Battle_ID = this.Device.Player.Avatar.Battle_ID
                                     });
 
-                                //if (Core.Resources.Players.Get(Battle.Defender.UserId, Constants.Database) == null)
+                                //if (Core.Players.Get(Battle.Defender.UserId, Constants.Database) == null)
                                 {
                                     //if (Player.Avatar.Guard < 1)
                                     Player.Avatar.Inbox.Add(

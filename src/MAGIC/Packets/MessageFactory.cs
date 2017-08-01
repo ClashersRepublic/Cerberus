@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
 using CRepublic.Magic.Packets.Client.Authentication;
 using CRepublic.Magic.Packets.Messages.Client;
 using CRepublic.Magic.Packets.Messages.Client.API;
@@ -58,6 +60,13 @@ namespace CRepublic.Magic.Packets
                 {15000, typeof(Request_War_Home_Data)},
                 {15001, typeof(Attack_War)},
             };
+        }
+        internal static Message Parse(Device client, Reader reader, int messageId)
+        {
+            if (Messages.ContainsKey(messageId))
+                return (Message)Activator.CreateInstance(Messages[messageId], client, reader);
+
+            return null;
         }
     }
 }

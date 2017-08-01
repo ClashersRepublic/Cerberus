@@ -1,0 +1,34 @@
+﻿{
+    "loot": [
+        [ 3000002, 99999999 ],
+        [ 3000001, 99999999 ]
+    ],
+    "availableLoot": [
+        [ 3000000, 0 ],
+        [ 3000001, 145430 ],
+        [ 3000002, 142872 ],
+        [ 3000003, 517 ]
+    ],
+    "units": [ [ 4000001, 58 ] ],
+    "spells": [ ],
+    "levels": [ [ 4000001, 4 ] ],
+    "stats": {
+        "townhallDestroyed": false,
+        "battleEnded": true,
+        "allianceUsed": false,
+        "destructionPercentage": 6,
+        "battleTime": 90,
+        "originalAttackerScore": 6022,
+        "attackerScore": -10,
+        "originalDefenderScore": 1056,
+        "defenderScore": 18,
+        "allianceName": "Clash of Magic",
+        "attackerStars": 0,
+        "homeID": [ 0, 5 ],
+        "allianceBadge": 1526735450,
+        "allianceBadge2": 1660949336,
+        "allianceID": [ 88, 884629 ],
+        "deployedHousingSpace": 168,
+        "armyDeploymentPercentage": 5
+    }
+}

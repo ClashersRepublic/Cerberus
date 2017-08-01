@@ -19,7 +19,6 @@ namespace CRepublic.Magic.Logic
     {
         internal Socket Socket;
         internal Level Player;
-        internal Token Token;
         internal Crypto Keys;
         internal IntPtr SocketHandle;
         internal RC4 RC4;
@@ -28,8 +27,8 @@ namespace CRepublic.Magic.Logic
         internal string AndroidID, OpenUDID, Model, OSVersion, MACAddress, AdvertiseID, VendorID, IPAddress;
         internal bool Android, Advertising;
         internal int Last_Checksum, Last_Tick, Depth;
-        internal long Dropped;
         internal uint ClientSeed;
+        internal readonly List<byte> Stream;
 
 
 
@@ -46,22 +45,7 @@ namespace CRepublic.Magic.Logic
             this.KeepAlive = new Keep_Alive_OK(this);
             this.LastKeepAlive = DateTime.Now;
             this.NextKeepAlive = this.LastKeepAlive.AddSeconds(30);
-        }
-
-        public Device(Socket so, Token token)
-        {
-            this.Socket = so;
-            this.Keys = new Crypto();
-            if (Constants.RC4)
-            {
-                this.RC4 = new RC4();
-            }
-            this.Token = token;
-            this.SocketHandle = so.Handle;
-            this.IPAddress = ((IPEndPoint)so.RemoteEndPoint).Address.ToString();
-            this.KeepAlive = new Keep_Alive_OK(this);
-            this.LastKeepAlive = DateTime.Now;
-            this.NextKeepAlive = this.LastKeepAlive.AddSeconds(30);
+            this.Stream = new List<Byte>();
         }
 
         internal State State = State.DISCONNECTED;
@@ -78,8 +62,78 @@ namespace CRepublic.Magic.Logic
             }
         }
 
-        internal void Process(byte[] Buffer)
+        internal bool TryGetPacket(out Message message)
         {
+            const int HEADER_LEN = 7;
+            message = default(Message);
+            var result = false;
+            if (Stream.Count >= 5)
+            {
+                int length = (Stream[2] << 16) | (Stream[3] << 8) | Stream[4];
+                ushort type = (ushort) ((Stream[0] << 8) | Stream[1]);
+
+                if (Stream.Count - HEADER_LEN >= length)
+                {
+                    // Avoid LINQ cause we can.
+                    var packet = new byte[length];
+                    for (int i = 0; i < packet.Length; i++)
+                        packet[i] = Stream[i + HEADER_LEN];
+
+                    message = MessageFactory.Parse(this, new Reader(packet), type);
+                    if (message != null)
+                    {
+                        message.Identifier = type;
+                        message.Length = (uint) length;
+                        try
+                        {
+                            //if (Constants.RC4)
+                            message.DecryptRC4();
+                            //else
+                            //message.DecryptPepper();
+                        }
+                        catch (Exception ex)
+                        {
+                            //ExceptionLogger.Log(ex, $"Unable to decrypt message with ID: {type}");
+                        }
+
+                        try
+                        {
+                            message.Decode();
+                        }
+                        catch (Exception ex)
+                        {
+                            //ExceptionLogger.Log(ex, $"Unable to decode message with ID: {type}");
+                        }
+#if DEBUG
+                        Loggers.Log(
+                            Utils.Padding(message.Device.Socket.RemoteEndPoint.ToString(), 15) + " --> " +
+                            message.GetType().Name, true);
+#endif
+                        result = true;
+                    }
+                    else
+                    {
+                        //Logger.Say("Unhandled message " + type);
+
+                        // Make sure we don't break the RC4 stream.
+                        if (Constants.RC4)
+                        {
+                            this.RC4.Decrypt(ref packet);
+                            packet = null;
+                        }
+                        else
+                            this.Keys.SNonce.Increment();
+                    }
+                    Stream.RemoveRange(0, HEADER_LEN + length);
+                }
+            }
+            return result;
+        }
+
+        [Obsolete]
+        internal void Process()
+        {
+            var Buffer = Stream.ToArray();
             if (Buffer.Length >= 7)
             {
                 using (Reader Reader = new Reader(Buffer))
@@ -108,14 +162,13 @@ namespace CRepublic.Magic.Logic
                                     Utils.Padding(_Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " --> " +
                                     _Message.GetType().Name, true);
 #endif
-
                                 _Message.Decode();
                                 _Message.Process();
                             }
 
                             catch (Exception Exception)
                             {
-                                Resources.Exceptions.Catch(Exception,
+                                Exceptions.Log(Exception,
                                     Exception.Message + Environment.NewLine + Exception.StackTrace +
                                     Environment.NewLine + Exception.Data, this.Model, this.OSVersion,
                                     this.Player.Avatar.Token, Player?.Avatar.UserId ?? 0);
@@ -144,11 +197,11 @@ namespace CRepublic.Magic.Logic
                             else
                                 this.Keys.SNonce.Increment();
                         }
-                        this.Token.Packet.RemoveRange(0, (int)Length + 7);
+                        Stream.RemoveRange(0, (int)Length + 7);
 
                         if (Buffer.Length - 7 - Length >= 7)
                         {
-                            this.Process(Reader.ReadBytes(Buffer.Length - 7 - (int)Length));
+                            this.Process();
                         }
                     }
 

@@ -16,7 +16,6 @@ namespace CRepublic.Magic.Core.Networking
         internal Token(SocketAsyncEventArgs Args, Device Device)
         {
             this.Device = Device;
-            this.Device.Token = this;
 
             this.Args = Args;
             this.Args.UserToken = this;
@@ -27,7 +26,7 @@ namespace CRepublic.Magic.Core.Networking
         internal void Process()
         {
             byte[] Data = this.Packet.ToArray();
-            this.Device.Process(Data);
+            this.Device.Process();
         }
     }
 }

@@ -22,7 +22,8 @@
           <Property Name="ID" Type="bigint" Nullable="false" />
           <Property Name="Trophies" Type="int" Nullable="false" />
           <Property Name="FacebookID" Type="text" Nullable="false" />
-          <Property Name="Data" Type="mediumtext" Nullable="false" />
+          <Property Name="Avatar" Type="mediumtext" Nullable="false" />
+          <Property Name="Village" Type="mediumtext" Nullable="false" />
         </EntityType>
         <EntityType Name="Battle">
           <Key>
@@ -57,7 +58,8 @@
           <Property Name="ID" Type="Int64" Nullable="false" />
           <Property Name="Trophies" Type="Int32" Nullable="false" />
           <Property Name="FacebookID" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="Data" Type="String" Nullable="false" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Name="Avatar" Type="String" Nullable="false" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Name="Village" Type="String" Nullable="false" MaxLength="16777215" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Battle">
           <Key>
@@ -91,7 +93,8 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Trophies" ColumnName="Trophies" />
                 <ScalarProperty Name="FacebookID" ColumnName="FacebookID" />
-                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="Village" ColumnName="Village" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

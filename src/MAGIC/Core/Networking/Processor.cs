@@ -27,7 +27,7 @@ namespace CRepublic.Magic.Core.Networking
                 }
                 catch (Exception ex)
                 {
-                    Resources.Exceptions.Catch(ex, $"Exception while encoding message {Message.GetType()}");
+                    Exceptions.Log(ex, $"Exception while encoding message {Message.GetType()}");
                     return;
                 }
 
@@ -39,7 +39,7 @@ namespace CRepublic.Magic.Core.Networking
                 else
                     Message.EncryptPepper();
 
-                Resources.Gateway.Send(Message);
+                Gateway.Send(Message);
 #if DEBUG
                 if (Message.Device.Connected())
                 {

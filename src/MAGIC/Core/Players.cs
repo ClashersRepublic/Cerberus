@@ -11,62 +11,61 @@ using CRepublic.Magic.Logic.Enums;
 
 namespace CRepublic.Magic.Core
 {
-    internal class Players : ConcurrentDictionary<long, Level>
+    internal static class Players
     {
-        internal JsonSerializerSettings Settings = new JsonSerializerSettings
+        internal static JsonSerializerSettings Settings = new JsonSerializerSettings
         {
-            TypeNameHandling = TypeNameHandling.Auto,
-            MissingMemberHandling = MissingMemberHandling.Ignore,
-            DefaultValueHandling = DefaultValueHandling.Include,
-            NullValueHandling = NullValueHandling.Ignore,
-            PreserveReferencesHandling = PreserveReferencesHandling.All,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            Formatting = Formatting.Indented,
-            Converters = { new Utils.ArrayReferencePreservngConverter() },
+            TypeNameHandling = TypeNameHandling.Auto,                    MissingMemberHandling = MissingMemberHandling.Ignore,
+            DefaultValueHandling = DefaultValueHandling.Include,         NullValueHandling = NullValueHandling.Ignore,
+            PreserveReferencesHandling = PreserveReferencesHandling.All, ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            Formatting = Formatting.Indented,                            Converters = { new Utils.ArrayReferencePreservngConverter() },
         };
 
-        internal long Seed;
+        internal static long Seed;
+        internal static readonly object s_sync = new object();
+        internal static ConcurrentDictionary<long, Level> Levels;
 
-        internal Players()
+        internal static void Initialize()
         {
+            Levels = new ConcurrentDictionary<long, Level>();
         }
 
-        internal void Add(Level Player)
+        internal static void Add(Level Player)
         {
 
-            if (this.ContainsKey(Player.Avatar.UserId))
+            if (Levels.ContainsKey(Player.Avatar.UserId))
             {
-                this[Player.Avatar.UserId] = Player;
+                Levels[Player.Avatar.UserId] = Player;
             }
             else
             {
-                this.TryAdd(Player.Avatar.UserId, Player);
+                Levels.TryAdd(Player.Avatar.UserId, Player);
             }
         }
 
-        internal void Remove(Level Player)
+        internal static void Remove(Level Player)
         {
             if (Player != null)
             {
                 Player.Tick();
-                this.Save(Player);
+                Save(Player);
 
-                this.TryRemove(Player.Avatar.UserId);
+                Levels.TryRemove(Player.Avatar.UserId);
 
                 if (Player.Device != null)
                 {
-                    if (Resources.Devices.ContainsKey(Player.Device.SocketHandle))
+                    if (Devices._Devices.ContainsKey(Player.Device.SocketHandle))
                     {
-                        Resources.Devices.Remove(Player.Device.SocketHandle);
+                        Devices.Remove(Player.Device.SocketHandle);
                     }
                     Resources.GChat.Remove(Player.Device);
                 }
             }
         }
 
-        internal Level Get(long UserId, bool Store = true, bool AvatarOnly = false)
+        internal static Level Get(long UserId, bool Store = true, bool AvatarOnly = false)
         {
-            if (!this.ContainsKey(UserId))
+            if (!Levels.ContainsKey(UserId))
             {
                 Level Player = null;
 
@@ -74,34 +73,42 @@ namespace CRepublic.Magic.Core
                 {
                     var Data = Database.Player.Find(UserId);
 
-                    if (!string.IsNullOrEmpty(Data?.Data))
+                    if (!string.IsNullOrEmpty(Data?.Avatar) && !string.IsNullOrEmpty(Data?.Village))
                     {
-                        string[] _Datas = Data.Data.Split(new string[1] {"#:#:#:#"}, StringSplitOptions.None);
-
-                        if (!string.IsNullOrEmpty(_Datas[0]) && !string.IsNullOrEmpty(_Datas[1]))
+                        Player = new Level
                         {
-                            Player = new Level
-                            {
-                                Avatar = JsonConvert.DeserializeObject<Logic.Player>(_Datas[0], this.Settings)
-                            };
-                            if (!AvatarOnly)
-                                Player.JSON = _Datas[1];
+                            Avatar = JsonConvert.DeserializeObject<Logic.Player>(Data.Avatar, Settings)
+                        };
+                        if (!AvatarOnly)
+                            Player.JSON = Data.Village;
 
-                            if (Store)
-                            {
-                                this.Add(Player);
-                            }
+                        if (Store)
+                        {
+                            Add(Player);
                         }
                     }
                 }
                 return Player;
             }
-            return this[UserId];
+            return Levels[UserId];
         }
 
-        internal Level New(long UserId = 0, string token = "", bool Store = true)
+        internal static Level New(long UserId = 0, string token = "", bool Store = true)
         {
-            var Player = UserId == 0 ? new Level(this.Seed++) : new Level(UserId);
+            lock (s_sync)
+            {
+                if (UserId == 0 || Seed == UserId)
+                {
+                    UserId = Seed++;
+                }
+                else
+                {
+                    if (UserId > Seed)
+                        Seed = UserId + 1;
+                }
+            }
+
+            var Player = new Level(UserId);
 
 
             if (string.IsNullOrEmpty(token))
@@ -135,7 +142,7 @@ namespace CRepublic.Magic.Core
 
             if (Store)
             {
-                this.Add(Player);
+                Add(Player);
             }
 
             using (MysqlEntities Database = new MysqlEntities())
@@ -143,8 +150,8 @@ namespace CRepublic.Magic.Core
                 Database.Player.Add(new Database.Player
                 {
                     ID = Player.Avatar.UserId,
-                    Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" +
-                           Player.JSON,
+                    Avatar = JsonConvert.SerializeObject(Player.Avatar, Settings),
+                    Village =  Player.JSON,
                     FacebookID = "#:#:#:#",
                 });
 
@@ -153,20 +160,19 @@ namespace CRepublic.Magic.Core
             return Player;
         }
 
-        internal void Save(Level Player)
+        internal static void Save(Level Player)
         {
             Player.Avatar.LastSave = DateTime.UtcNow;
 
             using (MysqlEntities Database = new MysqlEntities())
             {
                 Database.Configuration.AutoDetectChangesEnabled = false;
-                Database.Configuration.ValidateOnSaveEnabled = false;
                 var Data = Database.Player.Find(Player.Avatar.UserId);
 
                 if (Data != null)
                 {
-                    Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" +
-                                Player.JSON;
+                    Data.Avatar = JsonConvert.SerializeObject(Player.Avatar, Settings);
+                    Data.Village = Player.JSON;
                     Data.Trophies = Player.Avatar.Trophies;
                     Data.FacebookID = Player.Avatar.Facebook.Identifier ?? "#:#:#:#";
                     Database.Entry(Data).State = EntityState.Modified;
@@ -175,13 +181,13 @@ namespace CRepublic.Magic.Core
             }
         }
 
-        internal async Task Save()
+        internal static async Task Save()
         {
             using (MysqlEntities Database = new MysqlEntities())
             {
                 Database.Configuration.AutoDetectChangesEnabled = false;
                 Database.Configuration.ValidateOnSaveEnabled = false;
-                foreach (var Player in this.Values.ToList())
+                foreach (var Player in Levels.Values.ToList())
                 {
                     lock (Player)
                     {
@@ -190,8 +196,8 @@ namespace CRepublic.Magic.Core
 
                         if (Data != null)
                         {
-                            Data.Data = JsonConvert.SerializeObject(Player.Avatar, this.Settings) + "#:#:#:#" +
-                                        Player.JSON;
+                            Data.Avatar = JsonConvert.SerializeObject(Player.Avatar, Settings);
+                            Data.Village = Player.JSON;
                             Data.Trophies = Player.Avatar.Trophies;
                             Data.FacebookID = Player.Avatar.Facebook.Identifier ?? "#:#:#:#";
                             Database.Entry(Data).State = EntityState.Modified;

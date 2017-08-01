@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CRepublic.Magic.Core;
 using CRepublic.Magic.Extensions;
 using System.Threading;
+using CRepublic.Magic.Core.Networking;
 using CRepublic.Magic.Extensions.List;
 
 namespace CRepublic.Magic
@@ -38,7 +39,12 @@ namespace CRepublic.Magic
 
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
 
+            Exceptions.Initialize();
+            Devices.Initialize();
+            Players.Initialize();
             Resources.Initialize();
+            Gateway.Initialize();
+            Gateway.Listen();
             Console.WriteLine(@"-------------------------------------" + Environment.NewLine);
 
             Thread.Sleep(Timeout.Infinite);

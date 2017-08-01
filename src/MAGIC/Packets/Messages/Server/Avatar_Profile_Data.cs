@@ -16,7 +16,7 @@ namespace CRepublic.Magic.Packets.Messages.Server
         }
         internal override void Encode()
         {
-            this.Player = this.UserID == this.Device.Player.Avatar.UserId ? this.Device.Player : Resources.Players.Get(UserID, false);
+            this.Player = this.UserID == this.Device.Player.Avatar.UserId ? this.Device.Player : Players.Get(UserID, false);
 
             this.Data.AddRange(this.Player.Avatar.ToBytes);
             this.Data.AddCompressed(this.Player.JSON, false);

@@ -37,7 +37,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Battle
             Entry Stream = Alliance.Chats.Get(this.Stream_Low_ID);
             if (Stream != null)
             {
-                var Player = Resources.Players.Get(Stream.Sender_ID, false);
+                var Player = Players.Get(Stream.Sender_ID, false);
                 if (Player != null)
                 {
                     this.Device.Player.Avatar.Amical_ID = this.Stream_Low_ID;

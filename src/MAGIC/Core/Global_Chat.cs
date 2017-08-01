@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Linq;
 using System.Collections.Generic;
 using CRepublic.Magic.Logic;
 using CRepublic.Magic.Logic.Structure.Slots.Items;
@@ -21,7 +23,7 @@ namespace CRepublic.Magic.Core
                 }
                 else
                 {
-                    this.OrderBy(C => C.Devices.Count).ToList()[0].Devices.Add(Device);
+                    this.OrderBy(C => C.Devices.Count).ToList()[0].Add(Device);
                 }
             }
             else
@@ -41,7 +43,7 @@ namespace CRepublic.Magic.Core
             }
         }
 
-        internal Devices Get_Chat(Device Device)
+        internal ConcurrentDictionary<IntPtr, Device> Get_Chat(Device Device)
         {
             int Index = this.FindIndex(C => C.Devices.ContainsKey(Device.Socket.Handle));
 

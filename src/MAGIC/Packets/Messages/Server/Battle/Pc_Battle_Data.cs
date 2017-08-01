@@ -50,14 +50,14 @@ namespace CRepublic.Magic.Packets.Messages.Server.Battle
 
                 if (this.Device.Player.Avatar.Battle_ID == 0)
                 {
-                    Core.Resources.Battles.New(this.Device.Player, Core.Resources.Players.Get(this.Device.Player.Avatar.Last_Attack_Enemy_ID[this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count - 1]));
+                    Core.Resources.Battles.New(this.Device.Player, Core.Players.Get(this.Device.Player.Avatar.Last_Attack_Enemy_ID[this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count - 1]));
                 }
                 else
                 {
                     Core.Resources.Battles.Save(Core.Resources.Battles.Get(this.Device.Player.Avatar.Battle_ID));
                     Core.Resources.Battles.TryRemove(this.Device.Player.Avatar.Battle_ID);
 
-                    Core.Resources.Battles.New(this.Device.Player, Core.Resources.Players.Get(this.Device.Player.Avatar.Last_Attack_Enemy_ID[this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count - 1]));
+                    Core.Resources.Battles.New(this.Device.Player, Core.Players.Get(this.Device.Player.Avatar.Last_Attack_Enemy_ID[this.Device.Player.Avatar.Last_Attack_Enemy_ID.Count - 1]));
                 }
             }
             else if (this.BattleMode == Battle_Mode.AMICAL)

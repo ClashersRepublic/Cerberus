@@ -17,6 +17,7 @@ namespace CRepublic.Magic.Core.Database
         public long ID { get; set; }
         public int Trophies { get; set; }
         public string FacebookID { get; set; }
-        public string Data { get; set; }
+        public string Avatar { get; set; }
+        public string Village { get; set; }
     }
 }

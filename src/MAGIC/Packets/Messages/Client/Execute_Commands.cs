@@ -75,7 +75,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                                         }
                                         catch (Exception Exception)
                                         {
-                                            Resources.Exceptions.Catch(Exception,
+                                            Exceptions.Log(Exception,
                                                 Exception.Message + Environment.NewLine + Exception.StackTrace +
                                                 Environment.NewLine + Exception.Data, this.Device.Model,
                                                 this.Device.OSVersion,
@@ -98,7 +98,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
                                         }
                                         catch (Exception Exception)
                                         {
-                                            Resources.Exceptions.Catch(Exception,
+                                            Exceptions.Log(Exception,
                                                 Exception.Message + Environment.NewLine + Exception.StackTrace +
                                                 Environment.NewLine + Exception.Data, this.Device.Model,
                                                 this.Device.OSVersion,
@@ -138,7 +138,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
             }
             else
             {
-                Resources.Exceptions.RavenClient.Capture(new SentryEvent($"Count value is weird {this.Count}"));
+                Exceptions.RavenClient.Capture(new SentryEvent($"Count value is weird {this.Count}"));
                 new Out_Of_Sync(this.Device).Send();
             }
         }

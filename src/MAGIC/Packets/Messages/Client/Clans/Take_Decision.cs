@@ -34,7 +34,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
             Entry Stream = Alliance.Chats.Get(this.Stream_Low_ID);
             if (Stream != null)
             {
-                var Player = Resources.Players.Get(Stream.Sender_ID, false);
+                var Player = Players.Get(Stream.Sender_ID, false);
                 if (Player.Avatar.ClanId == 0)
                 {
                     if (Decision == 1)

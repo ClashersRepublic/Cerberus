@@ -23,7 +23,7 @@ namespace CRepublic.Magic.Core.Events
         {
             try
             {
-                Task.WaitAll(Resources.Players.Save(), Resources.Clans.Save(), Resources.Battles.Save());
+                Task.WaitAll(Players.Save(), Resources.Clans.Save(), Resources.Battles.Save());
             }
             catch (Exception)
             {

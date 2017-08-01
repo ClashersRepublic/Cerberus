@@ -5,35 +5,32 @@ using CRepublic.Magic.Logic;
 
 namespace CRepublic.Magic.Core
 {
-    internal class Devices : ConcurrentDictionary<IntPtr, Device>
+    internal static class Devices
     {
-        internal Devices()
+        internal static ConcurrentDictionary<IntPtr, Device> _Devices;
+        internal static void Initialize()
         {
-            // Devices.
+            _Devices = new ConcurrentDictionary<IntPtr, Device>();
         }
 
-        internal void Add(Device Device)
+        internal static void Add(Device Device)
         {
-            if (this.ContainsKey(Device.SocketHandle))
-            {
-                this[Device.SocketHandle] = Device;
-            }
-            else
-            {
-                this.TryAdd(Device.SocketHandle, Device);
-            }
+            _Devices.TryAdd(Device.SocketHandle, Device);
         }
 
-        internal void Remove(IntPtr Socket)
+        internal static bool Remove(IntPtr Socket)
         {
+            var closedSocket = false;
             try
             {
                 var device = default(Device);
-                if (this.TryRemove(Socket, out device))
+                if (_Devices.TryRemove(Socket, out device))
                 {
+
+                    var socket = device.Socket;
                     try
                     {
-                        device.Socket.Disconnect(false);
+                        socket.Disconnect(false);
                     }
                     catch
                     {
@@ -42,7 +39,7 @@ namespace CRepublic.Magic.Core
 
                     try
                     {
-                        device.Socket.Close();
+                        socket.Close();
                     }
 
                     catch
@@ -52,20 +49,19 @@ namespace CRepublic.Magic.Core
 
                     try
                     {
-                        device.Socket.Dispose();
+                        socket.Dispose();
                     }
                     catch
                     {
                         /* Swallow */
                     }
 
-                    Interlocked.CompareExchange(ref device.Dropped, 1, 0);
-
+                    closedSocket = true;
                     if (device.Player != null)
                     {
-                        if (Resources.Players.ContainsKey(device.Player.Avatar.UserId))
+                        if (Players.Levels.ContainsKey(device.Player.Avatar.UserId))
                         {
-                            Resources.Players.Remove(device.Player);
+                            Players.Remove(device.Player);
                         }
                     }
 
@@ -73,8 +69,9 @@ namespace CRepublic.Magic.Core
             }
             catch (Exception ex)
             {
-                Resources.Exceptions.Catch(ex, "Exception while dropping client.");
+                Exceptions.Log(ex, "Exception while dropping client.");
             }
+            return closedSocket;
         }
     }
 }

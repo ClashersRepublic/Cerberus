@@ -23,7 +23,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
 
         internal override void Process()
         {
-            var target = Resources.Players.Get(this.AvatarId, false);
+            var target = Players.Get(this.AvatarId, false);
             if (target != null)
             {
                 new Visit_Home_Data(this.Device, target).Send();

@@ -136,7 +136,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
             {
                 if (Token == null)
                 {
-                    this.Device.Player = Resources.Players.New();
+                    this.Device.Player = Players.New();
                     this.Device.Player.Avatar.Region =
                         Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress = this.Device.IPAddress);
 
@@ -170,7 +170,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
                 }
                 else
                 {
-                    this.Device.Player = Resources.Players.Get(this.UserId);
+                    this.Device.Player = Players.Get(this.UserId);
                     if (this.Device.Player != null)
                     {
                         if (string.Equals(this.Token, this.Device.Player.Avatar.Token))
@@ -214,7 +214,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
                     }
                     else
                     {
-                        this.Device.Player = Resources.Players.New(this.UserId, this.Token);
+                        this.Device.Player = Players.New(this.UserId, this.Token);
                         this.Device.Player.Avatar.Region =
                             Resources.Region.GetIpCountry(this.Device.Player.Avatar.IpAddress =
                                 this.Device.IPAddress);

@@ -9,12 +9,11 @@ using CRepublic.Magic.Core.Events;
 
 namespace CRepublic.Magic.Core
 {
-    internal class Classes : IDisposable
+    internal class Classes 
     {
         internal MessageFactory MFactory;
         internal CommandFactory CFactory;
         internal DebugFactory DFactory;
-        internal Loggers Loggers;
 
         internal CSV CSV;
         internal Home Home;
@@ -30,7 +29,7 @@ namespace CRepublic.Magic.Core
             this.MFactory = new MessageFactory();
             this.CFactory = new CommandFactory();
             this.DFactory = new DebugFactory();
-            this.Loggers = new Loggers();
+            Loggers.Initialize();
             this.CSV = new CSV();
             this.Home = new Home();
             this.Npc = new NPC();
@@ -53,11 +52,6 @@ namespace CRepublic.Magic.Core
             this.Test = new Test();
         
             MySQL_V2.GetAllSeed();
-        }
-
-        void IDisposable.Dispose()
-        {
-            this.Loggers.Dispose();
         }
     }
 }

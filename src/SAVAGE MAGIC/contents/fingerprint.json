@@ -1,0 +1,162 @@
+{
+  "files": [
+    {
+      "sha": "74915cb652f4adef733b3a90378917e8e9b58841",
+      "file": "csv/animations.csv"
+    },
+    {
+      "sha": "f4f380e790537ab24540735c111cc7849ba25eb5",
+      "file": "csv/billing_packages.csv"
+    },
+    {
+      "sha": "b5f5f7588645eb696f2d39e09f391291e7bea459",
+      "file": "csv/client_globals.csv"
+    },
+    {
+      "sha": "71643a7206a1b07a19eec1d1b325b90f8224eec7",
+      "file": "csv/credits.csv"
+    },
+    {
+      "sha": "65a221a92f79912f2351d136664611d0543fe036",
+      "file": "csv/faq.csv"
+    },
+    {
+      "sha": "e5c67bd089b2be0e51d345eb0d257c30c84b11dd",
+      "file": "csv/helpshift.csv"
+    },
+    {
+      "sha": "94c4d5dc51c6b57d1152641a83177de84f86b57c",
+      "file": "csv/hints.csv"
+    },
+    {
+      "sha": "535feaa26a1cca76c5f60220ea5a6e8d50710ab6",
+      "file": "csv/news.csv"
+    },
+    {
+      "sha": "945255506ccb14df5b63ca7850687a333310b7e2",
+      "file": "csv/particle_emitters.csv"
+    },
+    {
+      "sha": "94f90fdc2cfe19568f9434943c4eaa42195c1ae4",
+      "file": "csv/resource_packs.csv"
+    },
+    {
+      "sha": "2ed7ee735b63eaf43711dc22dd96603cdc843253",
+      "file": "csv/texts.csv"
+    },
+    {
+      "sha": "0dce5e1c877d3e99d242b9eeab894fd9444634ee",
+      "file": "csv/texts_patch.csv"
+    },
+    {
+      "sha": "e6fbdc0e38c67c9b9d3c2691244762ab99aa37ac",
+      "file": "logic/achievements.csv"
+    },
+    {
+      "sha": "88faeeabb1cac5bc3d46a0c935f0ee2bd8125c19",
+      "file": "logic/alliance_badges.csv"
+    },
+    {
+      "sha": "e5d6664b47a53ed42f77ac0a85971b2f86d7b857",
+      "file": "logic/alliance_badge_layers.csv"
+    },
+    {
+      "sha": "2ed9071976a471ba8aaeb7b4a5fbdc7443768f20",
+      "file": "logic/alliance_levels.csv"
+    },
+    {
+      "sha": "56f847f166f2bbb33947636c6e2dff95afe05106",
+      "file": "logic/alliance_portal.csv"
+    },
+    {
+      "sha": "1b2e314a8710d418c23d4149d2d9ba45d4af71b0",
+      "file": "logic/buildings.csv"
+    },
+    {
+      "sha": "d51b3d05baa8fa76221eb68485568e5b8d259182",
+      "file": "logic/building_classes.csv"
+    },
+    {
+      "sha": "67d310feea87453ef1e18baab63cf02b3c85ff8f",
+      "file": "logic/characters.csv"
+    },
+    {
+      "sha": "f5c0926be821afc0662d607f78ab5ba4eea582a9",
+      "file": "logic/decos.csv"
+    },
+    {
+      "sha": "79882b473430f4652dae9bf725e5ad3b4ae21dee",
+      "file": "logic/effects.csv"
+    },
+    {
+      "sha": "7d2b5c312e9314cd342c85c38495ba895961ea63",
+      "file": "logic/experience_levels.csv"
+    },
+    {
+      "sha": "3c8f3014b8cc7f39126727916a7f6b4b68cf32d4",
+      "file": "logic/globals.csv"
+    },
+    {
+      "sha": "5e15a8e7a32bd9d8d01b5a5f9c13910db916d42c",
+      "file": "logic/heroes.csv"
+    },
+    {
+      "sha": "b9e429c58182d61615d384d6f55d616c8dd5c276",
+      "file": "logic/leagues.csv"
+    },
+    {
+      "sha": "4b31f189b4c7f50582b8d036b575cf20ac9e9e01",
+      "file": "logic/locales.csv"
+    },
+    {
+      "sha": "16953352a83da163cf10eb62ccdc70b1c701fc3b",
+      "file": "logic/missions.csv"
+    },
+    {
+      "sha": "39a46dc5598571fb4e89e67838cd23d9dc4aaf54",
+      "file": "logic/npcs.csv"
+    },
+    {
+      "sha": "b36aa466b64626d5f4b7cb1ca7ef56fdd6ce02f4",
+      "file": "logic/obstacles.csv"
+    },
+    {
+      "sha": "7c223982287f0cd433163b4734c20413c428fdd5",
+      "file": "logic/projectiles.csv"
+    },
+    {
+      "sha": "4bc598b119eacb1841db72b154255173c5df9581",
+      "file": "logic/regions.csv"
+    },
+    {
+      "sha": "660c8f9f6cc5d4e6fd13ab11b2743934d790e144",
+      "file": "logic/resources.csv"
+    },
+    {
+      "sha": "286732e892ee79573598d9c05dbb2dfb97a7e733",
+      "file": "logic/shields.csv"
+    },
+    {
+      "sha": "9a84980dc15990c4e934ae02ad385e30b358e327",
+      "file": "logic/spells.csv"
+    },
+    {
+      "sha": "493d545ed1ea9da6409137aaa82f1376802266ba",
+      "file": "logic/townhall_levels.csv"
+    },
+    {
+      "sha": "a5e72f37506b10085d0a317f64876f9fa07804ef",
+      "file": "logic/traps.csv"
+    },
+    {
+      "sha": "dd64dd4a8530945c1972f2efbf66686243dbf89b",
+      "file": "logic/variables.csv"
+    },
+    {
+      "sha": "bd702b99cd16db05c86ec8c1655532508807d981",
+      "file": "logic/war.csv"
+    }
+  ],
+  "sha": "e6e676e15d79eaf9124dd8f8714c8c6a608e256b",
+  "version": "1465190609"
+}

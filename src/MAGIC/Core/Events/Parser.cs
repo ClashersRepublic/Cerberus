@@ -51,11 +51,10 @@ namespace CRepublic.Magic.Core.Events
                                           DateTime.Now.ToString("T") + " #");
                         Console.WriteLine("# -------------------------------------- #");
                         Console.WriteLine("# In-Memory Players    # " +
-                                          Utils.Padding(Resources.Players.Count.ToString(), 15) + " #");
+                                          Utils.Padding(Players.Levels.Count.ToString(), 15) + " #");
                         Console.WriteLine("# In-Memory Battles    # " +
                                           Utils.Padding(Resources.Battles.Seed.ToString(), 15) + " #");
-                        Console.WriteLine("# In-Memory SAEA       # " +
-                                          Utils.Padding(Resources.Gateway.ArgsPool._stack.Count.ToString(), 15) + " #");
+                        //Console.WriteLine("# In-Memory SAEA       # " + Utils.Padding(Gateway..ToString(), 15) + " #");
                         Console.WriteLine("# -------------------------------------- #");
                         break;
                     }
@@ -153,7 +152,7 @@ namespace CRepublic.Magic.Core.Events
 
                     case ConsoleKey.R:
                     {
-                        foreach (var _Device in Resources.Devices.Values.ToList())
+                        foreach (var _Device in Devices._Devices.Values.ToList())
                         {
                             if (_Device.Player != null)
                             {

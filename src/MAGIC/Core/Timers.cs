@@ -28,7 +28,7 @@ namespace CRepublic.Magic.Core
 
         internal void Maintenance(int durations)
         {
-            foreach (var _Device in Resources.Players.Values.ToList())
+            foreach (var _Device in Players.Levels.Values.ToList())
             {
                 if (_Device.Device != null)
                 {
@@ -44,9 +44,9 @@ namespace CRepublic.Magic.Core
 
             Timer.Elapsed += (_Sender, _Args) =>
             {   
-                foreach (var _Device in Resources.Devices.Values.ToList())
+                foreach (var _Device in Devices._Devices.Values.ToList())
                 {
-                    Resources.Gateway.Disconnect(_Device.Token.Args);
+                    Devices.Remove(_Device.SocketHandle);
                 }
 
                 Constants.Maintenance = new Maintenance_Timer();
@@ -110,11 +110,11 @@ namespace CRepublic.Magic.Core
 #endif
                 try
                 {
-                    await Task.WhenAll(Resources.Players.Save(), Resources.Clans.Save(), Resources.Battles.Save()).ConfigureAwait(false);
+                    await Task.WhenAll(Players.Save(), Resources.Clans.Save(), Resources.Battles.Save()).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    Resources.Exceptions.Catch(ex,
+                    Exceptions.Log(ex,
                         "[: Failed at " + DateTime.Now.ToString("T") + ']' + Environment.NewLine + ex.StackTrace);
                     Loggers.Log(
                         Utils.Padding(ex.GetType().Name, 15) + " : " + ex.Message + ".[: Failed at " +
@@ -145,7 +145,7 @@ namespace CRepublic.Magic.Core
 #if DEBUG
                 Loggers.Log(Utils.Padding(this.GetType().Name, 6) + " : DeadSocket executed at " + DateTime.Now.ToString("T") + ".", true);
 #endif
-                foreach (Device Device in Resources.Devices.Values.ToList())
+                foreach (Device Device in Devices._Devices.Values.ToList())
                 {
                     if (!Device.Connected())
                     {
@@ -161,7 +161,7 @@ namespace CRepublic.Magic.Core
 #endif
                 foreach (Device Device in DeadSockets)
                 {
-                    Resources.Gateway.Disconnect(Device.Token.Args);
+                    Devices.Remove(Device.SocketHandle);
                 }
 
 
@@ -192,11 +192,11 @@ namespace CRepublic.Magic.Core
                     Utils.Padding(this.GetType().Name, 6) + " : KeepAlive executed at " + DateTime.Now.ToString("T") +
                     ".", true);
 #endif
-                foreach (Device Device in Resources.Devices.Values.ToList())
+                foreach (Device Device in Devices._Devices.Values.ToList())
                 {
                     if (DateTime.Now > Device.NextKeepAlive)
                     {
-                        Resources.Devices.Remove(Device.SocketHandle);
+                        Devices.Remove(Device.SocketHandle);
                         numDisc++;
                     }
                 }
@@ -206,8 +206,9 @@ namespace CRepublic.Magic.Core
                     Utils.Padding(this.GetType().Name, 6) + $" : KeepAlive dropped {numDisc} clients due to keep alive timeouts at " + DateTime.Now.ToString("T") +
                     ".", true);
 #endif
-                Loggers.Log($" Pools: Args => {Resources.Gateway.NumberOfArgs} Buffers => {Resources.Gateway.NumberOfBuffers} at {DateTime.Now:T}.", true);
-
+                Loggers.Log("#" + DateTime.Now.ToString("d") + " ---- Pools ---- " + DateTime.Now.ToString("T") + " #", true);
+                Loggers.Log($"SocketAsyncEventArgs: created -> {Gateway.NumberOfArgsCreated} in-use -> {Gateway.NumberOfArgsInUse} available -> {Gateway.NumberOfArgs}.", true);
+                Loggers.Log($"Buffers: created -> {Gateway.NumberOfBuffersCreated} in-use -> {Gateway.NumberOfBuffersInUse} available -> {Gateway.NumberOfBuffers}.", true);
             };
 
             this.LTimers.Add(2, Timer);

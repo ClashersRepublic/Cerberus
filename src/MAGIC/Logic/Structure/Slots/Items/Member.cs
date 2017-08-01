@@ -15,8 +15,8 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
 
         [JsonProperty("joined")] internal DateTime Joined = DateTime.UtcNow;
 
-        internal bool Connected => Core.Resources.Players.ContainsKey(this.UserID);
-        internal Level Player => Core.Resources.Players.Get(this.UserID, false);
+        internal bool Connected => Core.Players.Levels.ContainsKey(this.UserID);
+        internal Level Player => Core.Players.Get(this.UserID, false);
         internal bool New => this.Joined >= DateTime.UtcNow.AddDays(-1);
 
         internal Member()

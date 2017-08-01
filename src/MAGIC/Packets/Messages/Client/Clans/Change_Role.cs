@@ -28,7 +28,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
 
         internal override void Process()
         {
-            Level Player = Resources.Players.Get(this.UserID, false);
+            Level Player = Players.Get(this.UserID, false);
             Clan Alliance = Resources.Clans.Get(this.Device.Player.Avatar.ClanId, false);
             if (Alliance != null && Player != null)
             {

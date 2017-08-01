@@ -11,11 +11,11 @@ using NLog;
 
 namespace CRepublic.Magic.Core
 {
-    internal class Loggers : IDisposable
+    internal static class Loggers 
     {
         internal static Logger _logger;
 
-        public Loggers()
+        internal static void Initialize()
         {
             if (Directory.Exists("Logs"))
             {
@@ -132,11 +132,6 @@ namespace CRepublic.Magic.Core
                     break;
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            _logger = null;
         }
     }
 }

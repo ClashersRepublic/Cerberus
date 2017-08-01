@@ -42,6 +42,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 
         internal override void Process()
         {
+            ShowValues();
             if (this.Major == Convert.ToInt32(Constants.ClientVersion[0]) &&  this.Minor == Convert.ToInt32(Constants.ClientVersion[1]))
             {
                 if (Constants.Maintenance == null)
