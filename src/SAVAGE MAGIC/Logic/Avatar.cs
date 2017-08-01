@@ -4,14 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 using Magic.Files.Logic;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic.DataSlots;
+using Savage.Magic;
+using Savage.Magic.Logic.DataSlots;
 using static System.Configuration.ConfigurationManager;
 using static System.Convert;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class Avatar : BaseAvatar
     {

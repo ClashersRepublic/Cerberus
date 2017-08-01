@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class GameObject
     {

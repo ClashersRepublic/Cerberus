@@ -1,13 +1,13 @@
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans.Logic.StreamEntries;
+using Savage.Magic;
+using Savage.Magic.Core;
+using Savage.Magic.Logic.StreamEntries;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class Alliance
     {
@@ -16,7 +16,7 @@ namespace Magic.ClashOfClans.Logic
         private const int m_vMaxAllianceMembers = 50;
         private const int m_vMaxChatMessagesNumber = 30;
         private readonly Dictionary<long, AllianceMemberEntry> m_vAllianceMembers;
-        private readonly System.Collections.Generic.List<Magic.ClashOfClans.Logic.StreamEntries.StreamEntry> m_vChatMessages;
+        private readonly System.Collections.Generic.List<Savage.Magic.Logic.StreamEntries.StreamEntry> m_vChatMessages;
         private int m_vAllianceBadgeData;
         private string m_vAllianceDescription;
         private int m_vAllianceExperience;
@@ -70,7 +70,7 @@ namespace Magic.ClashOfClans.Logic
             }
         }
 
-        public void AddChatMessage(Magic.ClashOfClans.Logic.StreamEntries.StreamEntry message)
+        public void AddChatMessage(Savage.Magic.Logic.StreamEntries.StreamEntry message)
         {
             lock (_sync)
             {

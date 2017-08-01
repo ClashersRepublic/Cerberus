@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
+using Savage.Magic.Core;
+using Savage.Magic;
+using Savage.Magic.Logic;
 
-namespace Magic.ClashOfClans.Network.Messages.Server
+namespace Savage.Magic.Network.Messages.Server
 {
     internal class EnemyHomeDataMessage : Message
     {

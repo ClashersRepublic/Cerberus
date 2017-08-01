@@ -1,7 +1,7 @@
 ﻿using System;
-using Magic.ClashOfClans.Core.Crypto.Sodium;
+using Savage.Magic.Core.Crypto.Sodium;
 
-namespace Magic.ClashOfClans.Core.Crypto.CustomNaCl
+namespace Savage.Magic.Core.Crypto.CustomNaCl
 {
     public class SecretBox
     {

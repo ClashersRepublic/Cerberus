@@ -1,4 +1,4 @@
-﻿namespace Magic.ClashOfClans.Network.Messages.Server
+﻿namespace Savage.Magic.Network.Messages.Server
 {
     internal class HomeBattleReplayDataMessage : Message
     {

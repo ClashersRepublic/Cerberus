@@ -1,4 +1,4 @@
-﻿namespace Magic.ClashOfClans.Network.Messages.Server
+﻿namespace Savage.Magic.Network.Messages.Server
 {  
     // Packet 25000
     internal class AllianceWarVisitDataMessage : Message

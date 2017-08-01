@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Magic.ClashOfClans.Network.Messages.Server
+namespace Savage.Magic.Network.Messages.Server
 {
     // Packet 24344
     internal class BookmarkRemoveAllianceMessage : Message

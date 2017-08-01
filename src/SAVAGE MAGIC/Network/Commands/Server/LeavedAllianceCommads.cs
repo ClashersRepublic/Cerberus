@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Network;
+using Savage.Magic;
+using Savage.Magic.Logic;
+using Savage.Magic.Network;
 
-namespace Magic.ClashOfClans.Network.Commands.Server
+namespace Savage.Magic.Network.Commands.Server
 {
     internal class LeavedAllianceCommand : Command
     {

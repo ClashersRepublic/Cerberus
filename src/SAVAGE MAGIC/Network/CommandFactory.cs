@@ -1,13 +1,13 @@
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans.Network.Commands;
-using Magic.ClashOfClans.Network.Commands.Client;
-using Magic.ClashOfClans;
+using Savage.Magic.Core;
+using Savage.Magic.Network.Commands;
+using Savage.Magic.Network.Commands.Client;
+using Savage.Magic;
 using Magic.Packets.Commands.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Magic.ClashOfClans.Network
+namespace Savage.Magic.Network
 {
     internal static class CommandFactory
     {

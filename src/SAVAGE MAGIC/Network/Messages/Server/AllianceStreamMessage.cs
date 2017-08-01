@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
+using Savage.Magic.Core;
+using Savage.Magic;
+using Savage.Magic.Logic;
 
-namespace Magic.ClashOfClans.Network.Messages.Server
+namespace Savage.Magic.Network.Messages.Server
 {
     internal class AllianceStreamMessage : Message
     {
@@ -19,14 +19,14 @@ namespace Magic.ClashOfClans.Network.Messages.Server
 
         public override void Encode()
         {
-            System.Collections.Generic.List<Magic.ClashOfClans.Logic.StreamEntries.StreamEntry> list = this.m_vAlliance.ChatMessages.ToList<Magic.ClashOfClans.Logic.StreamEntries.StreamEntry>();
+            System.Collections.Generic.List<Savage.Magic.Logic.StreamEntries.StreamEntry> list = this.m_vAlliance.ChatMessages.ToList<Savage.Magic.Logic.StreamEntries.StreamEntry>();
             var pack = new List<byte>();
             var chatMessages = m_vAlliance.ChatMessages.ToList();
             pack.AddInt32(0);
             pack.AddInt32(list.Count);
             int num = 0;
 
-            foreach (Magic.ClashOfClans.Logic.StreamEntries.StreamEntry streamEntry in list)
+            foreach (Savage.Magic.Logic.StreamEntries.StreamEntry streamEntry in list)
             {
                 pack.AddRange((IEnumerable<byte>)streamEntry.Encode());
                 ++num;

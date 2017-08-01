@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using static System.Convert;
 
-namespace Magic.ClashOfClans.Core
+namespace Savage.Magic.Core
 {
     internal static class Logger
     {

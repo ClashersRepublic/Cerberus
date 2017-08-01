@@ -1,7 +1,7 @@
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
+using Savage.Magic;
+using Savage.Magic.Logic;
 
-namespace Magic.ClashOfClans.Network
+namespace Savage.Magic.Network
 {
     internal class Command
     {

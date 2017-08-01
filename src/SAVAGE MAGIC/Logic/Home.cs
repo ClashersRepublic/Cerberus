@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
-using Magic.ClashOfClans;
+using Savage.Magic;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class Home : BaseHome
     {

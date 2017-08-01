@@ -1,9 +1,9 @@
 using Newtonsoft.Json.Linq;
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 using Magic.Files.Logic;
-using Magic.ClashOfClans;
+using Savage.Magic;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class UnitUpgradeComponent : Component
     {

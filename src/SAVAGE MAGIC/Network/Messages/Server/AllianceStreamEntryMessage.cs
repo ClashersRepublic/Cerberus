@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Magic.ClashOfClans.Logic.StreamEntries;
+using Savage.Magic.Logic.StreamEntries;
 
-namespace Magic.ClashOfClans.Network.Messages.Server
+namespace Savage.Magic.Network.Messages.Server
 {
     // Packet 24312
     internal class AllianceStreamEntryMessage : Message

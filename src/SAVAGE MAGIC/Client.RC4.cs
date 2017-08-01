@@ -1,7 +1,7 @@
-﻿using Magic.ClashOfClans.Core.Crypto;
+﻿using Savage.Magic.Core.Crypto;
 using System;
 
-namespace Magic.ClashOfClans
+namespace Savage.Magic
 {
     internal partial class Client
     {
@@ -90,18 +90,6 @@ namespace Magic.ClashOfClans
             Array.Copy(Key._RC4_PrivateKey, 0, completeSessionKey, 0, v7); //memcpy(v10, v8, v7);
             Array.Copy(clientKey, 0, completeSessionKey, v7, sessionKey.Length); //memcpy(v10 + v7, clientKey, sessionKeySize);
             uint v11 = 0;
-            uint v16;
-            uint v12;//attention type
-            byte v13;//attention type
-            uint v14;
-            byte* v15;
-            uint v17;
-            uint v18;
-            byte v19;
-            byte* v20;
-            byte v21;
-            uint v22;
-            byte* v23;
 
             fixed (byte* v5 = newKey, v8 = Key._RC4_PrivateKey, v10 = completeSessionKey)
             {
@@ -115,35 +103,35 @@ namespace Magic.ClashOfClans
                 *(v5 + 4) = 0;
                 while (true)
                 {
-                    v16 = *v5;
+                    uint v16 = *v5;
 
                     //if (v16 == 255)//if ( *v5 > 255 )
                     //    break;
-                    v12 = *((byte*)v10 + v16 % v9) + *(uint*)(v5 + 4);
+                    var v12 = *((byte*)v10 + v16 % v9) + *(uint*)(v5 + 4);//attention type
                     *(uint*)v5 = v16 + 1;
-                    v13 = *(byte*)(v5 + v16 + 8);
-                    v14 = (byte)(v12 + *(byte*)(v5 + v16 + 8));
+                    var v13 = *(byte*)(v5 + v16 + 8);//attention type
+                    uint v14 = (byte)(v12 + *(byte*)(v5 + v16 + 8));
                     *(uint*)(v5 + 4) = v14;
-                    v15 = v5 + v14;
+                    var v15 = v5 + v14;
                     *(byte*)(v5 + v16 + 8) = *(byte*)(v15 + 8);
                     *(byte*)(v15 + 8) = v13;
                     if (v16 == 255)//if ( *v5 > 255 )
                         break;
                 }
-                v17 = 0;
+                uint v17 = 0;
                 *v5 = 0;
                 *(v5 + 4) = 0;
                 while (v17 < v9)
                 {
                     ++v17;
-                    v18 = *(uint*)(v5 + 4);
-                    v19 = (byte)(*(uint*)v5 + 1);
+                    var v18 = *(uint*)(v5 + 4);
+                    var v19 = (byte)(*(uint*)v5 + 1);
                     *(uint*)v5 = v19;
-                    v20 = v5 + v19;
-                    v21 = *(byte*)(v20 + 8);
-                    v22 = (byte)(v18 + v21);
+                    var v20 = v5 + v19;
+                    var v21 = *(byte*)(v20 + 8);
+                    uint v22 = (byte)(v18 + v21);
                     *(uint*)(v5 + 4) = v22;
-                    v23 = v5 + v22;
+                    var v23 = v5 + v22;
                     *(byte*)(v20 + 8) = *(byte*)(v23 + 8);
                     *(byte*)(v23 + 8) = v21;
                 }
@@ -152,13 +140,11 @@ namespace Magic.ClashOfClans
             Array.Copy(newKey, OutgoingPacketsKey, newKey.Length);
         }
 
-        private void EnDecrypt(byte[] key, byte[] data)
+        private static void EnDecrypt(byte[] key, byte[] data)
         {
-            int dataLen;
-
             if (data != null)
             {
-                dataLen = data.Length;
+                var dataLen = data.Length;
 
                 if (dataLen >= 1)
                 {

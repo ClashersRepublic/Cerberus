@@ -1,9 +1,9 @@
-using Magic.ClashOfClans.Network;
-using Magic.ClashOfClans;
+using Savage.Magic.Network;
+using Savage.Magic;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-namespace Magic.ClashOfClans.Logic.DataSlots
+namespace Savage.Magic.Logic.DataSlots
 {
     internal class BookmarkSlot
     {

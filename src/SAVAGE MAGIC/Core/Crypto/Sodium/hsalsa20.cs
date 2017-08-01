@@ -1,4 +1,4 @@
-﻿namespace Magic.ClashOfClans.Core.Crypto.Sodium
+﻿namespace Savage.Magic.Core.Crypto.Sodium
 {
     public class hsalsa20
     {

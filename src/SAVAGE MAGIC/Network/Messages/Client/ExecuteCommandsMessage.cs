@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
+using Savage.Magic.Core;
+using Savage.Magic;
+using Savage.Magic.Logic;
 
-namespace Magic.ClashOfClans.Network.Messages.Client
+namespace Savage.Magic.Network.Messages.Client
 {
     // Packet 14102
     internal class ExecuteCommandsMessage : Message

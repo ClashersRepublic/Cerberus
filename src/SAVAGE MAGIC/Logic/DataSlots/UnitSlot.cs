@@ -1,9 +1,9 @@
 using System.IO;
 using Magic.Files.Logic;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Network;
+using Savage.Magic;
+using Savage.Magic.Network;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class UnitSlot
     {

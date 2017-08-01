@@ -1,4 +1,4 @@
-using Magic.ClashOfClans.Network;
+using Savage.Magic.Network;
 
 namespace Magic.Packets.Messages.Client
 {

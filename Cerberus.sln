@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xena", "src\XENA\Xena.cspro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lyra", "src\LYRA\Lyra.csproj", "{4A219B15-DFD8-480B-A52C-C6737ED48263}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Savage Republic", "src\SAVAGE MAGIC\Savage Republic.csproj", "{BC8078E0-1238-4162-841D-CDFF9AFA052B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Savage Magic", "src\SAVAGE MAGIC\Savage Magic.csproj", "{BC8078E0-1238-4162-841D-CDFF9AFA052B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

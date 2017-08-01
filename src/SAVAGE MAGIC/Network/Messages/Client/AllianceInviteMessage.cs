@@ -1,8 +1,8 @@
 ﻿using System.IO;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
+using Savage.Magic;
+using Savage.Magic.Logic;
 
-namespace Magic.ClashOfClans.Network.Messages.Client
+namespace Savage.Magic.Network.Messages.Client
 {
     internal class AllianceInviteMessage : Message
     {

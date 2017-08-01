@@ -1,7 +1,7 @@
-using Magic.ClashOfClans.Core.Database;
-using Magic.ClashOfClans.Core.Settings;
-using Magic.ClashOfClans.Database;
-using Magic.ClashOfClans.Logic;
+using Savage.Magic.Core.Database;
+using Savage.Magic.Core.Settings;
+using Savage.Magic.Database;
+using Savage.Magic.Logic;
 using Magic.Database;
 using MySql.Data.MySqlClient;
 using System;
@@ -13,9 +13,9 @@ using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
-using static Magic.ClashOfClans.Core.Logger;
+using static Savage.Magic.Core.Logger;
 
-namespace Magic.ClashOfClans.Core
+namespace Savage.Magic.Core
 {
     // This thing should have been a static class since the beginning.
 

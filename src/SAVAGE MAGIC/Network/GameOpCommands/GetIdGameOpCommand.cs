@@ -1,10 +1,10 @@
 using System;
 
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Logic.AvatarStreamEntries;
-using Magic.ClashOfClans.Network.Messages.Server;
+using Savage.Magic.Logic;
+using Savage.Magic.Logic.AvatarStreamEntries;
+using Savage.Magic.Network.Messages.Server;
 
-namespace Magic.ClashOfClans.Network.GameOpCommands
+namespace Savage.Magic.Network.GameOpCommands
 {
     internal class GetIdGameopCommand : GameOpCommand
     {

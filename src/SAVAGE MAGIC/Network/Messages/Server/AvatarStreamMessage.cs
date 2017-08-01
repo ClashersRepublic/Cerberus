@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic.AvatarStreamEntries;
+using Savage.Magic.Core;
+using Savage.Magic;
+using Savage.Magic.Logic.AvatarStreamEntries;
 
-namespace Magic.ClashOfClans.Network.Messages.Server
+namespace Savage.Magic.Network.Messages.Server
 {
     // Packet 24411
     internal class AvatarStreamMessage : Message

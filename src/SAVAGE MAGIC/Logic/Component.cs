@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class Component
     {

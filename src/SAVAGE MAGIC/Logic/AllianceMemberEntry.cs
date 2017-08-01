@@ -1,10 +1,10 @@
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Core;
+using Savage.Magic;
+using Savage.Magic.Core;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class AllianceMemberEntry
     {

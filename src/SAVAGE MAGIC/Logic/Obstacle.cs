@@ -1,10 +1,10 @@
 using Newtonsoft.Json.Linq;
 using System;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans;
+using Savage.Magic.Core;
+using Savage.Magic;
 using Magic.Files.Logic;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
 	internal class Obstacle : GameObject
 	{

@@ -1,11 +1,11 @@
-﻿using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans.Core.Settings;
+﻿using Savage.Magic.Core;
+using Savage.Magic.Core.Settings;
 using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace Magic.ClashOfClans.Network
+namespace Savage.Magic.Network
 {
     internal static class Gateway
     {

@@ -2,9 +2,9 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using static System.Console;
-using static Magic.ClashOfClans.Core.Logger;
+using static Savage.Magic.Core.Logger;
 
-namespace Magic.ClashOfClans.Core.Settings
+namespace Savage.Magic.Core.Settings
 {
     internal class MagicControl
     {

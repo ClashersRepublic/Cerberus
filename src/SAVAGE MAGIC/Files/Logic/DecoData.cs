@@ -1,4 +1,4 @@
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 using Magic.Files.CSV;
 
 namespace Magic.Files.Logic

@@ -1,15 +1,15 @@
 using System;
 using System.IO;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Logic.AvatarStreamEntries;
-using Magic.ClashOfClans.Logic.StreamEntries;
-using Magic.ClashOfClans.Network.Messages.Server;
-using Magic.ClashOfClans.Network.Commands.Server;
+using Savage.Magic.Core;
+using Savage.Magic;
+using Savage.Magic.Logic;
+using Savage.Magic.Logic.AvatarStreamEntries;
+using Savage.Magic.Logic.StreamEntries;
+using Savage.Magic.Network.Messages.Server;
+using Savage.Magic.Network.Commands.Server;
 using System.Threading.Tasks;
 
-namespace Magic.ClashOfClans.Network.Commands.Client
+namespace Savage.Magic.Network.Commands.Client
 {
     internal class KickAllianceMemberCommand : Command
     {

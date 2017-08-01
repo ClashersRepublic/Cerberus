@@ -11,7 +11,7 @@
 
 using System.Security.Cryptography;
 
-namespace Magic.ClashOfClans.Core.Crypto.Blake2b
+namespace Savage.Magic.Core.Crypto.Blake2b
 {
     public abstract class Hasher
     {

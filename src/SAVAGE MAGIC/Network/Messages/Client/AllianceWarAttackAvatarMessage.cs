@@ -1,4 +1,4 @@
-﻿namespace Magic.ClashOfClans.Network.Messages.Client
+﻿namespace Savage.Magic.Network.Messages.Client
 {
     internal class AllianceWarAttackAvatarMessage : Message
     {

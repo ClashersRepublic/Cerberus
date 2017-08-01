@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Logic.DataSlots;
+using Savage.Magic.Core;
+using Savage.Magic;
+using Savage.Magic.Logic;
+using Savage.Magic.Logic.DataSlots;
 
-namespace Magic.ClashOfClans.Network.Messages.Server
+namespace Savage.Magic.Network.Messages.Server
 {
     // Packet 24340
     internal class BookmarkMessage : Message

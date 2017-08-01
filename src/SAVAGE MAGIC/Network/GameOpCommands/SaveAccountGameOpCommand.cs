@@ -1,9 +1,9 @@
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Network.Messages.Server;
+using Savage.Magic.Logic;
+using Savage.Magic.Network.Messages.Server;
 
-namespace Magic.ClashOfClans.Network.GameOpCommands
+namespace Savage.Magic.Network.GameOpCommands
 {
     internal class SaveAccountGameOpCommand : GameOpCommand
     {

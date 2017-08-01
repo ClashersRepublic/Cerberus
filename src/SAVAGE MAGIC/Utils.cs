@@ -1,6 +1,6 @@
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 using Magic.Files.Logic;
-using Magic.ClashOfClans.Logic;
+using Savage.Magic.Logic;
 using Magic.Utilities.ZLib;
 using System;
 using System.Collections.Concurrent;
@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Magic.ClashOfClans
+namespace Savage.Magic
 {
     internal static class GamePlayUtil
     {

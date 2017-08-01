@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Configuration;
-using Magic.ClashOfClans;
+using Savage.Magic;
 
-namespace Magic.ClashOfClans.Network.Messages.Server
+namespace Savage.Magic.Network.Messages.Server
 {
     // Packet 20103
     internal class LoginFailedMessage : Message

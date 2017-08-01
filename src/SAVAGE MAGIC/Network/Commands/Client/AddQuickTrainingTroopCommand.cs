@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 using Magic.Files.Logic;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
+using Savage.Magic;
+using Savage.Magic.Logic;
 
-namespace Magic.ClashOfClans.Network.Commands.Client
+namespace Savage.Magic.Network.Commands.Client
 {
     internal class AddQuicKTrainingTroopCommand : Command
     {

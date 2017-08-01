@@ -11,7 +11,7 @@
 
 using System;
 
-namespace Magic.ClashOfClans.Core.Crypto.Blake2b
+namespace Savage.Magic.Core.Crypto.Blake2b
 {
     public sealed class Blake2BConfig : ICloneable
     {

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Magic.ClashOfClans.Network
+namespace Savage.Magic.Network
 {
     public class PacketReader : BinaryReader
     {

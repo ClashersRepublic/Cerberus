@@ -1,4 +1,4 @@
-using Magic.ClashOfClans.Database;
+using Savage.Magic.Database;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 

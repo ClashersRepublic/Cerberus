@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Magic.ClashOfClans.Network.GameOpCommands;
+using Savage.Magic.Network.GameOpCommands;
 using Magic.Packets.GameOpCommands;
 
-namespace Magic.ClashOfClans.Network
+namespace Savage.Magic.Network
 {
     internal static class GameOpCommandFactory
     {

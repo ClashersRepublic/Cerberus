@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
+using Savage.Magic;
+using Savage.Magic.Logic;
 
-namespace Magic.ClashOfClans.Network.Messages.Client
+namespace Savage.Magic.Network.Messages.Client
 {
     // Packet 14201
     internal class FacebookLinkMessage : Message

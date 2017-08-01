@@ -1,4 +1,4 @@
-﻿namespace Magic.ClashOfClans.Core.Crypto.CustomNaCl
+﻿namespace Savage.Magic.Core.Crypto.CustomNaCl
 {
     /// <summary>
     /// Custom written NaCl version

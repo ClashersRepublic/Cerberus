@@ -1,17 +1,17 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Logic.StreamEntries;
-using Magic.ClashOfClans.Network.Messages.Server;
-using  Magic.ClashOfClans.Network.Commands.Server;
+using Savage.Magic;
+using Savage.Magic.Logic;
+using Savage.Magic.Logic.StreamEntries;
+using Savage.Magic.Network.Messages.Server;
+using  Savage.Magic.Network.Commands.Server;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace Magic.ClashOfClans.Network.Messages.Client
+namespace Savage.Magic.Network.Messages.Client
 {
     internal class EditClanSettingsMessage : Message
     {

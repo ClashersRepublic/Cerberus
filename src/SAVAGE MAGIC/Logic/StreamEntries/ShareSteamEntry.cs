@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using Magic.ClashOfClans;
+using Savage.Magic;
 
-namespace Magic.ClashOfClans.Logic.StreamEntries
+namespace Savage.Magic.Logic.StreamEntries
 {
     internal class ShareStreamEntry : StreamEntry
     {

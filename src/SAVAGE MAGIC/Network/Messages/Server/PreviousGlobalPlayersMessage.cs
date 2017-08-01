@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans;
+using Savage.Magic.Core;
+using Savage.Magic;
 
-namespace Magic.ClashOfClans.Network.Messages.Server
+namespace Savage.Magic.Network.Messages.Server
 {
     internal class PreviousGlobalPlayersMessage : Message
     {

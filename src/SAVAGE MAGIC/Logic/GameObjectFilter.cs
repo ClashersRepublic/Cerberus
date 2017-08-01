@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class GameObjectFilter
     {

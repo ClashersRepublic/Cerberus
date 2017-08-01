@@ -1,8 +1,8 @@
 ﻿
 using Magic.Files.Logic;
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Network;
-using Magic.ClashOfClans.Network.Messages.Server;
+using Savage.Magic.Logic;
+using Savage.Magic.Network;
+using Savage.Magic.Network.Messages.Server;
 
 namespace Magic.Packets.GameOpCommands
 {

@@ -1,8 +1,8 @@
-using Magic.ClashOfClans;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Network;
-using Magic.ClashOfClans.Network.Messages.Server;
+using Savage.Magic;
+using Savage.Magic;
+using Savage.Magic.Logic;
+using Savage.Magic.Network;
+using Savage.Magic.Network.Messages.Server;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Magic.ClashOfClans.Core
+namespace Savage.Magic.Core
 {
     internal static class ResourcesManager
     {

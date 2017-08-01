@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Magic.Files.Logic;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
+using Savage.Magic;
+using Savage.Magic.Logic;
 
-namespace Magic.ClashOfClans.Network.Commands.Server
+namespace Savage.Magic.Network.Commands.Server
 {
     internal class DonatedAllianceUnitCommand : Command
     {

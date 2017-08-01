@@ -1,8 +1,8 @@
 ﻿using System;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans.Logic;
+using Savage.Magic.Core;
+using Savage.Magic.Logic;
 
-namespace Magic.ClashOfClans.Network.GameOpCommands
+namespace Savage.Magic.Network.GameOpCommands
 {
     internal class SetPrivilegesGameOpCommand : GameOpCommand
     {

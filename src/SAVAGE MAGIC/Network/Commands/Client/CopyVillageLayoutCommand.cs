@@ -1,7 +1,7 @@
 ﻿using System.IO;
-using Magic.ClashOfClans;
+using Savage.Magic;
 
-namespace Magic.ClashOfClans.Network.Commands.Client
+namespace Savage.Magic.Network.Commands.Client
 {
     internal class CopyVillageLayoutCommand : Command
     {

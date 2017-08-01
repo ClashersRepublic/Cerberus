@@ -1,5 +1,5 @@
-﻿using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
+﻿using Savage.Magic;
+using Savage.Magic.Logic;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Text;
 
-namespace Magic.ClashOfClans.Core.Database
+namespace Savage.Magic.Core.Database
 {
     internal class MySQL
     {

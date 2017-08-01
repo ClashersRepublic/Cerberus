@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     [Obsolete]
     internal class NpcLevel

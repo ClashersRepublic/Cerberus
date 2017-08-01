@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Magic.ClashOfClans;
+using Savage.Magic;
 using Magic.Utilities.ZLib;
 
-namespace Magic.ClashOfClans.Network.Messages.Server
+namespace Savage.Magic.Network.Messages.Server
 {
     internal class ReplayData : Message
     {

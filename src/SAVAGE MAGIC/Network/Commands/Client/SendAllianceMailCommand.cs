@@ -1,13 +1,13 @@
 ﻿using System;
 using System.IO;
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Logic.AvatarStreamEntries;
-using Magic.ClashOfClans.Network.Messages.Server;
+using Savage.Magic;
+using Savage.Magic.Logic;
+using Savage.Magic.Logic.AvatarStreamEntries;
+using Savage.Magic.Network.Messages.Server;
 
-namespace Magic.ClashOfClans.Network.Commands.Client
+namespace Savage.Magic.Network.Commands.Client
 {
     internal class SendAllianceMailCommand : Command
     {
@@ -46,7 +46,7 @@ namespace Magic.ClashOfClans.Network.Commands.Client
                             {
                                 AvatarStreamEntryMessage Message = new AvatarStreamEntryMessage(onlinePlayer.Client);
                                 AllianceMailStreamEntry allianceMailStreamEntry2 = allianceMailStreamEntry1;
-                                Message.SetAvatarStreamEntry((Magic.ClashOfClans.Logic.AvatarStreamEntries.AvatarStreamEntry)allianceMailStreamEntry2);
+                                Message.SetAvatarStreamEntry((Savage.Magic.Logic.AvatarStreamEntries.AvatarStreamEntry)allianceMailStreamEntry2);
                                 Message.Send();
                             }
                         }

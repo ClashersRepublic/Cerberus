@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Network.Messages.Server;
+using Savage.Magic;
+using Savage.Magic.Logic;
+using Savage.Magic.Network.Messages.Server;
 
-namespace Magic.ClashOfClans.Network.Messages.Client
+namespace Savage.Magic.Network.Messages.Client
 {
     // Packet 14715
     internal class SendGlobalChatLineMessage : Message

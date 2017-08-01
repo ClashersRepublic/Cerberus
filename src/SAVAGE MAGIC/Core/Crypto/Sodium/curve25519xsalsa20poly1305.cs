@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Magic.ClashOfClans.Core.Crypto.Sodium
+namespace Savage.Magic.Core.Crypto.Sodium
 {
     public class curve25519xsalsa20poly1305
     {

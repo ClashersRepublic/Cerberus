@@ -1,12 +1,12 @@
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans.Core.Settings;
-using Magic.ClashOfClans.Network;
+using Savage.Magic;
+using Savage.Magic.Core;
+using Savage.Magic.Core.Settings;
+using Savage.Magic.Network;
 using System;
 using System.IO;
 using System.Threading;
 
-namespace Magic.ClashOfClans
+namespace Savage.Magic
 {
     internal class Program
     {

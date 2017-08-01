@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans;
+using Savage.Magic.Core;
+using Savage.Magic;
 
-namespace Magic.ClashOfClans.Network.Messages.Server
+namespace Savage.Magic.Network.Messages.Server
 {
     // Packet 24404
     internal class LocalPlayersMessage : Message

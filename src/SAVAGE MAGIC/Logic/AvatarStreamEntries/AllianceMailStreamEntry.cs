@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Magic.ClashOfClans;
+using Savage.Magic;
 
-namespace Magic.ClashOfClans.Logic.AvatarStreamEntries
+namespace Savage.Magic.Logic.AvatarStreamEntries
 {
     internal class AllianceMailStreamEntry : AvatarStreamEntry
     {

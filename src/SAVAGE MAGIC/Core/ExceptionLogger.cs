@@ -1,8 +1,8 @@
-﻿using Magic.ClashOfClans.Core.Settings;
+﻿using Savage.Magic.Core.Settings;
 using System;
 using System.IO;
 
-namespace Magic.ClashOfClans.Core
+namespace Savage.Magic.Core
 {
     public static class ExceptionLogger
     {

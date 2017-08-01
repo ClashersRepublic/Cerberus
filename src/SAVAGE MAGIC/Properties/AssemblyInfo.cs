@@ -2,11 +2,11 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 
-[assembly: AssemblyTitle("Magic.ClashOfClans")]
+[assembly: AssemblyTitle("Savage.Magic")]
 [assembly: AssemblyDescription("A Clash of Clans server emulator.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Magic.ClashOfClans")]
+[assembly: AssemblyProduct("Savage.Magic")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -1,5 +1,5 @@
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Network.Messages.Server;
+using Savage.Magic.Logic;
+using Savage.Magic.Network.Messages.Server;
 using Magic.Database;
 using Magic.Files;
 using Magic.Files.CSV;
@@ -11,10 +11,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using static Magic.ClashOfClans.Core.Logger;
+using static Savage.Magic.Core.Logger;
 using Timer = System.Threading.Timer;
 
-namespace Magic.ClashOfClans.Core
+namespace Savage.Magic.Core
 
 {
     internal static class ObjectManager

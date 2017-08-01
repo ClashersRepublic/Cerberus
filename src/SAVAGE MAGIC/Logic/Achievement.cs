@@ -1,4 +1,4 @@
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class Achievement
     {

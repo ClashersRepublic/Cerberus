@@ -1,13 +1,13 @@
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Network.Messages.Client;
+using Savage.Magic;
+using Savage.Magic.Core;
+using Savage.Magic;
+using Savage.Magic.Network.Messages.Client;
 using Magic.Packets.Messages.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Magic.ClashOfClans.Network
+namespace Savage.Magic.Network
 {
     internal static class MessageFactory
     {

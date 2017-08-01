@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 
 using Magic.Files.Logic;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Network.Messages.Server;
+using Savage.Magic;
+using Savage.Magic.Logic;
+using Savage.Magic.Network.Messages.Server;
 
-namespace Magic.ClashOfClans.Network.Commands.Client
+namespace Savage.Magic.Network.Commands.Client
 {
     internal class SearchOpponentCommand : Command
     {

@@ -11,7 +11,7 @@
 
 using System;
 
-namespace Magic.ClashOfClans.Core.Crypto.Blake2b
+namespace Savage.Magic.Core.Crypto.Blake2b
 {
     internal static class Blake2IvBuilder
     {

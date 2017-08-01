@@ -1,6 +1,6 @@
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 using Magic.Files.CSV;
-using Magic.ClashOfClans;
+using Savage.Magic;
 
 namespace Magic.Files.Logic
 {

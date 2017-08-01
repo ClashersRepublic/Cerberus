@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Network;
+using Savage.Magic;
+using Savage.Magic.Logic;
+using Savage.Magic.Network;
 
 namespace Magic.Packets.Messages.Server
 {

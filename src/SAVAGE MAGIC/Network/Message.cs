@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans.Core.Crypto;
-using Magic.ClashOfClans.Core.Crypto.Blake2b;
-using Magic.ClashOfClans.Core.Crypto.CustomNaCl;
-using Magic.ClashOfClans.Core.Settings;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
+using Savage.Magic.Core;
+using Savage.Magic.Core.Crypto;
+using Savage.Magic.Core.Crypto.Blake2b;
+using Savage.Magic.Core.Crypto.CustomNaCl;
+using Savage.Magic.Core.Settings;
+using Savage.Magic;
+using Savage.Magic.Logic;
 using Magic.Packets.Messages.Server;
-using Magic.ClashOfClans;
+using Savage.Magic;
 
-namespace Magic.ClashOfClans.Network
+namespace Savage.Magic.Network
 {
     internal class Message
     {

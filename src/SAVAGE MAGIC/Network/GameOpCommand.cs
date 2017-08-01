@@ -1,11 +1,11 @@
-﻿using Magic.ClashOfClans;
-using Magic.ClashOfClans.Core;
+﻿using Savage.Magic;
+using Savage.Magic.Core;
 
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Network.Messages.Server;
+using Savage.Magic.Logic;
+using Savage.Magic.Network.Messages.Server;
 using System;
 
-namespace Magic.ClashOfClans.Network
+namespace Savage.Magic.Network
 {
     internal class GameOpCommand
     {

@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json.Linq;
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 using Magic.Files.Logic;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Network;
+using Savage.Magic;
+using Savage.Magic.Network;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class DataSlot
     {

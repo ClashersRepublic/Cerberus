@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Network;
+using Savage.Magic;
+using Savage.Magic.Logic;
+using Savage.Magic.Network;
 
 namespace Magic.Packets.Commands.Client
 {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Magic.Files.Logic;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class UnitProduction
     {

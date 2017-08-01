@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 using Magic.Files.Logic;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class BaseAvatar
     {

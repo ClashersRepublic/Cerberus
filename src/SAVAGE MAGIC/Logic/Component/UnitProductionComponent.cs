@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 using Magic.Files.Logic;
-using Magic.ClashOfClans.Logic.Manager;
+using Savage.Magic.Logic.Manager;
 using System.Collections;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     internal class UnitProductionComponent : Component
     {

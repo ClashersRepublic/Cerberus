@@ -1,19 +1,19 @@
-﻿using Magic.ClashOfClans.Core;
-using Magic.ClashOfClans.Core.Crypto;
+﻿using Savage.Magic.Core;
+using Savage.Magic.Core.Crypto;
 
-using Magic.ClashOfClans.Core.Settings;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Logic.Enums;
-using Magic.ClashOfClans.Network;
-using Magic.ClashOfClans.Network.Messages.Server;
+using Savage.Magic.Core.Settings;
+using Savage.Magic;
+using Savage.Magic.Logic;
+using Savage.Magic.Logic.Enums;
+using Savage.Magic.Network;
+using Savage.Magic.Network.Messages.Server;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 
-namespace Magic.ClashOfClans
+namespace Savage.Magic
 {
     internal partial class Client
     {

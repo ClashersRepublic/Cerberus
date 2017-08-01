@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Magic.ClashOfClans;
+using Savage.Magic;
 
-namespace Magic.ClashOfClans.Network.Messages.Server
+namespace Savage.Magic.Network.Messages.Server
 {
     // Packet 20104
     internal class LoginOkMessage : Message

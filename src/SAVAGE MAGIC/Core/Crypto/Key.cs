@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Magic.ClashOfClans.Core.Crypto
+namespace Savage.Magic.Core.Crypto
 {
     public static class Key
     {

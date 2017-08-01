@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
-using Magic.ClashOfClans.Network.Messages.Client;
+using Savage.Magic;
+using Savage.Magic.Logic;
+using Savage.Magic.Network.Messages.Client;
 
-namespace Magic.ClashOfClans.Network.Messages.Server
+namespace Savage.Magic.Network.Messages.Server
 {
     internal class PromoteAllianceMemberOkMessage : Message
     {

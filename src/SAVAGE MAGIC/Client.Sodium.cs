@@ -1,4 +1,4 @@
-﻿namespace Magic.ClashOfClans
+﻿namespace Savage.Magic
 {
     internal partial class Client
     {

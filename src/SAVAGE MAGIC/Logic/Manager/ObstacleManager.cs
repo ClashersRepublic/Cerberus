@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Magic.ClashOfClans.Core;
+using Savage.Magic.Core;
 using Magic.Files.Logic;
 
-namespace Magic.ClashOfClans.Logic
+namespace Savage.Magic.Logic
 {
     public static class ThreadSafeRandom
     {

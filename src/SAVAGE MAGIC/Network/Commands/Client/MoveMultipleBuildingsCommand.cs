@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Magic.ClashOfClans;
-using Magic.ClashOfClans.Logic;
+using Savage.Magic;
+using Savage.Magic.Logic;
 using Magic.Packets.Commands.Client;
 
-namespace Magic.ClashOfClans.Network.Commands.Client
+namespace Savage.Magic.Network.Commands.Client
 {
     internal class MoveMultipleBuildingsCommand : Command
     {
