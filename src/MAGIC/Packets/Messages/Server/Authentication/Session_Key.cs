@@ -20,7 +20,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Authentication
 
         internal override void Process()
         {
-           this.Device.RC4.UpdateCiphers(this.Device.ClientSeed, this.Key);
+           this.Device.UpdateKey(this.Key);
         }
     }
 }

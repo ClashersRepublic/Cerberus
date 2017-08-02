@@ -1,99 +1,40 @@
-using Savage.Magic;
-using Savage.Magic.Core;
-using Savage.Magic.Core.Settings;
-using Savage.Magic.Network;
-using System;
-using System.IO;
+﻿using System;
 using System.Threading;
+using CRepublic.Magic.Core.Interface;
+using CRepublic.Magic.Core.Network;
+using CRepublic.Magic.Core.Resource;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Packets;
 
-namespace Savage.Magic
+namespace CRepublic.Magic
 {
     internal class Program
     {
-        public static int OP = 0;
+        internal static int OP = 0;
 
         public static void Main(string[] args)
         {
-            // Print welcome message.
-            MagicControl.WelcomeMessage();
+            NativeCalls.SetWindowLong(NativeCalls.GetConsoleWindow(), -20, (int)NativeCalls.GetWindowLong(NativeCalls.GetConsoleWindow(), -20) ^ 0x80000);
+            NativeCalls.SetLayeredWindowAttributes(NativeCalls.GetConsoleWindow(), 0, 217, 0x2);
 
-            // Check directories and files.
-            CheckDirectories();
-            CheckFiles();
-
-            // Initialize our stuff.
-            CsvManager.Initialize();
-            ResourcesManager.Initialize();
-            ObjectManager.Initialize();
-
-            Logger.Initialize();
-            ExceptionLogger.Initialize();
-
-            WebApi.Initialize();
+            Control.Hi();
+            Devices.Initialize();
             Gateway.Initialize();
-
-            // Start listening since we're done initializing.
             Gateway.Listen();
 
-            while (true)
-            {
-                const int SLEEP_TIME = 5000;
+            Control.Say(@"-------------------------------------" + Environment.NewLine);
 
-                var numDisc = 0;
-                var clients = ResourcesManager.GetConnectedClients();
-                for (int i = 0; i < clients.Count; i++)
-                {
-                    var client = clients[i];
-                    if (DateTime.Now > client.NextKeepAlive)
-                    {
-                        ResourcesManager.DropClient(client.GetSocketHandle());
-                        numDisc++;
-                    }
-                }
-
-                if (numDisc > 0)
-                    Logger.Say($"Dropped {numDisc} clients due to keep alive timeouts.");
-
-                Logger.SayInfo("-- Pools --");
-                Logger.SayInfo($"SocketAsyncEventArgs: created -> {Gateway.NumberOfArgsCreated} in-use -> {Gateway.NumberOfArgsInUse} available -> {Gateway.NumberOfArgs}");
-                Logger.SayInfo($"Buffers: created -> {Gateway.NumberOfBuffersCreated} in-use -> {Gateway.NumberOfBuffersInUse} available -> {Gateway.NumberOfBuffers}");
-
-                Thread.Sleep(SLEEP_TIME);
-            }
+            Thread.Sleep(Timeout.Infinite);
         }
 
-        public static void TitleAd()
+        internal static void TitleAdd()
         {
-            Console.Title = Constants.DefaultTitle + Interlocked.Increment(ref OP);
+            Console.Title = Constants.Title + Interlocked.Increment(ref OP);
         }
 
-        public static void TitleDe()
+        internal static void TitleDec()
         {
-            Console.Title = Constants.DefaultTitle + Interlocked.Decrement(ref OP);
-        }
-
-        public static void CheckDirectories()
-        {
-            if (!Directory.Exists("logs"))
-                Directory.CreateDirectory("Logs");
-
-            if (!Directory.Exists("patch"))
-                Directory.CreateDirectory("patch");
-
-            if (!Directory.Exists("tools"))
-                Directory.CreateDirectory("tools");
-
-            if (!Directory.Exists("libs"))
-                Directory.CreateDirectory("libs");
-
-            if (!Directory.Exists("contents"))
-                Directory.CreateDirectory("contents");
-        }
-
-        public static void CheckFiles()
-        {
-            if (!File.Exists("filter.ucs"))
-                File.WriteAllText("filter.ucs", "./savegame");
+            Console.Title = Constants.Title + Interlocked.Decrement(ref OP);
         }
     }
 }

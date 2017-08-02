@@ -32,14 +32,11 @@ class Client:
             time.sleep(.1)
 
 def main():
-    clients = []
-    for i in range(1028 * 3):
+    clients = []    
+    while True:
         client = Client()
         clients.append(client)
         client.start(('127.0.0.1', 9339))
-
-    while True:
-        time.sleep(.1)
 
 if __name__ == "__main__":
     main()

@@ -57,18 +57,21 @@ namespace CRepublic.Magic.Core
             //if (Constants.Verbosity > 2)
             //Logger.Error(moreInfo + ": " + ex.GetType().Name + ": " + ex.Message);
 
-            SentryEvent Event = new SentryEvent(ex)
+            if (Constants.UseSentry)
             {
-                Message = moreInfo,
-            };
+                SentryEvent Event = new SentryEvent(ex)
+                {
+                    Message = moreInfo,
+                };
 
 
-            Event.Tags.Add("token", Token);
-            Event.Tags.Add("userid", ID.ToString());
-            Event.Tags.Add("model", Model);
-            Event.Tags.Add("os", OS);
+                Event.Tags.Add("token", Token);
+                Event.Tags.Add("userid", ID.ToString());
+                Event.Tags.Add("model", Model);
+                Event.Tags.Add("os", OS);
 
-            RavenClient.Capture(Event);
+                RavenClient.Capture(Event);
+            }
         }
         private static string GetLogFileName(Exception ex)
         {

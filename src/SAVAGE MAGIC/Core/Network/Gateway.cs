@@ -1,217 +1,142 @@
-﻿using Savage.Magic.Core;
-using Savage.Magic.Core.Settings;
+﻿using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Logic;
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Threading;
+using CRepublic.Magic.Core.Resource;
+using CRepublic.Magic.Packets;
 
-namespace Savage.Magic.Network
+namespace CRepublic.Magic.Core.Network
 {
     internal static class Gateway
     {
-        private static Socket s_listener;
-        private static Pool<SocketAsyncEventArgs> s_argsPool;
-        private static Pool<byte[]> s_bufferPool;
+        internal static Pool<SocketAsyncEventArgs> ArgsPool;
+        internal static Pool<byte[]> BufferPool;
+        internal static Socket Listener;
 
-        private static Semaphore s_semaphore;
-        private static int s_buffersCreated;
-        private static int s_argsCreated;
+        internal static int ConnectedSockets;
 
-        public static int NumberOfBuffers => s_bufferPool.Count;
-        public static int NumberOfBuffersCreated => s_buffersCreated;
-        public static int NumberOfBuffersInUse => s_buffersCreated - s_bufferPool.Count;
 
-        public static int NumberOfArgs => s_argsPool.Count;
-        public static int NumberOfArgsCreated => s_argsCreated;
-        public static int NumberOfArgsInUse => s_argsCreated - s_argsPool.Count;
+        internal static int NumberOfBuffers => BufferPool.Count;
+        internal static int NumberOfBuffersCreated => BuffersCreated;
+        internal static int NumberOfBuffersInUse => BuffersCreated - BufferPool.Count;
 
-        public static void Initialize()
+        internal static int NumberOfArgs => ArgsPool.Count;
+        internal static int NumberOfArgsCreated => ArgsCreated;
+        internal static int NumberOfArgsInUse => ArgsCreated - ArgsPool.Count;
+
+        private static int BuffersCreated;
+        private static int ArgsCreated;
+        private static Semaphore Semaphore;
+
+        internal static void Initialize()
         {
             var numThreads = Environment.ProcessorCount * 2;
-            s_semaphore = new Semaphore(numThreads, numThreads);
+            Semaphore = new Semaphore(numThreads, numThreads);
 
-            s_listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            s_argsPool = new Pool<SocketAsyncEventArgs>();
+            Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            ArgsPool = new Pool<SocketAsyncEventArgs>();
 
-            const int PRE_ALLOC_SAEA = 128;
-            for (int i = 0; i < PRE_ALLOC_SAEA; i++)
+            for (int i = 0; i < Constants.PRE_ALLOC_SEA; i++)
             {
                 var args = new SocketAsyncEventArgs();
-                args.Completed += AsyncOperationCompleted;
-                s_argsPool.Push(args);
+                args.Completed += OnIOCompleted;
 
-                s_argsCreated++;
+                ArgsPool.Push(args);
+                ArgsCreated++;
             }
 
-            s_bufferPool = new Pool<byte[]>();
+            BufferPool = new Pool<byte[]>();
         }
 
-        public static void Listen()
+        internal static void Listen()
         {
-            const int PORT = 9339;
-            const int BACK_LOG = 100;
+            Listener.Bind(new IPEndPoint(IPAddress.Any, 9339));
+            Listener.Listen(100);
 
-            var endPoint = new IPEndPoint(IPAddress.Any, PORT);
-
-            s_listener.Bind(endPoint);
-            s_listener.Listen(BACK_LOG);
+            //Program.Stopwatch.Stop();
 
             var args = GetArgs();
             StartAccept(args);
 
-            Logger.Say($"Listening on {endPoint}...");
+            //Loggers.Log(Assembly.GetExecutingAssembly().GetName().Name + $" has been started on {Utils.LocalNetworkIP} in {Math.Round(Program.Stopwatch.Elapsed.TotalSeconds, 4)} Seconds!", true);
         }
 
-        public static void Send(this Message message)
-        {
-            var buffer = default(byte[]);
-            var client = message.Client;
-
-            try { message.Encode(); }
-            catch (Exception ex)
-            {
-                ExceptionLogger.Log(ex, $"Exception while encoding message {message.GetType()}");
-                return;
-            }
-
-            try { buffer = message.GetRawData(); }
-            catch (Exception ex)
-            {
-                // Exit early since buffer will be null, we can't send a null buffer to the client.
-                ExceptionLogger.Log(ex, $"Exception while constructing message {message.GetType()}");
-                return;
-            }
-
-            var socket = client.Socket;
-
-            var args = GetArgs();
-            args.UserToken = client;
-            args.SetBuffer(buffer, 0, buffer.Length);
-
-            try { message.Process(client.Level); }
-            catch (Exception ex)
-            {
-                ExceptionLogger.Log(ex, $"Exception while processing outgoing message {message.GetType()}");
-            }
-
-            StartSend(args);
-        }
-
-        private static void StartSend(SocketAsyncEventArgs e)
-        {
-            var client = (Client)e.UserToken;
-            var socket = client.Socket;
-
-            try
-            {
-                while (!socket.SendAsync(e))
-                    ProcessSend(e);
-            }
-            catch (ObjectDisposedException)
-            {
-                Drop(e);
-            }
-            catch (Exception ex)
-            {
-                ExceptionLogger.Log(ex, "Exception while starting receive");
-            }
-        }
-
-        private static void ProcessSend(SocketAsyncEventArgs e)
-        {
-            var client = (Client)e.UserToken;
-            var transferred = e.BytesTransferred;
-
-            if (transferred == 0 || e.SocketError != SocketError.Success)
-            {
-                Drop(e);
-            }
-            else
-            {
-                try
-                {
-                    var offset = e.Offset;
-                    var count = e.Count;
-                    if (transferred < count)
-                    {
-                        // Move the offset so it points to the next piece of data to send.
-                        e.SetBuffer(offset + transferred, count - transferred);
-                        StartSend(e);
-                    }
-                    else
-                    {
-                        // We done with sending can recycle EventArgs.
-                        Recycle(e);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ExceptionLogger.Log(ex, "Exception while processing send");
-                }
-            }
-        }
-
-        private static void StartAccept(SocketAsyncEventArgs e)
+        internal static void StartAccept(SocketAsyncEventArgs e)
         {
             try
             {
-                // Avoid StackOverflowExceptions cause we can.
-                while (!s_listener.AcceptAsync(e))
+                while (!Listener.AcceptAsync(e))
                     ProcessAccept(e, false);
             }
             catch (Exception ex)
             {
-                // If this is reached, we won't start listening again, therefore no more clients.
-                ExceptionLogger.Log(ex, "Exception while starting to accept(critical)");
-                // Could try to resurrect listeners or something here.
+                //Exceptions.Log(ex, "Exception while starting to accept(critical)");
             }
         }
 
-        private static void ProcessAccept(SocketAsyncEventArgs e, bool startNew)
+        internal static void ProcessAccept(SocketAsyncEventArgs e, bool startNew)
         {
             var acceptSocket = e.AcceptSocket;
+
             if (e.SocketError != SocketError.Success)
             {
-                Logger.Error($"Failed to accept new socket: {e.SocketError}.");
+                //Loggers.Log("Not connected or error at ProcessAccept.", false, Defcon.ERROR);
                 Drop(e);
 
-                // Get a new args from pool, since we dropped the previous one.
                 e = GetArgs();
             }
             else
             {
                 try
                 {
-                    if (Constants.Verbosity > 3)
-                        Logger.Say($"Accepted connection at {acceptSocket.RemoteEndPoint}.");
+                    /*if (Constants.Local)
+                    {
+                        if (!Constants.AuthorizedIP.Contains(socket.RemoteEndPoint.ToString().Split(':')[0]))
+                        {
+                            socket.Close();
+                            e.AcceptSocket = null;
+                            if (startNew)
+                                StartAccept(e);
+                            return;
+                        }
+                    }*/
 
-                    var client = new Client(acceptSocket);
-                    // Register the client in the ResourceManager.
-                    ResourcesManager.AddClient(client);
+                    //if (Constants.Verbosity > 3)
+                        //Loggers.Log($"New client connected -> {socket.RemoteEndPoint}", true);
+                        //Console.WriteLine($"New client connected -> {acceptSocket.RemoteEndPoint}");
+                    var device = new Device(acceptSocket);
+                    Devices.Add(device);
 
                     var args = GetArgs();
                     var buffer = GetBuffer();
-                    args.UserToken = client;
+
+                    args.UserToken = device;
                     args.SetBuffer(buffer, 0, buffer.Length);
 
                     StartReceive(args);
                 }
                 catch (Exception ex)
                 {
-                    ExceptionLogger.Log(ex, "Exception while processing accept");
+                    //Exceptions.Log(ex, "Exception while processing accept");
                 }
             }
 
-            // Clean up for reuse.
+            // Clean shit up for reuse.
             e.AcceptSocket = null;
+
             if (startNew)
                 StartAccept(e);
         }
 
-        private static void StartReceive(SocketAsyncEventArgs e)
+
+        internal static void StartReceive(SocketAsyncEventArgs e)
         {
-            var client = (Client)e.UserToken;
-            var socket = client.Socket;
+            var device = (Device) e.UserToken;
+            var socket = device.Socket;
 
             try
             {
@@ -224,15 +149,14 @@ namespace Savage.Magic.Network
             }
             catch (Exception ex)
             {
-                ExceptionLogger.Log(ex, "Exception while start receive");
+                Console.WriteLine("Exception while start receive: ");
             }
         }
 
-        private static void ProcessReceive(SocketAsyncEventArgs e, bool startNew)
+        internal static void ProcessReceive(SocketAsyncEventArgs e, bool startNew)
         {
-            var client = (Client)e.UserToken;
+            var device = (Device) e.UserToken;
             var transferred = e.BytesTransferred;
-
             if (transferred == 0 || e.SocketError != SocketError.Success)
             {
                 Drop(e);
@@ -242,24 +166,28 @@ namespace Savage.Magic.Network
                 try
                 {
                     var buffer = e.Buffer;
-                    var offset = e.Offset; // 0 anyways.
+                    var offset = e.Offset;
                     for (int i = 0; i < transferred; i++)
-                        client.DataStream.Add(buffer[offset + i]);
+                        device.Stream.Add(buffer[offset + i]);
 
-                    var level = client.Level;
                     var message = default(Message);
-                    while (client.TryGetPacket(out message))
+
+                    while (device.TryGetPacket(out message))
                     {
-                        try { message.Process(level); }
+                        try
+                        {
+                            message.Process();
+                        }
                         catch (Exception ex)
                         {
-                            ExceptionLogger.Log(ex, $"Exception while processing incoming message {message.GetType()}");
+                            //Exceptions.Log(ex, $"Exception while processing incoming message {message.GetType()}");
                         }
                     }
+
                 }
                 catch (Exception ex)
                 {
-                    ExceptionLogger.Log(ex, "Exception while processing receive");
+                    //Exceptions.Log(ex, "Exception while processing receive");
                 }
 
                 if (startNew)
@@ -267,14 +195,102 @@ namespace Savage.Magic.Network
             }
         }
 
-        private static void AsyncOperationCompleted(object sender, SocketAsyncEventArgs e)
+        internal static void Send(Message message)
+        {
+            var buffer = default(byte[]);
+
+            try
+            {
+                buffer = message.ToBytes;
+            }
+            catch (Exception ex)
+            {
+                //Exceptions.Log(ex, $"Exception while constructing message {message.GetType()}");
+                return;
+            }
+
+            var args = GetArgs();
+            args.SetBuffer(buffer, 0, buffer.Length);
+            args.UserToken = message.Device;
+
+            StartSend(args);
+        }
+
+        internal static void StartSend(SocketAsyncEventArgs e)
+        {
+            var token = (Device) e.UserToken;
+            var socket = token.Socket;
+
+            try
+            {
+                while (!socket.SendAsync(e))
+                    ProcessSend(e);
+            }
+            catch (ObjectDisposedException)
+            {
+                Drop(e);
+            }
+            catch (Exception ex)
+            {
+                //Exceptions.Log(ex, "Exception while starting send");
+            }
+        }
+
+        internal static void ProcessSend(SocketAsyncEventArgs e)
+        {
+            var transferred = e.BytesTransferred;
+            if (transferred == 0 || e.SocketError != SocketError.Success)
+            {
+                Drop(e);
+            }
+            else
+            {
+                try
+                {
+                    var offset = e.Offset;
+                    var count = e.Count;
+                    if (transferred < count)
+                    {
+                        e.SetBuffer(offset + transferred, count - transferred);
+                        StartSend(e);
+                    }
+                    else
+                    {
+                        // We done with sending can recycle EventArgs.
+                        Recycle(e);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //Exceptions.Log(ex, "Exception while processing send");
+                }
+            }
+        }
+
+        internal static void Disconnect(SocketAsyncEventArgs e)
+        {
+            var token = (Device)e.UserToken;
+
+            /*if (token.Player != null)
+            {
+                if (Players.Levels.ContainsKey(token.Player.Avatar.UserId))
+                    Players.Remove(token.Player);
+            }
+            else
+            {
+                Devices.Remove(token.SocketHandle);
+            }
+            */
+            Interlocked.Decrement(ref ConnectedSockets);
+        }
+
+        internal static void OnIOCompleted(object sender, SocketAsyncEventArgs e)
         {
             const int TIME_OUT = 10000;
-
             var semaphoreAcquired = false;
             try
             {
-                semaphoreAcquired = s_semaphore.WaitOne(TIME_OUT);
+                semaphoreAcquired = Semaphore.WaitOne(TIME_OUT);
                 if (semaphoreAcquired)
                 {
                     if (e.SocketError == SocketError.Success)
@@ -284,24 +300,20 @@ namespace Savage.Magic.Network
                             case SocketAsyncOperation.Accept:
                                 ProcessAccept(e, true);
                                 break;
-
                             case SocketAsyncOperation.Receive:
                                 ProcessReceive(e, true);
                                 break;
-
                             case SocketAsyncOperation.Send:
                                 ProcessSend(e);
                                 break;
-
                             default:
                                 throw new Exception("Unexpected operation.");
                         }
                     }
+
                     else
                     {
-                        if (Constants.Verbosity > 1)
-                            Logger.SayInfo($"A socket operation wasn't successful => {e.LastOperation}. Dropping connection.");
-
+                        //Loggers.Log($"A socket operation wasn't successful => {e.LastOperation}. Dropping connection.", true);
                         Drop(e);
 
                         // If the last operation was an accept operation, continue accepting
@@ -315,32 +327,36 @@ namespace Savage.Magic.Network
                 }
                 else
                 {
-                    Logger.Error("SEMAPHORE DID NOT RESPOND IN TIME!");
-                    Drop(e);
+                    //Loggers.Log($"SEMAPHORE DID NOT RESPOND IN TIME!", true);
                 }
             }
             catch (Exception ex)
             {
-                ExceptionLogger.Log(ex, "Exception occurred while processing async operation(potentially critical). Dropping connection");
+               /* Exceptions.Log(ex,
+                    "Exception occurred while processing async operation(potentially critical). Dropping connection");
+                Loggers.Log(
+                    ex +
+                    "Exception occurred while processing async operation(potentially critical). Dropping connection",
+                    true);*/
                 Drop(e);
             }
             finally
             {
                 if (semaphoreAcquired)
-                    s_semaphore.Release();
+                    Semaphore.Release();
             }
         }
 
-        private static void Drop(SocketAsyncEventArgs e)
+        internal static void Drop(SocketAsyncEventArgs e)
         {
             if (e == null)
                 return;
 
-            var client = e.UserToken as Client;
+            var client = e.UserToken as Device;
             if (client != null)
             {
                 // If the resource manager did not mange to kill the socket, we do it here.
-                if (!ResourcesManager.DropClient(client.GetSocketHandle()))
+                if (!Devices.Remove(client.SocketHandle))
                     KillSocket(client.Socket);
             }
             else if (e.LastOperation == SocketAsyncOperation.Accept)
@@ -352,64 +368,83 @@ namespace Savage.Magic.Network
             Recycle(e);
         }
 
-        private static void Recycle(SocketAsyncEventArgs e)
+        internal static void Recycle(SocketAsyncEventArgs e)
         {
             if (e == null)
                 return;
 
             var buffer = e.Buffer;
             e.UserToken = null;
-            e.AcceptSocket = null;
             e.SetBuffer(null, 0, 0);
+            e.AcceptSocket = null;
 
             Recycle(buffer);
 
-            s_argsPool.Push(e);
+            ArgsPool.Push(e);
         }
 
-        private static void Recycle(byte[] buffer)
+        internal static  void Recycle(byte[] buffer)
         {
-            if (buffer == null)
-                return;
-
-            if (buffer.Length == Constants.BufferSize)
-                s_bufferPool.Push(buffer);
+            if (buffer?.Length == Constants.Buffer)
+                BufferPool.Push(buffer);
         }
 
-        private static void KillSocket(Socket socket)
+        internal static void KillSocket(Socket socket)
         {
             if (socket == null)
                 return;
 
-            try { socket.Shutdown(SocketShutdown.Both); }
-            catch { /* Swallow */ }
-            try { socket.Dispose(); }
-            catch { /* SWallow */ }
+            try
+            {
+                socket.Disconnect(false);
+            }
+            catch
+            {
+                /* Swallow */
+            }
+            try
+            {
+                socket.Close(5);
+            }
+            catch
+            {
+                /* Swallow */
+            }
+            try
+            {
+                socket.Dispose();
+            }
+            catch
+            {
+                /* SWallow */
+            }
         }
 
-        private static SocketAsyncEventArgs GetArgs()
+        internal static SocketAsyncEventArgs GetArgs()
         {
-            var args = s_argsPool.Pop();
+            var args = ArgsPool.Pop();
             if (args == null)
             {
+                //Logger.SayInfo("Creating new SocketAsyncEventArgs object since pool was empty(returned null).");
                 args = new SocketAsyncEventArgs();
-                args.Completed += AsyncOperationCompleted;
+                args.Completed += OnIOCompleted;
 
-                Interlocked.Increment(ref s_argsCreated);
+                Interlocked.Increment(ref ArgsCreated);
             }
             return args;
         }
 
-        private static byte[] GetBuffer()
+        internal static byte[] GetBuffer()
         {
-            var buffer = s_bufferPool.Pop();
+            var buffer = BufferPool.Pop();
             if (buffer == null)
             {
-                buffer = new byte[Constants.BufferSize];
+                buffer = new byte[Constants.Buffer];
 
-                Interlocked.Increment(ref s_buffersCreated);
+                Interlocked.Increment(ref BuffersCreated);
             }
             return buffer;
         }
+
     }
 }

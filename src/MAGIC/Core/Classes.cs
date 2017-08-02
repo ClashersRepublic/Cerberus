@@ -51,7 +51,7 @@ namespace CRepublic.Magic.Core
             
             this.Test = new Test();
         
-            MySQL_V2.GetAllSeed();
+            //MySQL_V2.GetAllSeed();
         }
     }
 }

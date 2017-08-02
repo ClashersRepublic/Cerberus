@@ -20,7 +20,7 @@ namespace CRepublic.Magic.Core.Networking
             this.Args = Args;
             this.Args.UserToken = this;
 
-            this.Packet = new List<byte>(Constants.ReceiveBuffer);
+            this.Packet = new List<byte>(Constants.Buffer);
         }
 
         internal void Process()

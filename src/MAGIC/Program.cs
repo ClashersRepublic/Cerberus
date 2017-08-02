@@ -39,12 +39,7 @@ namespace CRepublic.Magic
 
             Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Name + @" is now starting..." + Environment.NewLine);
 
-            Exceptions.Initialize();
-            Devices.Initialize();
-            Players.Initialize();
             Resources.Initialize();
-            Gateway.Initialize();
-            Gateway.Listen();
             Console.WriteLine(@"-------------------------------------" + Environment.NewLine);
 
             Thread.Sleep(Timeout.Infinite);

@@ -91,7 +91,7 @@ namespace CRepublic.Magic.Packets
             byte[] Decrypted = this.Reader.ReadBytes((int)this.Length).ToArray();
             if (this.Identifier != 10100)
             {
-                this.Device.RC4.Decrypt(ref Decrypted);
+                this.Device.Decrypt(Decrypted);
             }
             
             this.Reader = new Reader(Decrypted);
@@ -118,7 +118,7 @@ namespace CRepublic.Magic.Packets
             byte[] Encrypted = this.Data.ToArray();
 
             if (this.Device.State > State.SESSION_OK)
-                this.Device.RC4.Encrypt(ref Encrypted);
+                this.Device.Encrypt(Encrypted);
 
             this.Data = new List<byte>(Encrypted);
             this.Length = (ushort) this.Data.Count;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Net.Sockets;
 using System.Threading;
 using CRepublic.Magic.Logic;
 
@@ -28,33 +29,11 @@ namespace CRepublic.Magic.Core
                 {
 
                     var socket = device.Socket;
-                    try
-                    {
-                        socket.Disconnect(false);
-                    }
-                    catch
-                    {
-                        /* Swallow */
-                    }
 
-                    try
-                    {
-                        socket.Close();
-                    }
-
-                    catch
-                    {
-                        /* Swallow */
-                    }
-
-                    try
-                    {
-                        socket.Dispose();
-                    }
-                    catch
-                    {
-                        /* Swallow */
-                    }
+                    try { socket.Shutdown(SocketShutdown.Both); }
+                    catch { /* Swallow */ }
+                    try { socket.Dispose(); }
+                    catch { /* SWallow */ }
 
                     closedSocket = true;
                     if (device.Player != null)

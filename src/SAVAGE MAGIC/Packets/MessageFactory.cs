@@ -1,30 +1,28 @@
-using Savage.Magic;
-using Savage.Magic.Core;
-using Savage.Magic;
-using Savage.Magic.Network.Messages.Client;
-using Magic.Packets.Messages.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic;
+using CRepublic.Magic.Packets.Messages.Client;
 
-namespace Savage.Magic.Network
+namespace CRepublic.Magic.Packets
 {
     internal static class MessageFactory
     {
-        private static readonly Dictionary<int, Type> _messages;
+        public static Dictionary<int, Type> Messages;
 
-        static MessageFactory()
+         static MessageFactory()
         {
-            _messages = new Dictionary<int, Type>
+            Messages = new Dictionary<int, Type>
             {
+                {10108, typeof(Keep_Alive) },
                 
             };
         }
 
-        public static Message Read(Client client, PacketReader reader, int messageId)
+        internal static Message Parse(Device client, int messageId)
         {
-            if (_messages.ContainsKey(messageId))
-                return (Message)Activator.CreateInstance(_messages[messageId], client, reader);
+            if (Messages.ContainsKey(messageId))
+                return (Message)Activator.CreateInstance(Messages[messageId], client);
 
             return null;
         }

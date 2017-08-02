@@ -304,6 +304,7 @@
     <Compile Include="Files\Game_Events.cs" />
     <Compile Include="Files\Home.cs" />
     <Compile Include="Files\NPC.cs" />
+    <Compile Include="Logic\Device.RC4.cs" />
     <Compile Include="Logic\Enums\Mode.cs" />
     <Compile Include="Logic\Structure\Slots\Battle_V2.cs" />
     <Compile Include="Logic\Structure\Slots\Items\Battle_V2.cs" />

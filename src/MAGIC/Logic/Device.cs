@@ -15,37 +15,48 @@ using System.Net;
 
 namespace CRepublic.Magic.Logic
 {
-    internal class Device
+    internal partial class Device
     {
-        internal Socket Socket;
         internal Level Player;
-        internal Crypto Keys;
-        internal IntPtr SocketHandle;
-        internal RC4 RC4;
         internal DateTime LastKeepAlive, NextKeepAlive;
         internal Keep_Alive_OK KeepAlive;
         internal string AndroidID, OpenUDID, Model, OSVersion, MACAddress, AdvertiseID, VendorID, IPAddress;
         internal bool Android, Advertising;
         internal int Last_Checksum, Last_Tick, Depth;
-        internal uint ClientSeed;
-        internal readonly List<byte> Stream;
 
+
+        internal Crypto Keys { get; }
+        internal Socket Socket { get; }
+        internal IntPtr SocketHandle { get; }
+        internal List<byte> Stream { get; }
+
+        internal uint ClientSeed { get; set; }
+
+        internal byte[] IncomingPacketsKey { get; set; }
+        internal byte[] OutgoingPacketsKey { get; set; }
 
 
         public Device(Socket so)
         {
             this.Socket = so;
-            this.Keys = new Crypto();
+
             if (Constants.RC4)
             {
-                this.RC4 = new RC4();
+                IncomingPacketsKey = new byte[Key._RC4_EndecryptKey.Length];
+                Array.Copy(Key._RC4_EndecryptKey, IncomingPacketsKey, Key._RC4_EndecryptKey.Length);
+
+                OutgoingPacketsKey = new byte[Key._RC4_EndecryptKey.Length];
+                Array.Copy(Key._RC4_EndecryptKey, OutgoingPacketsKey, Key._RC4_EndecryptKey.Length);
             }
+
             this.SocketHandle = so.Handle;
+
             this.IPAddress = ((IPEndPoint)so.RemoteEndPoint).Address.ToString();
+
             this.KeepAlive = new Keep_Alive_OK(this);
             this.LastKeepAlive = DateTime.Now;
             this.NextKeepAlive = this.LastKeepAlive.AddSeconds(30);
-            this.Stream = new List<Byte>();
+            this.Stream = new List<byte>(Constants.Buffer);
         }
 
         internal State State = State.DISCONNECTED;
@@ -118,11 +129,12 @@ namespace CRepublic.Magic.Logic
                         // Make sure we don't break the RC4 stream.
                         if (Constants.RC4)
                         {
-                            this.RC4.Decrypt(ref packet);
+
+                            this.Decrypt(packet);
                             packet = null;
                         }
-                        else
-                            this.Keys.SNonce.Increment();
+                        //else
+                            //this.Keys.SNonce.Increment();
                     }
                     Stream.RemoveRange(0, HEADER_LEN + length);
                 }
@@ -191,11 +203,11 @@ namespace CRepublic.Magic.Logic
                             if (Constants.RC4)
                             {
                                 var buffer = Reader.ReadBytes((int)Length);
-                                this.RC4.Decrypt(ref buffer);
+                                this.Decrypt(buffer);
                                 buffer = null;
                             }
-                            else
-                                this.Keys.SNonce.Increment();
+                            //else
+                                //this.Keys.SNonce.Increment();
                         }
                         Stream.RemoveRange(0, (int)Length + 7);
 

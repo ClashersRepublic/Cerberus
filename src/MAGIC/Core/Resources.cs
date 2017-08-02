@@ -20,17 +20,22 @@ namespace CRepublic.Magic.Core
         internal static WebApi Api;
 
         internal static void Initialize()
-        {          
+        {
+            Exceptions.Initialize();
+            Devices.Initialize();
+            Resources.Classes = new Classes();
+            /*Players.Initialize();
             Resources.Clans = new Clans();
             Resources.GChat = new Global_Chat();
             Resources.Battles = new Battles();
             Resources.Battles_V2 = new Battles_V2();
-            Resources.Classes = new Classes();
             Resources.Random = new Random(DateTime.Now.ToString().GetHashCode());
             Resources.Region = new Region();
-            Resources.PRegion = new Player_Region();
-            Resources.Api = new WebApi();
-            Resources.Parser = new Parser();
+            Resources.PRegion = new Player_Region();*/
+            Gateway.Initialize();
+            Gateway.Listen();
+            //Resources.Api = new WebApi();
+            //Resources.Parser = new Parser();
         }
     }
 }
