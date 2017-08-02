@@ -8,6 +8,7 @@ using CRepublic.Magic.Core.Interface;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Packets;
 using CRepublic.Magic.Extensions.Binary;
+using CRepublic.Magic.Logic.Enums;
 using CRepublic.Magic.Packets.Messages.Server;
 
 namespace CRepublic.Magic.Logic
@@ -17,6 +18,7 @@ namespace CRepublic.Magic.Logic
         internal Socket Socket { get; }
         internal IntPtr SocketHandle { get; }
         internal List<byte> Stream { get; }
+        internal State State = State.DISCONNECTED;
 
         internal uint ClientSeed { get; set; }
 

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading;
+using CRepublic.Magic.Core;
 using CRepublic.Magic.Core.Interface;
 using CRepublic.Magic.Core.Network;
 using CRepublic.Magic.Core.Resource;
 using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Files;
 using CRepublic.Magic.Packets;
 
 namespace CRepublic.Magic
@@ -19,6 +21,7 @@ namespace CRepublic.Magic
 
             Control.Hi();
             Devices.Initialize();
+            Classes.Hey();
             Gateway.Initialize();
             Gateway.Listen();
 

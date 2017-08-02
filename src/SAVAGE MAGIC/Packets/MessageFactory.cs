@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CRepublic.Magic.Extensions.Binary;
 using CRepublic.Magic.Logic;
 using CRepublic.Magic.Packets.Messages.Client;
+using CRepublic.Magic.Packets.Messages.Client.Authentication;
 
 namespace CRepublic.Magic.Packets
 {
@@ -14,6 +15,7 @@ namespace CRepublic.Magic.Packets
         {
             Messages = new Dictionary<int, Type>
             {
+                {10100, typeof(Pre_Authentication) },
                 {10108, typeof(Keep_Alive) },
                 
             };

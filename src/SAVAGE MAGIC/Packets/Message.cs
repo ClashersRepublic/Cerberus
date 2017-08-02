@@ -9,6 +9,7 @@ using CRepublic.Magic.Extensions.Binary;
 using CRepublic.Magic.Extensions.List;
 using CRepublic.Magic.External.Sodium;
 using CRepublic.Magic.Logic;
+using CRepublic.Magic.Logic.Enums;
 
 namespace CRepublic.Magic.Packets
 {
@@ -86,7 +87,7 @@ namespace CRepublic.Magic.Packets
         internal virtual void Encrypt()
         {
             var buffer = Data.ToArray();
-            //if (this.Device.State > State.SESSION_OK)
+            if (this.Device.State > State.SESSION_OK)
             this.Device.Encrypt(buffer);
             this.Data = new List<byte>(buffer);
         }
