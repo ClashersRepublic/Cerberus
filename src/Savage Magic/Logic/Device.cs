@@ -29,6 +29,19 @@ namespace CRepublic.Magic.Logic
         internal DateTime LastKeepAlive { get; set; }
 
         internal readonly Keep_Alive_OK Keep_Alive;
+
+
+        internal string AndroidID { get; set; }
+        internal string OpenUDID { get; set; }
+        internal string Model { get; set; }
+        internal string OSVersion{ get; set; }
+        internal string MACAddress { get; set; }
+        internal string AdvertiseID { get; set; }
+        internal string VendorID { get; set; }
+        internal string IPAddress { get; set; }
+        internal bool Android { get; set; }
+        internal bool Advertising { get; set; }
+
         public Device(Socket socket)
         {
             this.Socket = socket;
@@ -59,14 +72,16 @@ namespace CRepublic.Magic.Logic
                 if (Stream.Count - HEADER_LEN >= length)
                 {
                     // Avoid LINQ cause we can.
-                    var packet = new List<byte>(length);
-                    for (int i = 0; i < packet.Count; i++)
+                    var packet = new byte[length];
+                    for (int i = 0; i < packet.Length; i++)
+                    {
                         packet[i] = Stream[i + HEADER_LEN];
+                    }
 
                     message = MessageFactory.Parse(this, type);
                     if (message != null)
                     {
-                        message.Data = packet;
+                        message.Data = new List<byte>(packet);
                         message.Identifier = type;
                         try
                         {

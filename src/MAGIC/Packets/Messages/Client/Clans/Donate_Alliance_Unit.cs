@@ -28,7 +28,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
         internal bool PaidTroop;
 
         internal bool IsSpell;
-        public Donate_Alliance_Unit(Device Device, Reader Reader) : base(Device, Reader)
+        public Donate_Alliance_Unit(Device device) : base(device)
         {
 
         }

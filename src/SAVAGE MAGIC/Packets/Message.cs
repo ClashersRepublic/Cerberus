@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using CRepublic.Magic.Core.Interface;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Extensions.Binary;
 using CRepublic.Magic.Extensions.List;
@@ -19,8 +20,8 @@ namespace CRepublic.Magic.Packets
         internal ushort Identifier;
         internal ushort Version;
         internal int Offset;
-        internal int Length { get; private set; }
-        internal Reader Reader { get; private set; }
+        internal int Length { get; set; }
+        internal Reader Reader { get; set; }
 
         internal List<byte> Data
         {
@@ -78,6 +79,7 @@ namespace CRepublic.Magic.Packets
         internal virtual void Decrypt()
         {
             var buffer = Data.ToArray();
+            
             this.Device.Decrypt(buffer);
             this.Reader = new Reader(buffer);
             this.Length = buffer.Length;
@@ -112,13 +114,13 @@ namespace CRepublic.Magic.Packets
 
         internal void ShowValues()
         {
-            //Console.WriteLine(Environment.NewLine);
+            Console.WriteLine(Environment.NewLine);
 
             foreach (FieldInfo Field in this.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 if (Field != null)
                 {
-                    //Console.WriteLine(Utils.Padding(this.GetType().Name) + " - " + Utils.Padding(Field.Name) + " : " + Utils.Padding(!string.IsNullOrEmpty(Field.Name) ? (Field.GetValue(this) != null ? Field.GetValue(this).ToString() : "(null)") : "(null)", 40));
+                    Control.SayInfo(Utils.Padding(this.GetType().Name) + " - " + Utils.Padding(Field.Name) + " : " + Utils.Padding(!string.IsNullOrEmpty(Field.Name) ? (Field.GetValue(this) != null ? Field.GetValue(this).ToString() : "(null)") : "(null)", 40));
                 }
             }
         }

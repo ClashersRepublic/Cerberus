@@ -17,7 +17,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
         internal int Stream_Low_ID;
         internal byte Decision;
 
-        public Take_Decision(Device Device, Reader Reader) : base(Device, Reader)
+        public Take_Decision(Device device) : base(device)
         {
         }
 

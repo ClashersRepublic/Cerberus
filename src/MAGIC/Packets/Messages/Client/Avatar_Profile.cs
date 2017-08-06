@@ -9,7 +9,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
     {
         internal long UserID;
 
-        public Avatar_Profile(Device Device, Reader Reader) : base(Device, Reader)
+        public Avatar_Profile(Device device) : base(device)
         {
             // Avatar_Profile.
         }

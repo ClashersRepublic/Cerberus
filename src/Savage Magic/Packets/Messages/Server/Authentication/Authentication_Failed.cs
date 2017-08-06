@@ -16,11 +16,11 @@ namespace CRepublic.Magic.Packets.Messages.Server.Authentication
 
 
         internal Reason Reason = Reason.Default;
-        internal string PatchingHost => "https://www.clashersrepublic.com/game-content/projectmagic/";
+        internal string PatchingHost => "http://192.168.0.11/";
 
         internal string Message;
         internal string RedirectDomain;
-
+            
         internal override void Encode()
         {
             this.Data.AddInt((int)this.Reason);

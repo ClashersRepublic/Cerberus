@@ -61,10 +61,10 @@ namespace CRepublic.Magic.Packets
                 {15001, typeof(Attack_War)},
             };
         }
-        internal static Message Parse(Device client, Reader reader, int messageId)
+        internal static Message Parse(Device client, int messageId)
         {
             if (Messages.ContainsKey(messageId))
-                return (Message)Activator.CreateInstance(Messages[messageId], client, reader);
+                return (Message)Activator.CreateInstance(Messages[messageId], client);
 
             return null;
         }

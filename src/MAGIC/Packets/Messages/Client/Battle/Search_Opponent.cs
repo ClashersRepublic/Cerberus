@@ -17,7 +17,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Battle
         internal bool Max_Seed_Achieved;
         internal Level Enemy_Player;
 
-        public Search_Opponent(Device Device, Reader Reader) : base(Device, Reader)
+        public Search_Opponent(Device device) : base(device)
         {
             // Search_Opponent.
         }

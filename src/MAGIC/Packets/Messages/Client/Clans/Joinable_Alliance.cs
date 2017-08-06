@@ -7,7 +7,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
 {
     internal class Joinable_Alliance : Message
     {
-        public Joinable_Alliance(Device Device, Reader Reader) : base(Device, Reader)
+        public Joinable_Alliance(Device device) : base(device)
         {
 
         }

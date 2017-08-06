@@ -10,7 +10,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Battle
     {
         internal long Replay_ID;
 
-        public Get_Replay(Device Device, Reader Reader) : base(Device, Reader)
+        public Get_Replay(Device device) : base(device)
         {
             // Get_Replay.
         }

@@ -9,7 +9,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
     internal class Request_Name_Change : Message
     {
         internal string Name;
-        public Request_Name_Change(Device Device, Reader Reader) : base(Device, Reader)
+        public Request_Name_Change(Device device) : base(device)
         {
             // Request_Name_Change.
         }

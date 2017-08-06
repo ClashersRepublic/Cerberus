@@ -21,17 +21,5 @@ namespace CRepublic.Magic.Packets.Messages.Server.Authentication
         {
             this.Data.AddInt((int)this.Reason);
         }
-
-        internal override void EncryptPepper()
-        {
-            this.Device.Keys.RNonce.Increment();
-
-            this.Data = new List<byte>(Sodium
-                .Encrypt(this.Data.ToArray(), this.Device.Keys.RNonce, this.Device.Keys.PublicKey)
-                .Skip(16)
-                .ToArray());
-
-            this.Length = (ushort)this.Data.Count;
-        }
     }
 }

@@ -11,11 +11,12 @@ namespace CRepublic.Magic.Packets
     {
         public static Dictionary<int, Type> Messages;
 
-         static MessageFactory()
+         internal static void Initialize()
         {
             Messages = new Dictionary<int, Type>
             {
                 {10100, typeof(Pre_Authentication) },
+                {10101, typeof(Authentication) },
                 {10108, typeof(Keep_Alive) },
                 
             };

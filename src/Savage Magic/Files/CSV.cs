@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using CRepublic.Magic.Core.Interface;
 using CRepublic.Magic.Files.CSV_Reader;
 using CRepublic.Magic.Logic.Enums;
 
 namespace CRepublic.Magic.Files
 {
-    internal class CSV
+    internal static class CSV
     {
         internal static readonly Dictionary<int, string> Gamefiles = new Dictionary<int, string>();
 
         internal static Gamefiles Tables;
-        internal CSV()
+        internal static void Initialize()
         {
             CSV.Gamefiles.Add((int)Gamefile.Buildings, @"Gamefiles/logic/buildings.csv");
             CSV.Gamefiles.Add((int)Gamefile.Resources, @"Gamefiles/logic/resources.csv");
@@ -43,7 +44,7 @@ namespace CRepublic.Magic.Files
                 }
             }//);
 
-            Console.WriteLine(CSV.Gamefiles.Count + " CSV Files, loaded and stored in memory.\n");
+            Control.Say(CSV.Gamefiles.Count + " CSV Files, loaded and stored in memory.\n");
         }
     }
 }

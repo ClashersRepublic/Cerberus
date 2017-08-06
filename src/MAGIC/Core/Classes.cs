@@ -30,6 +30,7 @@ namespace CRepublic.Magic.Core
             this.CFactory = new CommandFactory();
             this.DFactory = new DebugFactory();
             Loggers.Initialize();
+            Fingerprint = new Fingerprint();
             this.CSV = new CSV();
             this.Home = new Home();
             this.Npc = new NPC();
@@ -51,7 +52,7 @@ namespace CRepublic.Magic.Core
             
             this.Test = new Test();
         
-            //MySQL_V2.GetAllSeed();
+            MySQL_V2.GetAllSeed();
         }
     }
 }

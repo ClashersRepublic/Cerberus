@@ -22,7 +22,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 {
     internal class Authentication : Message
     {
-        public Authentication(Device device, Reader reader) : base(device, reader)
+        public Authentication(Device device) : base(device)
         {
             this.Device.State = State.LOGIN;
         }
@@ -35,34 +35,6 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
         internal int Major, Minor, Revision;
 
         internal string[] ClientVersion;
-
-
-        internal override void DecryptPepper()
-        {
-            byte[] Buffer = this.Reader.ReadBytes((int)this.Length);
-            Console.WriteLine($"Raw {BitConverter.ToString(Buffer.ToArray()).Replace("-", "")}");
-            Console.WriteLine($"Buffer Lenght {Buffer.ToArray().Length}");
-            this.Device.Keys.PublicKey = Buffer.Take(32).ToArray();
-
-            Console.WriteLine($"Public Key {BitConverter.ToString(this.Device.Keys.PublicKey).Replace("-", "")}");
-
-            Blake2BHasher Blake = new Blake2BHasher();
-
-            Blake.Update(this.Device.Keys.PublicKey);
-            Blake.Update(Key.PublicKey);
-
-            this.Device.Keys.RNonce = Blake.Finish();
-
-            Buffer = Sodium.Decrypt(Buffer.Skip(68).ToArray(), this.Device.Keys.RNonce, Key.PrivateKey, this.Device.Keys.PublicKey);
-
-            this.Device.Keys.SNonce = Buffer.Skip(24).Take(24).ToArray();
-            this.Reader = new Reader(Buffer.Skip(48).ToArray());
-
-            Console.WriteLine($"Decrypted {BitConverter.ToString(Buffer.Skip(48).ToArray()).Replace("-", "")}");
-            this.Length = (ushort)Buffer.Length;
-            Console.WriteLine(this.Length);
-
-        }
 
         internal override void Decode()
         { 

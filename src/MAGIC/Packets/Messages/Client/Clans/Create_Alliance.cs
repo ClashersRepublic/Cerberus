@@ -17,7 +17,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
     internal class Create_Alliance : Message
     {
         internal Clan Clan = Resources.Clans.New();
-        public Create_Alliance(Device Device, Reader Reader) : base(Device, Reader)
+        public Create_Alliance(Device device) : base(device)
         {
 
         }

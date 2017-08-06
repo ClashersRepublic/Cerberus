@@ -168,7 +168,7 @@ namespace CRepublic.Magic.Core.Networking
                     for (int i = 0; i < transferred; i++)
                         device.Stream.Add(buffer[offset + i]);
 
-                    /*var message = default(Message);
+                    var message = default(Message);
 
                     while (device.TryGetPacket(out message))
                     {
@@ -180,7 +180,7 @@ namespace CRepublic.Magic.Core.Networking
                         {
                             Exceptions.Log(ex, $"Exception while processing incoming message {message.GetType()}");
                         }
-                    }*/
+                    }
 
                 }
                 catch (Exception ex)

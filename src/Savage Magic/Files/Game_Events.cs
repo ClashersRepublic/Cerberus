@@ -7,13 +7,13 @@ using System.Text.RegularExpressions;
 
 namespace CRepublic.Magic.Files
 {
-    internal class Game_Events
+    internal static class Game_Events
     {
         internal static string Events_Json = string.Empty;
         internal static Calendar Events_Calendar = new Calendar();
-        internal string JsonPath = "Gamefiles/events.json";
+        internal static string JsonPath = "Gamefiles/events.json";
 
-        internal Game_Events()
+        internal static void Initialize()
         {
             if (!Directory.Exists("Gamefiles/level/"))
                 throw new DirectoryNotFoundException("Directory Gamefiles/level does not exist!");

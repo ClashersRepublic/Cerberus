@@ -60,21 +60,5 @@ namespace CRepublic.Magic.Packets.Messages.Server.Authentication
             this.Data.AddString(null);
 
         }
-
-        internal override void EncryptPepper()
-        {
-            Blake2BHasher blake = new Blake2BHasher();
-
-            blake.Update(this.Device.Keys.SNonce);
-            blake.Update(this.Device.Keys.PublicKey);
-            blake.Update(Key.PublicKey);
-
-            byte[] Nonce = blake.Finish();  
-            byte[] encrypted = this.Device.Keys.RNonce.Concat(this.Device.Keys.PublicKey).Concat(this.Data).ToArray();
-
-            this.Data = new List<byte>(Sodium.Encrypt(encrypted, Nonce, Key.PrivateKey, this.Device.Keys.PublicKey));
-
-            this.Length = (ushort)this.Data.Count;
-        }
     }
 }

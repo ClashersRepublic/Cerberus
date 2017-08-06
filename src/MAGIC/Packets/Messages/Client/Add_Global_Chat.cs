@@ -12,7 +12,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
     {
         internal string Message = string.Empty;
         
-        public Add_Global_Chat(Device Device, Reader Reader) : base(Device, Reader)
+        public Add_Global_Chat(Device device) : base(device)
         {
         }
         

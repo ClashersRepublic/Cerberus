@@ -10,7 +10,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
     {
         internal string Message = string.Empty;
 
-        public Add_Alliance_Message(Device Device, Reader Reader) : base(Device, Reader)
+        public Add_Alliance_Message(Device device) : base(device)
         {
 
         }

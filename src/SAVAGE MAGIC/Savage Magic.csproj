@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>Build\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>Build\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -43,6 +43,7 @@
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
@@ -59,12 +60,14 @@
     <Compile Include="Core\Network\Pool.cs" />
     <Compile Include="Core\Network\Processor.cs" />
     <Compile Include="Core\Resource\Devices.cs" />
+    <Compile Include="Core\Resource\Players.cs" />
     <Compile Include="Extensions\Binary\Reader.cs" />
     <Compile Include="Extensions\Constants.cs" />
     <Compile Include="Extensions\Key.cs" />
     <Compile Include="Extensions\List\Writer.cs" />
     <Compile Include="Extensions\NativeCalls.cs" />
     <Compile Include="Extensions\TimeUtils.cs" />
+    <Compile Include="Extensions\Utils.cs" />
     <Compile Include="External\Blake2B\Blake2BBase.cs" />
     <Compile Include="External\Blake2B\Blake2BBuilder.cs" />
     <Compile Include="External\Blake2B\Blake2BConfig.cs" />
@@ -160,14 +163,18 @@
     <Compile Include="Logic\Enums\Village_Mode.cs" />
     <Compile Include="Logic\Enums\WarState.cs" />
     <Compile Include="Logic\Level.cs" />
+    <Compile Include="Logic\Player.cs" />
     <Compile Include="Logic\Structure\Slots\Calendar.cs" />
     <Compile Include="Logic\Structure\Slots\Items\Event.cs" />
     <Compile Include="Logic\Structure\Slots\Items\Functions.cs" />
     <Compile Include="Packets\Message.cs" />
     <Compile Include="Packets\MessageFactory.cs" />
+    <Compile Include="Packets\Messages\Client\Authentication\Authentication.cs" />
     <Compile Include="Packets\Messages\Client\Keep_Alive.cs" />
-    <Compile Include="Packets\Messages\Client\Pre_Authentication.cs" />
+    <Compile Include="Packets\Messages\Client\Authentication\Pre_Authentication.cs" />
     <Compile Include="Packets\Messages\Server\Authentication\Authentication_Failed.cs" />
+    <Compile Include="Packets\Messages\Server\Authentication\Authentication_OK.cs" />
+    <Compile Include="Packets\Messages\Server\Authentication\Session_Key.cs" />
     <Compile Include="Packets\Messages\Server\Keep_Alive_OK.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

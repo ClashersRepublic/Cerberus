@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using CRepublic.Magic.Core.Interface;
 
 namespace CRepublic.Magic.Files
 {
-    internal class NPC
+    internal static class NPC
     {
         internal static Dictionary<int, string> Levels = new Dictionary<int, string>();
 
-        internal NPC()
+        internal static void Initialize()
         {
             string[] Files = Directory.GetFiles(@"Gamefiles\level\", "npc*.json");
 
@@ -21,7 +22,7 @@ namespace CRepublic.Magic.Files
                 NPC.Levels.Add(_Index + 17000002, File.ReadAllText($@"Gamefiles\level\npc{_Index + 1}.json", Encoding.UTF8));
             }
 
-            Console.WriteLine((Files.Length + 2) + " NPC Files, loaded and stored in memory.");
+           Control.Say((Files.Length + 2) + " NPC Files, loaded and stored in memory.");
         }
     }
 }

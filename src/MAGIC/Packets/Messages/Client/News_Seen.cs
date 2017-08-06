@@ -9,7 +9,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
     {
         internal int Unknown;
 
-        public News_Seen(Device Device, Reader Reader) : base(Device, Reader)
+        public News_Seen(Device device) : base(device)
         {
         }
 

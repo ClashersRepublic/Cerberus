@@ -21,7 +21,7 @@ namespace CRepublic.Magic.Packets.Client.Authentication
         internal string UnlockCode;
         internal string UserPassword;
 
-        public Unlock_Account(Device Device, Reader Reader) : base(Device, Reader)
+        public Unlock_Account(Device Device) : base(Device)
         {
             this.UserPassword = this.Device.Player != null ? this.Device.Player.Avatar.Password : String.Empty;
         }
@@ -80,21 +80,6 @@ namespace CRepublic.Magic.Packets.Client.Authentication
                 new Unlock_Account_Failed(this.Device) { Reason = UnlockReason.Default }.Send();
 
             }
-        }
-
-        internal override void DecryptPepper()
-        {
-            Console.WriteLine(BitConverter.ToString(this.Device.Keys.SNonce));
-            //this.Device.Keys.SNonce.Increment(0);
-            byte[] Decrypted = Sodium.Decrypt(new byte[16].Concat(this.Reader.ReadBytes((int)this.Length)).ToArray(), this.Device.Keys.SNonce, this.Device.Keys.PublicKey);
-
-            if (Decrypted == null)
-            {
-                throw new CryptographicException("Tried to decrypt an incomplete message.");
-            }
-
-            this.Reader = new Reader(Decrypted);
-            this.Length = (ushort)this.Reader.BaseStream.Length;
         }
     }
 }

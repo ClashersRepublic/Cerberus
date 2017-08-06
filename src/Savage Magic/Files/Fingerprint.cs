@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
+using CRepublic.Magic.Core.Interface;
 using Newtonsoft.Json.Linq;
 
 namespace CRepublic.Magic.Files
 {
-    internal class Fingerprint
+    internal static class Fingerprint
     {
         internal static string Json;
 
@@ -14,11 +15,11 @@ namespace CRepublic.Magic.Files
 
         internal static bool Custom;
 
-        internal Fingerprint()
+        internal static void Initialize()
         {
             try
             {
-                if (!this.Patches())
+                if (!Patches())
                 {
                     if (File.Exists(@"Gamefiles\fingerprint.json"))
                     {
@@ -26,25 +27,25 @@ namespace CRepublic.Magic.Files
                         JObject _Json = JObject.Parse(Fingerprint.Json);
                         Fingerprint.Sha = _Json["sha"].ToObject<string>();
                         Fingerprint.Version = _Json["version"].ToObject<string>().Split('.');
-                        Console.WriteLine("Default patch detected, with version " + string.Join(".", Fingerprint.Version) + "." + Environment.NewLine);
+                        Control.Say("Default patch detected, with version " + string.Join(".", Fingerprint.Version) + "." + Environment.NewLine);
                     }
                     else
                     {
-                        Console.WriteLine("The Fingerprint cannot be loaded, the file does not exist." + Environment.NewLine);
+                        Control.Say("The Fingerprint cannot be loaded, the file does not exist." + Environment.NewLine);
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Custom patch detected, with version " + string.Join(".", Fingerprint.Version) + "." + Environment.NewLine);
+                    Control.Say("Custom patch detected, with version " + string.Join(".", Fingerprint.Version) + "." + Environment.NewLine);
                 }
             }
             catch (Exception)
             {
-                Console.WriteLine("An error occured while parsing the fingerprint." + Environment.NewLine);
+                Control.Say("An error occured while parsing the fingerprint." + Environment.NewLine);
             }
         }
 
-        internal bool Patches()
+        internal static bool Patches()
         {
             bool _Result = false;
 

@@ -147,7 +147,7 @@ namespace CRepublic.Magic.Core
 #endif
                 foreach (Device Device in Devices._Devices.Values.ToList())
                 {
-                    if (!Device.Connected())
+                    //if (!Device.Connected())
                     {
                         DeadSockets.Add(Device);
                     }

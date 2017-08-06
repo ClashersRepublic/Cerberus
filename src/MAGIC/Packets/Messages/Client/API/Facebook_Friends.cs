@@ -14,7 +14,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.API
     {
         internal List<string> Friends;
 
-        public Facebook_Friends(Device Device, Reader Reader) : base(Device, Reader)
+        public Facebook_Friends(Device device) : base(device)
         {
             // Facebook_Friends.
         }

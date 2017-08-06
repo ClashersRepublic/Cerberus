@@ -18,7 +18,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Battle
         internal List<Command> LCommands;
 
 
-        public Execute_Battle_Commands(Device Device, Reader Reader) : base(Device, Reader)
+        public Execute_Battle_Commands(Device device) : base(device)
         {
         }
 

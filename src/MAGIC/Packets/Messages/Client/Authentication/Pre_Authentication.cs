@@ -23,7 +23,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 
         internal string Hash;
 
-        public Pre_Authentication(Device Device, Reader Reader) : base(Device, Reader)
+        public Pre_Authentication(Device Device) : base(Device)
         {
             this.Device.State = State.SESSION;
         }
@@ -42,7 +42,6 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 
         internal override void Process()
         {
-            ShowValues();
             if (this.Major == Convert.ToInt32(Constants.ClientVersion[0]) &&  this.Minor == Convert.ToInt32(Constants.ClientVersion[1]))
             {
                 if (Constants.Maintenance == null)

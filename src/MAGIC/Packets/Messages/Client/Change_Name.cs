@@ -11,7 +11,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
     internal class Change_Name : Message
     {
         internal string Name;
-        public Change_Name(Device Device, Reader Reader) : base(Device, Reader)
+        public Change_Name(Device device) : base(device)
         {
             // Change_Name.
         }

@@ -5,12 +5,12 @@ using System.Text.RegularExpressions;
 
 namespace CRepublic.Magic.Files
 {
-    internal class Home
+    internal static class Home
     {
         internal static string Starting_Home = string.Empty;
-        internal string JsonPath = "Gamefiles/level/starting_home.json";
+        internal static string JsonPath = "Gamefiles/level/starting_home.json";
 
-        internal Home()
+        internal static void Initialize()
         {
             if (!Directory.Exists("Gamefiles/level/"))
                 throw new DirectoryNotFoundException("Directory Gamefiles/level does not exist!");

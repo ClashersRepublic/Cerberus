@@ -10,7 +10,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
     {
         internal long ClanID;
 
-        public Ask_Alliance(Device Device, Reader Reader) : base(Device, Reader)
+        public Ask_Alliance(Device device) : base(device)
         {
 
         }

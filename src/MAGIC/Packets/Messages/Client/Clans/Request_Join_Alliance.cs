@@ -12,7 +12,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
         internal long AllianceID;
         internal string Message;
 
-        public Request_Join_Alliance(Device device, Reader reader) : base(device, reader)
+        public Request_Join_Alliance(Device device) : base(device)
         {
         }
         internal override void Decode()

@@ -1,5 +1,5 @@
-﻿//#define CONCURRENT_STACK
-#define LIST // Use LIST to enable tracing n stuff.
+﻿#define CONCURRENT_STACK
+//#define LIST // Use LIST to enable tracing n stuff.
 
 using System.Collections.Concurrent;
 using System.Collections.Generic;

@@ -12,7 +12,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
     {
         internal long AvatarId;
 
-        public Ask_Visit_Home(Device device, Reader reader) : base(device, reader)
+        public Ask_Visit_Home(Device device) : base(device)
         {
         }
 

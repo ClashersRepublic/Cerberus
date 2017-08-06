@@ -11,7 +11,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.API
         internal string GoogleID;
         internal string Token;
 
-        public Bind_Google_Account(Device Device, Reader Reader) : base(Device, Reader)
+        public Bind_Google_Account(Device device) : base(device)
         {
             // Bind_Google_Account.
         }

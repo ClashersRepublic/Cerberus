@@ -18,7 +18,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
     internal class Leave_Alliance : Message
     {
         internal bool done;
-        public Leave_Alliance(Device device, Reader reader) : base(device, reader)
+        public Leave_Alliance(Device device) : base(device)
         {
 
         }

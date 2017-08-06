@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using CRepublic.Magic.Core;
 using CRepublic.Magic.Core.Interface;
@@ -13,21 +14,33 @@ namespace CRepublic.Magic
     internal class Program
     {
         internal static int OP = 0;
+        internal static Stopwatch Stopwatch { get; set; }
 
         public static void Main(string[] args)
         {
+            Stopwatch = Stopwatch.StartNew();
             NativeCalls.SetWindowLong(NativeCalls.GetConsoleWindow(), -20, (int)NativeCalls.GetWindowLong(NativeCalls.GetConsoleWindow(), -20) ^ 0x80000);
             NativeCalls.SetLayeredWindowAttributes(NativeCalls.GetConsoleWindow(), 0, 217, 0x2);
 
             Control.Hi();
             Devices.Initialize();
-            Classes.Hey();
+            Classes.Initialize();
             Gateway.Initialize();
             Gateway.Listen();
 
             Control.Say(@"-------------------------------------" + Environment.NewLine);
 
-            Thread.Sleep(Timeout.Infinite);
+
+            while (true)
+            {
+                const int SLEEP_TIME = 5000;              
+
+                Control.SayInfo("-- Pools --");
+                Control.SayInfo($"SocketAsyncEventArgs: created -> {Gateway.NumberOfArgsCreated} in-use -> {Gateway.NumberOfArgsInUse} available -> {Gateway.NumberOfArgs}");
+                Control.SayInfo($"Buffers: created -> {Gateway.NumberOfBuffersCreated} in-use -> {Gateway.NumberOfBuffersInUse} available -> {Gateway.NumberOfBuffers}");
+
+                Thread.Sleep(SLEEP_TIME);
+            }
         }
 
         internal static void TitleAdd()

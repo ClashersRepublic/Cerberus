@@ -24,7 +24,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
         internal byte[] Commands;
         internal List<Command> LCommands;
         
-        public Execute_Commands(Device Device, Reader Reader) : base(Device, Reader)
+        public Execute_Commands(Device device) : base(device)
         {
         }
 

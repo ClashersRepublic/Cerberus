@@ -12,7 +12,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans.War
 {
     internal class Request_War_Home_Data : Message
     {
-        public Request_War_Home_Data(Device Device, Reader Reader) : base(Device, Reader)
+        public Request_War_Home_Data(Device device) : base(device)
         {
 
         }

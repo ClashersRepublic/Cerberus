@@ -14,7 +14,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Leaderboard
         internal bool Local;
         internal Village_Mode Village_Type;
 
-        public Request_Global_Clans(Device Device, Reader Reader) : base(Device, Reader)
+        public Request_Global_Clans(Device device) : base(device)
         {
 
         }

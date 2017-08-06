@@ -26,7 +26,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Battle
         internal override void Process()
         {
             Thread.Sleep(1500);
-            this.Device.KeepAlive.Send();
+            this.Device.Keep_Alive.Send();
             new Live_Battle_Data(this.Device).Send();
         }
     }

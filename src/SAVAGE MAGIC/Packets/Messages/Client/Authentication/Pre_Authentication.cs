@@ -26,6 +26,13 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
         public Pre_Authentication(Device Device) : base(Device)
         {
         }
+        internal override void Decrypt()
+        {
+            var buffer = Data.ToArray();
+
+            this.Reader = new Reader(buffer);
+            this.Length = buffer.Length;
+        }
 
         internal override void Decode()
         {
@@ -41,10 +48,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 
         internal override void Process()
         {
-            ShowValues();
-
-            new Authentication_Failed(this.Device, Reason.Update){ Message = "hi"}.Send();
-
+            new Authentication_Failed(this.Device, Reason.Patch).Send();
         }
     }
 }

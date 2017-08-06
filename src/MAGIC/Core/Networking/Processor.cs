@@ -8,10 +8,7 @@ namespace CRepublic.Magic.Core.Networking
     {
         internal static void Recept(this Message Message)
         {
-            if (Constants.RC4)
-                Message.EncryptRC4();
-            else
-                Message.EncryptPepper();
+            Message.Encrypt();
             Message.Decode();
             Message.Process();
         }
@@ -34,18 +31,10 @@ namespace CRepublic.Magic.Core.Networking
 #if DEBUG
                 Loggers.Log(Message, Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15));
 #endif
-                if (Constants.RC4)
-                    Message.EncryptRC4();
-                else
-                    Message.EncryptPepper();
+                    Message.Encrypt();
 
                 Gateway.Send(Message);
-#if DEBUG
-                if (Message.Device.Connected())
-                {
-                    Loggers.Log(Utils.Padding(Message.Device.Socket.RemoteEndPoint.ToString(), 15) + " <-- " + Message.GetType().Name, true);
-                }
-#endif
+      
                 Message.Process();
             }
             catch (Exception)

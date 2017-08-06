@@ -11,7 +11,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Battle
     {
         internal int Npc_ID;
 
-        public Attack_War(Device Device, Reader Reader) : base(Device, Reader)
+        public Attack_War(Device device) : base(device)
         {
             // Attack_War.
         }

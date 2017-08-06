@@ -16,7 +16,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
 
         internal Clan Clan;
 
-        public Edit_Alliance_Settings(Device Device, Reader Reader) : base(Device, Reader)
+        public Edit_Alliance_Settings(Device device) : base(device)
         {
         }
 

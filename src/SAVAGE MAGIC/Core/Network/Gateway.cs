@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Threading;
+using CRepublic.Magic.Core.Interface;
 using CRepublic.Magic.Core.Resource;
 using CRepublic.Magic.Packets;
 
@@ -57,12 +58,11 @@ namespace CRepublic.Magic.Core.Network
             Listener.Bind(new IPEndPoint(IPAddress.Any, 9339));
             Listener.Listen(100);
 
-            //Program.Stopwatch.Stop();
-
             var args = GetArgs();
-            StartAccept(args);
+            StartAccept(args);  
 
-            //Loggers.Log(Assembly.GetExecutingAssembly().GetName().Name + $" has been started on {Utils.LocalNetworkIP} in {Math.Round(Program.Stopwatch.Elapsed.TotalSeconds, 4)} Seconds!", true);
+            Program.Stopwatch.Stop();
+            Control.Say(Assembly.GetExecutingAssembly().GetName().Name + $" has been started on {Utils.LocalNetworkIP} in {Math.Round(Program.Stopwatch.Elapsed.TotalMilliseconds, 5)} Milliseconds!");
         }
 
         internal static void StartAccept(SocketAsyncEventArgs e)
@@ -115,7 +115,7 @@ namespace CRepublic.Magic.Core.Network
                     var buffer = GetBuffer();
 
                     args.UserToken = device;
-                    args.SetBuffer(buffer, 0, buffer.Length);
+                    DefensiveSetBuffer(ref args, buffer);
 
                     StartReceive(args);
                 }
@@ -195,9 +195,28 @@ namespace CRepublic.Magic.Core.Network
             }
         }
 
-        internal static void Send(Message message)
+        internal static void Send(this Message message)
         {
             var buffer = default(byte[]);
+            try
+            {
+                message.Encode();
+            }
+            catch (Exception ex)
+            {
+                //Exceptions.Log(ex, $"Exception while encoding message {Message.GetType()}");
+                return;
+            }
+
+            try
+            {
+                message.Encrypt();
+            }
+            catch (Exception ex)
+            {
+                //Exceptions.Log(ex, $"Exception while encrypting message {Message.GetType()}");
+                return;
+            }
 
             try
             {
@@ -209,8 +228,19 @@ namespace CRepublic.Magic.Core.Network
                 return;
             }
 
+
+            try
+            {
+                message.Process();
+            }
+            catch (Exception ex)
+            {
+                //Exceptions.Log(ex, $"Exception while processing message {message.GetType()}");
+                return;
+            }
+
             var args = GetArgs();
-            args.SetBuffer(buffer, 0, buffer.Length);
+            DefensiveSetBuffer(ref args, buffer);
             args.UserToken = message.Device;
 
             StartSend(args);
@@ -313,7 +343,7 @@ namespace CRepublic.Magic.Core.Network
 
                     else
                     {
-                        //Loggers.Log($"A socket operation wasn't successful => {e.LastOperation}. Dropping connection.", true);
+                        Control.Say($"A socket operation wasn't successful => {e.LastOperation}. Dropping connection.");
                         Drop(e);
 
                         // If the last operation was an accept operation, continue accepting
@@ -327,17 +357,14 @@ namespace CRepublic.Magic.Core.Network
                 }
                 else
                 {
-                    //Loggers.Log($"SEMAPHORE DID NOT RESPOND IN TIME!", true);
+                    Control.Say($"SEMAPHORE DID NOT RESPOND IN TIME!");
                 }
             }
             catch (Exception ex)
             {
                /* Exceptions.Log(ex,
-                    "Exception occurred while processing async operation(potentially critical). Dropping connection");
-                Loggers.Log(
-                    ex +
-                    "Exception occurred while processing async operation(potentially critical). Dropping connection",
-                    true);*/
+                    "Exception occurred while processing async operation(potentially critical). Dropping connection");*/
+                Control.Say(ex + "Exception occurred while processing async operation(potentially critical). Dropping connection");
                 Drop(e);
             }
             finally
@@ -375,7 +402,7 @@ namespace CRepublic.Magic.Core.Network
 
             var buffer = e.Buffer;
             e.UserToken = null;
-            e.SetBuffer(null, 0, 0);
+            DefensiveSetBuffer(ref e, null);
             e.AcceptSocket = null;
 
             Recycle(buffer);
@@ -425,7 +452,7 @@ namespace CRepublic.Magic.Core.Network
             var args = ArgsPool.Pop();
             if (args == null)
             {
-                //Logger.SayInfo("Creating new SocketAsyncEventArgs object since pool was empty(returned null).");
+                //Control.SayInfo("Creating new SocketAsyncEventArgs object since pool was empty(returned null).");
                 args = new SocketAsyncEventArgs();
                 args.Completed += OnIOCompleted;
 
@@ -444,6 +471,22 @@ namespace CRepublic.Magic.Core.Network
                 Interlocked.Increment(ref BuffersCreated);
             }
             return buffer;
+        }
+
+        internal static void DefensiveSetBuffer(ref SocketAsyncEventArgs args, byte[] buffer)
+        {
+            try
+            {
+                args.SetBuffer(buffer, 0, buffer?.Length ?? 0 );
+            }
+            catch (InvalidOperationException)
+            {
+                Control.SayInfo($"A SocketAsynceEvenArgs object was already in use. Last Op => {args.LastOperation}.");
+
+                args = new SocketAsyncEventArgs();
+                args.Completed += OnIOCompleted;
+                args.SetBuffer(buffer, 0, buffer?.Length ?? 0);
+            }
         }
 
     }

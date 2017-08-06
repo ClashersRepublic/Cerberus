@@ -16,7 +16,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Clans
         internal long UserID;
         internal Role Role;
 
-        public Change_Role(Device Device, Reader Reader) : base(Device, Reader)
+        public Change_Role(Device device) : base(device)
         { 
         }
 

@@ -13,7 +13,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.API
         internal string FBToken;
 
 
-        public Facebook_Connect(Device Device, Reader Reader) : base(Device, Reader)
+        public Facebook_Connect(Device device) : base(device)
         {
             // Facebook_Connect.
         }

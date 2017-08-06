@@ -14,7 +14,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
     {
         internal int State;
 
-        public Go_Home(Device Device, Reader Reader) : base(Device, Reader)
+        public Go_Home(Device device) : base(device)
         {
             // Go_Home.
         }

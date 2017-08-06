@@ -13,7 +13,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Battle
     internal class Attack_NPC : Message
     {
         internal int Npc_ID;
-        public Attack_NPC(Device Device, Reader Reader) : base(Device, Reader)
+        public Attack_NPC(Device device) : base(device)
         {
             // Attack_NPC.
         }

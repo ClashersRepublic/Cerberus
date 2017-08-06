@@ -7,7 +7,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
 {
    internal class Keep_Alive : Message
     {
-        public Keep_Alive(Device Device, Reader Reader) : base(Device, Reader)
+        public Keep_Alive(Device Device) : base(Device)
         {
             // Keep_Alive.
         }
@@ -16,7 +16,7 @@ namespace CRepublic.Magic.Packets.Messages.Client
         {
             this.Device.LastKeepAlive = DateTime.Now;
             this.Device.NextKeepAlive = this.Device.LastKeepAlive.AddSeconds(30);
-            this.Device.KeepAlive.Send();
+            this.Device.Keep_Alive.Send();
         }
     }
 }

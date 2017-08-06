@@ -7,7 +7,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Leaderboard
 {
     internal class Request_League_Players : Message
     { 
-        public Request_League_Players(Device Device, Reader Reader) : base(Device, Reader)
+        public Request_League_Players(Device device) : base(device)
         {
         }
 

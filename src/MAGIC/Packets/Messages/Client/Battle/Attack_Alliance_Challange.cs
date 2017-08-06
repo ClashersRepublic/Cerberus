@@ -20,7 +20,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Battle
     {
         internal int Stream_High_ID;
         internal int Stream_Low_ID;
-        public Attack_Alliance_Challange(Device Device, Reader Reader) : base(Device, Reader)
+        public Attack_Alliance_Challange(Device device) : base(device)
         {
             // Attack_Alliance_Challange.
         }

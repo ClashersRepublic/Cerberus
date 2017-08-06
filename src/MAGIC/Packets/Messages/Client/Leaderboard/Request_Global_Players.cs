@@ -7,7 +7,7 @@ namespace CRepublic.Magic.Packets.Messages.Client.Leaderboard
 {
     internal class Request_Global_Players :Message
     {
-        public Request_Global_Players(Device device, Reader reader) : base(device, reader)
+        public Request_Global_Players(Device device) : base(device)
         {
         }
         internal override void Process()
