@@ -19,7 +19,7 @@ class Client:
         self.__thread.start()
 
     def __keepalive(self):
-        return b'\x27\x74\x00\x00\x00\x00\x00'
+        return b'\x27\x7C\x00\x00\x00\x00\x00'
 
     def __spam(self):
         while True:
@@ -37,6 +37,6 @@ def main():
         client = Client()
         clients.append(client)
         client.start(('127.0.0.1', 9339))
-        time.sleep(.01)
+        time.sleep(.1)
 if __name__ == "__main__":
     main()

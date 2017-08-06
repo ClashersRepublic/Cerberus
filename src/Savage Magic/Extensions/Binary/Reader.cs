@@ -2,6 +2,10 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using CRepublic.Magic.Files;
+using CRepublic.Magic.Files.CSV_Helpers;
+using Ionic.Zlib;
+
 namespace CRepublic.Magic.Extensions.Binary
 {
     public class Reader : BinaryReader
@@ -136,7 +140,7 @@ namespace CRepublic.Magic.Extensions.Binary
             return _Buffer;
         }
 
-        /*internal Data ReadData()
+        internal Data ReadData()
         {
             int Reference = this.ReadInt32();
             int RowIndex = this.ReadInt32();
@@ -145,7 +149,7 @@ namespace CRepublic.Magic.Extensions.Binary
             Data Data = Table.GetDataWithID(RowIndex);
 
             return Data;
-        }*/
+        }
 
         internal byte[] ReadFully()
         {
@@ -161,7 +165,7 @@ namespace CRepublic.Magic.Extensions.Binary
             }
         }
 
-        /*internal string ReadZlibStreamFail()
+        internal string ReadZlibStreamFail()
         {
             var bytes = ReadBytes();
 
@@ -198,6 +202,6 @@ namespace CRepublic.Magic.Extensions.Binary
                 }
             }
             return null;
-        }*/
+        }
     }
 }

@@ -185,8 +185,6 @@ namespace CRepublic.Magic.Core
         {
             using (MysqlEntities Database = new MysqlEntities())
             {
-                Database.Configuration.AutoDetectChangesEnabled = false;
-                Database.Configuration.ValidateOnSaveEnabled = false;
                 foreach (var Player in Levels.Values.ToList())
                 {
                     lock (Player)
@@ -200,12 +198,11 @@ namespace CRepublic.Magic.Core
                             Data.Village = Player.JSON;
                             Data.Trophies = Player.Avatar.Trophies;
                             Data.FacebookID = Player.Avatar.Facebook.Identifier ?? "#:#:#:#";
-                            Database.Entry(Data).State = EntityState.Modified;
                         }
                     }
                 }
 
-                await Database.SaveChangesAsync();
+                await Database.BulkSaveChangesAsync();
             }
         }
     }

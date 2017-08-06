@@ -11,6 +11,7 @@ namespace CRepublic.Magic.Extensions
         internal const int PRE_ALLOC_SEA = 128;
         internal const int Verbosity = 3;
 
+        internal const bool PacketCompression = true;
         internal const bool UseRC4 = true;
 
         internal static string Title = "Clashers Republic Clash Server - ©Clashers Repbulic | ";

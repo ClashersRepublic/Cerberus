@@ -20,8 +20,8 @@ namespace CRepublic.Magic.Packets.Messages.Server.Authentication
 
         internal override void Encode()
         {
-            this.Data.AddLong(0);
-            this.Data.AddLong(0);
+            this.Data.AddLong(1);
+            this.Data.AddLong(1);
 
             this.Data.AddString("");
 

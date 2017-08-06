@@ -29,16 +29,15 @@ namespace CRepublic.Magic
             Gateway.Listen();
 
             Control.Say(@"-------------------------------------" + Environment.NewLine);
-
-
+            
+            
             while (true)
             {
                 const int SLEEP_TIME = 5000;              
 
                 Control.SayInfo("-- Pools --");
                 Control.SayInfo($"SocketAsyncEventArgs: created -> {Gateway.NumberOfArgsCreated} in-use -> {Gateway.NumberOfArgsInUse} available -> {Gateway.NumberOfArgs}");
-                Control.SayInfo($"Buffers: created -> {Gateway.NumberOfBuffersCreated} in-use -> {Gateway.NumberOfBuffersInUse} available -> {Gateway.NumberOfBuffers}");
-
+                Control.SayInfo($"Buffers: created -> {Gateway.NumberOfBuffersCreated} in-use -> {Gateway.NumberOfBuffersInUse} pool -> {Gateway.NumberOfBuffers} available -> {Gateway.NumberOfBuffers}");
                 Thread.Sleep(SLEEP_TIME);
             }
         }

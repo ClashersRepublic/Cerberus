@@ -147,7 +147,7 @@ namespace CRepublic.Magic.Core
                         }
                     }
                 }
-                await Database.SaveChangesAsync();
+                await Database.BulkSaveChangesAsync();
             }
             /*
             while (true)

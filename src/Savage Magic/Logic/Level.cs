@@ -3,14 +3,16 @@
     internal class Level
     {
         internal Device Device;
+        internal Player Avatar; 
 
         internal Level()
         {
+            Avatar = new Player();
         }
 
         internal Level(long id)
         {
-
+           Avatar = new Player(id);
         }
 
         /*internal string JSON

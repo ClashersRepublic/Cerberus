@@ -16,6 +16,7 @@ namespace CRepublic.Magic.Logic
     internal partial class Device
     {
         internal Socket Socket { get; }
+        internal Level Player { get; set; }
         internal IntPtr SocketHandle { get; }
         internal List<byte> Stream { get; }
         internal State State = State.DISCONNECTED;

@@ -1,6 +1,7 @@
 ﻿#define CONCURRENT_STACK
 //#define LIST // Use LIST to enable tracing n stuff.
 
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
@@ -10,6 +11,7 @@ namespace CRepublic.Magic.Core.Network
     {
 #if CONCURRENT_STACK
         private readonly ConcurrentQueue<T> _stack;
+        internal int Limit;
 #elif LIST
         private readonly List<T> _list;
 #endif
@@ -62,7 +64,9 @@ namespace CRepublic.Magic.Core.Network
         internal void Push(T item)
         {
 #if CONCURRENT_STACK
-            _stack.Enqueue(item);
+
+                    _stack.Enqueue(item);
+
 #elif LIST
             lock (_list)
             {

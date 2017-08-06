@@ -57,6 +57,7 @@ namespace CRepublic.Magic.Packets
                 Packet.AddInt24(this.Length);
                 Packet.AddUShort(this.Version);
                 Packet.AddRange(this.Data);
+                Console.WriteLine(BitConverter.ToString(this.Data.ToArray()));
 
                 return Packet.ToArray();
             }
@@ -90,7 +91,7 @@ namespace CRepublic.Magic.Packets
         {
             var buffer = Data.ToArray();
             if (this.Device.State > State.SESSION_OK)
-            this.Device.Encrypt(buffer);
+                this.Device.Encrypt(buffer);
             this.Data = new List<byte>(buffer);
         }
 

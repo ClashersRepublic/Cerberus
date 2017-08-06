@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CRepublic.Magic.Files.CSV_Helpers;
+using CRepublic.Magic.Logic.Structure.Slots.Items;
+using Ionic.Zlib;
 
 namespace CRepublic.Magic.Extensions.List
 {
@@ -108,7 +111,7 @@ namespace CRepublic.Magic.Extensions.List
             _Packet.AddRange(BitConverter.GetBytes(_Value).Reverse().Skip(1));
         }
 
-        /*public static void AddCompressed(this List<byte> _Packet, string _Value, bool addbool = true)
+       public static void AddCompressed(this List<byte> _Packet, string _Value, bool addbool = true)
         {
             if (addbool)
                 _Packet.AddBool(Constants.PacketCompression);
@@ -128,7 +131,7 @@ namespace CRepublic.Magic.Extensions.List
             }
             else
                 _Packet.AddString(_Value);
-        }*/
+        }
 
         public static void AddHexa(this List<byte> _Packet, string _Value)
         {
@@ -141,7 +144,7 @@ namespace CRepublic.Magic.Extensions.List
             return Enumerable.Range(0, _Tmp.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(_Tmp.Substring(x, 2), 16)).ToArray();
         }
         
-        /*internal static void AddData(this List<byte> _Writer, Data _Data)
+        internal static void AddData(this List<byte> _Writer, Data _Data)
         {
             int Reference = _Data.Id;
             int RowIndex = _Data.GetID();
@@ -158,7 +161,7 @@ namespace CRepublic.Magic.Extensions.List
                 _Packet.AddInt(dataSlot.Data);
                 _Packet.AddInt(dataSlot.Count);
             }
-        }*/
+        }
 
         internal static void AddByteArray(this List<byte> _Packet, byte[] data)
         {

@@ -16,7 +16,7 @@ namespace CRepublic.Magic.Packets.Messages.Server.Authentication
 
 
         internal Reason Reason = Reason.Default;
-        internal string PatchingHost => "http://192.168.0.11/";
+        internal string PatchingHost => "http://192.168.0.5/";
 
         internal string Message;
         internal string RedirectDomain;

@@ -1,13 +1,16 @@
 ﻿using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Logic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using CRepublic.Magic.Core.Interface;
 using CRepublic.Magic.Core.Resource;
+using CRepublic.Magic.Extensions.List;
 using CRepublic.Magic.Packets;
 
 namespace CRepublic.Magic.Core.Network
@@ -50,13 +53,18 @@ namespace CRepublic.Magic.Core.Network
                 ArgsCreated++;
             }
 
-            BufferPool = new Pool<byte[]>();
+            BufferPool = new Pool<byte[]>
+            {
+                Limit = 2000
+            };
         }
 
         internal static void Listen()
         {
             Listener.Bind(new IPEndPoint(IPAddress.Any, 9339));
             Listener.Listen(100);
+            Listener.ReceiveBufferSize = Constants.Buffer;
+            Listener.SendBufferSize = Constants.Buffer;
 
             var args = GetArgs();
             StartAccept(args);  
@@ -69,7 +77,7 @@ namespace CRepublic.Magic.Core.Network
         {
             try
             {
-                while (!Listener.AcceptAsync(e))
+                if (!Listener.AcceptAsync(e))
                     ProcessAccept(e, false);
             }
             catch (Exception ex)
@@ -140,7 +148,7 @@ namespace CRepublic.Magic.Core.Network
 
             try
             {
-                while (!socket.ReceiveAsync(e))
+                if (!socket.ReceiveAsync(e))
                     ProcessReceive(e, false);
             }
             catch (ObjectDisposedException)
@@ -253,7 +261,7 @@ namespace CRepublic.Magic.Core.Network
 
             try
             {
-                while (!socket.SendAsync(e))
+                if (!socket.SendAsync(e))
                     ProcessSend(e);
             }
             catch (ObjectDisposedException)
@@ -362,8 +370,6 @@ namespace CRepublic.Magic.Core.Network
             }
             catch (Exception ex)
             {
-               /* Exceptions.Log(ex,
-                    "Exception occurred while processing async operation(potentially critical). Dropping connection");*/
                 Control.Say(ex + "Exception occurred while processing async operation(potentially critical). Dropping connection");
                 Drop(e);
             }
@@ -406,14 +412,17 @@ namespace CRepublic.Magic.Core.Network
             e.AcceptSocket = null;
 
             Recycle(buffer);
+            buffer = null;
 
             ArgsPool.Push(e);
         }
 
-        internal static  void Recycle(byte[] buffer)
+        internal static void Recycle(byte[] buffer)
         {
             if (buffer?.Length == Constants.Buffer)
+            {
                 BufferPool.Push(buffer);
+            }
         }
 
         internal static void KillSocket(Socket socket)

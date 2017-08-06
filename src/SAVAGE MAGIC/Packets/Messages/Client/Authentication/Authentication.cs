@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CRepublic.Magic.Core.Network;
 using CRepublic.Magic.Logic;
 using CRepublic.Magic.Logic.Enums;
+using CRepublic.Magic.Packets.Messages.Server;
 using CRepublic.Magic.Packets.Messages.Server.Authentication;
 
 namespace CRepublic.Magic.Packets.Messages.Client.Authentication
@@ -71,8 +72,10 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 
         internal override void Process()
         {
+            this.Device.Player = new Level(1);
             new Session_Key(this.Device).Send();
             new Authentication_OK(this.Device).Send();
+            new Own_Home_Data(this.Device).Send();
 
 
         }

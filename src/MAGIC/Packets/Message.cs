@@ -59,7 +59,6 @@ namespace CRepublic.Magic.Packets
                 Packet.AddInt24(this.Length);
                 Packet.AddUShort(this.Version);
                 Packet.AddRange(this.Data);
-
                 return Packet.ToArray();
             }
         }
