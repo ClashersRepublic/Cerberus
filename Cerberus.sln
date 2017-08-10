@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26608.5
+VisualStudioVersion = 15.0.26730.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Royale", "src\ROYALE\Royale.csproj", "{E9AB2ED5-C78C-4586-AB9E-0214F9551B9A}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lyra", "src\LYRA\Lyra.csproj", "{4A219B15-DFD8-480B-A52C-C6737ED48263}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Savage Magic", "src\SAVAGE MAGIC\Savage Magic.csproj", "{B2C9A329-9577-454C-8C1D-0CE91C5C3B75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Savage Royale", "src\SAVAGE ROYALE\Savage Royale.csproj", "{F16AEE98-B1D2-4DD9-9BA5-F9B8115461B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,8 +103,19 @@ Global
 		{B2C9A329-9577-454C-8C1D-0CE91C5C3B75}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B2C9A329-9577-454C-8C1D-0CE91C5C3B75}.Release|x64.ActiveCfg = Release|Any CPU
 		{B2C9A329-9577-454C-8C1D-0CE91C5C3B75}.Release|x64.Build.0 = Release|Any CPU
+		{F16AEE98-B1D2-4DD9-9BA5-F9B8115461B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F16AEE98-B1D2-4DD9-9BA5-F9B8115461B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F16AEE98-B1D2-4DD9-9BA5-F9B8115461B9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F16AEE98-B1D2-4DD9-9BA5-F9B8115461B9}.Debug|x64.Build.0 = Debug|Any CPU
+		{F16AEE98-B1D2-4DD9-9BA5-F9B8115461B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F16AEE98-B1D2-4DD9-9BA5-F9B8115461B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F16AEE98-B1D2-4DD9-9BA5-F9B8115461B9}.Release|x64.ActiveCfg = Release|Any CPU
+		{F16AEE98-B1D2-4DD9-9BA5-F9B8115461B9}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3C6C1CA4-968B-4057-B86C-B1ADC7B0B1D0}
 	EndGlobalSection
 EndGlobal

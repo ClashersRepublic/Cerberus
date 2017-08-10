@@ -4,8 +4,8 @@ namespace CRepublic.Magic.Logic.Structure.Slots.Items
 {
     internal class Slot
     {
-        [JsonProperty("id", DefaultValueHandling = DefaultValueHandling.Include)] internal int Data;
-        [JsonProperty("cnt", DefaultValueHandling = DefaultValueHandling.Include)] internal int Count;
+        [JsonProperty("id")] internal int Data;
+        [JsonProperty("cnt")] internal int Count;
 
         internal Slot()
         {

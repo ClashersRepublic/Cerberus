@@ -24,6 +24,7 @@ namespace CRepublic.Magic.Logic
         internal int Last_Checksum, Last_Tick, Depth;
 
 
+        internal Crypto Keys { get; }
         internal Socket Socket { get; }
         internal IntPtr SocketHandle { get; }
         internal List<byte> Stream { get; }
@@ -44,11 +45,18 @@ namespace CRepublic.Magic.Logic
         {
             this.Socket = so;
 
-            IncomingPacketsKey = new byte[Key._RC4_EndecryptKey.Length];
-            Array.Copy(Key._RC4_EndecryptKey, IncomingPacketsKey, Key._RC4_EndecryptKey.Length);
+            if (Constants.RC4)
+            {
+                IncomingPacketsKey = new byte[Key._RC4_EndecryptKey.Length];
+                Array.Copy(Key._RC4_EndecryptKey, IncomingPacketsKey, Key._RC4_EndecryptKey.Length);
 
-            OutgoingPacketsKey = new byte[Key._RC4_EndecryptKey.Length];
-            Array.Copy(Key._RC4_EndecryptKey, OutgoingPacketsKey, Key._RC4_EndecryptKey.Length);
+                OutgoingPacketsKey = new byte[Key._RC4_EndecryptKey.Length];
+                Array.Copy(Key._RC4_EndecryptKey, OutgoingPacketsKey, Key._RC4_EndecryptKey.Length);
+            }
+            else
+            {
+                this.Keys = new Crypto();
+            }
 
             this.SocketHandle = so.Handle;
 
@@ -86,10 +94,10 @@ namespace CRepublic.Magic.Logic
                         message.Identifier = type;
                         try
                         {
-                            //if (Constants.RC4)
+                            if (Constants.RC4)
                             message.Decrypt();
-                            //else
-                            //message.DecryptPepper();
+                            else
+                            message.DecryptSexy();
                         }
                         catch (Exception ex)
                         {

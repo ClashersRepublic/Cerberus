@@ -22,12 +22,9 @@ namespace CRepublic.Magic.Core.Resource
         
         internal JsonSerializerSettings Settings = new JsonSerializerSettings
         {
-            TypeNameHandling = TypeNameHandling.Auto,
-            MissingMemberHandling = MissingMemberHandling.Ignore,
-            DefaultValueHandling = DefaultValueHandling.Include,
-            NullValueHandling = NullValueHandling.Ignore,
-            PreserveReferencesHandling = PreserveReferencesHandling.All,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,                        MissingMemberHandling = MissingMemberHandling.Ignore,
+            DefaultValueHandling = DefaultValueHandling.Include,             NullValueHandling = NullValueHandling.Ignore,
+            PreserveReferencesHandling = PreserveReferencesHandling.All,     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             Formatting = Formatting.Indented,
         };
 
@@ -47,9 +44,36 @@ namespace CRepublic.Magic.Core.Resource
                     ID = level.Avatar.UserId,
                     Avatar = JsonConvert.SerializeObject(level.Avatar, this.Settings),
                 };
+
                 Ctx.Player.Add(player);
                 Ctx.SaveChanges();
             }
+        }
+
+        internal Level FetchLevel(long userId)
+        {
+            var level = default(Level);
+            try
+            {
+                using (var Ctx = new MysqlEntities())
+                {
+                    var Player = Ctx.Player.Find(userId);
+                    if (Player != null)
+                    {
+                        level = new Level
+                        {
+                            Avatar = JsonConvert.DeserializeObject<Logic.Player>(Player.Avatar, this.Settings),
+                            JSON = Player.Village
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Exceptions.Log(ex, $"Exception while trying to get a level {userId} from the database.");
+                level = null;
+            }
+            return level;
         }
 
         internal async void Save(List<Level> Levels)
@@ -70,8 +94,9 @@ namespace CRepublic.Magic.Core.Resource
                         }
                     }
                 }
-                await Ctx.BulkSaveChangesAsync();
+                await Ctx.BulkSaveChangesAsync(false);
             }
         }
+
     }
 }

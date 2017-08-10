@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using CRepublic.Magic.Core;
 using CRepublic.Magic.Core.Interface;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Packets;
@@ -93,7 +94,7 @@ namespace CRepublic.Magic.Logic
                         }
                         catch (Exception ex)
                         {
-                            //ExceptionLogger.Log(ex, $"Unable to decrypt message with ID: {type}");
+                            Exceptions.Log(ex, $"Unable to decrypt message with ID: {type}");
                         }
 
                         try
@@ -102,7 +103,7 @@ namespace CRepublic.Magic.Logic
                         }
                         catch (Exception ex)
                         {
-                            //ExceptionLogger.Log(ex, $"Unable to decode message with ID: {type}");
+                            Exceptions.Log(ex, $"Unable to decode message with ID: {type}");
                         }
 #if DEBUG
                        //Control.Say(message.Device.Socket.RemoteEndPoint + " --> " + message.GetType().Name);

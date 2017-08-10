@@ -30,14 +30,25 @@ namespace BB.Library.Patcher
                         {
                             Console.WriteLine("    - Offest       : " + (Offset - 32) + " [0x" + (Offset - 32).ToString("X") + "]");
                             Console.WriteLine("    - Key (Hex)    : " + "0x" + BitConverter.ToString(_file.ToList().GetRange((int)Offset - 32, 32).ToArray()).Replace("-", ", 0x"));
-                            Console.WriteLine("    - Replace?");
+                            Console.WriteLine("    - Replace Key and Patch SharedKey Generation?");
                             Console.Write("\b");
 
                             if (Console.ReadKey(false).Key == ConsoleKey.Y)
                             {
+                                Console.WriteLine("Patching keys ...");
                                 List<Byte> Patched = _file.ToList();
                                 Patched.RemoveRange((int) Offset - 32, 32);
                                 Patched.InsertRange((int) Offset - 32, Constants.CustomKey);
+
+                                Console.WriteLine("Patching SharedKeyGen #1...");
+                                Patched.RemoveRange((int)4248312, 1);
+                                Patched.InsertRange((int)4248312, Constants.SharedKeyPatch);
+
+
+                                Console.WriteLine("Patching SharedKeyGen #2...");
+                                Patched.RemoveRange((int)4251436, 1);
+                                Patched.InsertRange((int)4251436, Constants.SharedKeyPatch);
+
 
                                 using (FileStream FStream = File.Create(_folder.FullName + "/CoC-libg.so", Patched.Count, FileOptions.None))
                                 {
@@ -77,6 +88,17 @@ namespace BB.Library.Patcher
                             Console.WriteLine("    - Replace?");
                             Console.Write("\b");
 
+                            if (Console.ReadKey(false).Key == ConsoleKey.Y)
+                            {
+                                List<Byte> Patched = _file.ToList();
+                                Patched.RemoveRange((int)Offset - 32, 32);
+                                Patched.InsertRange((int)Offset - 32, Constants.CustomKey);
+
+                                using (FileStream FStream = File.Create(_folder.FullName + "/CR-libg.so", Patched.Count, FileOptions.None))
+                                {
+                                    FStream.Write(Patched.ToArray(), 0, Patched.Count);
+                                }
+                            }
                         }
                         else
                         {
@@ -89,19 +111,19 @@ namespace BB.Library.Patcher
                                     Console.WriteLine("    - Offest       : " + (Offset + 32) + " [0x" + (Offset + 32).ToString("X") + "]");
                                     Console.WriteLine("    - 20 byte sequence (Hex)    : " + "0x" + BitConverter.ToString(_file.ToList().GetRange((int)Offset + 32, 20).ToArray()).Replace("-", ", 0x"));
                                     Console.Write("\b");
-                                    Console.ReadKey(false);
-                                }
-                            }
-                        }
-                        if (Console.ReadKey(false).Key == ConsoleKey.Y)
-                        {
-                            List<Byte> Patched = _file.ToList();
-                            Patched.RemoveRange((int) Offset - 32, 32);
-                            Patched.InsertRange((int) Offset - 32, Constants.CustomKey);
 
-                            using (FileStream FStream = File.Create(_folder.FullName + "/CR-libg.so", Patched.Count, FileOptions.None))
-                            {
-                                FStream.Write(Patched.ToArray(), 0, Patched.Count);
+                                    if (Console.ReadKey(false).Key == ConsoleKey.Y)
+                                    {
+                                        List<Byte> Patched = _file.ToList();
+                                        Patched.RemoveRange((int)Offset, 32);
+                                        Patched.InsertRange((int)Offset, Constants.CustomKey);
+
+                                        using (FileStream FStream = File.Create(_folder.FullName + "/CR-libg.so", Patched.Count, FileOptions.None))
+                                        {
+                                            FStream.Write(Patched.ToArray(), 0, Patched.Count);
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

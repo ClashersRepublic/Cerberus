@@ -1,0 +1,164 @@
+﻿{
+  "events": [
+    {
+      "id": 0,
+      "name": "",
+      "boomboxEntry": "CustomSCLoading",
+      "eventEntryName": "CustomSCLoading",
+      "inboxEntryId": 1,
+      "sc": "giant_builder.sc",
+      "image": "",
+      "localization": "builder_away_giant.csv",
+      "notification": "",
+      "visibleTime": "20170528T070000.000Z",
+      "startTime": "20170601T070000.000Z",
+      "endTime": "20180803T070000.000Z",
+      "showUpcoming": 0,
+      "functions": [
+        {
+          "name": "BuildingDestroyedSpawnUnit",
+          "parameters": [
+            "1000015",
+            "4000003",
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "",
+      "boomboxEntry": "",
+      "eventEntryName": "",
+      "inboxEntryId": 1,
+      "sc": "",
+      "image": "",
+      "localization": "builder_sign_back.csv",
+      "notification": "",
+      "visibleTime": "20170628T070000.000Z",
+      "startTime": "20170601T070000.000Z",
+      "endTime": "20180803T070000.000Z",
+      "showUpcoming": 0,
+      "functions": [
+        {
+          "name": "BuildingSign",
+          "parameters": [
+            "1000015"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "",
+      "boomboxEntry": "",
+      "eventEntryName": "",
+      "inboxEntryId": 1,
+      "sc": "",
+      "image": "",
+      "localization": "",
+      "notification": "",
+      "visibleTime": "20170628T070000.000Z",
+      "startTime": "20170601T070000.000Z",
+      "endTime": "20180803T070000.000Z",
+      "showUpcoming": 0,
+      "functions": [
+        {
+          "name": "ChangeWorkerLook",
+          "parameters": [
+            "1",
+            "worker_building2",
+            "icon_builder_giant"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "",
+      "boomboxEntry": "DynamicArmy",
+      "eventEntryName": "DynamicArmy",
+      "inboxEntryId": 1,
+      "sc": "battleram.sc",
+      "image": "",
+      "localization": "builder_away_barbarian.csv",
+      "notification": "",
+      "visibleTime": "20170628T070000.000Z",
+      "startTime": "20170601T070000.000Z",
+      "endTime": "20180803T070000.000Z",
+      "showUpcoming": 0,
+      "functions": [
+        {
+          "name": "EnableTroop",
+          "parameters": [
+            "4000045"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "",
+      "boomboxEntry": "DynamicArmy",
+      "eventEntryName": "DynamicArmy",
+      "inboxEntryId": 1,
+      "sc": "gift_spell.sc",
+      "image": "",
+      "localization": "builder_away_wizard.csv",
+      "notification": "",
+      "visibleTime": "20170628T070000.000Z",
+      "startTime": "20170601T070000.000Z",
+      "endTime": "20180803T070000.000Z",
+      "showUpcoming": 0,
+      "functions": [
+        {
+          "name": "EnableSpell",
+          "parameters": [
+            "26000022"
+          ]
+        },
+        {
+          "name": "EnableSpell",
+          "parameters": [
+            "26000006"
+          ]
+        },
+        {
+          "name": "EnableTroop",
+          "parameters": [
+            "4000030"
+          ]
+        },
+        {
+          "name": "EnableTrap",
+          "parameters": [
+            "12000009"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "",
+      "boomboxEntry": "CustomSCLoading",
+      "eventEntryName": "CustomSCLoading",
+      "inboxEntryId": 1,
+      "sc": "shrink_spell.sc",
+      "image": "",
+      "localization": "builder_away_witch.csv",
+      "notification": "",
+      "visibleTime": "20170628T070000.000Z",
+      "startTime": "20170601T070000.000Z",
+      "endTime": "20180803T070000.000Z",
+      "showUpcoming": 0,
+      "functions": [
+        {
+          "name": "EnableTrap",
+          "parameters": [
+            "12000015"
+          ]
+        }
+      ]
+    }
+  ]
+} 

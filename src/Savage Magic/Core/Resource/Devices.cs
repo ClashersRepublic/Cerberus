@@ -42,7 +42,7 @@ namespace CRepublic.Magic.Core.Resource
             }
             catch (Exception ex)
             {
-                //Exceptions.Log(ex, "Exception while dropping client.");
+                Exceptions.Log(ex, "Exception while dropping client.");
             }
             return closedSocket;
         }

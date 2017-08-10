@@ -46,13 +46,13 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
             {
                 if (Constants.Maintenance == null)
                 {
-                    if (string.Equals(this.Hash, Fingerprint.Sha))
+                    //if (string.Equals(this.Hash, Fingerprint.Sha))
                     {
                         new Pre_Authentication_OK(this.Device).Send();
                     }
-                    else
+                   // else
                     {
-                        new Authentication_Failed(this.Device, Reason.Patch).Send();
+                     //   new Authentication_Failed(this.Device, Reason.Patch).Send();
                     }
                 }
                 else

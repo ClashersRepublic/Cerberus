@@ -82,7 +82,7 @@ namespace CRepublic.Magic.Core.Network
             }
             catch (Exception ex)
             {
-                //Exceptions.Log(ex, "Exception while starting to accept(critical)");
+                Exceptions.Log(ex, "Exception while starting to accept(critical)");
             }
         }
 
@@ -113,9 +113,8 @@ namespace CRepublic.Magic.Core.Network
                         }
                     }*/
 
-                    //if (Constants.Verbosity > 3)
-                        //Loggers.Log($"New client connected -> {socket.RemoteEndPoint}", true);
-                        //Console.WriteLine($"New client connected -> {acceptSocket.RemoteEndPoint}");
+                    if (Constants.Verbosity > 3)
+                        Control.SayInfo($"New client connected -> {acceptSocket.RemoteEndPoint}");
                     var device = new Device(acceptSocket);
                     Devices.Add(device);
 
@@ -129,7 +128,7 @@ namespace CRepublic.Magic.Core.Network
                 }
                 catch (Exception ex)
                 {
-                    //Exceptions.Log(ex, "Exception while processing accept");
+                    Exceptions.Log(ex, "Exception while processing accept");
                 }
             }
 
@@ -157,7 +156,7 @@ namespace CRepublic.Magic.Core.Network
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception while start receive: ");
+                Exceptions.Log(ex, "Exception while starting to receive");
             }
         }
 
@@ -188,14 +187,14 @@ namespace CRepublic.Magic.Core.Network
                         }
                         catch (Exception ex)
                         {
-                            //Exceptions.Log(ex, $"Exception while processing incoming message {message.GetType()}");
+                            Exceptions.Log(ex, $"Exception while processing incoming message {message.GetType()}");
                         }
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    //Exceptions.Log(ex, "Exception while processing receive");
+                    Exceptions.Log(ex, "Exception while processing receive");
                 }
 
                 if (startNew)
@@ -212,7 +211,7 @@ namespace CRepublic.Magic.Core.Network
             }
             catch (Exception ex)
             {
-                //Exceptions.Log(ex, $"Exception while encoding message {Message.GetType()}");
+                Exceptions.Log(ex, $"Exception while encoding message {message.GetType()}");
                 return;
             }
 
@@ -222,7 +221,7 @@ namespace CRepublic.Magic.Core.Network
             }
             catch (Exception ex)
             {
-                //Exceptions.Log(ex, $"Exception while encrypting message {Message.GetType()}");
+                Exceptions.Log(ex, $"Exception while encrypting message {message.GetType()}");
                 return;
             }
 
@@ -232,7 +231,7 @@ namespace CRepublic.Magic.Core.Network
             }
             catch (Exception ex)
             {
-                //Exceptions.Log(ex, $"Exception while constructing message {message.GetType()}");
+                Exceptions.Log(ex, $"Exception while constructing message {message.GetType()}");
                 return;
             }
 
@@ -243,7 +242,7 @@ namespace CRepublic.Magic.Core.Network
             }
             catch (Exception ex)
             {
-                //Exceptions.Log(ex, $"Exception while processing message {message.GetType()}");
+                Exceptions.Log(ex, $"Exception while processing message {message.GetType()}");
                 return;
             }
 
@@ -270,7 +269,7 @@ namespace CRepublic.Magic.Core.Network
             }
             catch (Exception ex)
             {
-                //Exceptions.Log(ex, "Exception while starting send");
+                Exceptions.Log(ex, "Exception while starting send");
             }
         }
 
@@ -300,7 +299,7 @@ namespace CRepublic.Magic.Core.Network
                 }
                 catch (Exception ex)
                 {
-                    //Exceptions.Log(ex, "Exception while processing send");
+                    Exceptions.Log(ex, "Exception while processing send");
                 }
             }
         }

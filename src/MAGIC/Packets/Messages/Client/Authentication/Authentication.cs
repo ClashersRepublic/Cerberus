@@ -36,6 +36,28 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 
         internal string[] ClientVersion;
 
+
+        internal override void DecryptSexy()
+        {
+            byte[] Buffer = this.Reader.ReadBytes((int)this.Length);
+            this.Device.Keys.PublicKey = Buffer.Take(32).ToArray();
+            
+            Blake2BHasher Blake = new Blake2BHasher();
+
+            Blake.Update(this.Device.Keys.PublicKey);
+            Blake.Update(Key.PublicKey);
+
+            this.Device.Keys.RNonce = Blake.Finish();
+
+            Buffer = Sodium.Decrypt(Buffer.Skip(32).ToArray(), this.Device.Keys.RNonce, Key.PrivateKey, this.Device.Keys.PublicKey);
+
+            this.Device.Keys.SNonce = Buffer.Skip(24).Take(24).ToArray();
+            this.Reader = new Reader(Buffer.Skip(48).ToArray());
+
+            this.Length = (ushort)Buffer.Length;
+
+        }
+
         internal override void Decode()
         { 
             this.UserId = this.Reader.ReadInt64();

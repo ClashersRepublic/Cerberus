@@ -13,6 +13,9 @@ namespace CRepublic.Magic.Extensions
 
         internal const bool PacketCompression = true;
         internal const bool UseRC4 = true;
+        internal const bool WriteLog = true;
+        internal const bool Local = false;
+        internal const bool CloudLogging = false;
 
         internal static string Title = "Clashers Republic Clash Server - ©Clashers Repbulic | ";
 

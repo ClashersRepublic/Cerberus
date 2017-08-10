@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CRepublic.Magic.Core.Network;
+using CRepublic.Magic.Extensions;
+using CRepublic.Magic.Files;
 using CRepublic.Magic.Logic;
 using CRepublic.Magic.Logic.Enums;
 using CRepublic.Magic.Packets.Messages.Server;
@@ -72,12 +74,21 @@ namespace CRepublic.Magic.Packets.Messages.Client.Authentication
 
         internal override void Process()
         {
-            this.Device.Player = new Level(1);
-            new Session_Key(this.Device).Send();
-            new Authentication_OK(this.Device).Send();
-            new Own_Home_Data(this.Device).Send();
+            if (Constants.UseRC4)
+                new Session_Key(this.Device).Send();
+
+            if (!string.IsNullOrEmpty(Fingerprint.Json) && !string.Equals(this.MasterHash, Fingerprint.Sha))
+            {
+                new Authentication_Failed(this.Device, Logic.Enums.Reason.Patch).Send();
+                return;
+            }
 
 
+        }
+
+        internal void Login()
+        {
+            this.Device.Player.Device = this.Device;
         }
     }
 }

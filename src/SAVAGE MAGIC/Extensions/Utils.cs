@@ -90,6 +90,17 @@ namespace CRepublic.Magic.Extensions
             r.NextBytes(buffer);
             return buffer;
         }
+        internal static string RandomString(int Size)
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < Size; i++)
+            {
+                var ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * Program.Random.NextDouble() + 65)));
+                builder.Append(ch);
+            }
+            return builder.ToString();
+        }
+
         internal static bool IsOdd(int value)
         {
             return value % 2 != 0;

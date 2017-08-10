@@ -1,5 +1,5 @@
 ﻿using System;
-
+using CRepublic.Magic.Core.Database;
 using CRepublic.Magic.Extensions;
 using CRepublic.Magic.Files;
 using CRepublic.Magic.Logic.Enums;
@@ -17,6 +17,8 @@ namespace CRepublic.Magic.Core
             Home.Initialize();
             NPC.Initialize();
             Fingerprint.Initialize();
+            MySQL_V2.GetAllSeed();
+            
         }
     }
 }

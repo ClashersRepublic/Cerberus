@@ -5,15 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using CRepublic.Magic.Core.Database;
 using CRepublic.Magic.Extensions.List;
+using CRepublic.Magic.Files.CSV_Helpers;
+using CRepublic.Magic.Files.CSV_Logic;
 using CRepublic.Magic.Logic.Enums;
 using CRepublic.Magic.Logic.Structure.Slots;
 using CRepublic.Magic.Logic.Structure.Slots.Items;
 using Newtonsoft.Json;
+using Npcs = CRepublic.Magic.Logic.Structure.Slots.Npcs;
+using Resource = CRepublic.Magic.Logic.Enums.Resource;
 
 namespace CRepublic.Magic.Logic
 {
-    internal class Player 
+    internal class Player : ICloneable
     {
+        [JsonIgnore] internal long Battle_ID_V2;
+        [JsonIgnore] internal long Battle_ID;
+        [JsonIgnore] internal int Amical_ID;
+        [JsonIgnore] internal int ObstacleClearCount;
+
         [JsonIgnore]
         internal long UserId
         {
@@ -328,6 +337,228 @@ namespace CRepublic.Magic.Logic
                 _Packet.AddInt(0);
                 return _Packet.ToArray();
             }
+        }
+        internal static int GetDataIndex(List<Slot> dsl, Data d) => dsl.FindIndex(ds => ds.Data == d.Id);
+
+        internal static int GetDataIndex(Units dsl, Data d) => dsl.FindIndex(ds => ds.Data == d.Id);
+
+        internal int Get_Unit_Count_V2(Combat_Item cd)
+        {
+            var result = 0;
+            var index = GetDataIndex(this.Units2, cd);
+            if (index != -1)
+                result = this.Units2[index].Count;
+            return result;
+        }
+
+        internal void Set_Unit_Count_V2(Combat_Item cd, int count)
+        {
+
+            var index = GetDataIndex(this.Units2, cd);
+            if (index != -1)
+                this.Units2[index].Count = count;
+            else
+            {
+                var ds = new Slot(cd.GetGlobalID(), count);
+                this.Units2.Add(ds);
+            }
+        }
+
+        internal void Add_Unit2(int Data, int Count)
+        {
+            int _Index = this.Units2.FindIndex(U => U.Data == Data);
+
+            if (_Index > -1)
+            {
+                this.Units2[_Index].Count += Count;
+            }
+            else
+            {
+                this.Units2.Add(new Slot(Data, Count));
+            }
+        }
+
+        internal void Add_Unit(int Data, int Count)
+        {
+            int _Index = this.Units.FindIndex(U => U.Data == Data);
+
+            if (_Index > -1)
+            {
+                this.Units[_Index].Count += Count;
+            }
+            else
+            {
+                this.Units.Add(new Slot(Data, Count));
+            }
+        }
+
+        public void Add_Spells(int Data, int Count)
+        {
+            int _Index = this.Spells.FindIndex(S => S.Data == Data);
+
+            if (_Index > -1)
+            {
+                this.Spells[_Index].Count += Count;
+            }
+            else
+            {
+                this.Spells.Add(new Slot(Data, Count));
+            }
+        }
+
+        public void AddCastleTroop(int Data, int Count, int level)
+        {
+            int _Index = this.Castle_Units.FindIndex(t => t.Data == Data && t.Level == level);
+            if (_Index > -1)
+            {
+                this.Castle_Units[_Index].Count += Count;
+            }
+            else
+            {
+                Alliance_Unit ds = new Alliance_Unit(0, Data, Count, level);
+                this.Castle_Units.Add(ds);
+            }
+        }
+
+        public void AddCastleSpell(int Data, int Count, int level)
+        {
+            int _Index = this.Castle_Spells.FindIndex(t => t.Data == Data && t.Level == level);
+            if (_Index > -1)
+            {
+                this.Castle_Spells[_Index].Count += Count;
+            }
+            else
+            {
+                Alliance_Unit ds = new Alliance_Unit(0, Data, Count, level);
+                this.Castle_Spells.Add(ds);
+            }
+        }
+
+        public int GetUnitUpgradeLevel(Combat_Item cd)
+        {
+            int result = 0;
+            switch (cd.GetCombatItemType())
+            {
+                case 2:
+                {
+                    int index = GetDataIndex(this.Heroes_Upgrades, cd);
+                    if (index != -1)
+                    {
+                        result = this.Heroes_Upgrades[index].Count;
+                    }
+                    break;
+                }
+                case 1:
+                {
+                    int index = GetDataIndex(this.Spell_Upgrades, cd);
+                    if (index != -1)
+                    {
+                        result = this.Spell_Upgrades[index].Count;
+                    }
+                    break;
+                }
+
+                default:
+                {
+                    int index = GetDataIndex(this.Unit_Upgrades, cd);
+                    if (index != -1)
+                    {
+                        result = this.Unit_Upgrades[index].Count;
+                    }
+                    break;
+                }
+            }
+            return result;
+        }
+        public void SetUnitUpgradeLevel(Combat_Item cd, int level)
+        {
+            switch (cd.GetCombatItemType())
+            {
+                case 2:
+                {
+                    int index = GetDataIndex(this.Heroes_Upgrades, cd);
+                    if (index != -1)
+                    {
+                        this.Heroes_Upgrades[index].Count = level;
+                    }
+                    else
+                    {
+                        Slot ds = new Slot(cd.GetGlobalID(), level);
+                        this.Heroes_Upgrades.Add(ds);
+                    }
+                    break;
+                }
+                case 1:
+                {
+                    int index = GetDataIndex(this.Spell_Upgrades, cd);
+                    if (index != -1)
+                    {
+                        this.Spell_Upgrades[index].Count = level;
+                    }
+                    else
+                    {
+                        Slot ds = new Slot(cd.GetGlobalID(), level);
+                        this.Spell_Upgrades.Add(ds);
+                    }
+                    break;
+                }
+                default:
+                {
+                    int index = GetDataIndex(this.Unit_Upgrades, cd);
+                    if (index != -1)
+                    {
+                        this.Unit_Upgrades[index].Count = level;
+                    }
+                    else
+                    {
+                        Slot ds = new Slot(cd.GetGlobalID(), level);
+                        this.Unit_Upgrades.Add(ds);
+                    }
+                    break;
+                }
+            }
+        }
+
+        public void SetHeroHealth(Heroes hd, int health)
+        {
+            int index = GetDataIndex(this.Heroes_Health, hd);
+            if (index == -1)
+            {
+                Slot ds = new Slot(hd.GetGlobalID(), health);
+                this.Heroes_Health.Add(ds);
+            }
+            else
+            {
+                this.Heroes_Health[index].Count = health;
+            }
+        }
+
+        public void SetHeroState(Heroes hd, int state)
+        {
+            int index = GetDataIndex(this.Heroes_States, hd);
+            if (index == -1)
+            {
+                Slot ds = new Slot(hd.GetGlobalID(), state);
+                this.Heroes_States.Add(ds);
+            }
+            else
+            {
+                this.Heroes_States[index].Count = state;
+            }
+        }
+
+        public bool HasEnoughResources(Resource resource, int buildCost) => this.Resources.Get(resource) >= buildCost;
+
+        public bool HasEnoughResources(int globalId, int buildCost) => this.Resources.Get(globalId) >= buildCost;
+
+        internal Player Clone()
+        {
+            return this.MemberwiseClone() as Player;
+        }
+
+        object ICloneable.Clone()
+        {
+            return this.Clone();
         }
     }
 }

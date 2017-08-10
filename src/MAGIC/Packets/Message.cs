@@ -22,8 +22,8 @@ namespace CRepublic.Magic.Packets
         internal ushort Identifier;
         internal ushort Version;
         internal int Offset;
-        internal int Length { get; private set; }
-        internal Reader Reader { get; private set; }
+        internal int Length { get; set; }
+        internal Reader Reader { get; set; }
 
         internal List<byte> Data
         {
@@ -82,6 +82,33 @@ namespace CRepublic.Magic.Packets
             var buffer = Data.ToArray();
             if (Identifier != 10100)
                 this.Device.Decrypt(buffer);
+            this.Reader = new Reader(buffer);
+            this.Length = buffer.Length;
+        }
+
+        internal virtual void DecryptSexy()
+        {
+            if (this.Device.State >= State.LOGGED)
+            {
+                this.Device.Keys.SNonce.Increment();
+
+                byte[] Decrypted = Sodium.Decrypt(new byte[16].Concat(this.Reader.ReadBytes(this.Length)).ToArray(), this.Device.Keys.SNonce, this.Device.Keys.PublicKey);
+
+                if (Decrypted == null)
+                {
+                    throw new CryptographicException("We tried to decrypt an incomplete message - Check the network part, still have bytes to read.");
+                }
+
+                this.Reader = new Reader(Decrypted);
+                this.Length = (ushort)Decrypted.Length;
+            }
+
+
+
+            var buffer = Data.ToArray();
+            if (Identifier != 10100)
+                this.Device.Decrypt(buffer);
+            this.Device.Keys.SNonce.Increment();
             this.Reader = new Reader(buffer);
             this.Length = buffer.Length;
         }
