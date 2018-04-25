@@ -14,6 +14,15 @@ namespace CRepublic.Magic.Packets
         {
             Commands = new Dictionary<int, Type>
             {
+                {1, typeof(Joined_Alliance)},
+                {2, typeof(Leaved_Alliance)},
+                {3, typeof(Name_Change_Callback)},
+                {4, typeof(Donate_Troop_Callback)},
+                {5, typeof(Receive_Troop_Callback)},
+                {6, typeof(Changed_Alliance_Setting)},
+                {8, typeof(Role_Update)},
+                {21, typeof(New_Promotion)},
+                
                 {500, typeof(Buy_Building)},
                 {501, typeof(Move_Building)},
                 {502, typeof(Upgrade_Building)},
