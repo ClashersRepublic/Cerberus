@@ -331,6 +331,7 @@ namespace CRepublic.Magic.Core
 
                             Database.Entry(Data).State = EntityState.Modified;
                         }
+                        Database.SaveChanges();
                     }
                 }
                 await Database.BulkSaveChangesAsync();
