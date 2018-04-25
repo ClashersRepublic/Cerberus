@@ -199,6 +199,7 @@ namespace CRepublic.Magic.Core
                             Data.Trophies = Player.Avatar.Trophies;
                             Data.FacebookID = Player.Avatar.Facebook.Identifier ?? "#:#:#:#";
                         }
+                        Database.SaveChanges();
                     }
                 }
 
