@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CRepublic.Magic.Packets.Commands.Server;
 using CRepublic.Magic.Packets.Commands.Client;
 using CRepublic.Magic.Packets.Commands.Client.Battle;
 using CRepublic.Magic.Packets.Commands.Client.Clan;
